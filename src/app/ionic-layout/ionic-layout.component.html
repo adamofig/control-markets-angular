@@ -1,0 +1,95 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay">
+      <ion-content>
+        <ion-list id="inbox-list">
+          <ion-list-header>{{ projectName }}</ion-list-header>
+
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <!-- Admin Section -->
+          <ng-container *ngIf="isAdmin">
+            <ion-list-header>Admin Section</ion-list-header>
+            <ion-menu-toggle auto-hide="false" *ngFor="let p of adminPages; let i = index">
+              <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+                <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                <ion-label>{{ p.title }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ng-container>
+        </ion-list>
+      </ion-content>
+
+      <ion-footer>
+        <ion-toolbar>
+          <ion-note style="padding-left: 10px">{{ envName }} - v{{ version }}</ion-note>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-menu>
+
+    <div class="ion-page" id="main-content">
+      <ion-header [translucent]="true">
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+          <ion-title>{{ projectName }}</ion-title>
+
+          <ion-buttons slot="end">
+            <p-togglebutton [(ngModel)]="isDarkMode" onLabel="" offLabel="" styleClass="w-36" ariaLabel="Do you confirm" (onChange)="toggleDarkMode()">
+              <ng-template pTemplate="onicon" let-checked="checked">
+                <ion-icon [name]="checked ? 'sunny' : 'moon'"></ion-icon>
+              </ng-template>
+            </p-togglebutton>
+
+            <!-- <ion-toggle [checked]="isDarkMode" aria-label="Dark mode"> Dark Mode </ion-toggle> -->
+
+            <ion-button (click)="openActionSheet()">
+              <span>
+                <ion-avatar style="width: 3em; height: 3em">
+                  <img width="10px" alt="Silhouette of a person's head" [src]="user?.photoURL || '/assets/icon/favicon.png'" />
+                </ion-avatar>
+              </span>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <router-outlet></router-outlet>
+      </ion-content>
+
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="home" (click)="navigateTo('page/home')">
+          <ion-icon name="home"></ion-icon>
+          Home
+        </ion-tab-button>
+
+        <ion-tab-button tab="code-working" (click)="navigateTo('page/chat')">
+          <ion-icon name="chatbubble-ellipses"></ion-icon>
+          Agentes
+        </ion-tab-button>
+
+        <ion-tab-button tab="eye" (click)="navigateTo('page/tasks')">
+          <ion-icon name="eye"></ion-icon>
+          Tareas
+        </ion-tab-button>
+
+        <ion-tab-button tab="sources" (click)="navigateTo('page/sources')">
+          <ion-icon name="document-attach-outline"></ion-icon>
+          Fuentes
+        </ion-tab-button>
+
+        <ion-tab-button tab="sources" (click)="navigateTo('page/video-analizer')">
+          <ion-icon name="videocam-outline"></ion-icon>
+          Videos
+        </ion-tab-button>
+      </ion-tab-bar>
+    </div>
+  </ion-split-pane>
+</ion-app>

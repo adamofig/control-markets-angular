@@ -1,0 +1,28 @@
+<h5>Tiktoks exportados de {{ user }}</h5>
+
+<p-table stripedRows [value]="products" [tableStyle]="{'min-width': '30rem'}" [paginator]="true" [rows]="20" [sortMode]="'multiple'" size="small">
+  <ng-template #header>
+    <tr>
+      <th pSortableColumn="create_time">create_time <p-sortIcon field="create_time" /></th>
+      <th pSortableColumn="statistics_play_count">Vistas <p-sortIcon field="statistics_play_count" /></th>
+      <th pSortableColumn="statistics_share_count">Compartidos <p-sortIcon field="statistics_share_count" /></th>
+      <th pSortableColumn="statistics_collect_count">Guardados/Favoritos <p-sortIcon field="statistics_collect_count" /></th>
+      <th>Link</th>
+      <th>Análisis</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-product>
+    <tr>
+      <td>{{ product.create_time | date: 'dd/MM/yyyy HH:mm ' }}</td>
+      <td>{{ product.statistics_play_count }}</td>
+      <td>{{ product.statistics_share_count }}</td>
+      <td>{{ product.statistics_collect_count }}</td>
+      <td>
+        <p-button (click)="openTiktok(product)" label="Ver video" variant="outlined" />
+      </td>
+      <td>
+        <p-button (click)="openAnalysis(product)" label="Ver Resultados" variant="outlined" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

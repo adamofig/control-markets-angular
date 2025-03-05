@@ -1,0 +1,124 @@
+:host {
+  display: block;
+  padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.agent-card-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 15px;
+}
+.w-full {
+  width: 100%;
+}
+
+.field {
+  margin-bottom: 1rem;
+}
+
+label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.task-form-card {
+  max-width: 600px;
+  margin: 2rem auto;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.task-form-card ::ng-deep .p-card {
+  background: linear-gradient(145deg, var(--surface-ground), var(--surface-section));
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.form-field {
+  position: relative;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.form-field label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-color-secondary);
+  margin-bottom: 0.5rem;
+  /* transition: all 0.2s ease; */
+}
+
+/* Input styling */
+:host ::ng-deep .p-inputtext {
+  border-radius: 12px;
+  padding: 1rem;
+  transition: all 0.2s ease;
+  background: var(--surface-section);
+  /* border: 2px solid transparent; */
+}
+
+:host ::ng-deep .p-inputtext:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+:host ::ng-deep .p-inputtext:focus {
+  box-shadow: 0 0 0 2px var(--primary-color-lighter);
+  border-color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+/* Dropdown styling */
+:host ::ng-deep .p-select {
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .p-select:hover {
+  border-color: var(--primary-color);
+  /* transform: translateY(-1px); */
+}
+
+/* Button styling */
+:host ::ng-deep .p-button {
+  /* border-radius: 12px; */
+  /* padding: 1rem 2rem; */
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .p-button:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.textmin {
+  width: 100%;
+  border-radius: 12px;
+  min-height: 100px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.remove-agent-button ::ng-deep .p-button:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(2px) !important;
+    -webkit-backdrop-filter: blur(2px) !important;
+}
+.remove-agent-button ::ng-deep .p-button {
+    transition: all 0.3s ease;
+}
+

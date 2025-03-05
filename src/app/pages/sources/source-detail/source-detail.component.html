@@ -1,0 +1,109 @@
+<p-divider align="center" type="dotted">
+  <b> Video Analysis </b>
+</p-divider>
+
+<div>
+  <h5>Status History</h5>
+  <ul>
+    @for (status of statusHistory; track status) {
+    <li>{{ status }}</li>
+    }
+  </ul>
+</div>
+
+<div>
+  <h5>Video {{ source?.type }}</h5>
+  <p>Nombre: {{ source?.name }}</p>
+  <p>Status: {{ source?.status }}</p>
+  <p>Status Description: {{ source?.statusDescription }}</p>
+</div>
+
+@if(!(source?.video) && (source?.type === sourceType.TIKTOK || source?.type === sourceType.YOUTUBE)) {
+<div>
+  <h5>No hay un video procesado para esta fuente</h5>
+  <p-button label="Procesar video" (click)="processVideo()"></p-button>
+</div>
+} @if(source?.video) {
+<div>
+  @if(source?.relationId && additionalData){
+  <p-divider align="left" type="solid">
+    <b>Basic info</b>
+  </p-divider>
+
+  <div class="tiktok-summary">
+    <h2>{{ additionalData.desc || 'No description' }}</h2>
+    <p>By: {{ additionalData.author?.unique_id || 'Unknown username' }} ({{ additionalData.author?.nickname || 'Unknown author' }})</p>
+
+    <div class="stats">
+      <span>👁️ {{ additionalData.statistics?.play_count?.toLocaleString() || 0 }} views</span>
+      <span>❤️ {{ additionalData.statistics?.digg_count?.toLocaleString() || 0 }} likes</span>
+      <span>💬 {{ additionalData.statistics?.comment_count?.toLocaleString() || 0 }} comments</span>
+      <span>↗️ {{ additionalData.statistics?.share_count?.toLocaleString() || 0 }} shares</span>
+    </div>
+
+    <div class="content-info">
+      <p>Content Type: {{ additionalData.content_type || 'Unknown' }}</p>
+      <p>Shot using: {{ additionalData.shoot_tab_name }}</p>
+      @if(additionalData.aigc_info?.aigc_label_type > 0) {
+      <p><strong>AI Generated Content</strong></p>
+      }
+    </div>
+
+    <div class="music-info">
+      <h3>Music</h3>
+      <p>{{ additionalData.music?.title || 'No music title' }} - {{ additionalData.music?.author || 'Unknown artist' }}</p>
+      <p>Volume: {{ additionalData.music_volume ? additionalData.music_volume * 1 : 0 }}%</p>
+    </div>
+  </div>
+  }
+
+  <p-divider align="center" type="dotted">
+    <b> Video</b>
+  </p-divider>
+
+  <button pButton label="Copy Url" (click)="copyUrl()"></button>
+  <button pButton type="button" label="Download Video" (click)="downloadVideo()"></button>
+
+  @if(source?.video?.audio){
+  <p-divider align="center" type="dotted">
+    <b> Audio</b>
+  </p-divider>
+
+  <div>
+    <audio [src]="source?.video?.audio?.url" controls></audio>
+  </div>
+  }
+
+  <p-divider align="right" type="dashed">
+    <b>Transcription</b>
+  </p-divider>
+
+  @if(source?.video?.transcription){
+  <div>
+    <h5>Transcription</h5>
+    <div>Duration: {{ source?.video?.transcription.duration }} - Language: {{ source?.video?.transcription.language }}</div>
+    <div>{{ source?.video?.transcription.text }}</div>
+
+    @if(source?.video?.transcription?.segments){
+    <div>
+      <h5>Segments</h5>
+      <ul>
+        @for(segment of source?.video?.transcription?.segments; track segment.id) {
+        <li>{{ segment.start }} - {{ segment.end }} segs: {{ segment.text }}</li>
+        }
+      </ul>
+    </div>
+    }
+  </div>
+  } @if (source?.video?.frames) {
+  <div>
+    <h5>Frames</h5>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px">
+      @for(frame of source?.video?.frames; track frame) {
+      <img class="frame-image" [src]="frame?.image?.url" />
+      }
+    </div>
+  </div>
+  }
+</div>
+}

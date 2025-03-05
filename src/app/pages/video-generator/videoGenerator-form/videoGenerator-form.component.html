@@ -1,0 +1,30 @@
+<h3>VideoGenerators Form</h3>
+
+<div class="source-form-card">
+  <p-card [header]="videoGeneratorId ? 'Edit Project' : 'Nuevo Proyecto de Video'">
+    <form [formGroup]="videoGeneratorForm">
+      <div class="form-field">
+        <label for="name" class="block">Name</label>
+        <input pInputText id="name" type="text" formControlName="name" placeholder="Cuál es el nombre del proyecto?" />
+      </div>
+
+      <div class="form-field">
+        <label for="description" class="block">Description</label>
+        <textarea id="description" pTextarea formControlName="description" rows="2" class="w-full" placeholder="Breve descripción del proyecto"> </textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="type" class="block">Type</label>
+        <p-select id="type" [options]="videoGeneratorTypes" formControlName="type" optionLabel="label" optionValue="value" placeholder="Select a type" />
+      </div>
+    </form>
+
+    <div>
+      <p-button (click)="addVideo()" label="Add Video" [disabled]="!videoGeneratorForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
+    </div>
+
+    <div>
+      <p-button (click)="save()" label="Save VideoGenerator" [disabled]="!videoGeneratorForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
+    </div>
+  </p-card>
+</div>

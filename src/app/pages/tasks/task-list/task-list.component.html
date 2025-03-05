@@ -1,0 +1,74 @@
+<dc-filter-bar (onFilterChange)="onFilterChange($event)" (onNew)="onNew()"></dc-filter-bar>
+
+<br />
+
+@if (tasks.length === 0) {
+<div class="flex flex-column gap-3">
+  <p-card>
+    <div>No hay tareas</div>
+  </p-card>
+</div>
+} @else {
+<div class="flex flex-column gap-3">
+  @for (task of tasks; track task.id) {
+  <div style="margin-bottom: 10px" class="flex flex-column gap-3">
+    <p-card [header]="task.name">
+      <div style="display: flex; gap: 10px">
+        <div>
+          <div>Agentes: {{ task.agentCards.length }}</div>
+          <div>Estado: {{ task.status }}</div>
+          <div>Tipo: {{ task.taskType }}</div>
+          <div>Fuentes: {{ task.sources.length }}</div>
+
+          @if (task.sources.length > 0) {
+          <ul>
+            @for (source of task.sources; track source.id) {
+            <li>{{ source.name }}</li>
+            }
+          </ul>
+          } @if (task.notionOutput) {
+          <div>Salida: {{ task.notionOutput.name }}</div>
+          }
+        </div>
+        <div style="display: flex; gap: 10px">
+          @for (agentCard of task.agentCards; track agentCard.id) {
+          <img [src]="agentCard.assets?.image?.url" class="agent-card-image" />
+          }
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px">
+        <p class="task-description">
+          {{ task.description }}
+        </p>
+      </div>
+
+      <ng-template #footer>
+        <div class="flex gap-4 mt-1 justify-content-end">
+          <p-button label="Ver tarea" severity="help" (onClick)="viewTask(task)" />
+
+          <p-button label="Ejecutar" severity="info" (onClick)="executeTask(task)" [loading]="loadingTasks[task.id]" />
+          <p-button label="Eliminar" severity="danger" (onClick)="deleteTask(task)" />
+          <p-button label="Historial de Trabajos" severity="secondary" (onClick)="viewResults(task)" />
+          <p-button label="Editar" (onClick)="editTask(task)" />
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+  }
+</div>
+
+@if (showTaksDetails) {
+<p-dialog [(visible)]="showTaksDetails" [modal]="true" [draggable]="false" [resizable]="false">
+  <div>
+    <p>Nombre: {{ selectedTask.name }}</p>
+    <p>Descripción: {{ selectedTask.description }}</p>
+    <p>Estado: {{ selectedTask.status }}</p>
+
+    @for (message of promptMessages; track message) {
+    <span>{{ message.role }}</span>
+    <p>{{ message.content }}</p>
+    }
+  </div>
+</p-dialog>
+} }

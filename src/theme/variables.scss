@@ -1,0 +1,30 @@
+// For information on how to create your own theme, please see:
+// http://ionicframework.com/docs/theming/
+
+// Dark theme
+:root {
+  // ...existing code...
+  --ion-color-primary: var(--p-primary-500);
+  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: var(--p-slate-700);
+  --ion-color-primary-tint: var(--p-stone-500);
+  --ion-background-color: var(--p-amber-50);
+  --ion-text-color: var(--p-slate-800);
+}
+
+// :root[theme=dark] {
+//   // ...existing code...
+
+//   --ion-item-background: #1e1e1e;
+//   --ion-item-color: #ffffff;
+//   --ion-input-background: #2a2a2a;
+//   --ion-input-color: #ffffff;
+//   --ion-input-placeholder-color: #888888;
+//   --ion-input-border-color: #444444;
+
+//   // Add any other customizations for dark theme inputs here
+// }
+
+// // ...existing code...

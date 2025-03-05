@@ -1,0 +1,158 @@
+<div class="task-form-card">
+  <p-card [header]="id ? 'Edit Task' : 'New Task'">
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-4">
+      <div class="form-field">
+        <label for="name" class="block">Title</label>
+        <br />
+        <input style="width: 100%" id="name" type="text" pInputText formControlName="name" placeholder="Enter task title" />
+      </div>
+
+      <div class="field">
+        <label for="agentCard">Agent Cards</label>
+
+        <div style="display: flex; gap: 15px; margin-bottom: 8px; margin-top: 8px">
+          @for (agentCard of taskForm.controls.agentCards.value; track agentCard.id) {
+          <div style="position: relative">
+            <img [src]="agentCard.assets?.image?.url" class="agent-card-image" />
+            <p-button
+              size="small"
+              [style]="{ position: 'absolute', top: '-10px', right: '-10px' }"
+              icon="pi pi-times"
+              [rounded]="true"
+              [text]="true"
+              severity="danger"
+              class="remove-agent-button"
+              (onClick)="removeAgentCard(agentCard)" />
+          </div>
+          }
+        </div>
+
+        <p-select
+          [options]="agentOptions"
+          [placeholder]="'Select an agent card'"
+          [style]="{ width: '100%' }"
+          (onChange)="onAgentCardChange($event)">
+          <ng-template #selectedItem let-selectedOption>
+            <div style="display: flex; align-items: center; gap: 10px" *ngIf="selectedOption">
+              <img [src]="selectedOption.assets?.image?.url" style="width: 18px" />
+              <div>{{ selectedOption.title }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-item #item>
+            <div style="display: flex; gap: 10px">
+              <img [src]="item.assets?.image?.url" style="width: 18px" />
+              <div>{{ item?.title }}</div>
+            </div>
+          </ng-template>
+          <ng-template #dropdownicon>
+            <i class="pi pi-microchip-ai"></i>
+          </ng-template>
+          <ng-template #header>
+            <div style="font-weight: bold">Available Agent Cards</div>
+          </ng-template>
+          <ng-template #footer>
+            <div style="display: flex; justify-content: flex-end">
+              <p-button label="Add New" fluid severity="secondary" text size="small" icon="pi pi-plus" />
+            </div>
+          </ng-template>
+        </p-select>
+      </div>
+
+      <div class="field">
+        <label>Fuentes de información</label>
+
+        @if (taskForm.controls.sources.value?.length === 0) {
+        <p>Sin fuentes</p>
+        }
+
+        <p-select
+          [options]="sourcesOptions"
+          [placeholder]="'Select data sources for task'"
+          [style]="{ width: '100%' }"
+          (onChange)="addSourceToTask($event)">
+          <ng-template #selectedItem let-selectedOption>
+            <div style="display: flex; align-items: center; gap: 10px" *ngIf="selectedOption">
+              <img [src]="selectedOption.assets?.image?.url" style="width: 18px" />
+              <div>{{ selectedOption.name }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-item #item>
+            <div style="display: flex; gap: 10px">
+              <img [src]="item.assets?.image?.url" style="width: 18px" />
+              <div>{{ item?.name }}</div>
+            </div>
+          </ng-template>
+
+          <ng-template #dropdownicon>
+            <i class="pi pi-file-import"></i>
+          </ng-template>
+        </p-select>
+      </div>
+
+      <div class="form-field">
+        <label for="taskType" class="block">Task Type</label>
+        <br />
+        <p-dropdown id="taskType" [options]="taskTypes" formControlName="taskType" placeholder="Select Task Type" class="w-full"> </p-dropdown>
+      </div>
+
+      @if (taskForm.controls.taskType.value === 'review_task') {
+      <div class="form-field">
+        <label for="taskAttached" class="block">Tarea a revisar</label>
+        <br />
+        <p-dropdown
+          id="taskAttached"
+          [options]="taskAttachedOptions"
+          formControlName="taskAttached"
+          optionLabel="name"
+          placeholder="Select Task Attached"
+          class="w-full">
+        </p-dropdown>
+      </div>
+      }
+
+      <div style="display: flex; gap: 10px">
+        <div class="form-field">
+          <label class="block" pTooltip="El agente tiene dominio sobre esta base de datos">Resultados en Base de Notion</label>
+          <p-select
+            styleClass="w-full"
+            [options]="dbOptions"
+            optionLabel="name"
+            formControlName="output"
+            placeholder="Select Notion DB"
+            class="w-full">
+          </p-select>
+        </div>
+        <p-button
+          (onClick)="getNotionDBs()"
+          pTooltip="Buscar bases en Notion"
+          tooltipPosition="left"
+          severity="secondary"
+          size="small"
+          icon="pi pi-search" />
+      </div>
+
+      <div class="form-field">
+        <label for="description" class="block">Description</label>
+        <textarea
+          class="textmin"
+          rows="3"
+          pInputTextarea
+          id="description"
+          formControlName="description"
+          placeholder="Enter task description"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="status" class="block">Status</label>
+        <br />
+        <p-dropdown id="status" [options]="statuses" formControlName="status" placeholder="Select Status" class="w-full"> </p-dropdown>
+      </div>
+
+      <dc-provider-selector [parentForm]="taskForm.controls.model"></dc-provider-selector>
+
+      <div class="flex justify-content-end mt-4">
+        <p-button type="submit" label="Save Task" [disabled]="!taskForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
+      </div>
+    </form>
+  </p-card>
+</div>

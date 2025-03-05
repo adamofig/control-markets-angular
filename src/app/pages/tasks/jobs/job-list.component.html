@@ -1,0 +1,57 @@
+<div class="job-list-container">
+  <div class="header">
+    <h2>Jobs List</h2>
+    <button class="add-button" (click)="addJob()">Add New Job</button>
+  </div>
+
+  <div class="jobs-grid">
+    <div *ngIf="jobs.length === 0" class="no-jobs">No jobs found. Click 'Add New Job' to create one.</div>
+
+    @for (job of jobs; track job.idAgentCard) {
+    <p-card>
+      <ng-template #header>
+        <div style="display: flex">
+          <img class="agent-card-image" alt="Card" [src]="job.agentCard?.assets?.image?.url" />
+          <h4>{{ job.task.name }}</h4>
+        </div>
+      </ng-template>
+      <!-- <ng-template #title> {{ job.task.name }}</ng-template> -->
+      <ng-template #subtitle>
+        Agente: {{ job.agentCard.name }} Fecha: {{ job.createdAt | date : 'dd/MM/yyyy HH:mm' }}
+        <br />
+
+        Id Task: {{ job.task.id }} <br />
+        ID Job: {{ job.id }}
+        <br />
+        Fuentes: {{ job.sources.length }} Instrucciones: {{ job.messages.length }}
+
+        <br />
+      </ng-template>
+      <p>{{ job.response.content | slice : 0 : 300 }}{{ job.response.content.length > 300 ? '...' : '' }}</p>
+      <ng-template #footer>
+        <div class="flex gap-4 mt-1">
+          <div class="job-actions">
+            <p-button label="Ver Detalles" (onClick)="viewJobDetails(job)" />
+            <p-button label="Eliminar" severity="danger" (onClick)="deleteJob(job)" />
+          </div>
+        </div>
+      </ng-template>
+    </p-card>
+    }
+  </div>
+</div>
+
+@if (displayJobDetails) {
+<p-dialog [(visible)]="displayJobDetails" [modal]="true" [draggable]="false" [resizable]="false">
+  <div class="job-details">
+    <p>Messages</p>
+    @for (message of selectedJob.messages; track message.id) {
+    <p>{{ message.content }}</p>
+    }
+
+    <p>Response</p>
+    <p>{{ selectedJob.response.content }}</p>
+    <!-- Add more job details as needed -->
+  </div>
+</p-dialog>
+}

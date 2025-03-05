@@ -1,0 +1,22 @@
+<dc-filter-bar (onNew)="onNew()"></dc-filter-bar>
+<br />
+
+@for (source of sources; track source.id) {
+<div class="card-source">
+  <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
+    <p-speeddial
+      [model]="getCustomButtons(source)"
+      [radius]="70"
+      type="semi-circle"
+      direction="left"
+      [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
+  </div>
+  <p-card [header]="source.name">
+    <p class="m-0">{{ source.description | slice : 0 : 350 }}...</p>
+    <p-chip [label]="source.type" />
+
+    <span>{{ source.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
+  </p-card>
+</div>
+
+}

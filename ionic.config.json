@@ -1,0 +1,7 @@
+{
+  "name": "niche-market",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

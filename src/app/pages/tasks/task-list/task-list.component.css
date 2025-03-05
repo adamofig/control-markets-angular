@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+.justify-content-end {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.agent-card-image {
+  width: 100px;
+  height: 140px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 15px;
+}
+
+.task-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 4.5em; /* Approximately 3 lines of text */
+}

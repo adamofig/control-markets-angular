@@ -1,0 +1,55 @@
+steps:
+  - id: print-variables
+    name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "=== Default Cloud Build Substitutions ==="
+        echo "Project ID: ${PROJECT_ID}"
+        echo "Build ID: ${BUILD_ID}"
+        echo "=== Trigger-specific Substitutions ==="
+        echo "Trigger Name: ${TRIGGER_NAME}"
+        echo "Repository Name: ${REPO_NAME}"
+        echo "Branch Name: ${BRANCH_NAME}"
+        echo "Tag Name: ${TAG_NAME}"
+        echo "Ref Name: ${REF_NAME}"
+        echo "Service Account Email: ${SERVICE_ACCOUNT_EMAIL}"
+        echo "Service Account: ${SERVICE_ACCOUNT}"
+        echo "=== Environment Config ==="
+        echo "$$ENVIRONMENT_CONFIG"
+    secretEnv: ['ENVIRONMENT_CONFIG']
+
+
+  - id: 'create-environment-file'
+    name: 'bash'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "$$ENVIRONMENT_CONFIG" > src/environments/environment.ts
+        echo "$$ENVIRONMENT_CONFIG" > src/environments/environment.prod.ts
+    secretEnv: ['ENVIRONMENT_CONFIG']
+
+  - id: 'install-angular-dependencies'
+    name: 'node:22-alpine'
+    entrypoint: npm
+    args: ['install', '--legacy-peer-deps']
+
+  - id: 'build-angular-for-env'
+    name: 'node:22-alpine'
+    entrypoint: npm
+    args: ['run', 'build:$_ENV']
+    
+  - id: deploy-to-hosting-firebase
+    name: 'gcr.io/$PROJECT_ID/firebase'
+    args: ['deploy', '--only=hosting', '--project=$PROJECT_ID']
+
+# Secrets you have to create in the secret manager and give access to the service account
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/environment_secret/versions/latest
+      env: 'ENVIRONMENT_CONFIG'
+options:
+  logging: CLOUD_LOGGING_ONLY
+

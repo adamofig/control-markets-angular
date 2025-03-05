@@ -1,0 +1,8 @@
+:host {
+  display: block;
+}
+
+.frame-image {
+  width: 210px;
+  border-radius: 10px;
+}

@@ -1,0 +1,6 @@
+<ion-content class="ion-padding">
+  <dc-agent-card-lists
+    (goToDetailsEvent)="goToDetails($event)"
+    (goToEditEvent)="goToEdit($event)"
+    [getCustomButtons]="getCustomButtons.bind(this)"></dc-agent-card-lists>
+</ion-content>

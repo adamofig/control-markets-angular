@@ -1,0 +1,40 @@
+<div class="source-form-card">
+  <p-card [header]="sourceId ? 'Edit Source' : 'New Source'">
+    <form [formGroup]="sourceForm" class="flex flex-column gap-4">
+      <div class="form-field">
+        <label for="name">Name</label>
+        <input id="name" type="text" pInputText formControlName="name" placeholder="Enter source name" />
+      </div>
+
+      <div class="form-field">
+        <label for="type" class="block">Type</label>
+        <p-dropdown id="type" [options]="sourcesTypes" formControlName="type" placeholder="Select Type" optionLabel="label" optionValue="value" class="w-full">
+        </p-dropdown>
+      </div>
+
+      <div class="form-field">
+        <label class="block">Source URL</label>
+        <input type="text" pInputText formControlName="sourceUrl" placeholder="Enter source URL" class="w-full" />
+      </div>
+
+      <div class="form-field">
+        <label for="content" class="block">Content</label>
+        <textarea
+          [autoResize]="true"
+          style="width: 100%; max-height: 500px; overflow-y: auto"
+          id="content"
+          rows="2"
+          pInputTextarea
+          formControlName="content"
+          placeholder="Enter source content">
+        </textarea>
+      </div>
+    </form>
+
+    <div class="flex justify-content-end gap-2">
+      <p-button (click)="saveSource()" type="submit" label="Save Source" [disabled]="!sourceForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
+
+      <p-button (click)="updateSource()" label="Actualizar Fuente" [disabled]="!sourceForm.valid" icon="pi pi-refresh" iconPos="right"> </p-button>
+    </div>
+  </p-card>
+</div>

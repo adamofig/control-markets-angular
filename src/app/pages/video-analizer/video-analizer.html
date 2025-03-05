@@ -1,0 +1,68 @@
+<h4>Video Analizer</h4>
+
+<button (click)="navigateToGenerator()" pButton>Ver proyectos de vídeo automático</button>
+
+<br /><br />
+
+<p-divider align="left" type="solid">
+  <b>Tiktoks</b>
+</p-divider>
+<button (click)="navigateTo('tiktoks')" pButton>Ir a lista de tiktoks</button>
+
+<br />
+<br />
+<p-card header="Analizar video de Tiktok">
+  <div>
+    <input style="width: 100%" pInputText id="name" type="text" [formControl]="url" placeholder="Copia la url de tiktok aquí" />
+  </div>
+
+  <br />
+  <p-button label="Analyze" (onClick)="analyzeVideo()" />
+</p-card>
+
+<br />
+
+<p-card header="Extraer información de videos,">
+  <div class="flex flex-column gap-2">
+    <label for="url">URL</label>
+    <textarea
+      style="width: 100%; max-height: 500px; overflow-y: auto"
+      id="content"
+      rows="3"
+      pInputTextarea
+      [formControl]="urls"
+      placeholder="Copia todas las urls de los videos que quieras extraer información">
+    </textarea>
+  </div>
+
+  <br />
+  <p-button label="Analyze" (onClick)="extractInfo()" />
+</p-card>
+
+<p-divider align="left" type="solid">
+  <b>Youtube</b>
+</p-divider>
+
+<p-card header="Descargar video de Youtube">
+  <div>
+    <input style="width: 100%" pInputText id="name" type="text" [(ngModel)]="youtubeInputUrl" placeholder="Copia la url de youtube aquí" />
+  </div>
+
+  <div style="display: flex; gap: 10px; margin: 10px">
+    <div class="flex items-center">
+      <p-checkbox [(ngModel)]="youtubeOptions.video" binary="true"></p-checkbox>
+      <label class="ml-2"> Video </label>
+    </div>
+    <div class="flex items-center">
+      <p-checkbox [(ngModel)]="youtubeOptions.audio" binary="true"></p-checkbox>
+      <label class="ml-2"> Audio </label>
+    </div>
+    <div class="flex items-center">
+      <p-checkbox [(ngModel)]="youtubeOptions.vocals" binary="true"></p-checkbox>
+      <label class="ml-2"> Vocals </label>
+    </div>
+    <p-button [disabled]="!youtubeInputUrl" label="Descargar" (click)="downloadYoutubeVideo()" />
+  </div>
+
+  <br />
+</p-card>

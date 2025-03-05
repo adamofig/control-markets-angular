@@ -1,0 +1,11 @@
+<h1>Herramientas</h1>
+<h3>Algunas herramientas para facilitar tu trabajo al crear contenido</h3>
+
+<p-card header="Descargar audio de Youtube">
+  <div class="flex flex-column gap-2">
+    <input style="width: 100%" pInputText type="text" [(ngModel)]="url" />
+  </div>
+  <br />
+
+  <button (click)="downloadYoutubeSong()" pButton type="button" label="descargar cancón" class="p-button-success"></button>
+</p-card>
