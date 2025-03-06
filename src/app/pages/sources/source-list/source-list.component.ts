@@ -10,10 +10,11 @@ import { SpeedDialModule } from 'primeng/speeddial';
 import { MenuItem } from 'primeng/api';
 import { SlicePipe, DatePipe } from '@angular/common';
 import { ChipModule } from 'primeng/chip';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-source-list',
-  imports: [CardModule, ButtonModule, DCFilterBarComponent, SpeedDialModule, SlicePipe, DatePipe, ChipModule],
+  imports: [CardModule, ButtonModule, DCFilterBarComponent, SpeedDialModule, SlicePipe, DatePipe, ChipModule, TagModule],
   templateUrl: './source-list.component.html',
   styleUrl: './source-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

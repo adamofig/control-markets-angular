@@ -1,6 +1,6 @@
-<h4>Video Analizer</h4>
+<h4>Proyectos de video Generación automática</h4>
 
-<button (click)="navigateToGenerator()" pButton>Ver proyectos de vídeo automático</button>
+<button (click)="navigateToGenerator()" pButton severity="info">Ver proyectos de vídeo automático</button>
 
 <br /><br />
 
@@ -29,7 +29,7 @@
       style="width: 100%; max-height: 500px; overflow-y: auto"
       id="content"
       rows="3"
-      pInputTextarea
+      pTextarea
       [formControl]="urls"
       placeholder="Copia todas las urls de los videos que quieras extraer información">
     </textarea>

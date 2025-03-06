@@ -68,7 +68,8 @@ export class VideoGeneratorListComponent extends PaginationBase implements OnIni
       case 'delete':
         const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
         if (areYouSure) {
-          await this.sourceService.deleteVideoGenerator(item.id);
+          const results = await this.sourceService.deleteVideoGenerator(item.id);
+          console.log('results', results);
           this.videoGenerators = this.videoGenerators.filter(videoGenerator => videoGenerator.id !== item.id);
           this.toastService.success({
             title: 'Origen eliminado',

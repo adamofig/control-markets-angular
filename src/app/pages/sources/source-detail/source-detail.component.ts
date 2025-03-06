@@ -5,11 +5,12 @@ import { IAgentSource, SourceType } from '../models/sources.model';
 import { DividerModule } from 'primeng/divider';
 import { ButtonModule } from 'primeng/button';
 import { ToastAlertService } from 'src/app/services/toast.service';
-import { VideoAnalizerService } from '../../video-analizer/video-analizer.service';
+import { VideoAnalizerService, VideoAnalysisDto } from '../../video-analizer/video-analizer.service';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-source-detail',
-  imports: [DividerModule, ButtonModule],
+  imports: [DividerModule, ButtonModule, TagModule],
   templateUrl: './source-detail.component.html',
   styleUrl: './source-detail.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -137,6 +138,41 @@ export class SourceDetailComponent {
   }
 
   public async processVideo() {
-    // await this.videoAnalizerService.startAnalyzeVideo();
+    console.log('Processing video', this.source);
+    await this.videoAnalizerService.startAnalyzeVideo({
+      url: this.source?.sourceUrl ?? '',
+      website: 'youtube',
+      id: this.source?.id ?? '',
+      options: {},
+    });
+  }
+
+  public extractFrames() {
+    console.log('Generating frames', this.source);
+    alert('Not implemented yet');
+    // await this.videoAnalizerService.startGenerateFrames(this.source?.id);
+  }
+
+  public async extractAudio() {
+    console.log('Generating audio', this.source);
+    const params: VideoAnalysisDto = { url: this.source?.sourceUrl ?? '', website: 'youtube', id: this.source?.id ?? '', options: { only_audio: true } };
+    await this.videoAnalizerService.startAnalyzeVideo(params);
+  }
+
+  public async extractVocals() {
+    console.log('Extracting vocals', this.source);
+    const params: VideoAnalysisDto = { url: this.source?.sourceUrl ?? '', website: 'youtube', id: this.source?.id ?? '', options: { only_vocals: true } };
+    await this.videoAnalizerService.startAnalyzeVideo(params);
+  }
+
+  public async extractTranscription() {
+    console.log('Extracting transcription', this.source);
+    const params: VideoAnalysisDto = {
+      url: this.source?.sourceUrl ?? '',
+      website: 'youtube',
+      id: this.source?.id ?? '',
+      options: { only_transcription: true },
+    };
+    await this.videoAnalizerService.startAnalyzeVideo(params);
   }
 }

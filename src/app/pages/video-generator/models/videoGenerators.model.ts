@@ -1,3 +1,5 @@
+import { IAgentSource } from '../../sources/models/sources.model';
+
 export interface AuditDate {
   createdAt?: string;
   updatedAt?: string;
@@ -21,4 +23,5 @@ export interface IVideoGenerator extends AuditDate {
   description?: string;
   type?: string;
   relation?: IVideoGeneratorRelation;
+  sources?: any[];
 }

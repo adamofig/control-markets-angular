@@ -28,56 +28,9 @@ import {
   ActionSheetController,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import {
-  mailOutline,
-  mailSharp,
-  paperPlaneOutline,
-  paperPlaneSharp,
-  heartOutline,
-  heartSharp,
-  archiveOutline,
-  archiveSharp,
-  trashOutline,
-  trashSharp,
-  warningOutline,
-  warningSharp,
-  bookmarkOutline,
-  bookmarkSharp,
-  library,
-  playCircle,
-  radio,
-  search,
-  ellipsisHorizontal,
-  ellipsisVertical,
-  personCircle,
-  helpCircle,
-  home,
-  homeOutline,
-  homeSharp,
-  codeWorking,
-  codeWorkingOutline,
-  codeWorkingSharp,
-  eye,
-  eyeOutline,
-  eyeSharp,
-  chatbubbleEllipses,
-  chatbubbleEllipsesOutline,
-  chatbubbleEllipsesSharp,
-  people,
-  peopleOutline,
-  peopleSharp,
-  settings,
-  settingsOutline,
-  settingsSharp,
-  lockClosed,
-  lockOpen,
-  moon,
-  sunny,
-  documentText,
-  documentAttachOutline,
-  documentAttach,
-  videocamOutline,
-} from 'ionicons/icons';
+
+import * as ionicons from 'ionicons/icons'; // import all icons
+
 import { environment } from 'src/environments/environment';
 import { FirebaseAuthService } from '@dataclouder/app-auth';
 import { ToggleButtonModule } from 'primeng/togglebutton';
@@ -128,7 +81,10 @@ export class IonicLayoutComponent implements OnInit {
 
   public appPages = [
     { title: 'Home', url: '/page/home', icon: 'home' },
-    { title: 'Explore', url: '/page/explore', icon: 'eye' },
+    { title: 'Explore', url: '/page/explore', icon: 'id-card' },
+    { title: 'Sources', url: '/page/sources', icon: 'document-attach' },
+    { title: 'Video Analizer', url: '/page/video-analizer', icon: 'analytics' },
+    { title: 'Video Generator', url: '/page/video-generator', icon: 'videocam' },
     { title: 'Conversation', url: '/page/chat', icon: 'chatbubble-ellipses' },
     { title: 'Generics', url: '/page/generics', icon: 'code-working' },
     { title: 'Tools', url: '/page/tools', icon: 'code-working' },
@@ -152,50 +108,7 @@ export class IonicLayoutComponent implements OnInit {
     private navController: NavController,
     private actionSheetController: ActionSheetController
   ) {
-    addIcons({
-      mailOutline,
-      mailSharp,
-      paperPlaneOutline,
-      paperPlaneSharp,
-      heartOutline,
-      heartSharp,
-      archiveOutline,
-      archiveSharp,
-      trashOutline,
-      trashSharp,
-      warningOutline,
-      warningSharp,
-      bookmarkOutline,
-      bookmarkSharp,
-      home,
-      homeOutline,
-      homeSharp,
-      codeWorking,
-      codeWorkingOutline,
-      codeWorkingSharp,
-      eye,
-      eyeOutline,
-      eyeSharp,
-      chatbubbleEllipses,
-      chatbubbleEllipsesOutline,
-      chatbubbleEllipsesSharp,
-      people,
-      peopleOutline,
-      peopleSharp,
-      settings,
-      settingsOutline,
-      settingsSharp,
-      lockClosed,
-      lockOpen,
-      moon,
-      sunny,
-      documentText,
-      documentAttachOutline,
-      documentAttach,
-      videocamOutline,
-    });
-    addIcons({ library, playCircle, radio, search });
-    addIcons({ ellipsisHorizontal, ellipsisVertical, helpCircle, personCircle, search });
+    addIcons(ionicons);
 
     // Check if dark mode was previously enabled
     this.isDarkMode = localStorage.getItem('darkMode') === 'true';

@@ -69,8 +69,26 @@
     <b> Audio</b>
   </p-divider>
 
-  <div>
+  <div style="display: flex; gap: 10px; align-items: center">
+    <p-tag icon="pi pi-music" value="Original" severity="secondary" />
+
     <audio [src]="source?.video?.audio?.url" controls></audio>
+  </div>
+  } @else {
+  <div>
+    <h5>No audio found</h5>
+    <p-button label="Extract Audio" (click)="extractAudio()"></p-button>
+  </div>
+  } @if(source?.video?.separatedAudio?.vocals){
+
+  <div style="display: flex; gap: 10px; align-items: center">
+    <p-tag icon="pi pi-user" value="Vocals" severity="secondary" />
+    <audio [src]="source?.video?.separatedAudio?.vocals?.url" controls></audio>
+  </div>
+  } @else {
+  <div>
+    <h5>No vocals found</h5>
+    <p-button label="Extract Vocals" (click)="extractVocals()"></p-button>
   </div>
   }
 
@@ -95,6 +113,11 @@
     </div>
     }
   </div>
+  } @else {
+  <div>
+    <h5>No transcription found</h5>
+    <p-button label="Extract Transcription" (click)="extractTranscription()"></p-button>
+  </div>
   } @if (source?.video?.frames) {
   <div>
     <h5>Frames</h5>
@@ -103,6 +126,11 @@
       <img class="frame-image" [src]="frame?.image?.url" />
       }
     </div>
+  </div>
+  } @else {
+  <div>
+    <h5>No frames found</h5>
+    <p-button label="Extract Frames" (click)="extractFrames()"></p-button>
   </div>
   }
 </div>

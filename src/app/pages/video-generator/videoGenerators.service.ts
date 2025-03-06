@@ -51,6 +51,14 @@ export class VideoGeneratorService {
   }
 
   public async deleteVideoGenerator(id: string) {
-    // return this.httpService.deleteDataFromService(`${Endpoints.Sources.Source}/${id}`);
+    return this.httpService.deleteDataFromService(`${Endpoints.VideoGenerators.VideoGenerator}/${id}`);
+  }
+
+  public async addSource(id: string, sourceId: string) {
+    return this.httpService.patchDataToService<IVideoGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/add-source/${sourceId}`);
+  }
+
+  public async removeSource(id: string, sourceId: string) {
+    return this.httpService.patchDataToService<IVideoGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/remove-source/${sourceId}`);
   }
 }

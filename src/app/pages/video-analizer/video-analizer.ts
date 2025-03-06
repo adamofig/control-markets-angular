@@ -12,7 +12,7 @@ import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
-import { VideoAnalizerService } from './video-analizer.service';
+import { VideoAnalizerService, VideoAnalysisDto } from './video-analizer.service';
 import { DividerModule } from 'primeng/divider';
 import { CheckboxModule } from 'primeng/checkbox';
 
@@ -67,7 +67,8 @@ export class VideoAnalizerComponent implements OnInit {
       return;
     }
     this.toastAlerts.info({ title: 'info', subtitle: 'Analyzing video...' });
-    const source = await this.videoAnalizerService.startAnalyzeVideo(this.url.value as string);
+    const params: VideoAnalysisDto = { url: this.url.value as string, website: 'youtube', id: '' };
+    const source = await this.videoAnalizerService.startAnalyzeVideo(params);
     this.toastAlerts.success({ title: 'success', subtitle: 'Comenzó el analisis del video' });
     this.router.navigate(['../sources/details', source.id], { relativeTo: this.route });
   }

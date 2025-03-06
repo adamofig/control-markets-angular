@@ -19,12 +19,23 @@
       </div>
     </form>
 
-    <div>
-      <p-button (click)="addVideo()" label="Add Video" [disabled]="!videoGeneratorForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
-    </div>
+    <div style="display: flex; gap: 10px; justify-content: flex-end">
+      <p-button (click)="addSource()" label="Agregar fuente" [disabled]="!videoGeneratorForm.valid" icon="pi pi-paperclip" iconPos="right"> </p-button>
 
-    <div>
-      <p-button (click)="save()" label="Save VideoGenerator" [disabled]="!videoGeneratorForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
+      <p-button (click)="addVideo()" label="Add Video" [disabled]="!videoGeneratorForm.valid" icon="pi pi-video" iconPos="right"> </p-button>
+
+      <p-button (click)="save()" label="Save VideoGenerator" [disabled]="!videoGeneratorForm.valid" icon="pi pi-save" iconPos="right"> </p-button>
     </div>
   </p-card>
 </div>
+
+<br />
+<p-card header="Fuentes">
+  @if (videoGenerator?.sources !== null) { @for (source of videoGenerator?.sources; track source.reference?.id) {
+  <p>{{ source.reference?.name }}</p>
+  <p>{{ source.reference?.description }}</p>
+
+  <p-button icon="pi pi-times" severity="danger" (click)="removeSource(source)" />
+
+  } }
+</p-card>

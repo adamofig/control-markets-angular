@@ -1,7 +1,7 @@
 # Variables for deployment
-PROJECT_ID ?= notion-neat-dev#Firebase/Google project ID
-PROJECT_NAME ?= notion-neat-dev#Name of the project package format, use - instead of spaces
-APP_ID ?= dev.dataclouder.notion # User for mobile apps.
+PROJECT_ID ?= niche-market-dev#Firebase/Google project ID
+PROJECT_NAME ?= niche-market#Name of the project package format, use - instead of spaces
+APP_ID ?= web.app.niche-market.app # User for mobile apps.
 DISPLAY_NAME ?= $(PROJECT_NAME)
 
 help:

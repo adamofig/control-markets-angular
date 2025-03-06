@@ -37,6 +37,19 @@ export class HttpService {
     return lastValueFrom<T>(response$);
   }
 
+  public patchDataToService<T = any>(service: string, data: any = {}, host = 'nodejs'): Promise<T> {
+    const url = `${this.getHostUrl(host)}/${service}`;
+    const dataPlain = toPlainObject(data);
+    const response$ = this.httpClient.patch<T>(url, dataPlain).pipe(
+      catchError(err => {
+        this.handleError(err);
+        return throwError(() => err);
+      })
+    );
+
+    return lastValueFrom<T>(response$);
+  }
+
   public putDataToService<T = any>(service: string, data: any, host = 'nodejs'): Promise<T> {
     const url = `${this.getHostUrl(host)}/${service}`;
     const dataPlain = toPlainObject(data);

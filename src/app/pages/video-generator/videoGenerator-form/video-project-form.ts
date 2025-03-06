@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IVideoGenerator } from '../models/videoGenerators.model';
@@ -17,13 +17,13 @@ import { AspectType, CropperComponentModal, CropImageSettings } from '@datacloud
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
 
 @Component({
-  selector: 'app-source-form',
+  selector: 'app-video-project-form',
   imports: [ReactiveFormsModule, CardModule, TextareaModule, DropdownModule, ButtonModule, SelectModule, InputTextModule, ChipModule, TooltipModule],
-  templateUrl: './videoGenerator-form.component.html',
-  styleUrl: './videoGenerator-form.component.css',
+  templateUrl: './video-project-form.html',
+  styleUrl: './video-project-form.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VideoGeneratorFormComponent implements OnInit {
+export class VideoProjectFormComponent implements OnInit {
   // public imageSettings: CropImageSettings = {
   //   cropImageSettings: {
   //     resizeToWidth: 1024,
@@ -67,7 +67,8 @@ export class VideoGeneratorFormComponent implements OnInit {
     private videoGeneratorService: VideoGeneratorService,
     private fb: FormBuilder,
     private router: Router,
-    @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService
+    @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   public videoGenerator: IVideoGenerator | null = null;
@@ -113,5 +114,32 @@ export class VideoGeneratorFormComponent implements OnInit {
     if (url) {
       console.log('');
     }
+  }
+
+  public async addSource() {
+    const idSource = prompt('La fuente debe estar agregada en la sección de fuentes, copia el id');
+    if (!idSource) {
+      this.toastService.warn({ title: 'Error', subtitle: 'No se ha seleccionado ninguna fuente' });
+      return;
+    }
+
+    const result: any = await this.videoGeneratorService.addSource(this.videoGeneratorId, idSource);
+    console.log(result);
+    this.videoGenerator = result;
+    this.cdr.detectChanges();
+    this.toastService.success({ title: 'Fuente agregada', subtitle: 'La fuente ha sido agregada correctamente' });
+  }
+
+  public async removeSource(source: any) {
+    if (!source) {
+      this.toastService.warn({ title: 'Error', subtitle: 'No se ha seleccionado ninguna fuente' });
+      return;
+    }
+
+    const result = await this.videoGeneratorService.removeSource(this.videoGeneratorId, source.reference._id);
+    this.videoGenerator = result;
+    this.cdr.detectChanges();
+
+    this.toastService.success({ title: 'Fuente eliminada', subtitle: 'La fuente ha sido eliminada correctamente' });
   }
 }

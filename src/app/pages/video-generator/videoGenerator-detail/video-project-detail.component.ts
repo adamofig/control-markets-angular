@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-videoGenerator-detail',
+  selector: 'app-video-project-detail',
   imports: [],
-  template: `<p>videoGenerator-detail works!</p>`,
-  styleUrl: './videoGenerator-detail.component.css',
+  templateUrl: './video-project-detail.component.html',
+  styleUrl: './video-project-detail.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VideoGeneratorDetailComponent {}

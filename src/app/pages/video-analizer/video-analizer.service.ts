@@ -4,14 +4,21 @@ import { HttpService } from 'src/app/services/http.service';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 
+export interface VideoAnalysisDto {
+  id: string | null;
+  url: string;
+  website: string;
+  options?: { only_video?: boolean; only_audio?: boolean; only_transcription?: boolean; only_vocals?: boolean };
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class VideoAnalizerService {
   constructor(private httpService: HttpService) {}
 
-  public startAnalyzeVideo(url: string) {
-    return this.httpService.postDataToService('api/video-analizer', { url }, 'python');
+  public startAnalyzeVideo(videoAnalysis: VideoAnalysisDto) {
+    return this.httpService.postDataToService('api/video-analizer', videoAnalysis, 'python');
   }
 
   public extractInfo(urls: string[]) {

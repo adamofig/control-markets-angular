@@ -15,7 +15,19 @@
     <p class="m-0">{{ source.description | slice : 0 : 350 }}...</p>
     <p-chip [label]="source.type" />
 
-    <span>{{ source.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
+    <span style="margin-left: 10px">
+      <p-tag icon="pi pi-key" severity="secondary" [value]="source.id" />
+    </span>
+
+    @if(source.createdAt){
+    <span style="margin-left: 10px">
+      <p-tag icon="pi pi-database" severity="secondary" value="{{ source.createdAt | date : 'dd/MM/yyyy HH:mm' }}" />
+    </span>
+    } @if(source.updatedAt){
+    <span style="margin-left: 10px">
+      <p-tag icon="pi pi-refresh" severity="secondary" value="{{ source.updatedAt | date : 'dd/MM/yyyy HH:mm' }}" />
+    </span>
+    }
   </p-card>
 </div>
 

@@ -32,6 +32,7 @@ export interface IAudioSource {
 export interface IVideoSource {
   id_platform: string;
   audio: CloudStorageData;
+  separatedAudio?: { vocals?: CloudStorageData; accompaniment?: CloudStorageData };
   video: CloudStorageData;
   frames: IImageSource[];
   transcription: any;

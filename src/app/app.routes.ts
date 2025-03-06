@@ -224,15 +224,16 @@ export const routes: Routes = [
           },
           {
             path: 'edit',
-            loadComponent: () => import('./pages/video-generator/videoGenerator-form/videoGenerator-form.component').then(m => m.VideoGeneratorFormComponent),
+            loadComponent: () => import('./pages/video-generator/videoGenerator-form/video-project-form').then(m => m.VideoProjectFormComponent),
           },
           {
             path: 'edit/:id',
-            loadComponent: () => import('./pages/video-generator/videoGenerator-form/videoGenerator-form.component').then(m => m.VideoGeneratorFormComponent),
+            loadComponent: () => import('./pages/video-generator/videoGenerator-form/video-project-form').then(m => m.VideoProjectFormComponent),
           },
           {
             path: 'details/:id',
-            loadComponent: () => import('./pages/video-generator/videoGenerator-form/videoGenerator-form.component').then(m => m.VideoGeneratorFormComponent),
+            loadComponent: () =>
+              import('./pages/video-generator/videoGenerator-detail/video-project-detail.component').then(m => m.VideoGeneratorDetailComponent),
           },
         ],
       },
