@@ -4,12 +4,16 @@ import { Endpoints } from '../../core/enums';
 import { VideoGeneratorype, IVideoGenerator } from './models/videoGenerators.model';
 import { FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN } from '@dataclouder/core-components';
 import { ToastAlertService } from 'src/app/services/toast.service';
-
+import { AgentCardService } from 'src/app/services/agent-cards.service';
 @Injectable({
   providedIn: 'root',
 })
 export class VideoGeneratorService {
-  constructor(private httpService: HttpService, @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertService) {}
+  constructor(
+    private httpService: HttpService,
+    @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertService,
+    private agentCardService: AgentCardService
+  ) {}
 
   public async getVideoGenerators(): Promise<IVideoGenerator[]> {
     try {
@@ -60,5 +64,13 @@ export class VideoGeneratorService {
 
   public async removeSource(id: string, sourceId: string) {
     return this.httpService.patchDataToService<IVideoGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/remove-source/${sourceId}`);
+  }
+
+  public async getBestFragments(instructions: string) {
+    const response = await this.agentCardService.callInstruction(instructions, { provider: 'google' });
+    console.log(response);
+    return response;
+    // const response = await this.agentCardService.callChatCompletion({ messages });
+    // return this.httpService.postDataToService<IVideoGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/get-best-fragments`, { instructions });
   }
 }

@@ -24,4 +24,5 @@ export interface IVideoGenerator extends AuditDate {
   type?: string;
   relation?: IVideoGeneratorRelation;
   sources?: any[];
+  plan?: any;
 }

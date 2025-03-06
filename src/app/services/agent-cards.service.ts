@@ -9,6 +9,7 @@ import {
   TranscriptionsWhisper,
   IConversationSettings,
   IAgentResponseDTO,
+  IAIModel,
 } from '@dataclouder/conversation-system';
 import { HttpService } from './http.service';
 import { UserService } from '../dc-user-module/user.service';
@@ -139,6 +140,12 @@ export class AgentCardService implements AgentCardsAbstractService {
     const conversationFiltered = { ...conversation, messages };
 
     return await this.httpService.postDataToService(`${Endpoints.ConversationCard.AgentChat}`, conversationFiltered, 'python');
+  }
+
+  public async callInstruction(prompt: string, model: IAIModel = {}): Promise<any> {
+    const messages = [{ content: prompt, role: ChatRole.User }];
+    const conversationDto = { messages, model };
+    return await this.httpService.postDataToService(`${Endpoints.ConversationCard.AgentChat}`, conversationDto, 'python');
   }
 
   getText(): void {

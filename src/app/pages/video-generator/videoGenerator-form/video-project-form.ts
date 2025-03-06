@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IVideoGenerator } from '../models/videoGenerators.model';
 import { VideoGeneratorService } from '../videoGenerators.service';
@@ -12,28 +12,36 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
-import { AspectType, CropperComponentModal, CropImageSettings } from '@dataclouder/storage-uploader';
+import { CheckboxModule } from 'primeng/checkbox';
+import { TagModule } from 'primeng/tag';
+import { AccordionModule } from 'primeng/accordion';
 
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
 
 @Component({
   selector: 'app-video-project-form',
-  imports: [ReactiveFormsModule, CardModule, TextareaModule, DropdownModule, ButtonModule, SelectModule, InputTextModule, ChipModule, TooltipModule],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    CardModule,
+    TextareaModule,
+    DropdownModule,
+    ButtonModule,
+    SelectModule,
+    InputTextModule,
+    ChipModule,
+    TooltipModule,
+    CheckboxModule,
+    FormsModule,
+    TagModule,
+    AccordionModule,
+  ],
   templateUrl: './video-project-form.html',
   styleUrl: './video-project-form.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VideoProjectFormComponent implements OnInit {
-  // public imageSettings: CropImageSettings = {
-  //   cropImageSettings: {
-  //     resizeToWidth: 1024,
-  //     path: 'testimonials',
-  //     fileName: 'image',
-  //   },
-
-  //   ratioType: AspectType.Square,
-  //   resolutions: [1024, 768],
-  // };
+  public instructions: string = '';
 
   public videoGeneratorForm = this.fb.group({
     name: ['', Validators.required],
@@ -41,14 +49,6 @@ export class VideoProjectFormComponent implements OnInit {
     type: [''],
     relation: [{ id: '', name: '', description: '' }],
   });
-
-  public peopleOptions = [
-    { id: '1', name: 'Yang Feng', description: 'Description with short description', image: 'assets/images/face-1.jpg' },
-    { id: '2', name: 'Juan Perez', description: 'Description ', image: 'assets/images/face-2.jpg' },
-    { id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/images/face-3.jpg' },
-  ];
-
-  public selectedPeople: any[] = [{ id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/images/face-3.jpg' }];
 
   public videoGeneratorTypes = [
     { label: 'Type 1', value: 'type1' },
@@ -100,15 +100,6 @@ export class VideoProjectFormComponent implements OnInit {
     }
   }
 
-  public addItemToList(event: any) {
-    this.selectedPeople.push(event.value);
-  }
-
-  public removeItemFromList(person: any) {
-    this.selectedPeople = this.selectedPeople.filter(p => p.id !== person.id);
-    console.log(this.selectedPeople);
-  }
-
   public addVideo() {
     const url = prompt('¿Estás seguro de querer agregar un video?');
     if (url) {
@@ -141,5 +132,85 @@ export class VideoProjectFormComponent implements OnInit {
     this.cdr.detectChanges();
 
     this.toastService.success({ title: 'Fuente eliminada', subtitle: 'La fuente ha sido eliminada correctamente' });
+  }
+
+  public extraction: any = null;
+
+  public async getBestFragments() {
+    const BestFragmentDefinition = `
+    interface BestFragment {
+      start: string;                      // Second where the video should start
+      end: string;                        // Second where the video should end
+      reason: string;                     // Reason why you choose this part
+      suggestions: string;                // Any suggestions for visual elements or effects to enhance the segment
+    }`;
+
+    let instructions =
+      'I have a transcription from an audio file. Please analyze the following segments and identify the most viral-worthy parts for a TikTok video:';
+
+    let transcriptionJson = '';
+    if (this.videoGenerator?.sources?.length) {
+      const transcription = this.videoGenerator?.sources[0]?.reference?.video?.transcription;
+      const segments = transcription.segments.map((segment: any) => {
+        return { start: segment.start, end: segment.end, text: segment.text };
+      });
+
+      transcriptionJson += '```json\n' + JSON.stringify(segments) + '\n```';
+    }
+
+    instructions += `
+${transcriptionJson}
+
+
+Please tell me a range of video time that would make the most engaging TikTok content and explain why they would be effective. The ideal segments should:
+1. Be catchy and memorable
+2. The total time should be between 20-60 seconds in length combine adjacent segments to make a longer video
+3. Contain complete thoughts or phrases
+4. Have emotional impact or humor
+5. Feature clear speech with minimal background noise
+
+For the selected segment or combination, please provide:
+- The total start and end times 
+- A reason Why it would be effective for TikTok
+- Any suggestions for visual elements or effects to enhance the segment
+    `;
+
+    instructions += `\n\nIMPORTANT: You must return only the JSON in the next format: ${BestFragmentDefinition}`;
+
+    console.log(instructions);
+    // TODO: pass transcription here.
+    const result = await this.videoGeneratorService.getBestFragments(instructions);
+
+    console.log(result.content);
+    this.extraction = extractJsonFromResponse(result.content);
+    if (!this.extraction) {
+      this.toastService.error({ title: 'Try again', subtitle: 'Error Getting a response or parsing JSON' });
+      return;
+    } else {
+      this.extraction.instructions = instructions;
+      this.toastService.success({ title: 'Success', subtitle: 'Extraction done' });
+    }
+    console.log(this.extraction);
+    if (!this.videoGenerator?.plan) {
+      (this.videoGenerator as any).plan = {};
+    }
+    (this.videoGenerator?.plan as any).extraction = this.extraction;
+    const response = await this.videoGeneratorService.saveVideoGenerator(this.videoGenerator as IVideoGenerator);
+    console.log('response', response, 'saving ', this.videoGenerator);
+    this.cdr.detectChanges();
+    // console.log(result);
+    // console.log(result);
+  }
+}
+
+export function extractJsonFromResponse(content: string): any {
+  const jsonMatch = content.match(/\{[\s\S]*?\}/); // Match everything between first { and }
+  if (!jsonMatch) return null;
+
+  try {
+    return JSON.parse(jsonMatch[0]);
+  } catch (error) {
+    console.error('Error parsing JSON:', error);
+    return null;
   }
 }

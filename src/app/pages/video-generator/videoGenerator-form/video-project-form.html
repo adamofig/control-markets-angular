@@ -32,10 +32,66 @@
 <br />
 <p-card header="Fuentes">
   @if (videoGenerator?.sources !== null) { @for (source of videoGenerator?.sources; track source.reference?.id) {
-  <p>{{ source.reference?.name }}</p>
-  <p>{{ source.reference?.description }}</p>
 
-  <p-button icon="pi pi-times" severity="danger" (click)="removeSource(source)" />
+  <div style="display: flex; gap: 10px">
+    <p>{{ source.reference?.name }} - {{ source.reference?.description }}</p>
+    <p-button icon="pi pi-times" severity="danger" (click)="removeSource(source)" />
+  </div>
 
+  <div style="display: flex; gap: 15px">
+    <div>Video: <p-checkbox [ngModel]="!!source.reference?.video?.video" [binary]="true" [disabled]="true" /></div>
+    <div>Audio: <p-checkbox [ngModel]="!!source.reference?.video?.audio" [binary]="true" [disabled]="true" /></div>
+    <div>Transcripción: <p-checkbox [ngModel]="!!source.reference?.video?.transcription" [binary]="true" [disabled]="true" /></div>
+    <div>Imagen: <p-checkbox [ngModel]="!!source.reference?.video?.image" [binary]="true" [disabled]="true" /></div>
+  </div>
   } }
+</p-card>
+
+<br />
+
+<p-card header="Planificador">
+  <h5>Extracción de fragmentos</h5>
+
+  <div class="form-field">
+    <label class="block">Instrucciones</label>
+    <textarea [(ngModel)]="instructions" pTextarea rows="2" class="w-full" placeholder="Detalla más lo que quieres"> </textarea>
+  </div>
+
+  <p-button (click)="getBestFragments()" label="Encontrar fragmentos" [disabled]="!instructions"> </p-button>
+
+  <div>
+    @if (videoGenerator?.plan?.extraction) {
+
+    <div class="card flex justify-content-center">
+      <p-accordion [value]="['0']" [multiple]="true">
+        <p-accordion-panel value="0">
+          <p-accordion-header> Detalles de la extracción </p-accordion-header>
+          <p-accordion-content>
+            <p class="m-0">
+              <span>Mostrando los segundos: </span>
+              <p-tag [value]="videoGenerator?.plan?.extraction?.start" [rounded]="true" />
+              -
+              <p-tag [value]="videoGenerator?.plan?.extraction?.end" [rounded]="true" />
+            </p>
+          </p-accordion-content>
+        </p-accordion-panel>
+        <p-accordion-panel value="1">
+          <p-accordion-header> Razón y sugerencias </p-accordion-header>
+          <p-accordion-content>
+            <p class="m-0"></p>
+            <p>{{ videoGenerator?.plan?.extraction?.reason }}</p>
+            <p>{{ videoGenerator?.plan?.extraction?.suggestions }}</p>
+          </p-accordion-content>
+        </p-accordion-panel>
+        <p-accordion-panel value="2">
+          <p-accordion-header>Prompt</p-accordion-header>
+          <p-accordion-content>
+            <p>{{ videoGenerator?.plan?.extraction?.instructions }}</p>
+          </p-accordion-content>
+        </p-accordion-panel>
+      </p-accordion>
+    </div>
+
+    }
+  </div>
 </p-card>

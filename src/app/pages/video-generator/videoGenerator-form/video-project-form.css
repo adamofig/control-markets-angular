@@ -27,11 +27,11 @@
 }
 
 /* Add some spacing for the button container */
-:host ::ng-deep .p-card .p-card-content > div:last-child {
+/* :host ::ng-deep .p-card .p-card-content > div:last-child {
   margin-top: 1.5rem;
   display: flex;
   justify-content: flex-end;
-}
+} */
 
 /* Optional: Add some styling to the card header */
 :host ::ng-deep .p-card .p-card-header {
