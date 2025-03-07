@@ -122,4 +122,8 @@ export class SourceFormComponent implements OnInit {
 
     // throw new Error('Not implemented');
   }
+
+  public goToSourceDetail(sourceId: string) {
+    this.router.navigate(['../../details', sourceId], { relativeTo: this.route });
+  }
 }

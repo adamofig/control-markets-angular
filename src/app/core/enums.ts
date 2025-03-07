@@ -82,9 +82,9 @@ export const Endpoints = {
   },
 
   Sources: {
-    Source: 'api/sources-llm',
-    QuerySources: 'api/sources-llm/query',
-    YoutubeTranscript: 'api/sources-llm/youtube-transcript',
+    Source: 'api/agent-sources',
+    QuerySources: 'api/agent-sources/query',
+    YoutubeTranscript: 'api/agent-sources/youtube-transcript',
     Notion: {
       ListDBs: 'api/notion/list-dbs',
       ListPages: 'api/notion/list-pages',

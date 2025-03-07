@@ -32,6 +32,10 @@
     </form>
 
     <div class="flex justify-content-end gap-2">
+      @if (sourceId) {
+      <p-button (click)="goToSourceDetail(sourceId)" type="submit" label="Ver detalles" icon="pi pi-check" iconPos="right"> </p-button>
+      }
+
       <p-button (click)="saveSource()" type="submit" label="Save Source" [disabled]="!sourceForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
 
       <p-button (click)="updateSource()" label="Actualizar Fuente" [disabled]="!sourceForm.valid" icon="pi pi-refresh" iconPos="right"> </p-button>

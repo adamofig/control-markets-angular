@@ -60,9 +60,12 @@
   <p-divider align="center" type="dotted">
     <b> Video</b>
   </p-divider>
+  <div>
+    <video [src]="source?.video?.video?.url" controls></video>
+  </div>
 
   <button pButton label="Copy Url" (click)="copyUrl()"></button>
-  <button pButton type="button" label="Download Video" (click)="downloadVideo()"></button>
+  <!-- <button pButton type="button" label="Download Video" (click)="downloadVideo()"></button> -->
 
   @if(source?.video?.audio){
   <p-divider align="center" type="dotted">
