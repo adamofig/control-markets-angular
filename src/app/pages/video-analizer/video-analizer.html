@@ -61,7 +61,7 @@
       <p-checkbox [(ngModel)]="youtubeOptions.vocals" binary="true"></p-checkbox>
       <label class="ml-2"> Vocals </label>
     </div>
-    <p-button [disabled]="!youtubeInputUrl" label="Descargar" (click)="downloadYoutubeVideo()" />
+    <p-button [loading]="isDownloading" [disabled]="!youtubeInputUrl" label="Descargar" (click)="downloadYoutubeVideo()" />
   </div>
 
   <br />

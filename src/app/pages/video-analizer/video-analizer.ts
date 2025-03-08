@@ -47,6 +47,7 @@ export class VideoAnalizerComponent implements OnInit {
   };
 
   public youtubeInputUrl = '';
+  public isDownloading = false;
 
   constructor(
     @Inject(TOAST_ALERTS_TOKEN) private toastAlerts: ToastAlertsAbstractService,
@@ -100,6 +101,10 @@ export class VideoAnalizerComponent implements OnInit {
       this.toastAlerts.error({ title: 'error', subtitle: 'Error please enter a valid url' });
       return;
     }
+
+    this.toastAlerts.info({ title: 'info', subtitle: 'Descargando contenido multimedia...' });
+    this.isDownloading = true;
+
     this.videoAnalizerService.downloadYoutubeVideoAndSave(this.youtubeInputUrl, this.youtubeOptions).subscribe({
       next: data => {
         // Only show progress updates if needed
@@ -108,9 +113,11 @@ export class VideoAnalizerComponent implements OnInit {
       complete: () => {
         // Show notification only when the download is complete
         this.toastAlerts.success({ title: 'success', subtitle: 'Video descargado correctamente' });
+        this.isDownloading = false;
       },
       error: error => {
         this.toastAlerts.error({ title: 'error', subtitle: 'Error downloading video' });
+        this.isDownloading = false;
       },
     });
   }
