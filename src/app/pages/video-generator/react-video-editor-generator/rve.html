@@ -1,0 +1,19 @@
+<h4>Composición Final</h4>
+
+<div style="display: flex; gap: 10px">
+  @for (overlay of overlays; track overlay.id) {
+  <div>
+    <h4>{{ overlay.type }}</h4>
+
+    Desde: <p-tag [value]="overlay.from.toString()" [rounded]="true" /> @if(overlay.type === OverlayType.VIDEO) { Offset Frames:
+    <p-tag [value]="overlay.videoStartTime?.toString()" [rounded]="true" /> } Total Frames:
+    <p-tag [value]="overlay.durationInFrames.toString()" [rounded]="true" />
+  </div>
+
+  <div>{{ overlay | segFramesCalc: 30 | json }}</div>
+  }
+</div>
+
+<br /><br />
+
+<p-button label="Descargar composición" (click)="downloadComposition()" />

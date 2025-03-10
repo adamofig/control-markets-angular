@@ -49,6 +49,7 @@ export interface IAgentSource extends AuditDate {
   image: IImageSource;
   video: IVideoSource;
   assets?: Record<string, CloudStorageData>;
+  thumbnail: CloudStorageData;
   status: string;
   statusDescription: string;
   relationId?: string;

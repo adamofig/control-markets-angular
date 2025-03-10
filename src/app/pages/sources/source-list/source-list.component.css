@@ -1,9 +1,14 @@
 :host {
   display: block;
+  padding: 0 10%;
 }
 
 .card-source {
   margin-bottom: 10px;
   position: relative;
-}
 
+  /* display: flex; */
+  /* justify-content: center; */
+  /* padding-right: 50px; */
+
+}

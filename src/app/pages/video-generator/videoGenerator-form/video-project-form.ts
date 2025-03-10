@@ -17,6 +17,7 @@ import { TagModule } from 'primeng/tag';
 import { AccordionModule } from 'primeng/accordion';
 
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
+import { RVEComponent } from '../react-video-editor-generator/rve';
 
 @Component({
   selector: 'app-video-project-form',
@@ -35,6 +36,7 @@ import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/cor
     FormsModule,
     TagModule,
     AccordionModule,
+    RVEComponent,
   ],
   templateUrl: './video-project-form.html',
   styleUrl: './video-project-form.css',
@@ -46,21 +48,7 @@ export class VideoProjectFormComponent implements OnInit {
   public videoGeneratorForm = this.fb.group({
     name: ['', Validators.required],
     description: [''],
-    type: [''],
-    relation: [{ id: '', name: '', description: '' }],
   });
-
-  public videoGeneratorTypes = [
-    { label: 'Type 1', value: 'type1' },
-    { label: 'Type 2', value: 'type2' },
-    { label: 'Type 3', value: 'type3' },
-  ];
-
-  public relationObjects = [
-    { id: 'Relation 1', name: 'relation1', description: 'Description with short description' },
-    { id: 'Relation 2', name: 'relation2', description: 'Description with short description' },
-    { id: 'Relation 3', name: 'relation3', description: 'Description with short description' },
-  ];
 
   constructor(
     private route: ActivatedRoute,
@@ -136,7 +124,9 @@ export class VideoProjectFormComponent implements OnInit {
 
   public extraction: any = null;
 
+  public isLookingFragments = false;
   public async getBestFragments() {
+    this.isLookingFragments = true;
     const BestFragmentDefinition = `
     interface BestFragment {
       start: string;                      // Second where the video should start
@@ -197,6 +187,7 @@ For the selected segment or combination, please provide:
     (this.videoGenerator?.plan as any).extraction = this.extraction;
     const response = await this.videoGeneratorService.saveVideoGenerator(this.videoGenerator as IVideoGenerator);
     console.log('response', response, 'saving ', this.videoGenerator);
+    this.isLookingFragments = false;
     this.cdr.detectChanges();
     // console.log(result);
     // console.log(result);

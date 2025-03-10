@@ -12,8 +12,16 @@
       [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
   </div>
   <p-card [header]="source.name">
+    <div>
+      @if(source?.thumbnail?.url) {
+      <img style="width: 200px; border-radius: 20px" [src]="source?.thumbnail?.url" alt="Thumbnail" />
+      } @else {
+      <img style="width: 200px; border-radius: 20px" src="assets/images/default-feature1.png" alt="Thumbnail" />
+      }
+    </div>
     <p class="m-0">{{ source.description | slice : 0 : 350 }}...</p>
-    <p-chip [label]="source.type" />
+
+    <p-chip [label]="source.type" icon="pi pi-{{ source.type }}" />
 
     <span style="margin-left: 10px">
       <p-tag icon="pi pi-key" severity="secondary" [value]="source.id" />

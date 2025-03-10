@@ -1,4 +1,4 @@
-<h3>VideoGenerators Form</h3>
+<h3>Video Project Generator Form</h3>
 
 <div class="source-form-card">
   <p-card [header]="videoGeneratorId ? 'Edit Project' : 'Nuevo Proyecto de Video'">
@@ -12,26 +12,34 @@
         <label for="description" class="block">Description</label>
         <textarea id="description" pTextarea formControlName="description" rows="2" class="w-full" placeholder="Breve descripción del proyecto"> </textarea>
       </div>
-
-      <div class="form-field">
-        <label for="type" class="block">Type</label>
-        <p-select id="type" [options]="videoGeneratorTypes" formControlName="type" optionLabel="label" optionValue="value" placeholder="Select a type" />
-      </div>
     </form>
 
     <div style="display: flex; gap: 10px; justify-content: flex-end">
-      <p-button (click)="addSource()" label="Agregar fuente" [disabled]="!videoGeneratorForm.valid" icon="pi pi-paperclip" iconPos="right"> </p-button>
+      <p-button
+        outlined
+        severity="warn"
+        (click)="addSource()"
+        label="Agregar fuente"
+        [disabled]="!videoGeneratorForm.valid"
+        icon="pi pi-paperclip"
+        iconPos="right">
+      </p-button>
 
-      <p-button (click)="addVideo()" label="Add Video" [disabled]="!videoGeneratorForm.valid" icon="pi pi-video" iconPos="right"> </p-button>
+      <p-button outlined severity="info" (click)="addVideo()" label="Add Video" [disabled]="!videoGeneratorForm.valid" icon="pi pi-video" iconPos="right">
+      </p-button>
 
-      <p-button (click)="save()" label="Save VideoGenerator" [disabled]="!videoGeneratorForm.valid" icon="pi pi-save" iconPos="right"> </p-button>
+      <p-button (click)="save()" label="Save" [disabled]="!videoGeneratorForm.valid" icon="pi pi-save" iconPos="right"> </p-button>
     </div>
   </p-card>
 </div>
 
 <br />
 <p-card header="Fuentes">
-  @if (videoGenerator?.sources !== null) { @for (source of videoGenerator?.sources; track source.reference?.id) {
+  @if (videoGenerator?.sources !== null) { @for (source of videoGenerator?.sources; track source.reference?.id) { @if(source.reference?.thumbnail?.url) {
+  <img style="width: 200px; border-radius: 20px" [src]="source.reference?.thumbnail?.url" alt="Thumbnail" />
+  } @else {
+  <img style="width: 200px; border-radius: 20px" src="assets/images/default-feature1.png" alt="Thumbnail" />
+  }
 
   <div style="display: flex; gap: 10px">
     <p>{{ source.reference?.name }} - {{ source.reference?.description }}</p>
@@ -57,7 +65,7 @@
     <textarea [(ngModel)]="instructions" pTextarea rows="2" class="w-full" placeholder="Detalla más lo que quieres"> </textarea>
   </div>
 
-  <p-button (click)="getBestFragments()" label="Encontrar fragmentos" [disabled]="!instructions"> </p-button>
+  <p-button [loading]="isLookingFragments" (click)="getBestFragments()" label="Encontrar fragmentos" [disabled]="!instructions"> </p-button>
 
   <div>
     @if (videoGenerator?.plan?.extraction) {
@@ -94,4 +102,8 @@
 
     }
   </div>
+</p-card>
+
+<p-card header="Composición Final">
+  <app-rve></app-rve>
 </p-card>
