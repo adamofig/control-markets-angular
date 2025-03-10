@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IVideoGenerator } from '../models/videoGenerators.model';
+import { IPlan, IVideoGenerator } from '../models/videoGenerators.model';
 import { VideoGeneratorService } from '../videoGenerators.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
@@ -15,9 +15,12 @@ import { TooltipModule } from 'primeng/tooltip';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TagModule } from 'primeng/tag';
 import { AccordionModule } from 'primeng/accordion';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
 import { RVEComponent } from '../react-video-editor-generator/rve';
+import { MarkdownPipe } from 'src/app/shared/pipes/markdown.pipe';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-video-project-form',
@@ -37,6 +40,9 @@ import { RVEComponent } from '../react-video-editor-generator/rve';
     TagModule,
     AccordionModule,
     RVEComponent,
+    MarkdownModule,
+    MarkdownPipe,
+    AsyncPipe,
   ],
   templateUrl: './video-project-form.html',
   styleUrl: './video-project-form.css',
@@ -128,12 +134,12 @@ export class VideoProjectFormComponent implements OnInit {
   public async getBestFragments() {
     this.isLookingFragments = true;
     const BestFragmentDefinition = `
-    interface BestFragment {
-      start: string;                      // Second where the video should start
-      end: string;                        // Second where the video should end
-      reason: string;                     // Reason why you choose this part
-      suggestions: string;                // Any suggestions for visual elements or effects to enhance the segment
-    }`;
+interface BestFragment {
+  start: string;                      // Second where the video should start
+  end: string;                        // Second where the video should end
+  reason: string;                     // Reason why you choose this part
+  suggestions: string;                // Any suggestions for visual elements or effects to enhance the segment
+}`;
 
     let instructions =
       'I have a transcription from an audio file. Please analyze the following segments and identify the most viral-worthy parts for a TikTok video:';
@@ -145,41 +151,47 @@ export class VideoProjectFormComponent implements OnInit {
         return { start: segment.start, end: segment.end, text: segment.text };
       });
 
-      transcriptionJson += '```json\n' + JSON.stringify(segments) + '\n```';
+      transcriptionJson += '```json\n' + JSON.stringify(segments, null, 2) + '\n```';
     }
 
     instructions += `
 ${transcriptionJson}
-
 
 Please tell me a range of video time that would make the most engaging TikTok content and explain why they would be effective. The ideal segments should:
 1. Be catchy and memorable
 2. The total time should be between 20-60 seconds in length combine adjacent segments to make a longer video
 3. Contain complete thoughts or phrases
 4. Have emotional impact or humor
-5. Feature clear speech with minimal background noise
+5. Do not select just one segment, select at least 2 segments to make a longer video, remember minimum 20 seconds
 
-For the selected segment or combination, please provide:
-- The total start and end times 
+For the selected segments or combination, please provide:
+- The start time and end time and total time of the final video
 - A reason Why it would be effective for TikTok
-- Any suggestions for visual elements or effects to enhance the segment
+- Any suggestions for visual elements or effects to enhance the video in edition
     `;
 
-    instructions += `\n\nIMPORTANT: You must return only the JSON in the next format: ${BestFragmentDefinition}`;
+    instructions += `\n\n**${this.instructions}**\n\n`;
+    instructions += '\n\nIMPORTANT: You must return only the JSON in the next format: ';
+    instructions += '\n```' + BestFragmentDefinition + '\n```';
 
     console.log(instructions);
     // TODO: pass transcription here.
-    const result = await this.videoGeneratorService.getBestFragments(instructions);
-
-    console.log(result.content);
-    this.extraction = extractJsonFromResponse(result.content);
-    if (!this.extraction) {
+    try {
+      const result = await this.videoGeneratorService.getBestFragments(instructions);
+      console.log(result.content);
+      this.extraction = extractJsonFromResponse(result.content);
+      if (!this.extraction) {
+        this.toastService.error({ title: 'Try again', subtitle: 'Error Getting a response or parsing JSON' });
+        return;
+      } else {
+        this.extraction.instructions = instructions;
+      }
+    } catch (error) {
+      this.isLookingFragments = false;
       this.toastService.error({ title: 'Try again', subtitle: 'Error Getting a response or parsing JSON' });
       return;
-    } else {
-      this.extraction.instructions = instructions;
-      this.toastService.success({ title: 'Success', subtitle: 'Extraction done' });
     }
+
     console.log(this.extraction);
     if (!this.videoGenerator?.plan) {
       (this.videoGenerator as any).plan = {};

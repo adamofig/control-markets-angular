@@ -1,0 +1,35 @@
+{
+  "overlays": [
+    {
+      "left": 53,
+      "top": 68,
+      "width": 964,
+      "height": 1780,
+      "durationInFrames": 88,
+      "from": 0,
+      "id": 5,
+      "rotation": 0,
+      "row": 0,
+      "isDragging": false,
+      "type": "clip",
+      "content": "https://images.pexels.com/videos/7660624/pexels-photo-7660624.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+      "src": "https://videos.pexels.com/video-files/7660624/7660624-uhd_2560_1440_25fps.mp4",
+      "videoStartTime": 0,
+      "styles": {
+        "opacity": 1,
+        "zIndex": 100,
+        "transform": "none",
+        "objectFit": "cover",
+        "filter": "brightness(150%)",
+        "borderRadius": "50px",
+        "animation": {
+          "exit": "fade"
+        }
+      }
+    }
+  ],
+  "durationInFrames": 90,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920
+}

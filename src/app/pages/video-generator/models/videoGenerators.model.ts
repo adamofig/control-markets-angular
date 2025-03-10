@@ -24,5 +24,10 @@ export interface IVideoGenerator extends AuditDate {
   type?: string;
   relation?: IVideoGeneratorRelation;
   sources?: any[];
-  plan?: any;
+  plan?: IPlan;
+}
+
+export interface IPlan {
+  extraction: { start: number; end: number; reason: string; suggestions: string; instructions: string };
+  composition: any;
 }

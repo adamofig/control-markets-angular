@@ -77,9 +77,9 @@
           <p-accordion-content>
             <p class="m-0">
               <span>Mostrando los segundos: </span>
-              <p-tag [value]="videoGenerator?.plan?.extraction?.start" [rounded]="true" />
+              <p-tag [value]="videoGenerator?.plan?.extraction?.start?.toString()" [rounded]="true" />
               -
-              <p-tag [value]="videoGenerator?.plan?.extraction?.end" [rounded]="true" />
+              <p-tag [value]="videoGenerator?.plan?.extraction?.end?.toString()" [rounded]="true" />
             </p>
           </p-accordion-content>
         </p-accordion-panel>
@@ -94,7 +94,8 @@
         <p-accordion-panel value="2">
           <p-accordion-header>Prompt</p-accordion-header>
           <p-accordion-content>
-            <p>{{ videoGenerator?.plan?.extraction?.instructions }}</p>
+            <markdown [data]="videoGenerator?.plan?.extraction?.instructions" ngPreserveWhitespaces></markdown>
+            <!-- <div [innerHTML]="videoGenerator?.plan?.extraction?.instructions | language : 'typescript' | markdown | async"></div> -->
           </p-accordion-content>
         </p-accordion-panel>
       </p-accordion>
@@ -104,6 +105,14 @@
   </div>
 </p-card>
 
-<p-card header="Composición Final">
-  <app-rve></app-rve>
+@if (videoGenerator) {
+
+<br />
+<br />
+<p-card header="Plan de Composición Final">
+  <!-- <h6>Ejemplo para el futuro</h6> -->
+  <!-- <markdown [src]="'assets/m.md'" mermaid></markdown> -->
+  <app-rve [videoProject]="videoGenerator"></app-rve>
 </p-card>
+
+}

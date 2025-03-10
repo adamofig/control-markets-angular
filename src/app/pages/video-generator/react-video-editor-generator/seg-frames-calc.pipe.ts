@@ -12,7 +12,6 @@ export class SegFramesCalcPipe implements PipeTransform {
       let fromSeg = (overlay as any).videoStartTime / fps;
       fromSeg = Math.round(fromSeg * 100) / 100;
       console.log('fromSeg', overlay.videoStartTime, endFrame, fromSeg);
-      debugger;
 
       let toSeg = endFrame / fps;
       toSeg = Math.round(toSeg * 100) / 100;

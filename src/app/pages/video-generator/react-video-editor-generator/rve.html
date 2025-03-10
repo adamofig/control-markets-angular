@@ -1,5 +1,3 @@
-<h4>Composición Final</h4>
-
 <div style="display: flex; gap: 10px">
   @for (overlay of overlays; track overlay.id) {
   <div>
@@ -15,5 +13,9 @@
 </div>
 
 <br /><br />
+
+@if (ganttChart) {
+<markdown [data]="ganttChart" mermaid></markdown>
+}
 
 <p-button label="Descargar composición" (click)="downloadComposition()" />

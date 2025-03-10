@@ -18,6 +18,8 @@ import { providePrimeNG } from 'primeng/config';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MarkdownModule, MARKED_OPTIONS, MERMAID_OPTIONS } from 'ngx-markdown';
+import { SecurityContext } from '@angular/core';
 // DC Libs
 import { provideChatAIService, provideUserDataExchange } from '@dataclouder/conversation-system';
 import { provideLessonsService, provideNotionService } from '@dataclouder/lessons';
@@ -93,6 +95,23 @@ bootstrapApplication(AppComponent, {
           provide: TranslateLoader,
           useFactory: createTranslateLoader,
           deps: [HttpClient],
+        },
+      }),
+      MarkdownModule.forRoot({
+        markedOptions: {
+          provide: MARKED_OPTIONS,
+          useValue: {
+            gfm: true,
+            breaks: true,
+            pedantic: false,
+          },
+        },
+        mermaidOptions: {
+          provide: MERMAID_OPTIONS,
+          useValue: {
+            darkMode: true,
+            look: 'handDrawn',
+          },
         },
       })
     ),
