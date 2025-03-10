@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -54,7 +54,8 @@ export class VideoAnalizerComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private videoAnalizerService: VideoAnalizerService
+    private videoAnalizerService: VideoAnalizerService, 
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -114,10 +115,13 @@ export class VideoAnalizerComponent implements OnInit {
         // Show notification only when the download is complete
         this.toastAlerts.success({ title: 'success', subtitle: 'Video descargado correctamente' });
         this.isDownloading = false;
+        this.cdr.detectChanges();
       },
       error: error => {
         this.toastAlerts.error({ title: 'error', subtitle: 'Error downloading video' });
         this.isDownloading = false;
+        this.cdr.detectChanges();
+
       },
     });
   }

@@ -9,7 +9,7 @@
   "homepage": "dataclouder.dev",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0 --disable-host-check",
     "start:qa": "ng serve -c qa",
     "start:prod": "ng serve -c production",
     "build": "ng build",
