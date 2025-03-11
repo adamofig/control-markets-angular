@@ -3,8 +3,25 @@
 </p-divider>
 
 @if(source?.thumbnail?.url) {
-<div style="display: flex; justify-content: center">
+<div style="display: flex; justify-content: center; position: relative">
   <img style="max-width: 600px; border-radius: 20px" [src]="source?.thumbnail?.url" alt="Thumbnail" />
+
+  <div
+    style="
+      position: absolute;
+      top: 15px;
+      left: 10%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: rgb(251, 180, 0);
+      padding: 10px;
+      border-radius: 10px;
+      font-weight: 700;
+    ">
+    <h3>{{ source?.name }}</h3>
+    <p>tipo: {{ source?.type }}</p>
+    <p>Status: {{ source?.status }}</p>
+    <p>Status Description: {{ source?.statusDescription }}</p>
+  </div>
 </div>
 }
 
@@ -17,17 +34,10 @@
   </ul>
 </div>
 
-<div>
-  <h5>Video {{ source?.type }}</h5>
-  <p>Nombre: {{ source?.name }}</p>
-  <p>Status: {{ source?.status }}</p>
-  <p>Status Description: {{ source?.statusDescription }}</p>
-</div>
-
 @if(!(source?.video) && (source?.type === sourceType.TIKTOK || source?.type === sourceType.YOUTUBE)) {
 <div>
   <h5>No hay un video procesado para esta fuente</h5>
-  <p-button label="Procesar video" (click)="processVideo()"></p-button>
+  <p-button [loading]="loading.videoProcessing" label="Procesar video" (click)="processVideo()"></p-button>
 </div>
 } @if(source?.video) {
 <div>
@@ -79,25 +89,30 @@
   </p-divider>
 
   <div style="display: flex; gap: 10px; align-items: center">
-    <p-tag icon="pi pi-music" value="Original" severity="secondary" />
+    <p-tag icon="pi pi-headphones" value="Original" severity="secondary" />
 
     <audio [src]="source?.video?.audio?.url" controls></audio>
   </div>
   } @else {
   <div>
     <h5>No audio found</h5>
-    <p-button label="Extract Audio" (click)="extractAudio()"></p-button>
+    <p-button icon="pi pi-user" label="Extract Audio" (click)="extractAudio()"></p-button>
   </div>
   } @if(source?.video?.separatedAudio?.vocals){
 
   <div style="display: flex; gap: 10px; align-items: center">
-    <p-tag icon="pi pi-user" value="Vocals" severity="secondary" />
+    <p-tag icon="pi pi-microphone" value="Vocals" severity="secondary" />
     <audio [src]="source?.video?.separatedAudio?.vocals?.url" controls></audio>
+  </div>
+
+  <div style="display: flex; gap: 10px; align-items: center">
+    <p-tag icon="pi pi-wave-pulse" value="No Vocals" severity="secondary" />
+    <audio [src]="source?.video?.separatedAudio?.no_vocals?.url" controls></audio>
   </div>
   } @else {
   <div>
     <h5>No vocals found</h5>
-    <p-button label="Extract Vocals" (click)="extractVocals()"></p-button>
+    <p-button [loading]="loading.extractingVocals" label="Extract Vocals" (click)="extractVocals()"></p-button>
   </div>
   }
 
@@ -120,12 +135,27 @@
         }
       </ul>
     </div>
-    }
+
+    @if(source?.video?.transcription?.words){
+    <div>
+      <h5>Transcription words</h5>
+    </div>
+    } }
   </div>
   } @else {
   <div>
     <h5>No transcription found</h5>
     <p-button label="Extract Transcription" (click)="extractTranscription()"></p-button>
+  </div>
+  } @if(!source?.video?.remotionCaptions){
+  <div>
+    <h5>Remotion Captions</h5>
+    <p-button label="Extract Remotion Captions" (click)="extractRemotionCaptions()"></p-button>
+  </div>
+  } @else {
+  <div>
+    <h5>Remotion Captions</h5>
+    <div>{{ source?.video?.remotionCaptions }}</div>
   </div>
   } @if (source?.video?.frames) {
   <div>

@@ -1,3 +1,5 @@
+import { Caption } from '@remotion/captions';
+
 export interface AuditDate {
   createdAt: string;
   updatedAt: string;
@@ -32,10 +34,11 @@ export interface IAudioSource {
 export interface IVideoSource {
   id_platform: string;
   audio: CloudStorageData;
-  separatedAudio?: { vocals?: CloudStorageData; accompaniment?: CloudStorageData };
+  separatedAudio?: { vocals?: CloudStorageData; no_vocals?: CloudStorageData };
   video: CloudStorageData;
   frames: IImageSource[];
   transcription: any;
+  remotionCaptions?: Caption[];
   description: string;
 }
 export interface IAgentSource extends AuditDate {

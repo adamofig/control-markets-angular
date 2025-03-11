@@ -7,6 +7,12 @@ export enum OverlayType {
   SOUND = 'sound',
   CAPTION = 'caption',
 }
+
+type AdditionalOverlayProps = {
+  _durationInSeconds: number;
+  _offsetInSeconds: number;
+  _startSecond: number;
+};
 // Base overlay properties
 type BaseOverlay = {
   id: number;
@@ -20,7 +26,7 @@ type BaseOverlay = {
   isDragging: boolean;
   rotation: number;
   type: OverlayType;
-};
+} & AdditionalOverlayProps;
 
 // Base style properties
 type BaseStyles = {

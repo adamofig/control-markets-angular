@@ -35,7 +35,7 @@
 
 <br />
 <p-card header="Fuentes">
-  @if (videoGenerator?.sources !== null) { @for (source of videoGenerator?.sources; track source.reference?.id) { @if(source.reference?.thumbnail?.url) {
+  @if (videoGenerator?.sources?.length) { @for (source of videoGenerator?.sources; track source.reference?.id) { @if(source.reference?.thumbnail?.url) {
   <img style="width: 200px; border-radius: 20px" [src]="source.reference?.thumbnail?.url" alt="Thumbnail" />
   } @else {
   <img style="width: 200px; border-radius: 20px" src="assets/images/default-feature1.png" alt="Thumbnail" />
@@ -44,6 +44,7 @@
   <div style="display: flex; gap: 10px">
     <p>{{ source.reference?.name }} - {{ source.reference?.description }}</p>
     <p-button icon="pi pi-times" severity="danger" (click)="removeSource(source)" />
+    <p-button label="Go To Source" [link]="true" (click)="goToSource(source)" />
   </div>
 
   <div style="display: flex; gap: 15px">
@@ -52,17 +53,23 @@
     <div>Transcripción: <p-checkbox [ngModel]="!!source.reference?.video?.transcription" [binary]="true" [disabled]="true" /></div>
     <div>Imagen: <p-checkbox [ngModel]="!!source.reference?.video?.image" [binary]="true" [disabled]="true" /></div>
   </div>
-  } }
+  } } @else {
+  <p>No hay fuentes, Agrega una fuente para comenzar</p>
+  }
 </p-card>
 
 <br />
 
 <p-card header="Planificador">
-  <h5>Extracción de fragmentos</h5>
-
   <div class="form-field">
-    <label class="block">Instrucciones</label>
-    <textarea [(ngModel)]="instructions" pTextarea rows="2" class="w-full" placeholder="Detalla más lo que quieres"> </textarea>
+    <label class="block">Instrucciones para extraer fragmentos de las fuentes y crear un plan de composición</label>
+    <textarea
+      [(ngModel)]="instructions"
+      pTextarea
+      rows="2"
+      class="w-full"
+      placeholder="Detalla más lo que quieres, ej. dame la parte más pegajosa del vídeo...">
+    </textarea>
   </div>
 
   <p-button [loading]="isLookingFragments" (click)="getBestFragments()" label="Encontrar fragmentos" [disabled]="!instructions"> </p-button>
@@ -105,7 +112,7 @@
   </div>
 </p-card>
 
-@if (videoGenerator) {
+@if (videoGenerator?.sources?.length) {
 
 <br />
 <br />

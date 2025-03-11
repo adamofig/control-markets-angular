@@ -7,7 +7,8 @@ import { ButtonModule } from 'primeng/button';
 import { ToastAlertService } from 'src/app/services/toast.service';
 import { VideoAnalizerService, VideoAnalysisDto } from '../../video-analizer/video-analizer.service';
 import { TagModule } from 'primeng/tag';
-
+import { createTikTokStyleCaptions, Caption } from '@remotion/captions';
+import { openAiWhisperApiToCaptions } from '@remotion/openai-whisper';
 @Component({
   selector: 'app-source-detail',
   imports: [DividerModule, ButtonModule, TagModule],
@@ -22,11 +23,15 @@ export class SourceDetailComponent {
   private pollingInterval: any;
   private pollCount: number = 0;
 
+  public loading = {
+    videoProcessing: false,
+    extractingVocals: false,
+    extractingTranscription: false,
+    extractingRemotionCaptions: false,
+    tiktokDataLoading: false,
+  };
   public additionalData: any;
-
   public statusHistory: string[] = [];
-
-  public tiktokDataLoading: boolean = false;
 
   constructor(
     private videoAnalizerService: VideoAnalizerService,
@@ -51,11 +56,11 @@ export class SourceDetailComponent {
       this.statusHistory.push(source.statusDescription);
     }
     this.source = source;
-    if (this.source?.relationId && !this.additionalData && !this.tiktokDataLoading) {
-      this.tiktokDataLoading = true;
+    if (this.source?.relationId && !this.additionalData && !this.loading.tiktokDataLoading) {
+      this.loading.tiktokDataLoading = true;
       this.sourceService.getTiktokData(this.source?.relationId).then(data => {
         this.additionalData = data;
-        this.tiktokDataLoading = false;
+        this.loading.tiktokDataLoading = false;
       });
     }
     this.cdr.detectChanges();
@@ -138,13 +143,18 @@ export class SourceDetailComponent {
   }
 
   public async processVideo() {
-    console.log('Processing video', this.source);
-    await this.videoAnalizerService.startAnalyzeVideo({
+    this.loading.videoProcessing = true;
+    this.toastService.info({ title: 'Processing video', subtitle: 'Please wait...' });
+    const result = await this.videoAnalizerService.startAnalyzeVideo({
       url: this.source?.sourceUrl ?? '',
       website: 'youtube',
       id: this.source?.id ?? '',
       options: {},
     });
+    console.log('processVideo result, should i reaload?', result);
+    this.loading.videoProcessing = false;
+    this.cdr.detectChanges();
+    this.toastService.success({ title: 'Video processed', subtitle: 'Video processed successfully' });
   }
 
   public extractFrames() {
@@ -160,9 +170,11 @@ export class SourceDetailComponent {
   }
 
   public async extractVocals() {
+    this.loading.extractingVocals = true;
     console.log('Extracting vocals', this.source);
     const params: VideoAnalysisDto = { url: this.source?.sourceUrl ?? '', website: 'youtube', id: this.source?.id ?? '', options: { only_vocals: true } };
     await this.videoAnalizerService.startAnalyzeVideo(params);
+    this.loading.extractingVocals = false;
   }
 
   public async extractTranscription() {
@@ -175,4 +187,52 @@ export class SourceDetailComponent {
     };
     await this.videoAnalizerService.startAnalyzeVideo(params);
   }
+
+  public async extractRemotionCaptions() {
+    console.log('Extracting remotion captions', this.source);
+    try {
+      const captions = openAiWhisperApiToCaptions({ transcription: this.source?.video?.transcription });
+      // Additional process becouse i don't like the precision of the timestamps
+      captions.captions.forEach(caption => {
+        caption.startMs = Math.round(caption.startMs);
+        caption.endMs = Math.round(caption.endMs);
+        caption.timestampMs = caption.timestampMs ? Math.round(caption.timestampMs) : null;
+      });
+
+      if (this.source?.video) {
+        this.source.video.remotionCaptions = captions.captions;
+        this.sourceService.saveSource(this.source);
+        this.toastService.success({ title: 'Remotion captions extracted', subtitle: 'Remotion captions extracted successfully' });
+      }
+      this.cdr.detectChanges();
+    } catch (error) {
+      console.error('Error extracting remotion captions', error);
+      this.toastService.error({ title: 'Error extracting remotion captions', subtitle: `Error: ${error}` });
+    }
+    // const captions = createTikTokStyleCaptions(this.source?.video?.transcription);
+    // const captions = transformWhisperIntoRemotionCaptions(this.source?.video?.transcription?.segments);
+  }
+}
+
+function transformWhisperIntoRemotionCaptions(segments: any) {
+  const captions = [];
+
+  for (const item of segments) {
+    if (item.text === '') {
+      continue;
+    }
+
+    captions.push({
+      text: captions.length === 0 ? item.text.trimStart() : item.text,
+      startMs: Math.floor(item.start * 1000),
+      endMs: Math.floor(item.end * 1000),
+      timestampMs: Math.floor((item.start + item.end) / 2),
+    });
+  }
+  console.log('saving in json');
+
+  // const outPath = path.join(__dirname, 'public',  `${name}.json`);
+  // fs.writeFileSync(outPath, JSON.stringify(captions, null, 2));
+
+  return captions;
 }

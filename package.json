@@ -63,6 +63,8 @@
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "@primeng/themes": "^19.0.5",
+    "@remotion/captions": "^4.0.273",
+    "@remotion/openai-whisper": "^4.0.273",
     "firebase": "^10.8.0",
     "force": "^0.0.3",
     "ionicons": "^7.2.1",

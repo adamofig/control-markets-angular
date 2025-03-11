@@ -1,11 +1,25 @@
+<h6>Vista de overlays</h6>
+
 <div style="display: flex; gap: 10px">
   @for (overlay of overlays; track overlay.id) {
   <div>
-    <h4>{{ overlay.type }}</h4>
+    <h4>{{ overlay.type }} {{ overlay.id }}</h4>
 
-    Desde: <p-tag [value]="overlay.from.toString()" [rounded]="true" /> @if(overlay.type === OverlayType.VIDEO) { Offset Frames:
-    <p-tag [value]="overlay.videoStartTime?.toString()" [rounded]="true" /> } Total Frames:
-    <p-tag [value]="overlay.durationInFrames.toString()" [rounded]="true" />
+    <div>
+      <div>
+        Desde: <p-tag [value]="overlay.from.toString() + ' f'" [rounded]="true" />
+        <p-tag severity="info" [value]="overlay._startSecond.toString() + ' s'" [rounded]="true" />
+      </div>
+      <div>
+        @if (overlay.type === OverlayType.VIDEO) { Hasta: <p-tag [value]="overlay.videoStartTime?.toString() + ' f'" [rounded]="true" />
+        <p-tag severity="info" [value]="overlay._offsetInSeconds.toString() + ' s'" [rounded]="true" />
+        }
+      </div>
+      <div>
+        Total Frames: <p-tag [value]="overlay.durationInFrames.toString() + ' f'" [rounded]="true" />
+        <p-tag severity="info" [value]="overlay._durationInSeconds.toString() + ' s'" [rounded]="true" />
+      </div>
+    </div>
   </div>
 
   <div>{{ overlay | segFramesCalc: 30 | json }}</div>
@@ -16,6 +30,8 @@
 
 @if (ganttChart) {
 <markdown [data]="ganttChart" mermaid></markdown>
+} @else {
+<p>No hay plan de composición, Crea uno para iniciar</p>
 }
 
-<p-button label="Descargar composición" (click)="downloadComposition()" />
+<p-button [disabled]="!ganttChart" label="Descargar composición" (click)="downloadComposition()" />

@@ -200,9 +200,12 @@ For the selected segments or combination, please provide:
     const response = await this.videoGeneratorService.saveVideoGenerator(this.videoGenerator as IVideoGenerator);
     console.log('response', response, 'saving ', this.videoGenerator);
     this.isLookingFragments = false;
+    this.toastService.success({ title: 'Plan de composición creado', subtitle: 'El plan de composición ha sido creado correctamente' });
     this.cdr.detectChanges();
-    // console.log(result);
-    // console.log(result);
+  }
+
+  public goToSource(source: any) {
+    this.router.navigate(['../../../sources/details', source.id], { relativeTo: this.route });
   }
 }
 
