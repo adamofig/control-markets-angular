@@ -9,9 +9,9 @@ export enum OverlayType {
 }
 
 type AdditionalOverlayProps = {
-  _durationInSeconds: number;
-  _offsetInSeconds: number;
-  _startSecond: number;
+  _durationInSeconds?: number;
+  _offsetInSeconds?: number;
+  _startSecond?: number;
 };
 // Base overlay properties
 type BaseOverlay = {

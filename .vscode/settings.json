@@ -35,7 +35,9 @@
     "scrollbarSlider.activeBackground": "#ff1900cc",
     "scrollbar.shadow": "#ff19006e",
     "terminal.border": "#ff1900",
-    "tab.unfocusedActiveBorder": "#ff190080"
+    "tab.unfocusedActiveBorder": "#ff190080",
+    "sideBar.border": "#ff1900",
+    "panel.border": "#ff1900",
   },
 
   "editor.scrollbar.verticalScrollbarSize": 7,

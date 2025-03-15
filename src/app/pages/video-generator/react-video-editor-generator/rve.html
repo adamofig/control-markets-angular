@@ -8,16 +8,16 @@
     <div>
       <div>
         Desde: <p-tag [value]="overlay.from.toString() + ' f'" [rounded]="true" />
-        <p-tag severity="info" [value]="overlay._startSecond.toString() + ' s'" [rounded]="true" />
+        <p-tag severity="info" [value]="overlay._startSecond?.toString() + ' s'" [rounded]="true" />
       </div>
       <div>
         @if (overlay.type === OverlayType.VIDEO) { Hasta: <p-tag [value]="overlay.videoStartTime?.toString() + ' f'" [rounded]="true" />
-        <p-tag severity="info" [value]="overlay._offsetInSeconds.toString() + ' s'" [rounded]="true" />
+        <p-tag severity="info" [value]="overlay._offsetInSeconds?.toString() + ' s'" [rounded]="true" />
         }
       </div>
       <div>
         Total Frames: <p-tag [value]="overlay.durationInFrames.toString() + ' f'" [rounded]="true" />
-        <p-tag severity="info" [value]="overlay._durationInSeconds.toString() + ' s'" [rounded]="true" />
+        <p-tag severity="info" [value]="overlay._durationInSeconds?.toString() + ' s'" [rounded]="true" />
       </div>
     </div>
   </div>

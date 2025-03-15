@@ -118,7 +118,7 @@ function getCaptionsOverlay(videoSource: IAgentSource): CaptionOverlay {
   debugger;
   if (!captions.length) throw new Error('No captions source found');
   console.log('captions', captions);
-  const captionsOverlay = {
+  const captionsOverlay: CaptionOverlay = {
     id: 2,
     left: 53,
     top: 68,
@@ -127,6 +127,10 @@ function getCaptionsOverlay(videoSource: IAgentSource): CaptionOverlay {
     durationInFrames: 20 * FPS,
     from: 0,
     captions: captionsRVE,
+    type: OverlayType.CAPTION,
+    row: 0,
+    isDragging: false,
+    rotation: 0,
   };
   return captionsOverlay as CaptionOverlay;
 }
