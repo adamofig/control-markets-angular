@@ -11,7 +11,7 @@ import { Textarea } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { NotionService } from '../../tasks/services/notion.service';
 import { NotionExportType } from '../../tasks/models/notion.models';
-import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
+import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-source-form',

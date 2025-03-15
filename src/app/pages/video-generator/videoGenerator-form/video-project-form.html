@@ -35,7 +35,7 @@
 
 <br />
 <p-card header="Fuentes">
-  @if (videoGenerator?.sources?.length) { @for (source of videoGenerator?.sources; track source.reference?.id) { @if(source.reference?.thumbnail?.url) {
+  @if (videoProject?.sources?.length) { @for (source of videoProject?.sources; track source.reference?.id) { @if(source.reference?.thumbnail?.url) {
   <img style="width: 200px; border-radius: 20px" [src]="source.reference?.thumbnail?.url" alt="Thumbnail" />
   } @else {
   <img style="width: 200px; border-radius: 20px" src="assets/images/default-feature1.png" alt="Thumbnail" />
@@ -60,11 +60,18 @@
 
 <br />
 
-<p-card header="Planificador">
+<p-card header="Extractor de fragmentos">
+  <p-select
+    [options]="videoProject?.sources"
+    [(ngModel)]="fragmentExtraction.sourceId"
+    optionLabel="name"
+    optionValue="id"
+    placeholder="Selecciona una fuente" />
+
   <div class="form-field">
     <label class="block">Instrucciones para extraer fragmentos de las fuentes y crear un plan de composición</label>
     <textarea
-      [(ngModel)]="instructions"
+      [(ngModel)]="fragmentExtraction.instructions"
       pTextarea
       rows="2"
       class="w-full"
@@ -72,10 +79,10 @@
     </textarea>
   </div>
 
-  <p-button [loading]="isLookingFragments" (click)="getBestFragments()" label="Encontrar fragmentos" [disabled]="!instructions"> </p-button>
+  <p-button [loading]="isLookingFragments" (click)="getBestFragments()" label="Encontrar fragmentos" [disabled]="!fragmentExtraction.sourceId"> </p-button>
 
   <div>
-    @if (videoGenerator?.plan?.extraction) {
+    @if (videoProject?.overlayPlan?.length) {
 
     <div class="card flex justify-content-center">
       <p-accordion [value]="['0']" [multiple]="true">
@@ -84,9 +91,9 @@
           <p-accordion-content>
             <p class="m-0">
               <span>Mostrando los segundos: </span>
-              <p-tag [value]="videoGenerator?.plan?.extraction?.start?.toString()" [rounded]="true" />
+              <!-- <p-tag [value]="videoGenerator?.plan?.extraction?.start?.toString()" [rounded]="true" /> -->
               -
-              <p-tag [value]="videoGenerator?.plan?.extraction?.end?.toString()" [rounded]="true" />
+              <!-- <p-tag [value]="videoGenerator?.plan?.extraction?.end?.toString()" [rounded]="true" /> -->
             </p>
           </p-accordion-content>
         </p-accordion-panel>
@@ -94,14 +101,15 @@
           <p-accordion-header> Razón y sugerencias </p-accordion-header>
           <p-accordion-content>
             <p class="m-0"></p>
-            <p>{{ videoGenerator?.plan?.extraction?.reason }}</p>
-            <p>{{ videoGenerator?.plan?.extraction?.suggestions }}</p>
+            <!-- <p>{{ videoGenerator?.plan?.extraction?.reason }}</p>
+            <p>{{ videoGenerator?.plan?.extraction?.suggestions }}</p> -->
           </p-accordion-content>
         </p-accordion-panel>
         <p-accordion-panel value="2">
           <p-accordion-header>Prompt</p-accordion-header>
           <p-accordion-content>
-            <markdown [data]="videoGenerator?.plan?.extraction?.instructions" ngPreserveWhitespaces></markdown>
+            <p>Trabajando en plan</p>
+            <!-- <markdown [data]="videoGenerator?.plan?.extraction?.instructions" ngPreserveWhitespaces></markdown> -->
             <!-- <div [innerHTML]="videoGenerator?.plan?.extraction?.instructions | language : 'typescript' | markdown | async"></div> -->
           </p-accordion-content>
         </p-accordion-panel>
@@ -112,14 +120,14 @@
   </div>
 </p-card>
 
-@if (videoGenerator?.sources?.length) {
+@if (videoProject?.sources?.length) {
 
 <br />
 <br />
 <p-card header="Plan de Composición Final">
   <!-- <h6>Ejemplo para el futuro</h6> -->
   <!-- <markdown [src]="'assets/m.md'" mermaid></markdown> -->
-  <app-rve [videoProject]="videoGenerator"></app-rve>
+  <app-rve [videoProject]="videoProject"></app-rve>
 </p-card>
 
 }

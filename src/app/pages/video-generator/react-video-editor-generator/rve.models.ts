@@ -8,6 +8,8 @@ export enum OverlayType {
   CAPTION = 'caption',
 }
 
+export const FPS = 30;
+
 type AdditionalOverlayProps = {
   _durationInSeconds?: number;
   _offsetInSeconds?: number;

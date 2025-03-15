@@ -11,7 +11,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
 
-import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
+import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { VideoAnalizerService, VideoAnalysisDto } from './video-analizer.service';
 import { DividerModule } from 'primeng/divider';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -54,8 +54,8 @@ export class VideoAnalizerComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private videoAnalizerService: VideoAnalizerService, 
-    private cdr: ChangeDetectorRef,
+    private videoAnalizerService: VideoAnalizerService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -121,7 +121,6 @@ export class VideoAnalizerComponent implements OnInit {
         this.toastAlerts.error({ title: 'error', subtitle: 'Error downloading video' });
         this.isDownloading = false;
         this.cdr.detectChanges();
-
       },
     });
   }

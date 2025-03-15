@@ -1,16 +1,15 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { ClipOverlay, CompositionProps, Overlay, OverlayType, CaptionOverlay } from './rve.models';
+import { ClipOverlay, CompositionProps, Overlay, OverlayType, CaptionOverlay, FPS } from './rve.models';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { SegFramesCalcPipe } from './seg-frames-calc.pipe';
 import { JsonPipe } from '@angular/common';
-import { IPlan, IVideoGenerator } from '../models/videoGenerators.model';
+import { IVideoProjectGenerator } from '../models/videoGenerators.model';
 import { MarkdownModule } from 'ngx-markdown';
 import { IAgentSource, IVideoSource } from '../../sources/models/sources.model';
 import { createTikTokStyleCaptions, Caption, TikTokPage } from '@remotion/captions';
 import { Caption as CaptionRVE } from './rve.models';
-
-const FPS = 30;
+import { createGanttChart } from './grant.util';
 
 @Component({
   selector: 'app-rve',
@@ -21,7 +20,7 @@ const FPS = 30;
   standalone: true,
 })
 export class RVEComponent implements OnInit {
-  @Input() videoProject: IVideoGenerator | undefined | null = null;
+  @Input() videoProject: IVideoProjectGenerator | undefined | null = null;
 
   public OverlayType = OverlayType;
   public ganttChart: string = '';
@@ -30,12 +29,11 @@ export class RVEComponent implements OnInit {
   public overlays: Overlay[] = [];
 
   ngOnInit(): void {
-    // const videoOverlay: Overlay = getVideoOverlay(this.videoProject as IVideoGenerator);
-
+    // const videoOverlay: Overlay = getVideoOverlay(this.videoProject as IVideoProjectGenerator);
     // this.overlays.push(videoOverlay);
     // console.log('videoOverlay', videoOverlay);
 
-    this.ganttChart = createGanttChart(this.videoProject?.plan);
+    this.ganttChart = createGanttChart(this.videoProject?.overlayPlan?.[0]);
     console.log('ganttChart', this.ganttChart);
 
     this.cdr.detectChanges();
@@ -73,35 +71,6 @@ export class RVEComponent implements OnInit {
     a.click();
     window.URL.revokeObjectURL(url);
   }
-}
-
-export function createGanttChart(plan: IPlan | undefined): string {
-  if (!plan) return '';
-  const start = plan.extraction?.start || 0;
-  const end = plan.extraction?.end || 0;
-  console.log('start', start, 'end', end);
-
-  const ganttChart = `
-\`\`\`mermaid
-gantt
-    title Video Plan Timeline
-    dateFormat s
-    axisFormat %S
-
-    section Videos
-    Video 1           :v1, ${start}, ${end}s
-    Video 2           :v2, after v1, 4s
-
-    section Captions
-    Captions 1     :s1, ${start}, ${end}s
-
-    section Audio
-    Song    :a1, ${start}, ${end}s
-\`\`\``;
-
-  console.log(ganttChart);
-
-  return ganttChart;
 }
 
 function getCaptionsOverlay(videoSource: IAgentSource): CaptionOverlay {

@@ -3,7 +3,7 @@ import { UserDataExchange, UserDataExchangeAbstractService } from '@dataclouder/
 import { Endpoints } from 'src/app/core/enums';
 import { HttpService } from 'src/app/services/http.service';
 import { IAgentTask } from '../models/tasks-models';
-import { FiltersConfig, IFilterQueryResponse } from '@dataclouder/core-components';
+import { FiltersConfig, IFilterQueryResponse } from '@dataclouder/ngx-core';
 
 @Injectable({
   providedIn: 'root',

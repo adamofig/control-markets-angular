@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IPlan, IVideoGenerator } from '../models/videoGenerators.model';
+import { IOverlayPlan, IVideoProjectGenerator } from '../models/videoGenerators.model';
 import { VideoGeneratorService } from '../videoGenerators.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
@@ -17,10 +17,11 @@ import { TagModule } from 'primeng/tag';
 import { AccordionModule } from 'primeng/accordion';
 import { MarkdownModule } from 'ngx-markdown';
 
-import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
+import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { RVEComponent } from '../react-video-editor-generator/rve';
 import { MarkdownPipe } from 'src/app/shared/pipes/markdown.pipe';
 import { AsyncPipe } from '@angular/common';
+import { VideoFragmentExtractorService } from './video-fragment-extractor.service';
 
 @Component({
   selector: 'app-video-project-form',
@@ -51,6 +52,11 @@ import { AsyncPipe } from '@angular/common';
 export class VideoProjectFormComponent implements OnInit {
   public instructions: string = '';
 
+  public fragmentExtraction = {
+    instructions: '',
+    sourceId: '',
+  };
+
   public videoGeneratorForm = this.fb.group({
     name: ['', Validators.required],
     description: [''],
@@ -61,26 +67,27 @@ export class VideoProjectFormComponent implements OnInit {
     private videoGeneratorService: VideoGeneratorService,
     private fb: FormBuilder,
     private router: Router,
+    private videoFragmentExtractorService: VideoFragmentExtractorService,
     @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService,
     private cdr: ChangeDetectorRef
   ) {}
 
-  public videoGenerator: IVideoGenerator | null = null;
+  public videoProject: IVideoProjectGenerator | null = null;
   public videoGeneratorId = this.route.snapshot.params['id'];
 
   async ngOnInit(): Promise<void> {
     if (this.videoGeneratorId) {
-      this.videoGenerator = await this.videoGeneratorService.getVideoGenerator(this.videoGeneratorId);
-      if (this.videoGenerator) {
-        console.log(this.videoGenerator);
-        this.videoGeneratorForm.patchValue(this.videoGenerator);
+      this.videoProject = await this.videoGeneratorService.getVideoGenerator(this.videoGeneratorId);
+      if (this.videoProject) {
+        console.log(this.videoProject);
+        this.videoGeneratorForm.patchValue(this.videoProject);
       }
     }
   }
 
   async save() {
     if (this.videoGeneratorForm.valid) {
-      const videoGenerator = { ...this.videoGeneratorForm.value, ...this.videoGenerator } as IVideoGenerator;
+      const videoGenerator = { ...this.videoGeneratorForm.value, ...this.videoProject } as IVideoProjectGenerator;
 
       const result = await this.videoGeneratorService.saveVideoGenerator(videoGenerator);
 
@@ -110,7 +117,7 @@ export class VideoProjectFormComponent implements OnInit {
 
     const result: any = await this.videoGeneratorService.addSource(this.videoGeneratorId, idSource);
     console.log(result);
-    this.videoGenerator = result;
+    this.videoProject = result;
     this.cdr.detectChanges();
     this.toastService.success({ title: 'Fuente agregada', subtitle: 'La fuente ha sido agregada correctamente' });
   }
@@ -122,7 +129,7 @@ export class VideoProjectFormComponent implements OnInit {
     }
 
     const result = await this.videoGeneratorService.removeSource(this.videoGeneratorId, source.reference._id);
-    this.videoGenerator = result;
+    this.videoProject = result;
     this.cdr.detectChanges();
 
     this.toastService.success({ title: 'Fuente eliminada', subtitle: 'La fuente ha sido eliminada correctamente' });
@@ -131,92 +138,14 @@ export class VideoProjectFormComponent implements OnInit {
   public extraction: any = null;
 
   public isLookingFragments = false;
-  public async getBestFragments() {
-    this.isLookingFragments = true;
-    const BestFragmentDefinition = `
-interface BestFragment {
-  start: string;                      // Second where the video should start
-  end: string;                        // Second where the video should end
-  reason: string;                     // Reason why you choose this part
-  suggestions: string;                // Any suggestions for visual elements or effects to enhance the segment
-}`;
-
-    let instructions =
-      'I have a transcription from an audio file. Please analyze the following segments and identify the most viral-worthy parts for a TikTok video:';
-
-    let transcriptionJson = '';
-    if (this.videoGenerator?.sources?.length) {
-      const transcription = this.videoGenerator?.sources[0]?.reference?.video?.transcription;
-      const segments = transcription.segments.map((segment: any) => {
-        return { start: segment.start, end: segment.end, text: segment.text };
-      });
-
-      transcriptionJson += '```json\n' + JSON.stringify(segments, null, 2) + '\n```';
-    }
-
-    instructions += `
-${transcriptionJson}
-
-Please tell me a range of video time that would make the most engaging TikTok content and explain why they would be effective. The ideal segments should:
-1. Be catchy and memorable
-2. The total time should be between 20-60 seconds in length combine adjacent segments to make a longer video
-3. Contain complete thoughts or phrases
-4. Have emotional impact or humor
-5. Do not select just one segment, select at least 2 segments to make a longer video, remember minimum 20 seconds
-
-For the selected segments or combination, please provide:
-- The start time and end time and total time of the final video
-- A reason Why it would be effective for TikTok
-- Any suggestions for visual elements or effects to enhance the video in edition
-    `;
-
-    instructions += `\n\n**${this.instructions}**\n\n`;
-    instructions += '\n\nIMPORTANT: You must return only the JSON in the next format: ';
-    instructions += '\n```' + BestFragmentDefinition + '\n```';
-
-    console.log(instructions);
-    // TODO: pass transcription here.
-    try {
-      const result = await this.videoGeneratorService.getBestFragments(instructions);
-      console.log(result.content);
-      this.extraction = extractJsonFromResponse(result.content);
-      if (!this.extraction) {
-        this.toastService.error({ title: 'Try again', subtitle: 'Error Getting a response or parsing JSON' });
-        return;
-      } else {
-        this.extraction.instructions = instructions;
-      }
-    } catch (error) {
-      this.isLookingFragments = false;
-      this.toastService.error({ title: 'Try again', subtitle: 'Error Getting a response or parsing JSON' });
-      return;
-    }
-
-    console.log(this.extraction);
-    if (!this.videoGenerator?.plan) {
-      (this.videoGenerator as any).plan = {};
-    }
-    (this.videoGenerator?.plan as any).extraction = this.extraction;
-    const response = await this.videoGeneratorService.saveVideoGenerator(this.videoGenerator as IVideoGenerator);
-    console.log('response', response, 'saving ', this.videoGenerator);
-    this.isLookingFragments = false;
-    this.toastService.success({ title: 'Plan de composición creado', subtitle: 'El plan de composición ha sido creado correctamente' });
-    this.cdr.detectChanges();
-  }
 
   public goToSource(source: any) {
     this.router.navigate(['../../../sources/details', source.id], { relativeTo: this.route });
   }
-}
 
-export function extractJsonFromResponse(content: string): any {
-  const jsonMatch = content.match(/\{[\s\S]*?\}/); // Match everything between first { and }
-  if (!jsonMatch) return null;
-
-  try {
-    return JSON.parse(jsonMatch[0]);
-  } catch (error) {
-    console.error('Error parsing JSON:', error);
-    return null;
+  public async getBestFragments() {
+    this.isLookingFragments = true;
+    await this.videoFragmentExtractorService.getBestFragments(this.videoProject as IVideoProjectGenerator, this.fragmentExtraction);
+    this.isLookingFragments = false;
   }
 }

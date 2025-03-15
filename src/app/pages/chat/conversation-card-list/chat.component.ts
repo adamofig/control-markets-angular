@@ -15,7 +15,7 @@ import {
   IAgentCard,
 } from '@dataclouder/conversation-system';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
+import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { MenuItem } from 'primeng/api';
 
 @Component({

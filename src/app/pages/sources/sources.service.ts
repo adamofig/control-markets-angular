@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { Endpoints } from '../../core/enums';
 import { IAgentSource } from './models/sources.model';
-import { FiltersConfig, IFilterQueryResponse } from '@dataclouder/core-components';
+import { FiltersConfig, IFilterQueryResponse } from '@dataclouder/ngx-core';
 
 @Injectable({
   providedIn: 'root',

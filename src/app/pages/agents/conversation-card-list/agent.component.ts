@@ -18,7 +18,7 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { NotionService } from '../../tasks/services/notion.service';
 import { ToastAlertService } from 'src/app/services/toast.service';
-import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
+import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-chat',

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TasksService } from '../services/tasks.service';
-import { DCFilterBarComponent, FiltersConfig, PaginationBase } from '@dataclouder/core-components';
+import { DCFilterBarComponent, FiltersConfig, PaginationBase } from '@dataclouder/ngx-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';

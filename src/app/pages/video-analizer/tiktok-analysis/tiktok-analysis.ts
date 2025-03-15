@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
+import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -34,7 +34,7 @@ export class TiktokAnalysisComponent {
   ];
 
   public generateAnalysis() {
-    this.tiktokService.getTiktoksAvailibleUsers
+    this.tiktokService.getTiktoksAvailibleUsers;
     // this.router.navigate([`../`], { relativeTo: this.route });
   }
 }

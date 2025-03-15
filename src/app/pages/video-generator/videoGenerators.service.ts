@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { Endpoints } from '../../core/enums';
-import { VideoGeneratorype, IVideoGenerator } from './models/videoGenerators.model';
-import { FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN } from '@dataclouder/core-components';
+import { IVideoProjectGenerator } from './models/videoGenerators.model';
+import { FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { ToastAlertService } from 'src/app/services/toast.service';
 import { AgentCardService } from 'src/app/services/agent-cards.service';
 @Injectable({
@@ -15,42 +15,26 @@ export class VideoGeneratorService {
     private agentCardService: AgentCardService
   ) {}
 
-  public async getVideoGenerators(): Promise<IVideoGenerator[]> {
+  public async getVideoGenerators(): Promise<IVideoProjectGenerator[]> {
     try {
       const response = await this.httpService.getDataFromService(Endpoints.VideoGenerators.VideoGenerator);
       this.toastService.success({ title: 'Se han encontrado videoGenerators', subtitle: 'Mostrando información' });
       return response;
     } catch (error) {
       this.toastService.warn({ title: 'Error fetching videoGenerators', subtitle: 'Showing Default Data' });
-      return [
-        { id: '1', name: 'VideoGenerator 1', description: 'Description with short description', type: VideoGeneratorype.Gen1 },
-        {
-          id: '2',
-          name: 'VideoGenerator 2',
-          description:
-            'Description  with a Medium description, lorep ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-          type: VideoGeneratorype.Gen2,
-        },
-        {
-          id: '3',
-          name: 'VideoGenerator 3',
-          description:
-            'Description  with a long description, lorep ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-          type: VideoGeneratorype.Gen3,
-        },
-      ];
+      return [];
     }
   }
 
   public async getFilteredVideoGenerators(filter: FiltersConfig) {
-    return this.httpService.postDataToService<IFilterQueryResponse<IVideoGenerator>>(Endpoints.VideoGenerators.VideoGeneratorsFiltered, filter);
+    return this.httpService.postDataToService<IFilterQueryResponse<IVideoProjectGenerator>>(Endpoints.VideoGenerators.VideoGeneratorsFiltered, filter);
   }
 
-  public async getVideoGenerator(id: string): Promise<IVideoGenerator> {
-    return this.httpService.getDataFromService<IVideoGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}`);
+  public async getVideoGenerator(id: string): Promise<IVideoProjectGenerator> {
+    return this.httpService.getDataFromService<IVideoProjectGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}`);
   }
 
-  public async saveVideoGenerator(videoGenerator: IVideoGenerator): Promise<IVideoGenerator> {
+  public async saveVideoGenerator(videoGenerator: IVideoProjectGenerator): Promise<IVideoProjectGenerator> {
     return this.httpService.postDataToService(Endpoints.VideoGenerators.VideoGenerator, videoGenerator);
   }
 
@@ -59,11 +43,11 @@ export class VideoGeneratorService {
   }
 
   public async addSource(id: string, sourceId: string) {
-    return this.httpService.patchDataToService<IVideoGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/add-source/${sourceId}`);
+    return this.httpService.patchDataToService<IVideoProjectGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/add-source/${sourceId}`);
   }
 
   public async removeSource(id: string, sourceId: string) {
-    return this.httpService.patchDataToService<IVideoGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/remove-source/${sourceId}`);
+    return this.httpService.patchDataToService<IVideoProjectGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/remove-source/${sourceId}`);
   }
 
   public async getBestFragments(instructions: string) {
@@ -71,6 +55,6 @@ export class VideoGeneratorService {
     console.log(response);
     return response;
     // const response = await this.agentCardService.callChatCompletion({ messages });
-    // return this.httpService.postDataToService<IVideoGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/get-best-fragments`, { instructions });
+    // return this.httpService.postDataToService<IVideoProjectGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/get-best-fragments`, { instructions });
   }
 }

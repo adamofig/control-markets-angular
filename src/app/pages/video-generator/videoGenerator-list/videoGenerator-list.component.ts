@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit }
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-import { DCFilterBarComponent, PaginationBase, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
+import { DCFilterBarComponent, PaginationBase, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { VideoGeneratorService } from '../videoGenerators.service';
-import { IVideoGenerator } from '../models/videoGenerators.model';
+import { IVideoProjectGenerator } from '../models/videoGenerators.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { MenuItem } from 'primeng/api';
@@ -19,7 +19,7 @@ import { DatePipe, SlicePipe } from '@angular/common';
 })
 // TODO: extends PaginationBase this handle filter, pagination, and url params ?page=1
 export class VideoGeneratorListComponent extends PaginationBase implements OnInit {
-  videoGenerators: IVideoGenerator[] = [];
+  videoGenerators: IVideoProjectGenerator[] = [];
 
   getCustomButtons(item: any): MenuItem[] {
     return [
