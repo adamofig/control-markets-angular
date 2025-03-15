@@ -50,7 +50,7 @@ export class VideoGeneratorService {
     return this.httpService.patchDataToService<IVideoProjectGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/remove-source/${sourceId}`);
   }
 
-  public async getBestFragments(instructions: string) {
+  public async getAndSaveBestFragments(instructions: string) {
     const response = await this.agentCardService.callInstruction(instructions, { provider: 'google' });
     console.log(response);
     return response;

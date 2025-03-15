@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IOverlayPlan, IVideoProjectGenerator } from '../models/videoGenerators.model';
+import { IVideoProjectGenerator } from '../models/videoGenerators.model';
 import { VideoGeneratorService } from '../videoGenerators.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
@@ -18,10 +18,10 @@ import { AccordionModule } from 'primeng/accordion';
 import { MarkdownModule } from 'ngx-markdown';
 
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
-import { RVEComponent } from '../react-video-editor-generator/rve';
 import { MarkdownPipe } from 'src/app/shared/pipes/markdown.pipe';
 import { AsyncPipe } from '@angular/common';
 import { VideoFragmentExtractorService } from './video-fragment-extractor.service';
+import { CompositionEditorComponent } from '../composition-editor-adapter/composition-editor-adapter';
 
 @Component({
   selector: 'app-video-project-form',
@@ -40,7 +40,7 @@ import { VideoFragmentExtractorService } from './video-fragment-extractor.servic
     FormsModule,
     TagModule,
     AccordionModule,
-    RVEComponent,
+    CompositionEditorComponent,
     MarkdownModule,
     MarkdownPipe,
     AsyncPipe,
@@ -143,9 +143,19 @@ export class VideoProjectFormComponent implements OnInit {
     this.router.navigate(['../../../sources/details', source.id], { relativeTo: this.route });
   }
 
-  public async getBestFragments() {
+  public async getAndSaveBestFragments() {
     this.isLookingFragments = true;
-    await this.videoFragmentExtractorService.getBestFragments(this.videoProject as IVideoProjectGenerator, this.fragmentExtraction);
+    const result = await this.videoFragmentExtractorService.getAndSaveBestFragments(this.videoProject as IVideoProjectGenerator, this.fragmentExtraction);
+    if (result) {
+      // TODO: update the project with the new fragment extraction
+      this.videoProject!.compositionPlan = result.compositionPlan;
+      console.log('result', result);
+      this.toastService.success({ title: 'Fragmentos encontrados', subtitle: 'Los fragmentos han sido encontrados correctamente' });
+      this.cdr.detectChanges();
+    } else {
+      this.toastService.error({ title: 'Error', subtitle: 'No se ha encontrado ningún fragmento' });
+    }
     this.isLookingFragments = false;
+    this.cdr.detectChanges();
   }
 }

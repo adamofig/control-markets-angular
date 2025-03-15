@@ -79,10 +79,11 @@
     </textarea>
   </div>
 
-  <p-button [loading]="isLookingFragments" (click)="getBestFragments()" label="Encontrar fragmentos" [disabled]="!fragmentExtraction.sourceId"> </p-button>
+  <p-button [loading]="isLookingFragments" (click)="getAndSaveBestFragments()" label="Encontrar fragmentos" [disabled]="!fragmentExtraction.sourceId">
+  </p-button>
 
   <div>
-    @if (videoProject?.overlayPlan?.length) {
+    @if (videoProject?.compositionPlan?.overlays?.length) {
 
     <div class="card flex justify-content-center">
       <p-accordion [value]="['0']" [multiple]="true">

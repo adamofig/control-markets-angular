@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Overlay, OverlayType, ClipOverlay } from './rve.models';
+import { Overlay, OverlayType, ClipOverlay } from './composition-editor-adapter.models';
 
 @Pipe({
   name: 'segFramesCalc',

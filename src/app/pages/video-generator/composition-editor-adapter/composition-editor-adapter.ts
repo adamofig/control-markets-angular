@@ -1,25 +1,26 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { ClipOverlay, CompositionProps, Overlay, OverlayType, CaptionOverlay, FPS } from './rve.models';
+import { ClipOverlay, CompositionProps, Overlay, OverlayType, CaptionOverlay, FPS } from './composition-editor-adapter.models';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { SegFramesCalcPipe } from './seg-frames-calc.pipe';
 import { JsonPipe } from '@angular/common';
-import { IVideoProjectGenerator } from '../models/videoGenerators.model';
+import { IOverlayPlan, IVideoProjectGenerator } from '../models/videoGenerators.model';
 import { MarkdownModule } from 'ngx-markdown';
-import { IAgentSource, IVideoSource } from '../../sources/models/sources.model';
-import { createTikTokStyleCaptions, Caption, TikTokPage } from '@remotion/captions';
-import { Caption as CaptionRVE } from './rve.models';
-import { createGanttChart } from './grant.util';
+import { IAgentSource } from '../../sources/models/sources.model';
+import { createTikTokStyleCaptions, TikTokPage } from '@remotion/captions';
+import { Caption as CaptionRVE } from './composition-editor-adapter.models';
+import { createGanttChart } from './gantt-diagram.util';
+import { getVideoOverlay } from './overlay-download.util';
 
 @Component({
   selector: 'app-rve',
   imports: [TagModule, ButtonModule, SegFramesCalcPipe, JsonPipe, MarkdownModule],
-  templateUrl: './rve.html',
-  styleUrl: './rve.css',
+  templateUrl: './composition-editor-adapter.html',
+  styleUrl: './composition-editor-adapter.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class RVEComponent implements OnInit {
+export class CompositionEditorComponent implements OnInit {
   @Input() videoProject: IVideoProjectGenerator | undefined | null = null;
 
   public OverlayType = OverlayType;
@@ -29,19 +30,27 @@ export class RVEComponent implements OnInit {
   public overlays: Overlay[] = [];
 
   ngOnInit(): void {
-    // const videoOverlay: Overlay = getVideoOverlay(this.videoProject as IVideoProjectGenerator);
-    // this.overlays.push(videoOverlay);
-    // console.log('videoOverlay', videoOverlay);
-
-    this.ganttChart = createGanttChart(this.videoProject?.overlayPlan?.[0]);
-    console.log('ganttChart', this.ganttChart);
-
+    this.ganttChart = createGanttChart(this.videoProject?.compositionPlan?.overlays);
     this.cdr.detectChanges();
   }
 
   public downloadComposition() {
-    // Get the video overlays
+    for (const overlay of this.videoProject?.compositionPlan?.overlays || []) {
+      overlay.sourceId;
+      const source = this.videoProject?.sources?.find(source => source.reference._id === overlay.sourceId);
+      if (!source) throw new Error('No source found');
+      console.log('source', source);
 
+      if (source.reference.type === 'youtube') {
+        const videoOverlay: Overlay = getVideoOverlay(source.reference);
+        this.overlays.push(videoOverlay);
+      }
+    }
+
+    // this.downloadJson(composition, 'composition');
+  }
+
+  public buildOverlays(compositionPlan: IOverlayPlan[]) {
     const youtubeSource = this.videoProject?.sources?.find(source => source.reference.type === 'youtube');
     if (!youtubeSource) throw new Error('No youtube source found');
     const videoOverlay: Overlay = getVideoOverlay(youtubeSource.reference);
@@ -58,9 +67,9 @@ export class RVEComponent implements OnInit {
       height: 1080,
       fps: FPS,
     };
-    this.downloadJson(composition, 'composition');
   }
 
+  // this should be in core
   public downloadJson(jsonObject: Record<string, any>, fileName: string) {
     const jsonData = JSON.stringify(jsonObject, null, 2);
     const blob = new Blob([jsonData], { type: 'application/json' });
@@ -118,38 +127,4 @@ function remotionTiktokPageToCaptionRVE(page: TikTokPage): CaptionRVE {
       confidence: 1, // Default confidence since TikTokPage tokens don't have confidence
     })),
   };
-}
-
-function getVideoOverlay(videoSource: IAgentSource): ClipOverlay {
-  const durationInSeconds = 20;
-  const offsetInSeconds = 5;
-  const startSecond = 0;
-
-  const videoOverlay = {
-    id: 1,
-    left: 53,
-    top: 68,
-    width: 964,
-    height: 1780,
-    // TIME IN FRAMES
-    from: startSecond * FPS,
-    durationInFrames: durationInSeconds * FPS,
-    videoStartTime: offsetInSeconds * FPS,
-    // TIME IN SECONDS
-    _startSecond: startSecond,
-    _durationInSeconds: durationInSeconds,
-    _offsetInSeconds: offsetInSeconds,
-    rotation: 0,
-    row: 0,
-    isDragging: false,
-    type: OverlayType.VIDEO,
-    content: videoSource.thumbnail?.url || '',
-    src: videoSource.video.video.url,
-    styles: {
-      animation: {
-        exit: 'fade',
-      },
-    },
-  };
-  return videoOverlay as ClipOverlay;
 }

@@ -9,23 +9,32 @@ import { BEST_FRAGMENT_DEFINITION, IFragmentExtraction, IVideoProjectGenerator }
 export class VideoFragmentExtractorService {
   constructor(private videoGeneratorService: VideoGeneratorService) {}
 
-  public async getBestFragments(videoProject: IVideoProjectGenerator, fragmentExtraction: { instructions: string; sourceId: string }): Promise<void> {
+  public async getAndSaveBestFragments(
+    videoProject: IVideoProjectGenerator,
+    fragmentExtraction: { instructions: string; sourceId: string }
+  ): Promise<IVideoProjectGenerator | null> {
     try {
       // Validate source exists
       const source = this.validateAndGetSource(videoProject, fragmentExtraction.sourceId);
-      if (!source) return;
+      if (!source) return null;
 
       // Build instructions for AI
       const instructions = this.buildInstructions(videoProject, source, fragmentExtraction.instructions);
 
       // Get extraction result from AI
-      const extractionResult = await this.getFragmentFromAI(instructions);
-      if (!extractionResult) return;
+      const extractionResult: IFragmentExtraction | null = await this.getFragmentFromAI(instructions);
+      if (!extractionResult) return null;
+      console.log('extractionResult', extractionResult);
+
+      extractionResult.duration = Number(extractionResult.end) - Number(extractionResult.start);
+      extractionResult.duration = Number(extractionResult.duration.toFixed(2));
 
       // Save the extraction result to the project
-      await this.saveExtractionToProject(videoProject, fragmentExtraction.sourceId, extractionResult);
+      const updatedProject = await this.saveExtractionToProject(videoProject, fragmentExtraction.sourceId, extractionResult);
+      return updatedProject;
     } catch (error) {
-      console.error('Error in getBestFragments:', error);
+      console.error('Error in getAndSaveBestFragments:', error);
+      return null;
     }
   }
 
@@ -120,7 +129,7 @@ For the selected segments or combination, please provide:
    */
   private async getFragmentFromAI(instructions: string): Promise<IFragmentExtraction | null> {
     try {
-      const result = await this.videoGeneratorService.getBestFragments(instructions);
+      const result = await this.videoGeneratorService.getAndSaveBestFragments(instructions);
       console.log('AI Response:', result.content);
 
       const extractionResult = extractJsonFromString(result.content) as IFragmentExtraction;
@@ -128,6 +137,9 @@ For the selected segments or combination, please provide:
         console.error('Failed to parse AI response as JSON');
         return null;
       }
+      extractionResult.end = +Number(extractionResult.end).toFixed(2);
+      extractionResult.start = +Number(extractionResult.start).toFixed(2);
+      extractionResult.duration = Number((extractionResult.end - extractionResult.start).toFixed(2));
 
       extractionResult.instructions = instructions;
       return extractionResult;
@@ -140,14 +152,18 @@ For the selected segments or combination, please provide:
   /**
    * Saves the extraction result to the video project
    */
-  private async saveExtractionToProject(videoProject: IVideoProjectGenerator, sourceId: string, extractionResult: IFragmentExtraction): Promise<void> {
+  private async saveExtractionToProject(
+    videoProject: IVideoProjectGenerator,
+    sourceId: string,
+    extractionResult: IFragmentExtraction
+  ): Promise<IVideoProjectGenerator | null> {
     // Initialize overlay plan if it doesn't exist
-    if (!videoProject.overlayPlan) {
-      videoProject.overlayPlan = [];
+    if (!videoProject.compositionPlan) {
+      videoProject.compositionPlan = { overlays: [] };
     }
 
     // Add new overlay plan item
-    videoProject.overlayPlan.push({
+    videoProject.compositionPlan.overlays.push({
       type: 'video',
       sourceId: sourceId,
       timelineStart: null,
@@ -159,8 +175,10 @@ For the selected segments or combination, please provide:
     try {
       const response = await this.videoGeneratorService.saveVideoGenerator(videoProject);
       console.log('Project saved successfully:', response);
+      return response;
     } catch (error) {
       console.error('Error saving video project:', error);
+      return null;
     }
   }
 }

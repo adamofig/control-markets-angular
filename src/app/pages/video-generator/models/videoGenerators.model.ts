@@ -18,7 +18,7 @@ export interface IVideoProjectGenerator extends AuditDate {
   description?: string;
   type?: string;
   sources?: any[];
-  overlayPlan?: IOverlayPlan[];
+  compositionPlan?: { overlays: IOverlayPlan[] };
 }
 
 export interface IFragmentExtraction {
@@ -27,6 +27,7 @@ export interface IFragmentExtraction {
   reason: string;
   suggestions: string;
   instructions: string;
+  duration: number;
   // Ideas for futute
   // priority?: number; // For AI ordering logic
   // tags?: string[]; // For categorization
