@@ -1,5 +1,3 @@
-import { IAgentSource } from '../../sources/models/sources.model';
-
 export interface AuditDate {
   createdAt?: string;
   updatedAt?: string;
@@ -22,12 +20,12 @@ export interface IVideoProjectGenerator extends AuditDate {
 }
 
 export interface IFragmentExtraction {
-  start: number | null;
-  end: number | null;
+  startSec: number | null;
+  endSec: number | null;
   reason: string;
   suggestions: string;
   instructions: string;
-  duration: number;
+  durationSec: number;
   // Ideas for futute
   // priority?: number; // For AI ordering logic
   // tags?: string[]; // For categorization
@@ -38,8 +36,8 @@ export interface IFragmentExtraction {
 //definition for AI to understand the fragment extraction
 export const BEST_FRAGMENT_DEFINITION = `
 interface IFragmentExtraction {
-  start: string;                      // Second where the video should start
-  end: string;                        // Second where the video should end
+  startSec: string;                      // Second where the video should start
+  endSec: string;                        // Second where the video should end
   reason: string;                     // Reason why you choose this part
   suggestions: string;                // Any suggestions for visual elements or effects to enhance the segment
 }`;
@@ -47,8 +45,8 @@ interface IFragmentExtraction {
 export interface IOverlayPlan {
   type: 'video';
   sourceId: string; // related to the source to get data.
-  timelineStart: number | null;
-  timelineEnd: number | null;
+  timelineStartSec: number | null;
+  timelineEndSec: number | null;
   fragment: IFragmentExtraction;
   // Idaeas for future
   // properties: any; // potencially css effects and more.

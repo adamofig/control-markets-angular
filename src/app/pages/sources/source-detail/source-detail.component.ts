@@ -9,6 +9,8 @@ import { VideoAnalizerService, VideoAnalysisDto } from '../../video-analizer/vid
 import { TagModule } from 'primeng/tag';
 import { createTikTokStyleCaptions, Caption } from '@remotion/captions';
 import { openAiWhisperApiToCaptions } from '@remotion/openai-whisper';
+import { CaptionExtractionService } from './caption-extraction.service';
+
 @Component({
   selector: 'app-source-detail',
   imports: [DividerModule, ButtonModule, TagModule],
@@ -38,7 +40,8 @@ export class SourceDetailComponent {
     private route: ActivatedRoute,
     private sourceService: SourceService,
     private cdr: ChangeDetectorRef,
-    private toastService: ToastAlertService
+    private toastService: ToastAlertService,
+    private captionsService: CaptionExtractionService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -189,28 +192,13 @@ export class SourceDetailComponent {
   }
 
   public async extractRemotionCaptions() {
-    console.log('Extracting remotion captions', this.source);
     try {
-      const captions = openAiWhisperApiToCaptions({ transcription: this.source?.video?.transcription });
-      // Additional process becouse i don't like the precision of the timestamps
-      captions.captions.forEach(caption => {
-        caption.startMs = Math.round(caption.startMs);
-        caption.endMs = Math.round(caption.endMs);
-        caption.timestampMs = caption.timestampMs ? Math.round(caption.timestampMs) : null;
-      });
-
-      if (this.source?.video) {
-        this.source.video.remotionCaptions = captions.captions;
-        this.sourceService.saveSource(this.source);
-        this.toastService.success({ title: 'Remotion captions extracted', subtitle: 'Remotion captions extracted successfully' });
-      }
+      this.captionsService.extractRemotionCaptions(this.source!);
       this.cdr.detectChanges();
     } catch (error) {
       console.error('Error extracting remotion captions', error);
       this.toastService.error({ title: 'Error extracting remotion captions', subtitle: `Error: ${error}` });
     }
-    // const captions = createTikTokStyleCaptions(this.source?.video?.transcription);
-    // const captions = transformWhisperIntoRemotionCaptions(this.source?.video?.transcription?.segments);
   }
 }
 

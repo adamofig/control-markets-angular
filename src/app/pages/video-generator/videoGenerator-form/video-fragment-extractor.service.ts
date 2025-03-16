@@ -26,8 +26,8 @@ export class VideoFragmentExtractorService {
       if (!extractionResult) return null;
       console.log('extractionResult', extractionResult);
 
-      extractionResult.duration = Number(extractionResult.end) - Number(extractionResult.start);
-      extractionResult.duration = Number(extractionResult.duration.toFixed(2));
+      extractionResult.durationSec = Number(extractionResult.endSec) - Number(extractionResult.startSec);
+      extractionResult.durationSec = Number(extractionResult.durationSec.toFixed(2));
 
       // Save the extraction result to the project
       const updatedProject = await this.saveExtractionToProject(videoProject, fragmentExtraction.sourceId, extractionResult);
@@ -137,9 +137,9 @@ For the selected segments or combination, please provide:
         console.error('Failed to parse AI response as JSON');
         return null;
       }
-      extractionResult.end = +Number(extractionResult.end).toFixed(2);
-      extractionResult.start = +Number(extractionResult.start).toFixed(2);
-      extractionResult.duration = Number((extractionResult.end - extractionResult.start).toFixed(2));
+      extractionResult.endSec = +Number(extractionResult.endSec).toFixed(2);
+      extractionResult.startSec = +Number(extractionResult.startSec).toFixed(2);
+      extractionResult.durationSec = Number((extractionResult.endSec - extractionResult.startSec).toFixed(2));
 
       extractionResult.instructions = instructions;
       return extractionResult;
@@ -166,8 +166,8 @@ For the selected segments or combination, please provide:
     videoProject.compositionPlan.overlays.push({
       type: 'video',
       sourceId: sourceId,
-      timelineStart: null,
-      timelineEnd: null,
+      timelineStartSec: null,
+      timelineEndSec: null,
       fragment: extractionResult,
     });
 

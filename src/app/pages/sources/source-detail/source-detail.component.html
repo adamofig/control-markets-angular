@@ -147,15 +147,23 @@
     <h5>No transcription found</h5>
     <p-button label="Extract Transcription" (click)="extractTranscription()"></p-button>
   </div>
-  } @if(!source?.video?.remotionCaptions){
-  <div>
-    <h5>Remotion Captions</h5>
-    <p-button label="Extract Remotion Captions" (click)="extractRemotionCaptions()"></p-button>
+  } @if(!source?.video?.captions?.remotion){
+  <h5>Captions</h5>
+
+  <div style="display: flex; gap: 10px; align-items: center">
+    <p-button label="Extract Remotion Captions" (click)="extractRemotionCaptions()" variant="outlined"></p-button>
+
+    <p-tag icon="pi pi-arrow-right" />
+
+    <p-button label="Extract Tiktok Style" (click)="extractRemotionCaptions()" variant="outlined"></p-button>
+    <p-tag icon="pi pi-arrow-right" />
+
+    <p-button label="Translate tiktok style to spanish" (click)="extractRemotionCaptions()" variant="outlined"></p-button>
   </div>
   } @else {
   <div>
     <h5>Remotion Captions</h5>
-    <div>{{ source?.video?.remotionCaptions }}</div>
+    <div>{{ source?.video?.captions?.remotion }}</div>
   </div>
   } @if (source?.video?.frames) {
   <div>

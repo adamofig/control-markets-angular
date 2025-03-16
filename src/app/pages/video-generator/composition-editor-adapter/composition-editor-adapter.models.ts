@@ -11,9 +11,11 @@ export enum OverlayType {
 export const FPS = 30;
 
 type AdditionalOverlayProps = {
+  _timelineStartSec?: number;
+  _timelineEndSec?: number;
   _durationInSeconds?: number;
-  _offsetInSeconds?: number;
-  _startSecond?: number;
+  _overlayStartSec?: number;
+  _overlayEndSec?: number;
 };
 // Base overlay properties
 type BaseOverlay = {

@@ -8,11 +8,11 @@
     <div>
       <div>
         Desde: <p-tag [value]="overlay.from.toString() + ' f'" [rounded]="true" />
-        <p-tag severity="info" [value]="overlay._startSecond?.toString() + ' s'" [rounded]="true" />
+        <p-tag severity="info" [value]="overlay._timelineStartSec?.toString() + ' s'" [rounded]="true" />
       </div>
       <div>
         @if (overlay.type === OverlayType.VIDEO) { Hasta: <p-tag [value]="overlay.videoStartTime?.toString() + ' f'" [rounded]="true" />
-        <p-tag severity="info" [value]="overlay._offsetInSeconds?.toString() + ' s'" [rounded]="true" />
+        <p-tag severity="info" [value]="overlay._overlayStartSec?.toString() + ' s'" [rounded]="true" />
         }
       </div>
       <div>

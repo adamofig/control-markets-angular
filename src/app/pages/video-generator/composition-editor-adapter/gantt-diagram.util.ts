@@ -4,14 +4,16 @@ export function createGanttChart(plannedOverlays: IOverlayPlan[] | undefined): s
   if (!plannedOverlays) return '';
 
   const chartLines: string[] = [];
+  const captionLines: string[] = [];
   for (const i in plannedOverlays) {
     const chartLine = extractTimes(plannedOverlays[i], i);
-    console.log(chartLine);
+    const captionsLine = extractTimes(plannedOverlays[i], i, true);
     chartLines.push(chartLine);
+    captionLines.push(captionsLine);
   }
 
   const sections: string = chartLines.join('\n');
-
+  const captionsSections: string = captionLines.join('\n');
   const ganttChart = `
 \`\`\`mermaid
 gantt
@@ -23,7 +25,7 @@ gantt
     ${sections}
 
     section Captions
-    Captions 1     :s1, 2,5
+    ${captionsSections}
 
     section Audio
     Song    :a1, 2, 4s
@@ -34,19 +36,25 @@ gantt
   return ganttChart;
 }
 
-function extractTimes(overlay: IOverlayPlan, index: string): string {
+function extractTimes(overlay: IOverlayPlan, index: string, isCaption: boolean = false): string {
   const overlayClone = { ...overlay };
   console.log('overlay', overlay);
 
   let tag = '';
 
-  if (overlayClone.timelineStart === null) {
-    overlayClone.timelineStart = 0;
+  if (overlayClone.timelineStartSec === null) {
+    overlayClone.timelineStartSec = 0;
   }
 
-  if (overlayClone.timelineEnd === null) {
-    overlayClone.timelineEnd = overlayClone.fragment.duration;
+  if (overlayClone.timelineEndSec === null) {
+    overlayClone.timelineEndSec = overlayClone.fragment.durationSec;
     tag = 'crit,';
   }
-  return `Video ${index} :${tag} v${index}, ${Math.round(overlayClone.timelineStart)}, ${Math.round(overlayClone.timelineEnd)}`;
+  let overlayId = 'video' + index;
+  let title = `Video ${index} (${overlayClone.fragment.startSec}s - ${overlayClone.fragment.endSec}s)`;
+  if (isCaption) {
+    title = 'Captions ' + title;
+    overlayId = 'caption' + index;
+  }
+  return `${title} :${tag} ${overlayId}, ${Math.round(overlayClone.timelineStartSec)}, ${Math.round(overlayClone.timelineEndSec)}`;
 }

@@ -26,6 +26,10 @@ export class SourceService {
     return this.httpService.postDataToService<IAgentSource>(Endpoints.Sources.Source, source);
   }
 
+  public async updateSource(source: IAgentSource) {
+    return this.httpService.putDataToService<IAgentSource>(`${Endpoints.Sources.Source}/${source.id}`, source);
+  }
+
   public async deleteSource(id: string) {
     return this.httpService.deleteDataFromService(`${Endpoints.Sources.Source}/${id}`);
   }

@@ -35,34 +35,56 @@ export class CompositionEditorComponent implements OnInit {
   }
 
   public downloadComposition() {
+    const HardCodeTotalDurationInFrames = 900;
+    const composition: CompositionProps = {
+      overlays: [],
+      durationInFrames: HardCodeTotalDurationInFrames,
+      width: 1920,
+      height: 1080,
+      fps: 30,
+    };
+
     for (const overlay of this.videoProject?.compositionPlan?.overlays || []) {
-      overlay.sourceId;
       const source = this.videoProject?.sources?.find(source => source.reference._id === overlay.sourceId);
       if (!source) throw new Error('No source found');
       console.log('source', source);
 
       if (source.reference.type === 'youtube') {
-        const videoOverlay: Overlay = getVideoOverlay(source.reference);
-        this.overlays.push(videoOverlay);
+        const videoOverlay: ClipOverlay = getVideoOverlay(source.reference, overlay);
+        composition.overlays.push(videoOverlay);
+
+        if (source.reference.video.remotionCaptions) {
+          const captionsOverlay: CaptionOverlay = getCaptionsOverlay(source.reference, videoOverlay._overlayStartSec || 0);
+          composition.overlays.push(captionsOverlay);
+        }
       }
     }
 
-    // this.downloadJson(composition, 'composition');
+    downloadJson(composition, 'composition');
   }
 
   public buildOverlays(compositionPlan: IOverlayPlan[]) {
     const youtubeSource = this.videoProject?.sources?.find(source => source.reference.type === 'youtube');
     if (!youtubeSource) throw new Error('No youtube source found');
-    const videoOverlay: Overlay = getVideoOverlay(youtubeSource.reference);
 
-    const captionsOverlay: Overlay = getCaptionsOverlay(youtubeSource.reference);
+    const overlays: Overlay[] = [];
+    for (const overlay of compositionPlan) {
+      const videoOverlay: Overlay = getVideoOverlay(youtubeSource.reference, overlay);
+      overlays.push(videoOverlay);
 
-    const durationInSeconds = 20;
-    const durationInFrames = durationInSeconds * FPS;
+      if (youtubeSource.reference.video.remotionCaptions) {
+        // IMPROVE:  this assume ill want all time captions, if they are i added, but probably i should add in composition plan
+        const captionsOverlay: Overlay = getCaptionsOverlay(youtubeSource.reference, videoOverlay._overlayStartSec || 0);
+        overlays.push(captionsOverlay);
+      }
+    }
+
+    // think, how do i know the total duration of my video.
+    const FIX_THIS_TIME = 20;
 
     const composition: CompositionProps = {
-      overlays: [videoOverlay, captionsOverlay],
-      durationInFrames: durationInFrames,
+      overlays: [...overlays],
+      durationInFrames: FIX_THIS_TIME * FPS,
       width: 1920,
       height: 1080,
       fps: FPS,
@@ -70,30 +92,37 @@ export class CompositionEditorComponent implements OnInit {
   }
 
   // this should be in core
-  public downloadJson(jsonObject: Record<string, any>, fileName: string) {
-    const jsonData = JSON.stringify(jsonObject, null, 2);
-    const blob = new Blob([jsonData], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${fileName}.json`;
-    a.click();
-    window.URL.revokeObjectURL(url);
-  }
 }
 
-function getCaptionsOverlay(videoSource: IAgentSource): CaptionOverlay {
-  const captions = videoSource.video.remotionCaptions || [];
+function downloadJson(jsonObject: Record<string, any>, fileName: string) {
+  const jsonData = JSON.stringify(jsonObject, null, 2);
+  const blob = new Blob([jsonData], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${fileName}.json`;
+  a.click();
+  window.URL.revokeObjectURL(url);
+}
 
-  const tikTokCaptions = createTikTokStyleCaptions({
-    captions,
-    combineTokensWithinMilliseconds: 2000,
-  });
+function getCaptionsOverlay(videoSource: IAgentSource, offsetSeconds: number): CaptionOverlay {
+  const captions = videoSource.video.captions?.remotion || [];
 
+  const tikTokCaptions = createTikTokStyleCaptions({ captions, combineTokensWithinMilliseconds: 2000 });
+
+  downloadJson(tikTokCaptions, 'tiktok-captions');
   const captionsRVE = tikTokCaptions.pages.map(remotionTiktokPageToCaptionRVE);
   console.log('Result of transform captionsRVE', captionsRVE);
+  // adjust millseconds to video start time
+  captionsRVE.forEach(caption => {
+    caption.startMs = caption.startMs - offsetSeconds * 1000;
+    caption.endMs = caption.endMs - offsetSeconds * 1000;
+    caption.words.forEach(word => {
+      word.startMs = word.startMs - offsetSeconds * 1000;
+      word.endMs = word.endMs - offsetSeconds * 1000;
+    });
+  });
 
-  debugger;
   if (!captions.length) throw new Error('No captions source found');
   console.log('captions', captions);
   const captionsOverlay: CaptionOverlay = {

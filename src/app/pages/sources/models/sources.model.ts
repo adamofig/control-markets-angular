@@ -1,4 +1,4 @@
-import { Caption } from '@remotion/captions';
+import { Caption, TikTokPage } from '@remotion/captions';
 
 export interface AuditDate {
   createdAt: string;
@@ -38,7 +38,12 @@ export interface IVideoSource {
   video: CloudStorageData;
   frames: IImageSource[];
   transcription: any;
-  remotionCaptions?: Caption[];
+  // remotionCaptions?: Caption[];
+  captions?: {
+    remotion?: Caption[];
+    tiktokStyle?: TikTokPage[];
+    tiktokStyleSpanish?: TikTokPage[];
+  };
   description: string;
 }
 export interface IAgentSource extends AuditDate {
