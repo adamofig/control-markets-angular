@@ -9,11 +9,12 @@ import { VideoAnalizerService, VideoAnalysisDto } from '../../video-analizer/vid
 import { TagModule } from 'primeng/tag';
 import { createTikTokStyleCaptions, Caption } from '@remotion/captions';
 import { openAiWhisperApiToCaptions } from '@remotion/openai-whisper';
-import { CaptionExtractionService } from './caption-extraction.service';
-
+import { CaptionExtractionService } from '../services/caption-extraction.service';
+import { TabsModule } from 'primeng/tabs';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-source-detail',
-  imports: [DividerModule, ButtonModule, TagModule],
+  imports: [DividerModule, ButtonModule, TagModule, TabsModule, CommonModule],
   templateUrl: './source-detail.component.html',
   styleUrl: './source-detail.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -45,15 +46,16 @@ export class SourceDetailComponent {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    await this.updateSource();
-    this.startPolling();
+    await this.getSource();
+    // TODO: use this polling technique only when analisis process starts
+    // this.startPolling();
   }
 
   ngOnDestroy(): void {
     this.stopPolling();
   }
 
-  public async updateSource() {
+  public async getSource() {
     const source = await this.sourceService.getSource(this.sourceId);
     if (this.source?.statusDescription !== source.statusDescription) {
       this.statusHistory.push(source.statusDescription);
@@ -73,7 +75,7 @@ export class SourceDetailComponent {
     this.pollCount = 0;
     this.pollingInterval = setInterval(async () => {
       this.pollCount++;
-      await this.updateSource();
+      await this.getSource();
 
       // Stop polling if source is finished or we've reached 15 attempts
       if ((this.source && this.source.status === 'finished') || this.pollCount >= 15) {
@@ -193,11 +195,34 @@ export class SourceDetailComponent {
 
   public async extractRemotionCaptions() {
     try {
-      this.captionsService.extractRemotionCaptions(this.source!);
+      await this.captionsService.extractRemotionCaptions(this.source!);
       this.cdr.detectChanges();
+      this.toastService.success({ title: 'Remotion captions extracted', subtitle: 'Remotion captions extracted successfully' });
     } catch (error) {
       console.error('Error extracting remotion captions', error);
       this.toastService.error({ title: 'Error extracting remotion captions', subtitle: `Error: ${error}` });
+    }
+  }
+
+  public async extractTiktokStylePaginatedCaptions() {
+    try {
+      await this.captionsService.extractTiktokStyleCaptions(this.source!);
+      this.cdr.detectChanges();
+      this.toastService.success({ title: 'Tiktok style captions extracted', subtitle: 'Tiktok style captions extracted successfully' });
+    } catch (error) {
+      console.error('Error extracting tiktok style captions', error);
+      this.toastService.error({ title: 'Error extracting tiktok style captions', subtitle: `Error: ${error}` });
+    }
+  }
+
+  public async translateTiktokStylePaginatedCaptions() {
+    try {
+      await this.captionsService.translateTiktokStylePaginatedCaptions(this.source!);
+      this.cdr.detectChanges();
+      this.toastService.success({ title: 'Tiktok style captions translated', subtitle: 'Tiktok style captions translated successfully' });
+    } catch (error) {
+      console.error('Error translating tiktok style captions', error);
+      this.toastService.error({ title: 'Error translating tiktok style captions', subtitle: `Error: ${error}` });
     }
   }
 }

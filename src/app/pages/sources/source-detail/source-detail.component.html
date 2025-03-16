@@ -120,52 +120,147 @@
     <b>Transcription</b>
   </p-divider>
 
-  @if(source?.video?.transcription){
-  <div>
-    <h5>Transcription</h5>
-    <div>Duration: {{ source?.video?.transcription.duration }} - Language: {{ source?.video?.transcription.language }}</div>
-    <div>{{ source?.video?.transcription.text }}</div>
-
-    @if(source?.video?.transcription?.segments){
-    <div>
-      <h5>Segments</h5>
-      <ul>
-        @for(segment of source?.video?.transcription?.segments; track segment.id) {
-        <li>{{ segment.start }} - {{ segment.end }} segs: {{ segment.text }}</li>
-        }
-      </ul>
-    </div>
-
-    @if(source?.video?.transcription?.words){
-    <div>
-      <h5>Transcription words</h5>
-    </div>
-    } }
-  </div>
-  } @else {
-  <div>
-    <h5>No transcription found</h5>
-    <p-button label="Extract Transcription" (click)="extractTranscription()"></p-button>
-  </div>
-  } @if(!source?.video?.captions?.remotion){
   <h5>Captions</h5>
 
-  <div style="display: flex; gap: 10px; align-items: center">
-    <p-button label="Extract Remotion Captions" (click)="extractRemotionCaptions()" variant="outlined"></p-button>
+  <div class="card">
+    <p-tabs value="0">
+      <p-tablist>
+        <p-tab value="0">
+          <b style="margin-right: 10px">Whisper Transcription</b>
+          <p-tag icon="pi pi-arrow-right" />
+        </p-tab>
 
-    <p-tag icon="pi pi-arrow-right" />
+        <p-tab value="1">
+          <b style="margin-right: 10px">Remotion Captions</b>
+          <p-tag icon="pi pi-arrow-right" />
+        </p-tab>
+        <p-tab value="2">
+          <b style="margin-right: 10px">Paginated Captions</b>
 
-    <p-button label="Extract Tiktok Style" (click)="extractRemotionCaptions()" variant="outlined"></p-button>
-    <p-tag icon="pi pi-arrow-right" />
+          <p-tag icon="pi pi-arrow-right" />
+        </p-tab>
+        <p-tab value="3">
+          <b style="margin-right: 10px">Spanish Paginated</b>
+        </p-tab>
+      </p-tablist>
+      <p-tabpanels>
+        <p-tabpanel value="0">
+          @if(source?.video?.transcription){
+          <div>
+            <h5>Transcription</h5>
+            <strong>Duration: {{ source?.video?.transcription.duration }} - Language: {{ source?.video?.transcription.language }}</strong>
+            <p>{{ source?.video?.transcription.text }}</p>
 
-    <p-button label="Translate tiktok style to spanish" (click)="extractRemotionCaptions()" variant="outlined"></p-button>
+            @if(source?.video?.transcription?.words){
+            <div>
+              <h5>Words</h5>
+              <ul style="max-height: 400px; overflow-y: auto">
+                @for(segment of source?.video?.transcription?.words; track segment.id) {
+                <li>
+                  <b>{{ segment.word }}</b>
+                  {{ segment.start | number : '1.2-2' }} - {{ segment.end | number : '1.2-2' }}
+                </li>
+                }
+              </ul>
+            </div>
+
+            @if(source?.video?.transcription?.words){
+            <div>
+              <h5>Transcription words</h5>
+            </div>
+            } }
+          </div>
+          } @else {
+          <div>
+            <h5>No transcription found</h5>
+            <p-button label="Extract Transcription" (click)="extractTranscription()"></p-button>
+          </div>
+          }
+
+        </p-tabpanel>
+        <p-tabpanel value="1">
+          <p class="m-0">
+            @if(source?.video?.captions?.remotion){
+            <div>
+              <h5>Remotion Captions</h5>
+              <ul>
+                @for(caption of source?.video?.captions?.remotion; track caption) {
+                <li>
+                  <b>{{ caption.text }}</b>
+                  {{ caption.startMs | number : '1.2-2' }} - {{ caption.endMs | number : '1.2-2' }}
+                </li>
+                }
+              </ul>
+            </div>
+            } @else {
+            <div>
+              <h5>No remotion captions found</h5>
+              <p-button label="Extract Remotion Captions" (click)="extractRemotionCaptions()" variant="outlined"></p-button>
+            </div>
+            }
+
+          </p>
+
+        </p-tabpanel>
+        <p-tabpanel value="2">
+          <p class="m-0">
+            @if(source?.video?.captions?.tiktokStyle){
+            <div>
+              <h5>Paginated Captions</h5>
+              @for(page of source?.video?.captions?.tiktokStyle; track page) {
+                <ul>
+                  <li>
+                    <b>{{ page.text }}</b>
+                    <br>
+                    @for(token of page.tokens; track token) {
+                    <span> <i>{{ token.text }}</i> {{ token.fromMs }} - {{ token.toMs }} </span>
+                    }
+                  </li>
+                </ul>
+              }
+            </div>
+            } 
+            @else {
+            <div>
+              <h5>No paginated captions found</h5>
+          <p-button label="Translate tiktok style to spanish" (click)="extractTiktokStylePaginatedCaptions()" variant="outlined"></p-button>
+            </div>
+            }
+          </p>
+        </p-tabpanel>
+
+                <p-tabpanel value="3">
+          <p class="m-0">
+            @if(source?.video?.captions?.tiktokStyleSpanish){
+            <div>
+              <h5>Spanish Paginated Captions</h5>
+              @for(page of source?.video?.captions?.tiktokStyleSpanish; track page) {
+                <ul>
+                  <li>
+                    <b>{{ page.text }}</b>
+                    <br>
+                    @for(token of page.tokens; track token) {
+                    <span> <i>{{ token.text }}</i> {{ token.fromMs }} - {{ token.toMs }} </span>
+                    }
+                  </li>
+                </ul>
+              }
+            </div>
+            } 
+            @else {
+            <div>
+              <h5>No spanish paginated captions found</h5>
+          <p-button label="Translate tiktok style to spanish" (click)="translateTiktokStylePaginatedCaptions()" variant="outlined"></p-button>
+            </div>
+            }
+          </p>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
   </div>
-  } @else {
-  <div>
-    <h5>Remotion Captions</h5>
-    <div>{{ source?.video?.captions?.remotion }}</div>
-  </div>
-  } @if (source?.video?.frames) {
+
+
+   @if (source?.video?.frames) {
   <div>
     <h5>Frames</h5>
     <div style="display: flex; flex-wrap: wrap; gap: 10px">
