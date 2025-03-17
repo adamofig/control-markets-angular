@@ -13,7 +13,7 @@ import {
   IAgentCard,
   AgentCardsAbstractService,
   CONVERSATION_AI_TOKEN,
-} from '@dataclouder/conversation-system';
+} from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { NotionService } from '../../tasks/services/notion.service';

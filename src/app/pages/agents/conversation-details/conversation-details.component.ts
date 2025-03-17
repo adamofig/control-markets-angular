@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
-import { IAgentCard, DcAgentCardDetailsComponent } from '@dataclouder/conversation-system';
+import { IAgentCard, DcAgentCardDetailsComponent } from '@dataclouder/ngx-agent-cards';
 
 @Component({
   selector: 'app-conversation-details',

@@ -21,8 +21,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MarkdownModule, MARKED_OPTIONS, MERMAID_OPTIONS } from 'ngx-markdown';
 import { SecurityContext } from '@angular/core';
 // DC Libs
-import { provideChatAIService, provideUserDataExchange } from '@dataclouder/conversation-system';
-import { provideLessonsService, provideNotionService } from '@dataclouder/lessons';
+import { provideChatAIService, provideUserDataExchange } from '@dataclouder/ngx-agent-cards';
+import { provideLessonsService, provideNotionService } from '@dataclouder/ngx-lessons';
 import { provideAuthConfig } from '@dataclouder/app-auth';
 import { provideToastAlert } from '@dataclouder/ngx-core';
 // Local

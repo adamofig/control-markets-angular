@@ -1,4 +1,4 @@
-import { IAgentCard } from '@dataclouder/conversation-system';
+import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 
 export interface ISourceTask {
   id: string;

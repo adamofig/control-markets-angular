@@ -6,7 +6,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ToastAlertService } from 'src/app/services/toast.service';
 import { DialogModule } from 'primeng/dialog';
-import { ChatMessage, DCConversationPromptBuilderService } from '@dataclouder/conversation-system';
+import { ChatMessage, DCConversationPromptBuilderService } from '@dataclouder/ngx-agent-cards';
 import { AgentCardService } from 'src/app/services/agent-cards.service';
 @Component({
   selector: 'app-task-list',

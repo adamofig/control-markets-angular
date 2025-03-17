@@ -217,6 +217,7 @@ export class SourceDetailComponent {
 
   public async translateTiktokStylePaginatedCaptions() {
     try {
+      this.toastService.info({ title: 'Translating tiktok style paginated captions', subtitle: 'this can take a while... a lot...' });
       await this.captionsService.translateTiktokStylePaginatedCaptions(this.source!);
       this.cdr.detectChanges();
       this.toastService.success({ title: 'Tiktok style captions translated', subtitle: 'Tiktok style captions translated successfully' });

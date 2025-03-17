@@ -10,7 +10,7 @@ import {
   IConversationSettings,
   IAgentResponseDTO,
   IAIModel,
-} from '@dataclouder/conversation-system';
+} from '@dataclouder/ngx-agent-cards';
 import { HttpService } from './http.service';
 import { UserService } from '../dc-user-module/user.service';
 import { Endpoints } from '../core/enums';
@@ -142,7 +142,7 @@ export class AgentCardService implements AgentCardsAbstractService {
     return await this.httpService.postDataToService(`${Endpoints.ConversationCard.AgentChat}`, conversationFiltered, 'python');
   }
 
-  public async callInstruction(prompt: string, model: IAIModel = {}): Promise<any> {
+  public async callInstruction(prompt: string, model: IAIModel = {}): Promise<IAgentResponseDTO> {
     const messages = [{ content: prompt, role: ChatRole.User }];
     const conversationDto = { messages, model };
     return await this.httpService.postDataToService(`${Endpoints.ConversationCard.AgentChat}`, conversationDto, 'python');
