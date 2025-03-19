@@ -13,17 +13,8 @@ $RECYCLE.BIN/
 log.txt
 
 *.keystore
-*.environment*
 
 # Environment files
-/src/environments/environment.*
-/src/environments/environment.ts
-*.environment.*
-environment.*.ts
-environment.ts
-environment.prod.ts
-environment.development.ts
-environment.local.ts
 
 /.sourcemaps
 /.versions
