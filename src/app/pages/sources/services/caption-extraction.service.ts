@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { openAiWhisperApiToCaptions } from '@remotion/openai-whisper';
 import { Caption, createTikTokStyleCaptions } from '@remotion/captions';
 
 import { IAgentSource } from '../models/sources.model';
 import { SourceService } from '../sources.service';
 import { AgentCardService } from 'src/app/services/agent-cards.service';
+import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+// import { DCProgressToastComponent } from '@dataclouder/ngx-core';
 import { chunk } from 'lodash';
 
 // import { extractJsonFromString } from '@dataclouder/ngx-core';
@@ -13,7 +15,11 @@ import { chunk } from 'lodash';
   providedIn: 'root',
 })
 export class CaptionExtractionService {
-  constructor(private sourceService: SourceService, private agentCardService: AgentCardService) {}
+  constructor(
+    private sourceService: SourceService,
+    private agentCardService: AgentCardService,
+    @Inject(TOAST_ALERTS_TOKEN) private toastAlerts: ToastAlertsAbstractService
+  ) {}
 
   public async extractRemotionCaptions(source: IAgentSource): Promise<Caption[]> {
     console.log('Extracting remotion captions', source);
@@ -53,33 +59,36 @@ export class CaptionExtractionService {
   }
 
   public async translateTiktokStylePaginatedCaptions(source: IAgentSource) {
+    // Bueno este es mi primer intento, funciona peor no al 100%
     if (!source?.video?.captions?.tiktokStyle) {
       console.error('First extract tiktok style captions, cant proceed with translation');
       return;
     }
-
     const paginatedCaptions = source?.video?.captions?.tiktokStyle;
 
     const chunkedCaptions = chunk(paginatedCaptions, 15);
-    console.log('Chunked captions', chunkedCaptions);
-    return;
 
-    // One aprach is to translate the text only for page text.
-    // const pagesText = extractPagesText(paginatedCaptions);
-    // const prompt = getPromptTranslatePageText(JSON.stringify(pagesText));
+    const translatedPages: any[] = [];
 
-    // Another approach is to translate the text and the timing information.
+    for (const [index, chuck] of chunkedCaptions.entries()) {
+      this.toastAlerts.info({ title: 'Translating tiktok style paginated captions', subtitle: `Translating chunk ${index + 1} of ${chunkedCaptions.length}` });
+      const prompt = getPromptTranslatePaginatedCaptions(JSON.stringify(chuck));
+      console.log('Prompt', prompt);
 
-    const prompt = getPromptTranslatePaginatedCaptions(JSON.stringify(paginatedCaptions));
+      const response = await this.agentCardService.callInstruction(prompt, { provider: 'google' });
+      console.log('Response', response);
+      const translationChuck = extractJsonFromString(response.content);
+      console.log('Translated pages', translationChuck);
+      if (Array.isArray(translationChuck)) {
+        translatedPages.push(...translationChuck);
+      } else {
+        // translatedPages.push(translationChuck);
+      }
+    }
 
-    console.log('Prompt', prompt);
-
-    const response = await this.agentCardService.callInstruction(prompt, { provider: 'google' });
-    console.log('Response', response);
-    const translatedPages = extractJsonFromString(response.content);
     console.log('Translated pages', translatedPages);
-
-    console.log('Translating tiktok style paginated captions', source);
+    const update: any = { video: { captions: { tiktokStyleSpanish: translatedPages } } };
+    await this.sourceService.updateSource(source.id, update);
 
     return {};
   }
@@ -91,15 +100,28 @@ function extractPagesText(paginatedCaptions: any) {
 
 export function extractJsonFromString(content: string): any {
   console.log(content);
-  // Match either an array [...] or an object {...}
-  const jsonMatch = content.match(/(\[[\s\S]*?\]|\{[\s\S]*?\})/);
-  if (!jsonMatch) return null;
-
   try {
-    return JSON.parse(jsonMatch[0]);
-  } catch (error) {
-    console.error('Error parsing JSON:', error);
-    return null;
+    // First try to parse the entire string as JSON
+    return JSON.parse(content);
+  } catch {
+    try {
+      // If that fails, try to find the first valid JSON object or array in the string
+      const matches = content.match(/(\{[\s\S]*\}|\[[\s\S]*\])/g);
+      if (!matches) return null;
+
+      // Try each matched potential JSON string until we find a valid one
+      for (const match of matches) {
+        try {
+          return JSON.parse(match);
+        } catch {
+          continue;
+        }
+      }
+      return null;
+    } catch (error) {
+      console.error('Error parsing JSON:', error);
+      return null;
+    }
   }
 }
 
@@ -113,11 +135,10 @@ This is for a song bilingual subtitles. Note that due to the nature of the trans
 may be is not possible to adapt 100% accuarate but try your best to preserve the meaning while adapting to Spanish grammar and structure.
 Use semantic alignment approach, try to adapt the words and sentences to their English counterparts based on meaning, rather than a strict word-by-word translation.
 keep the exact timing information from the English subtitles. 
-
 \`\`\`json
 ${jsonCaptions}
 \`\`\`
-
+return only the same JSON structure but in spanish, nothing else.
 `;
 }
 

@@ -12,6 +12,7 @@ import { openAiWhisperApiToCaptions } from '@remotion/openai-whisper';
 import { CaptionExtractionService } from '../services/caption-extraction.service';
 import { TabsModule } from 'primeng/tabs';
 import { CommonModule } from '@angular/common';
+import { DCProgressToastComponent } from '@dataclouder/ngx-core';
 @Component({
   selector: 'app-source-detail',
   imports: [DividerModule, ButtonModule, TagModule, TabsModule, CommonModule],

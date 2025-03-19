@@ -42,8 +42,6 @@ import { CompositionEditorComponent } from '../composition-editor-adapter/compos
     AccordionModule,
     CompositionEditorComponent,
     MarkdownModule,
-    MarkdownPipe,
-    AsyncPipe,
   ],
   templateUrl: './video-project-form.html',
   styleUrl: './video-project-form.css',

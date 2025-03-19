@@ -223,7 +223,7 @@
             @else {
             <div>
               <h5>No paginated captions found</h5>
-          <p-button label="Translate tiktok style to spanish" (click)="extractTiktokStylePaginatedCaptions()" variant="outlined"></p-button>
+          <p-button label="Extract paginated captions" (click)="extractTiktokStylePaginatedCaptions()" variant="outlined"></p-button>
             </div>
             }
           </p>
@@ -277,3 +277,5 @@
   }
 </div>
 }
+
+<!-- <dc-progress-toast [visible]="isToastVisible" [progress]="toastProgress" (processCompleted)="onProcessCompleted()" (processClosed)="onProcessClosed()"></dc-progress-toast> -->

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
-import { CommonModule, DatePipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TiktokService } from '../tiktoks/tiktok.service';
@@ -8,7 +7,7 @@ import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-source-form',
-  imports: [ButtonModule, TableModule, DatePipe],
+  imports: [ButtonModule, TableModule],
   templateUrl: './tiktok-analysis.html',
   styleUrl: './tiktok-analysis.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
