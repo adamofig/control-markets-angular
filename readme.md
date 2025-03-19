@@ -138,6 +138,10 @@ https://github.com/dataclouder-dev/dataclouder-template-node https://github.com/
     firebase deploy --only hosting:dataclouder-dev : change .firebaserc to dataclouder-dev
 ```
 
+### Change Theme
+
+There are two files that control css mypreset.ts overrides primeng and global.scss general style that also overides ionic
+
 #### deploy using make
 
     make deploy

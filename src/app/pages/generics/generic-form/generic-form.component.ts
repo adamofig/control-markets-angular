@@ -12,16 +12,36 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
-import { AspectType, CropperComponentModal, CropImageSettings } from '@dataclouder/storage-uploader';
 
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+import { ExtraForms } from './formly/formly.component';
+
+class User {
+  firstName: string = '';
+  lastName: string = '';
+  email: string = '';
+  age: number = 0;
+  isActive: boolean = false;
+}
 
 @Component({
   selector: 'app-source-form',
-  imports: [ReactiveFormsModule, CardModule, TextareaModule, DropdownModule, ButtonModule, SelectModule, InputTextModule, ChipModule, TooltipModule],
+  imports: [
+    ReactiveFormsModule,
+    CardModule,
+    TextareaModule,
+    DropdownModule,
+    ButtonModule,
+    SelectModule,
+    InputTextModule,
+    ChipModule,
+    TooltipModule,
+    ExtraForms,
+  ],
   templateUrl: './generic-form.component.html',
   styleUrl: './generic-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class GenericFormComponent implements OnInit {
   // public imageSettings: CropImageSettings = {
@@ -84,17 +104,14 @@ export class GenericFormComponent implements OnInit {
 
   async save() {
     if (this.genericForm.valid) {
-      const generic = { ...this.genericForm.value, ...this.generic } as IGeneric;
+      const generic = { ...this.generic, ...this.genericForm.value } as IGeneric;
 
       const result = await this.genericService.saveGeneric(generic);
 
       if (!this.genericId) {
         this.router.navigate([result.id], { relativeTo: this.route });
       }
-      this.toastService.success({
-        title: 'Origen guardado',
-        subtitle: 'El origen ha sido guardado correctamente',
-      });
+      this.toastService.success({ title: 'Origen guardado', subtitle: 'El origen ha sido guardado correctamente' });
     }
   }
 
