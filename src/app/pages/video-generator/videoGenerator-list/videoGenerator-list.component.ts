@@ -88,4 +88,8 @@ export class VideoGeneratorListComponent extends PaginationBase implements OnIni
     console.log('onNew');
     this.router.navigate(['./edit'], { relativeTo: this.route });
   }
+
+  public goToEdit(item: any) {
+    this.doAction('edit', item);
+  }
 }

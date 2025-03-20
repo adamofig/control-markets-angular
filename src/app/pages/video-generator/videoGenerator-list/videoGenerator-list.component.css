@@ -5,5 +5,11 @@
 .card-source {
   margin-bottom: 10px;
   position: relative;
+
+
+}
+
+.clickable {
+  cursor: pointer;
 }
 
