@@ -47,7 +47,7 @@ function extractTimes(overlay: IOverlayPlan, index: string, isCaption: boolean =
   }
 
   if (overlayClone.timelineEndSec === null) {
-    overlayClone.timelineEndSec = overlayClone.fragment.durationSec;
+    overlayClone.timelineEndSec = overlayClone.fragment.durationSec || 0;
     tag = 'crit,';
   }
   let overlayId = 'video' + index;

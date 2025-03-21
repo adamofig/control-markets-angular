@@ -11,7 +11,7 @@
       direction="left"
       [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
   </div>
-  <p-card [header]="source.name">
+  <p-card [header]="source.name" (click)="doAction('view', source)" class="clickable">
     <div>
       @if(source?.thumbnail?.url) {
       <img style="width: 200px; border-radius: 20px" [src]="source?.thumbnail?.url" alt="Thumbnail" />

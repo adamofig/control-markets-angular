@@ -79,6 +79,16 @@ body.dark::before {
   
 
 .p-select, .p-inputtext, .p-textarea{
-    background: rgba(233, 233, 232, 0.378) !important;
-    backdrop-filter: blur(1px);
+    background: rgba(255, 255, 255, 0.614) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
 }
+
+.p-dropdown {
+    background: rgba(38, 0, 255, 0.378) !important;
+    backdrop-filter: blur(1px) !important;
+    z-index: 3;
+}
+
+.clickable {
+    cursor: pointer;
+  }

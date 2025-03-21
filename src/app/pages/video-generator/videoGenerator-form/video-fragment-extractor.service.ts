@@ -1,13 +1,31 @@
 import { Injectable } from '@angular/core';
 import { VideoGeneratorService } from '../videoGenerators.service';
 import { extractJsonFromString } from '@dataclouder/ngx-core';
-import { BEST_FRAGMENT_DEFINITION, IFragmentExtraction, IVideoProjectGenerator } from '../models/videoGenerators.model';
+import { BEST_FRAGMENT_DEFINITION, ICompositionPlan, IFragmentExtraction, IVideoProjectGenerator, IOverlayPlan } from '../models/videoGenerators.model';
+import { IAgentSource } from '../../sources/models/sources.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class VideoFragmentExtractorService {
   constructor(private videoGeneratorService: VideoGeneratorService) {}
+
+  public getVideoFullFragment(source: IAgentSource): ICompositionPlan {
+    console.log('source', source);
+    const duration = source.video?.transcription?.duration || 0;
+    const overlay: IOverlayPlan = {
+      type: 'video',
+      sourceId: source.id,
+      timelineStartSec: 0,
+      timelineEndSec: duration,
+      fragment: {
+        startSec: 0,
+        endSec: duration,
+        durationSec: duration,
+      },
+    };
+    return { overlays: [overlay] };
+  }
 
   public async getAndSaveBestFragments(
     videoProject: IVideoProjectGenerator,

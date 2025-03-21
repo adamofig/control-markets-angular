@@ -29,7 +29,6 @@ export class ExtraForms {
 
   onSubmit() {
     console.log(this.form);
-    debugger;
     alert(JSON.stringify(this.model, null, 4));
   }
 }

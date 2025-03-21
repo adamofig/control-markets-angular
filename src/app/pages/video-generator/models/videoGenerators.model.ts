@@ -1,31 +1,39 @@
+import { CloudStorageData } from '@dataclouder/ngx-cloud-storage';
+import { IAgentSource } from '../../sources/models/sources.model';
+
 export interface AuditDate {
   createdAt?: string;
   updatedAt?: string;
 }
 
-// export interface IVideoProjectGeneratorRelation {
-//   id: string;
-//   name: string;
-//   description: string;
-//   reference?: IAgentSource;
-// }
+export interface SourceWithReference {
+  id: string;
+  name: string;
+  description: string;
+  reference?: IAgentSource;
+  thumbnail?: CloudStorageData;
+}
+
+export interface ICompositionPlan {
+  overlays: IOverlayPlan[];
+}
 
 export interface IVideoProjectGenerator extends AuditDate {
   id: string;
   name?: string;
   description?: string;
   type?: string;
-  sources?: any[];
-  compositionPlan?: { overlays: IOverlayPlan[] };
+  sources?: SourceWithReference[];
+  compositionPlan?: ICompositionPlan;
 }
 
 export interface IFragmentExtraction {
   startSec: number | null;
   endSec: number | null;
-  reason: string;
-  suggestions: string;
-  instructions: string;
-  durationSec: number;
+  reason?: string;
+  suggestions?: string;
+  instructions?: string;
+  durationSec?: number;
   // Ideas for futute
   // priority?: number; // For AI ordering logic
   // tags?: string[]; // For categorization

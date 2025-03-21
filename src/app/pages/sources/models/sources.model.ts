@@ -31,13 +31,21 @@ export interface IAudioSource {
   description: string;
 }
 
+export interface WhisperTranscription {
+  text: string;
+  duration: number;
+  segments: any[];
+  words: any[];
+  language: string;
+}
+
 export interface IVideoSource {
   id_platform: string;
   audio: CloudStorageData;
   separatedAudio?: { vocals?: CloudStorageData; no_vocals?: CloudStorageData };
   video: CloudStorageData;
   frames: IImageSource[];
-  transcription: any;
+  transcription?: WhisperTranscription;
   // remotionCaptions?: Caption[];
   captions?: {
     remotion?: Caption[];

@@ -1,6 +1,8 @@
 <dc-filter-bar (onNew)="onNew()"></dc-filter-bar>
 <br />
 
+<h5>Lista de Proyectos de Video</h5>
+
 @for (videoGenerator of videoGenerators; track videoGenerator.id) {
 <div class="card-source">
   <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
@@ -12,6 +14,11 @@
       [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
   </div>
   <p-card (click)="goToEdit(videoGenerator)" class="clickable" [header]="videoGenerator.name">
+    @for (source of videoGenerator.sources; track source.id) {
+    <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; display: inline-block; margin: 5px">
+      <img style="width: 100%; height: 100%; object-fit: cover" [src]="source.thumbnail?.url" class="video-generator-image" />
+    </div>
+    }
     <p class="m-0">{{ videoGenerator.description | slice : 0 : 250 }}...</p>
     <span>{{ videoGenerator.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
   </p-card>

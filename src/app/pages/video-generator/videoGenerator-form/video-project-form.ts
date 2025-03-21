@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IVideoProjectGenerator } from '../models/videoGenerators.model';
+import { ICompositionPlan, IVideoProjectGenerator, SourceWithReference } from '../models/videoGenerators.model';
 import { VideoGeneratorService } from '../videoGenerators.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
@@ -22,6 +22,8 @@ import { MarkdownPipe } from 'src/app/shared/pipes/markdown.pipe';
 import { AsyncPipe } from '@angular/common';
 import { VideoFragmentExtractorService } from './video-fragment-extractor.service';
 import { CompositionEditorComponent } from '../composition-editor-adapter/composition-editor-adapter';
+import { IAgentSource } from '../../sources/models/sources.model';
+import { downloadComposition, downloadCompositionV2 } from '../composition-editor-adapter/overlay-download.util';
 
 @Component({
   selector: 'app-video-project-form',
@@ -155,5 +157,21 @@ export class VideoProjectFormComponent implements OnInit {
     }
     this.isLookingFragments = false;
     this.cdr.detectChanges();
+  }
+
+  public async downloadComposition(source: SourceWithReference) {
+    if (!source.reference) {
+      this.toastService.warn({ title: 'Error', subtitle: 'No se ha seleccionado ninguna fuente' });
+      return;
+    }
+
+    const compositionPlan: ICompositionPlan = this.videoFragmentExtractorService.getVideoFullFragment(
+      this.videoProject?.sources?.[0]?.reference as IAgentSource
+    );
+
+    downloadCompositionV2([source], compositionPlan!);
+    alert('Working on this...');
+    console.log('source', source.reference?.video);
+    this.toastService.success({ title: 'Composición descargada', subtitle: 'La composición ha sido descargada correctamente' });
   }
 }

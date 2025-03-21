@@ -9,7 +9,7 @@ export const environment = {
   iosClientId: '',
   backendNodeUrl: 'http://localhost:8080',
   // backendNodeUrl: 'https://niche-market-905545672221.us-central1.run.app',
-  backendPythonUrl: 'http://localhost:8000',
+  backendPythonUrl: 'http://localhost:8011',
   // backendPythonUrl: 'https://python-server-905545672221.us-central1.run.app',
 
   mobile: {

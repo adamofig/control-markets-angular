@@ -34,24 +34,37 @@
 </div>
 
 <br />
+
 <p-card header="Fuentes">
-  @if (videoProject?.sources?.length) { @for (source of videoProject?.sources; track source.reference?.id) { @if(source.reference?.thumbnail?.url) {
-  <img style="width: 200px; border-radius: 20px" [src]="source.reference?.thumbnail?.url" alt="Thumbnail" />
-  } @else {
-  <img style="width: 200px; border-radius: 20px" src="assets/images/default-feature1.png" alt="Thumbnail" />
-  }
+  @if (videoProject?.sources?.length) { @for (source of videoProject?.sources; track source.reference?.id) {
 
   <div style="display: flex; gap: 10px">
-    <p>{{ source.reference?.name }} - {{ source.reference?.description }}</p>
-    <p-button icon="pi pi-times" severity="danger" (click)="removeSource(source)" />
-    <p-button label="Go To Source" [link]="true" (click)="goToSource(source)" />
-  </div>
+    <div>
+      @if(source.reference?.thumbnail?.url) {
+      <img style="width: 200px; border-radius: 20px" [src]="source.reference?.thumbnail?.url" alt="Thumbnail" />
+      } @else {
+      <img style="width: 200px; border-radius: 20px" src="assets/images/default-feature1.png" alt="Thumbnail" />
+      }
+    </div>
 
-  <div style="display: flex; gap: 15px">
-    <div>Video: <p-checkbox [ngModel]="!!source.reference?.video?.video" [binary]="true" [disabled]="true" /></div>
-    <div>Audio: <p-checkbox [ngModel]="!!source.reference?.video?.audio" [binary]="true" [disabled]="true" /></div>
-    <div>Transcripción: <p-checkbox [ngModel]="!!source.reference?.video?.transcription" [binary]="true" [disabled]="true" /></div>
-    <div>Imagen: <p-checkbox [ngModel]="!!source.reference?.video?.image" [binary]="true" [disabled]="true" /></div>
+    <div>
+      <div style="display: flex; gap: 10px">
+        <p>{{ source.reference?.name }} - {{ source.reference?.description }}</p>
+        <p-button icon="pi pi-times" severity="danger" (click)="removeSource(source)" />
+      </div>
+
+      <div style="display: flex; gap: 15px">
+        <div>Video: <p-checkbox [ngModel]="!!source.reference?.video?.video" [binary]="true" [disabled]="true" /></div>
+        <div>Audio: <p-checkbox [ngModel]="!!source.reference?.video?.audio" [binary]="true" [disabled]="true" /></div>
+        <div>Transcripción: <p-checkbox [ngModel]="!!source.reference?.video?.transcription" [binary]="true" [disabled]="true" /></div>
+        <div>Imagen: <p-checkbox [ngModel]="!!source.reference?.video?.frames" [binary]="true" [disabled]="true" /></div>
+      </div>
+
+      <div style="margin-top: 5px">
+        <p-button label="Go To Source" [link]="true" (click)="goToSource(source)" />
+        <p-button label="Download Composition" severity="info" [link]="true" (click)="downloadComposition(source)" />
+      </div>
+    </div>
   </div>
   } } @else {
   <p>No hay fuentes, Agrega una fuente para comenzar</p>

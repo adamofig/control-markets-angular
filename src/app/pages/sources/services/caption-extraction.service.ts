@@ -23,7 +23,7 @@ export class CaptionExtractionService {
 
   public async extractRemotionCaptions(source: IAgentSource): Promise<Caption[]> {
     console.log('Extracting remotion captions', source);
-    const captions = openAiWhisperApiToCaptions({ transcription: source?.video?.transcription });
+    const captions = openAiWhisperApiToCaptions({ transcription: source?.video?.transcription! });
     console.log('Captions', captions);
     // Additional process becouse i don't like the precision of the timestamps
     captions.captions.forEach(caption => {
