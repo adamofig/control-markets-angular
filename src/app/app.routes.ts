@@ -216,24 +216,24 @@ export const routes: Routes = [
       },
       {
         path: 'video-generator',
-        loadComponent: () => import('./pages/video-generator/videoGenerators.component').then(m => m.VideoGeneratorsComponent),
+        loadComponent: () => import('./pages/video-projects-gen/videoGenerators.component').then(m => m.VideoGeneratorsComponent),
         children: [
           {
             path: '',
-            loadComponent: () => import('./pages/video-generator/videoGenerator-list/videoGenerator-list.component').then(m => m.VideoGeneratorListComponent),
+            loadComponent: () => import('./pages/video-projects-gen/video-project-list/videoGenerator-list.component').then(m => m.VideoGeneratorListComponent),
           },
           {
             path: 'edit',
-            loadComponent: () => import('./pages/video-generator/videoGenerator-form/video-project-form').then(m => m.VideoProjectFormComponent),
+            loadComponent: () => import('./pages/video-projects-gen/video-projects-form/video-project-form').then(m => m.VideoProjectFormComponent),
           },
           {
             path: 'edit/:id',
-            loadComponent: () => import('./pages/video-generator/videoGenerator-form/video-project-form').then(m => m.VideoProjectFormComponent),
+            loadComponent: () => import('./pages/video-projects-gen/video-projects-form/video-project-form').then(m => m.VideoProjectFormComponent),
           },
           {
             path: 'details/:id',
             loadComponent: () =>
-              import('./pages/video-generator/videoGenerator-detail/video-project-detail.component').then(m => m.VideoGeneratorDetailComponent),
+              import('./pages/video-projects-gen/video-projects-detail/video-project-detail.component').then(m => m.VideoGeneratorDetailComponent),
           },
         ],
       },

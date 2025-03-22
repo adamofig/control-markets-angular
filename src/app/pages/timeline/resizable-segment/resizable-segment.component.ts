@@ -4,8 +4,8 @@ import { IonicModule } from '@ionic/angular';
 import { DragDropModule, CdkDragMove, CdkDragStart, CdkDragEnd } from '@angular/cdk/drag-drop';
 
 export interface ResizableSegment {
-  start: number;
-  end: number;
+  startSec: number;
+  endSec: number;
   color?: string;
 }
 
@@ -20,7 +20,7 @@ export interface ResizableSegment {
 export class ResizableSegmentComponent implements OnInit, OnDestroy {
   @ViewChild('segmentContainer') segmentContainer!: ElementRef;
 
-  @Input({ required: true }) segment: ResizableSegment = { start: 0, end: 100 };
+  @Input({ required: true }) segment: ResizableSegment = { startSec: 0, endSec: 100 };
   @Input() totalDurationSec = 100; // Duration in seconds
   @Input() containerWidthPx = 0; // Width in pixels
   @Input() color = '#F4D35E'; // Default color
@@ -54,8 +54,8 @@ export class ResizableSegmentComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Initialize with segment values
-    this.currentStart.set(this.segment.start);
-    this.currentEnd.set(this.segment.end);
+    this.currentStart.set(this.segment.startSec);
+    this.currentEnd.set(this.segment.endSec);
   }
 
   ngOnDestroy() {
@@ -84,8 +84,8 @@ export class ResizableSegmentComponent implements OnInit, OnDestroy {
   // Handle drag operations
   onDragStarted(event: CdkDragStart): void {
     this.isDragging.set(true);
-    this.initialSegmentStart = this.segment.start;
-    this.initialSegmentEnd = this.segment.end;
+    this.initialSegmentStart = this.segment.startSec;
+    this.initialSegmentEnd = this.segment.endSec;
   }
 
   onDragMoved(event: CdkDragMove): void {
@@ -96,7 +96,7 @@ export class ResizableSegmentComponent implements OnInit, OnDestroy {
     const dragDistanceInTime = event.distance.x * pixelToTimeRatio;
 
     // Create new segment with updated position
-    const segmentDuration = this.segment.end - this.segment.start;
+    const segmentDuration = this.segment.endSec - this.segment.startSec;
     let newStart = Math.max(0, this.initialSegmentStart + dragDistanceInTime);
 
     // Ensure segment doesn't go beyond timeline
@@ -108,11 +108,7 @@ export class ResizableSegmentComponent implements OnInit, OnDestroy {
     this.currentStart.set(newStart);
     this.currentEnd.set(newStart + segmentDuration);
 
-    const updatedSegment: ResizableSegment = {
-      ...this.segment,
-      start: newStart,
-      end: newStart + segmentDuration,
-    };
+    const updatedSegment: ResizableSegment = { ...this.segment, startSec: newStart, endSec: newStart + segmentDuration };
 
     this.segmentChange.emit(updatedSegment);
   }
@@ -135,8 +131,8 @@ export class ResizableSegmentComponent implements OnInit, OnDestroy {
     this.handleDragStartX = event.clientX;
     this.lastDeltaX = 0;
 
-    this.initialSegmentStart = this.segment.start;
-    this.initialSegmentEnd = this.segment.end;
+    this.initialSegmentStart = this.segment.startSec;
+    this.initialSegmentEnd = this.segment.endSec;
 
     // Add temporary event listeners for resize operation
     document.addEventListener('mousemove', this.handleResizeMove);
@@ -158,8 +154,8 @@ export class ResizableSegmentComponent implements OnInit, OnDestroy {
       this.handleDragStartX = touch.clientX;
       this.lastDeltaX = 0;
 
-      this.initialSegmentStart = this.segment.start;
-      this.initialSegmentEnd = this.segment.end;
+      this.initialSegmentStart = this.segment.startSec;
+      this.initialSegmentEnd = this.segment.endSec;
 
       // Add temporary event listeners for resize operation
       document.addEventListener('touchmove', this.handleResizeTouchMove, { passive: false });
@@ -195,10 +191,7 @@ export class ResizableSegmentComponent implements OnInit, OnDestroy {
       this.currentStart.set(newStart);
 
       // Emit the updated segment
-      const updatedSegment = {
-        ...this.segment,
-        start: newStart,
-      };
+      const updatedSegment: ResizableSegment = { ...this.segment, startSec: newStart };
       this.segmentChange.emit(updatedSegment);
     } else {
       // Resizing from the end (right handle)
@@ -208,10 +201,7 @@ export class ResizableSegmentComponent implements OnInit, OnDestroy {
       this.currentEnd.set(newEnd);
 
       // Emit the updated segment
-      const updatedSegment = {
-        ...this.segment,
-        end: newEnd,
-      };
+      const updatedSegment: ResizableSegment = { ...this.segment, endSec: newEnd };
       this.segmentChange.emit(updatedSegment);
     }
   };
@@ -246,20 +236,14 @@ export class ResizableSegmentComponent implements OnInit, OnDestroy {
       const newStart = Math.max(0, Math.min(this.currentEnd() - minSegmentDuration, this.currentStart() + incrementalTimeDelta));
       this.currentStart.set(newStart);
 
-      const updatedSegment = {
-        ...this.segment,
-        start: newStart,
-      };
+      const updatedSegment: ResizableSegment = { ...this.segment, startSec: newStart };
       this.segmentChange.emit(updatedSegment);
     } else {
       // Resizing from the end (right handle)
       const newEnd = Math.min(this.totalDurationSec, Math.max(this.currentStart() + minSegmentDuration, this.currentEnd() + incrementalTimeDelta));
       this.currentEnd.set(newEnd);
 
-      const updatedSegment = {
-        ...this.segment,
-        end: newEnd,
-      };
+      const updatedSegment: ResizableSegment = { ...this.segment, endSec: newEnd };
       this.segmentChange.emit(updatedSegment);
     }
   };

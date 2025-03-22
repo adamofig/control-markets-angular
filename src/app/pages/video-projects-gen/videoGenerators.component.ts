@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
   selector: 'app-videoGenerators',
   imports: [RouterModule],
   templateUrl: './videoGenerators.component.html',
-  styleUrl: './videoGenerators.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VideoGeneratorsComponent {}

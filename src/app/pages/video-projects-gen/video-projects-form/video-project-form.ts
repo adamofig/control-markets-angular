@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit }
 import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ICompositionPlan, IFragmentExtraction, IVideoProjectGenerator, SourceWithReference } from '../models/videoGenerators.model';
-import { VideoGeneratorService } from '../videoGenerators.service';
+import { VideoGeneratorService } from '../services/video-project-gen.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
@@ -19,7 +19,7 @@ import { MarkdownModule } from 'ngx-markdown';
 
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 
-import { VideoFragmentExtractorService } from './video-fragment-extractor.service';
+import { VideoFragmentExtractorService } from '../services/video-fragment-extractor.service';
 import { CompositionEditorComponent } from '../composition-editor-adapter/composition-editor-adapter';
 import { IAgentSource } from '../../sources/models/sources.model';
 import { downloadVideoSourceAsComposition } from '../composition-editor-adapter/overlay-download.util';
