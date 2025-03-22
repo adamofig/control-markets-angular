@@ -1,6 +1,9 @@
 <p-divider align="center" type="dotted">
   <b> Video Analysis </b>
 </p-divider>
+<div>
+  {{source?.name}} - {{ source?.type }}
+</div>
 
 @if(source?.thumbnail?.url) {
 <div style="display: flex; justify-content: center; position: relative">

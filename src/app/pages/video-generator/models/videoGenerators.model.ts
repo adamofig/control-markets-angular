@@ -56,6 +56,7 @@ export interface IOverlayPlan {
   timelineStartSec: number | null;
   timelineEndSec: number | null;
   fragment: IFragmentExtraction;
+  fragments: IFragmentExtraction[];
   // Idaeas for future
   // properties: any; // potencially css effects and more.
   // transitionIn?: string; // Transition effect entering this fragment

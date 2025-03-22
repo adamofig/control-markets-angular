@@ -76,7 +76,7 @@
 <p-card header="Extractor de fragmentos">
   <p-select
     [options]="videoProject?.sources"
-    [(ngModel)]="fragmentExtraction.sourceId"
+    [(ngModel)]="fragmentExtraction.selectedSourceId"
     optionLabel="name"
     optionValue="id"
     placeholder="Selecciona una fuente" />
@@ -92,8 +92,13 @@
     </textarea>
   </div>
 
-  <p-button [loading]="isLookingFragments" (click)="getAndSaveBestFragments()" label="Encontrar fragmentos" [disabled]="!fragmentExtraction.sourceId">
-  </p-button>
+  <div>
+    <p-button [loading]="isLookingFragments" (click)="getAndSaveBestFragments()" label="Encontrar fragmentos" [disabled]="!fragmentExtraction.selectedSourceId">
+    </p-button>
+
+    <p-button [loading]="isLookingFragments" (click)="manualExtractFragments()" label="Selección Manual" [disabled]="!fragmentExtraction.selectedSourceId">
+    </p-button>
+  </div>
 
   <div>
     @if (videoProject?.compositionPlan?.overlays?.length) {
@@ -141,7 +146,11 @@
 <p-card header="Plan de Composición Final">
   <!-- <h6>Ejemplo para el futuro</h6> -->
   <!-- <markdown [src]="'assets/m.md'" mermaid></markdown> -->
+
+  @if (videoProject?.compositionPlan?.overlays?.length) {
+  <app-resizable-segment-demo [videoProject]="videoProject"></app-resizable-segment-demo>
   <app-rve [videoProject]="videoProject"></app-rve>
+  }
 </p-card>
 
 }

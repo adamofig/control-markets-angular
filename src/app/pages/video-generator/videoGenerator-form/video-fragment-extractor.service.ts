@@ -15,7 +15,7 @@ export class VideoFragmentExtractorService {
     const duration = source.video?.transcription?.duration || 0;
     const overlay: IOverlayPlan = {
       type: 'video',
-      sourceId: source.id,
+      sourceId: source.id || source._id || '',
       timelineStartSec: 0,
       timelineEndSec: duration,
       fragment: {
@@ -23,6 +23,7 @@ export class VideoFragmentExtractorService {
         endSec: duration,
         durationSec: duration,
       },
+      fragments: [],
     };
     return { overlays: [overlay] };
   }
@@ -187,6 +188,7 @@ For the selected segments or combination, please provide:
       timelineStartSec: null,
       timelineEndSec: null,
       fragment: extractionResult,
+      fragments: [],
     });
 
     // Save the updated project

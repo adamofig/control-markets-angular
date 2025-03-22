@@ -55,6 +55,7 @@ export interface IVideoSource {
   description: string;
 }
 export interface IAgentSource extends AuditDate {
+  _id?: string;
   id: string;
   name: string;
   description: string;

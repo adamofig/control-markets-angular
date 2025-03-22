@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ICompositionPlan, IVideoProjectGenerator, SourceWithReference } from '../models/videoGenerators.model';
+import { ICompositionPlan, IFragmentExtraction, IVideoProjectGenerator, SourceWithReference } from '../models/videoGenerators.model';
 import { VideoGeneratorService } from '../videoGenerators.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
@@ -18,12 +18,12 @@ import { AccordionModule } from 'primeng/accordion';
 import { MarkdownModule } from 'ngx-markdown';
 
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
-import { MarkdownPipe } from 'src/app/shared/pipes/markdown.pipe';
-import { AsyncPipe } from '@angular/common';
+
 import { VideoFragmentExtractorService } from './video-fragment-extractor.service';
 import { CompositionEditorComponent } from '../composition-editor-adapter/composition-editor-adapter';
 import { IAgentSource } from '../../sources/models/sources.model';
-import { downloadComposition, downloadCompositionV2 } from '../composition-editor-adapter/overlay-download.util';
+import { downloadVideoSourceAsComposition } from '../composition-editor-adapter/overlay-download.util';
+import { ResizableSegmentDemoComponent } from '../../timeline/resizable-segment-demo/resizable-segment-demo.component';
 
 @Component({
   selector: 'app-video-project-form',
@@ -44,6 +44,7 @@ import { downloadComposition, downloadCompositionV2 } from '../composition-edito
     AccordionModule,
     CompositionEditorComponent,
     MarkdownModule,
+    ResizableSegmentDemoComponent,
   ],
   templateUrl: './video-project-form.html',
   styleUrl: './video-project-form.css',
@@ -54,7 +55,7 @@ export class VideoProjectFormComponent implements OnInit {
 
   public fragmentExtraction = {
     instructions: '',
-    sourceId: '',
+    selectedSourceId: '',
   };
 
   public videoGeneratorForm = this.fb.group({
@@ -143,9 +144,32 @@ export class VideoProjectFormComponent implements OnInit {
     this.router.navigate(['../../../sources/details', source.id], { relativeTo: this.route });
   }
 
+  public async manualExtractFragments() {
+    const compositionPlan: ICompositionPlan = { overlays: [] };
+    const duration = this.videoProject?.sources?.find(s => s.id === this.fragmentExtraction.selectedSourceId)?.reference?.video?.transcription?.duration || 0;
+
+    const fragment: IFragmentExtraction = { startSec: 0, endSec: duration, durationSec: duration };
+    compositionPlan.overlays.push({
+      type: 'video',
+      sourceId: this.fragmentExtraction.selectedSourceId,
+      timelineStartSec: 0,
+      timelineEndSec: 0,
+      fragment,
+      fragments: [fragment],
+    });
+    this.videoProject!.compositionPlan = compositionPlan;
+    await this.videoGeneratorService.saveVideoGenerator(this.videoProject as IVideoProjectGenerator);
+    this.toastService.success({ title: 'Fragmentos manualmente extraídos', subtitle: 'Los fragmentos han sido extraídos correctamente' });
+    this.cdr.detectChanges();
+  }
+
   public async getAndSaveBestFragments() {
     this.isLookingFragments = true;
-    const result = await this.videoFragmentExtractorService.getAndSaveBestFragments(this.videoProject as IVideoProjectGenerator, this.fragmentExtraction);
+
+    const result = await this.videoFragmentExtractorService.getAndSaveBestFragments(this.videoProject as IVideoProjectGenerator, {
+      instructions: this.fragmentExtraction.instructions,
+      sourceId: this.fragmentExtraction.selectedSourceId,
+    });
     if (result) {
       // TODO: update the project with the new fragment extraction
       this.videoProject!.compositionPlan = result.compositionPlan;
@@ -165,13 +189,12 @@ export class VideoProjectFormComponent implements OnInit {
       return;
     }
 
-    const compositionPlan: ICompositionPlan = this.videoFragmentExtractorService.getVideoFullFragment(
-      this.videoProject?.sources?.[0]?.reference as IAgentSource
-    );
+    const compositionPlan: ICompositionPlan = this.videoFragmentExtractorService.getVideoFullFragment(source.reference as IAgentSource);
 
-    downloadCompositionV2([source], compositionPlan!);
+    downloadVideoSourceAsComposition(source.reference as IAgentSource, compositionPlan!);
     alert('Working on this...');
     console.log('source', source.reference?.video);
+
     this.toastService.success({ title: 'Composición descargada', subtitle: 'La composición ha sido descargada correctamente' });
   }
 }

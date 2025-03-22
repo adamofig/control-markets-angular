@@ -44,6 +44,7 @@ export function getVideoOverlay(videoSource: IAgentSource, overlay: IOverlayPlan
 }
 
 export function getCaptionsOverlay(videoSource: IAgentSource, offsetSeconds: number): CaptionOverlay {
+  const durationFrames = (videoSource.video.transcription?.duration || 20) * FPS; // for now im getting from transcription check how to dinamically get it adjust
   const captions = videoSource.video.captions?.remotion || [];
 
   const tikTokCaptions = createTikTokStyleCaptions({ captions, combineTokensWithinMilliseconds: 2000 });
@@ -69,7 +70,7 @@ export function getCaptionsOverlay(videoSource: IAgentSource, offsetSeconds: num
     top: 68,
     width: 964,
     height: 1780,
-    durationInFrames: 20 * FPS,
+    durationInFrames: durationFrames,
     from: 0,
     captions: captionsRVE,
     type: OverlayType.CAPTION,
@@ -136,27 +137,24 @@ export function downloadComposition(videoProject: IVideoProjectGenerator) {
   downloadJson(composition, 'composition');
 }
 
-export function downloadCompositionV2(sources: SourceWithReference[], compositionPlan: ICompositionPlan) {
-  const HardCodeTotalDurationInFrames = 900;
+export function downloadVideoSourceAsComposition(source: IAgentSource, compositionPlan: ICompositionPlan) {
+  const durationFrames = (source.video.transcription?.duration || 30) * FPS; // for now im getting from transcription
+
   const composition: CompositionProps = {
     overlays: [],
-    durationInFrames: HardCodeTotalDurationInFrames,
+    durationInFrames: durationFrames,
     width: 1920,
     height: 1080,
     fps: 30,
   };
 
   for (const overlay of compositionPlan.overlays || []) {
-    const source = sources.find(source => source.reference?.id === overlay.sourceId);
-    if (!source) throw new Error('No source found');
-    console.log('source', source);
-
-    if (source.reference?.type === 'youtube') {
-      const videoOverlay: ClipOverlay = getVideoOverlay(source.reference, overlay);
+    if (source.type === 'youtube') {
+      const videoOverlay: ClipOverlay = getVideoOverlay(source, overlay);
       composition.overlays.push(videoOverlay);
 
-      if (source.reference?.video?.captions) {
-        const captionsOverlay: CaptionOverlay = getCaptionsOverlay(source.reference, videoOverlay._overlayStartSec || 0);
+      if (source.video?.captions) {
+        const captionsOverlay: CaptionOverlay = getCaptionsOverlay(source, videoOverlay._overlayStartSec || 0);
         composition.overlays.push(captionsOverlay);
       }
     }

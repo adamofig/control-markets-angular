@@ -7,12 +7,10 @@ import { ButtonModule } from 'primeng/button';
 import { ToastAlertService } from 'src/app/services/toast.service';
 import { VideoAnalizerService, VideoAnalysisDto } from '../../video-analizer/video-analizer.service';
 import { TagModule } from 'primeng/tag';
-import { createTikTokStyleCaptions, Caption } from '@remotion/captions';
-import { openAiWhisperApiToCaptions } from '@remotion/openai-whisper';
 import { CaptionExtractionService } from '../services/caption-extraction.service';
 import { TabsModule } from 'primeng/tabs';
 import { CommonModule } from '@angular/common';
-import { DCProgressToastComponent } from '@dataclouder/ngx-core';
+import { LoadingBarService } from '@dataclouder/ngx-core';
 @Component({
   selector: 'app-source-detail',
   imports: [DividerModule, ButtonModule, TagModule, TabsModule, CommonModule],
@@ -43,13 +41,13 @@ export class SourceDetailComponent {
     private sourceService: SourceService,
     private cdr: ChangeDetectorRef,
     private toastService: ToastAlertService,
-    private captionsService: CaptionExtractionService
+    private captionsService: CaptionExtractionService,
+    private loadingBarService: LoadingBarService
   ) {}
 
   async ngOnInit(): Promise<void> {
     await this.getSource();
     // TODO: use this polling technique only when analisis process starts
-    // this.startPolling();
   }
 
   ngOnDestroy(): void {
@@ -79,10 +77,18 @@ export class SourceDetailComponent {
       await this.getSource();
 
       // Stop polling if source is finished or we've reached 15 attempts
-      if ((this.source && this.source.status === 'finished') || this.pollCount >= 15) {
-        this.stopPolling();
+      console.log('Status y conteo Polling', this.source?.status, this.pollCount);
+      if (this.source?.status === 'completed' || this.pollCount >= 35) {
+        this.finishPolling();
       }
-    }, 1000); // Poll every second
+    }, 2500); // Poll every second
+  }
+
+  private finishPolling(): void {
+    this.loading.videoProcessing = false;
+    this.loadingBarService.successAndHide();
+    this.stopPolling();
+    this.cdr.detectChanges();
   }
 
   private stopPolling(): void {
@@ -149,6 +155,7 @@ export class SourceDetailComponent {
   }
 
   public async processVideo() {
+    this.loadingBarService.fakeProgressWithTime(60);
     this.loading.videoProcessing = true;
     this.toastService.info({ title: 'Processing video', subtitle: 'Please wait...' });
     const result = await this.videoAnalizerService.startAnalyzeVideo({
@@ -157,10 +164,9 @@ export class SourceDetailComponent {
       id: this.source?.id ?? '',
       options: {},
     });
-    console.log('processVideo result, should i reaload?', result);
-    this.loading.videoProcessing = false;
+    this.startPolling();
     this.cdr.detectChanges();
-    this.toastService.success({ title: 'Video processed', subtitle: 'Video processed successfully' });
+    this.toastService.success({ title: 'Video processing started', subtitle: 'Please wait...' });
   }
 
   public extractFrames() {
@@ -176,11 +182,14 @@ export class SourceDetailComponent {
   }
 
   public async extractVocals() {
+    this.loadingBarService.fakeProgressWithTime(100);
     this.loading.extractingVocals = true;
     console.log('Extracting vocals', this.source);
     const params: VideoAnalysisDto = { url: this.source?.sourceUrl ?? '', website: 'youtube', id: this.source?.id ?? '', options: { only_vocals: true } };
     await this.videoAnalizerService.startAnalyzeVideo(params);
     this.loading.extractingVocals = false;
+    // TODO aqui hacer una llamada the pooling, para ver si ya termino.
+    // this.loadingBarService.successAndHide();
   }
 
   public async extractTranscription() {

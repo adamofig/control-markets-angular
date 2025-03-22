@@ -1,0 +1,24 @@
+<div class="segment-container" #segmentContainer>
+  <div
+    class="segment"
+    [style.left.%]="leftPositionPercent()"
+    [style.width.%]="widthPercent()"
+    [style.background]="segment.color || color"
+    [ngClass]="segmentClasses()">
+    <div class="handle left-handle" (mousedown)="onResizeHandleMouseDown($event, 'start')" (touchstart)="onResizeHandleTouchStart($event, 'start')"></div>
+
+    <div
+      class="segment-content"
+      cdkDrag
+      cdkDragLockAxis="x"
+      [cdkDragDisabled]="resizeMode() !== 'none'"
+      (mousedown)="onSegmentMouseDown($event)"
+      (cdkDragStarted)="onDragStarted($event)"
+      (cdkDragMoved)="onDragMoved($event)"
+      (cdkDragEnded)="onDragEnded($event)">
+      <!-- Content area (can be customized by the user) -->
+    </div>
+
+    <div class="handle right-handle" (mousedown)="onResizeHandleMouseDown($event, 'end')" (touchstart)="onResizeHandleTouchStart($event, 'end')"></div>
+  </div>
+</div>
