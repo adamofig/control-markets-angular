@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 
 import { DCFilterBarComponent, PaginationBase, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { VideoGeneratorService } from '../services/video-project-gen.service';
-import { IVideoProjectGenerator } from '../models/videoGenerators.model';
+import { IVideoProjectGenerator } from '../models/video-project.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { MenuItem } from 'primeng/api';

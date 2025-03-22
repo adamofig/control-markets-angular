@@ -4,7 +4,7 @@ import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { SegFramesCalcPipe } from './seg-frames-calc.pipe';
 import { JsonPipe } from '@angular/common';
-import { IOverlayPlan, IVideoProjectGenerator } from '../models/videoGenerators.model';
+import { IOverlayPlan, IVideoProjectGenerator } from '../models/video-project.model';
 import { MarkdownModule } from 'ngx-markdown';
 import { createGanttChart } from './gantt-diagram.util';
 import { downloadComposition, getCaptionsOverlay, getVideoOverlay } from './overlay-download.util';

@@ -1,4 +1,4 @@
-import { IOverlayPlan } from '../models/videoGenerators.model';
+import { IOverlayPlan } from '../models/video-project.model';
 
 export function createGanttChart(plannedOverlays: IOverlayPlan[] | undefined): string {
   if (!plannedOverlays) return '';

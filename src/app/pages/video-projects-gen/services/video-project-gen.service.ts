@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpService } from '../../../services/http.service';
 import { Endpoints } from '../../../core/enums';
-import { IVideoProjectGenerator } from '../models/videoGenerators.model';
+import { IVideoProjectGenerator } from '../models/video-project.model';
 import { FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { ToastAlertService } from 'src/app/services/toast.service';
 import { AgentCardService } from 'src/app/services/agent-cards.service';

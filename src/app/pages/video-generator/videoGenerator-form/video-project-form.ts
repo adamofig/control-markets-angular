@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ICompositionPlan, IFragmentExtraction, IVideoProjectGenerator, SourceWithReference } from '../models/video-project.model';
-import { VideoGeneratorService } from '../services/video-project-gen.service';
+import { ICompositionPlan, IFragmentExtraction, IVideoProjectGenerator, SourceWithReference } from '../models/videoGenerators.model';
+import { VideoGeneratorService } from '../videoGenerators.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
@@ -19,11 +19,11 @@ import { MarkdownModule } from 'ngx-markdown';
 
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 
-import { VideoFragmentExtractorService } from '../services/video-fragment-extractor.service';
+import { VideoFragmentExtractorService } from './video-fragment-extractor.service';
 import { CompositionEditorComponent } from '../composition-editor-adapter/composition-editor-adapter';
 import { IAgentSource } from '../../sources/models/sources.model';
 import { downloadVideoSourceAsComposition } from '../composition-editor-adapter/overlay-download.util';
-import { TimeLineManager } from '../timeline/timeline-manager/timeline-manager';
+import { TimeLineManager } from '../../video-projects-gen/timeline/timeline-manager/timeline-manager';
 
 @Component({
   selector: 'app-video-project-form',

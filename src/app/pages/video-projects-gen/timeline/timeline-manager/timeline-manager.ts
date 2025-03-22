@@ -2,11 +2,12 @@ import { Component, ChangeDetectionStrategy, signal, OnInit, AfterViewInit, Inpu
 import { CommonModule } from '@angular/common';
 import { ResizableSegmentComponent, ResizableSegment } from '../resizable-segment/resizable-segment.component';
 import { IOverlayPlan, IVideoProjectGenerator } from '../../models/video-project.model';
+import { VideoGeneratorService } from '../../services/video-project-gen.service';
 
 @Component({
-  selector: 'app-resizable-segment-demo',
-  templateUrl: './resizable-segment-demo.component.html',
-  styleUrls: ['./resizable-segment-demo.component.scss'],
+  selector: 'app-timeline-manager',
+  templateUrl: './timeline-manager.html',
+  styleUrls: ['./timeline-manager.scss'],
   standalone: true,
   imports: [CommonModule, ResizableSegmentComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,6 +19,8 @@ export class TimeLineManager implements OnInit, AfterViewInit {
   containerWidthPx = signal<number>(0);
 
   segment = signal<ResizableSegment>({ startSec: 0, endSec: 100, color: '#E5E5C7' });
+
+  constructor(private videoGeneratorService: VideoGeneratorService) {}
 
   ngOnInit(): void {
     this.durationSeconds = Math.ceil(this.videoProject?.sources?.[0].reference?.video.transcription?.duration ?? 100);
@@ -59,17 +62,20 @@ export class TimeLineManager implements OnInit, AfterViewInit {
 
   public saveComposition(): void {
     // TODO: for now overwrites everything, take care of this.
-    // const videoOverlay: IOverlayPlan = {
-    //   type: 'video',
-    //   sourceId: this.videoProject?.sources?.[0].id || '',
-    //   timelineStartSec: this.segment()?.startSec,
-    //   timelineEndSec: this.segment()?.endSec,
-    //   fragment: {
-    //     startSec: this.segment()?.startSec,
-    //     endSec: this.segment()?.endSec,
-    //   },
-    // };
-    // const overlay: IOverlayPlan[] = this.videoProject?.compositionPlan?.overlays || [videoOverlay];
-    // this.videoProject?.compositionPlan?.overlays;
+    const videoOverlay: IOverlayPlan = {
+      type: 'video',
+      sourceId: this.videoProject?.sources?.[0].id || '',
+      timelineStartSec: this.segment()?.startSec,
+      timelineEndSec: this.segment()?.endSec,
+      fragment: {
+        startSec: this.segment()?.startSec,
+        endSec: this.segment()?.endSec,
+      },
+      fragments: [],
+    };
+    const overlay: IOverlayPlan[] = [videoOverlay];
+    this.videoProject!.compositionPlan!.overlays = overlay;
+
+    this.videoGeneratorService.saveVideoGenerator(this.videoProject!);
   }
 }

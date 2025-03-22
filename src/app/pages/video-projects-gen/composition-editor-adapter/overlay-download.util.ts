@@ -1,6 +1,6 @@
 import { createTikTokStyleCaptions, TikTokPage } from '@remotion/captions';
 import { IAgentSource } from '../../sources/models/sources.model';
-import { ICompositionPlan, IOverlayPlan, IVideoProjectGenerator, SourceWithReference } from '../models/videoGenerators.model';
+import { ICompositionPlan, IOverlayPlan, IVideoProjectGenerator, SourceWithReference } from '../models/video-project.model';
 import { CaptionOverlay, ClipOverlay, CompositionProps, FPS, OverlayType } from './composition-editor-adapter.models';
 import { Caption as CaptionRVE } from './composition-editor-adapter.models';
 

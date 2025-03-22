@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { VideoGeneratorService } from './video-project-gen.service';
 import { extractJsonFromString } from '@dataclouder/ngx-core';
-import { BEST_FRAGMENT_DEFINITION, ICompositionPlan, IFragmentExtraction, IVideoProjectGenerator, IOverlayPlan } from '../models/videoGenerators.model';
+import { BEST_FRAGMENT_DEFINITION, ICompositionPlan, IFragmentExtraction, IVideoProjectGenerator, IOverlayPlan } from '../models/video-project.model';
 import { IAgentSource } from '../../sources/models/sources.model';
 
 @Injectable({
