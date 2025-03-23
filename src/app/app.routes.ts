@@ -66,11 +66,11 @@ export const routes: Routes = [
 
       {
         path: 'chat',
-        loadComponent: () => import('./pages/agents/agent-card-list/agent-card-list').then(m => m.ConversationCardChatComponent),
+        loadComponent: () => import('./pages/agents/agent-chat/agent-chat').then(m => m.ConversationCardChatComponent),
       },
       {
         path: 'chat/:id',
-        loadComponent: () => import('./pages/agents/agent-card-list/agent-card-list').then(m => m.ConversationCardChatComponent),
+        loadComponent: () => import('./pages/agents/agent-chat/agent-chat').then(m => m.ConversationCardChatComponent),
       },
 
       {
@@ -248,7 +248,7 @@ export const routes: Routes = [
       },
       {
         path: 'chat',
-        loadComponent: () => import('./pages/agents/conversation-card-list/agent.component').then(m => m.ChatComponentPage),
+        loadComponent: () => import('./pages/agents/agent-card-list/agent-card-list').then(m => m.ChatComponentPage),
       },
     ],
   },
