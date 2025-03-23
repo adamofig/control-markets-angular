@@ -80,9 +80,11 @@
   <p-button (click)="showAgentDetails = true" label="Agregar Agente" icon="pi pi-plus" iconPos="right" />
 </p-card>
 <!-- This is the dialog for adding an agent -->
+@if (showAgentDetails) {
 <p-dialog header="Agregar Agente" [closable]="true" [(visible)]="showAgentDetails" [draggable]="false" [modal]="true">
   <dc-agent-card-lists viewMode="table" (onSelect)="selectAgent($event)"></dc-agent-card-lists>
 </p-dialog>
+}
 
 <br />
 

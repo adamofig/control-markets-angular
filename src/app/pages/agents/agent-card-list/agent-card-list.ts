@@ -8,8 +8,8 @@ import { AgentCardService } from 'src/app/services/agent-cards.service';
   selector: 'app-conversation-card-chat',
   standalone: true,
   imports: [CommonModule, DCChatComponent],
-  templateUrl: './conversation-card-chat.component.html',
-  styleUrls: ['./conversation-card-chat.component.scss'],
+  templateUrl: './agent-card-list.html',
+  styleUrls: ['./agent-card-list.scss'],
 })
 export class ConversationCardChatComponent implements OnInit {
   @Input() conversationCard!: IAgentCard;
@@ -33,6 +33,7 @@ export class ConversationCardChatComponent implements OnInit {
   constructor(private route: ActivatedRoute, private conversationCardsService: AgentCardService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    debugger;
     this.route.paramMap.subscribe(async params => {
       // TODO fix this, card can be passed as param (WIP), or fetched from the service
       this.conversationCard = JSON.parse(params.get('conversationCard')!);
