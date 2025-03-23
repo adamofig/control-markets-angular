@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { TasksService } from '../services/tasks.service';
 import { DCFilterBarComponent, FiltersConfig, PaginationBase } from '@dataclouder/ngx-core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,15 +8,27 @@ import { ToastAlertService } from 'src/app/services/toast.service';
 import { DialogModule } from 'primeng/dialog';
 import { ChatMessage, DCConversationPromptBuilderService } from '@dataclouder/ngx-agent-cards';
 import { AgentCardService } from 'src/app/services/agent-cards.service';
+import { QuickTableComponent } from './quick-table/quick-table';
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [DCFilterBarComponent, CardModule, ButtonModule, DialogModule],
+  imports: [DCFilterBarComponent, CardModule, ButtonModule, DialogModule, QuickTableComponent],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskListComponent extends PaginationBase implements OnInit {
+  @Input() public viewTable = false;
+
+  public tasks: any[] = [];
+  loadingTasks: { [key: string]: boolean } = {};
+  public columns: string[] = ['name', 'description', 'status', 'taskType'];
+
+  public showTaksDetails = false;
+  public selectedTask: any;
+
+  public filters: FiltersConfig = { filters: {}, page: 0, rowsPerPage: 10, sort: { _id: -1 } };
+
   constructor(
     private tasksService: TasksService,
     public override router: Router,
@@ -28,15 +40,6 @@ export class TaskListComponent extends PaginationBase implements OnInit {
   ) {
     super(route, router);
   }
-
-  public tasks: any[] = [];
-  loadingTasks: { [key: string]: boolean } = {};
-
-  public showTaksDetails = false;
-  public selectedTask: any;
-
-  public filters: FiltersConfig = { filters: {}, page: 0, rowsPerPage: 10, sort: { _id: -1 } };
-
   ngOnInit() {
     this.getTasks();
   }
@@ -110,5 +113,11 @@ export class TaskListComponent extends PaginationBase implements OnInit {
   protected override async loadData(): Promise<void> {
     const tasks = await this.tasksService.getFilteredTasks(this.filters);
     this.tasks = tasks.rows;
+  }
+
+  public selectItem(item: any) {
+    console.log('onSelect');
+    // this.onSelect.emit(item);
+    alert('onSelect');
   }
 }

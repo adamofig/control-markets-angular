@@ -70,6 +70,21 @@
   <p>No hay fuentes, Agrega una fuente para comenzar</p>
   }
 </p-card>
+<br />
+
+<p-card header="Agente">
+  <p-button (click)="showAgentDetails = true" label="Agregar tarea" icon="pi pi-plus" iconPos="right" />
+</p-card>
+
+<p-dialog header="Agregar Agente" [visible]="showAgentDetails" [modal]="true" [draggable]="false" [resizable]="false" [style]="{ width: '50vw' }">
+  <dc-agent-card-lists></dc-agent-card-lists>
+</p-dialog>
+
+<br />
+
+<p-card header="Tareas">
+  <p-button (click)="showTaksDetails = true" label="Agregar tarea" icon="pi pi-plus" iconPos="right" />
+</p-card>
 
 <br />
 
@@ -154,3 +169,7 @@
 </p-card>
 
 }
+
+<p-dialog header="Agregar tarea" [visible]="showTaksDetails" [modal]="true" [draggable]="false" [resizable]="false" [style]="{ width: '50vw' }">
+  <app-task-list [viewTable]="true"></app-task-list>
+</p-dialog>

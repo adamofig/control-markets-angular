@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ResizableSegmentComponent, ResizableSegment } from '../resizable-segment/resizable-segment.component';
 import { IOverlayPlan, IVideoProjectGenerator } from '../../models/video-project.model';
 import { VideoGeneratorService } from '../../services/video-project-gen.service';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-timeline-manager',
   templateUrl: './timeline-manager.html',
   styleUrls: ['./timeline-manager.scss'],
   standalone: true,
-  imports: [CommonModule, ResizableSegmentComponent],
+  imports: [CommonModule, ResizableSegmentComponent, ButtonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimeLineManager implements OnInit, AfterViewInit {
@@ -60,7 +61,7 @@ export class TimeLineManager implements OnInit, AfterViewInit {
     return (percent / 100) * this.durationSeconds;
   }
 
-  public saveComposition(): void {
+  public saveCompositionOverlay(): void {
     // TODO: for now overwrites everything, take care of this.
     const videoOverlay: IOverlayPlan = {
       type: 'video',
@@ -76,6 +77,8 @@ export class TimeLineManager implements OnInit, AfterViewInit {
     const overlay: IOverlayPlan[] = [videoOverlay];
     this.videoProject!.compositionPlan!.overlays = overlay;
 
-    this.videoGeneratorService.saveVideoGenerator(this.videoProject!);
+    const update: Partial<IVideoProjectGenerator> = { compositionPlan: { overlays: overlay } };
+
+    this.videoGeneratorService.partialUpdateVideoGenerator(this.videoProject!.id, update);
   }
 }

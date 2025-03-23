@@ -21,7 +21,7 @@ type AdditionalOverlayProps = {
 type BaseOverlay = {
   id: number;
   durationInFrames: number;
-  from: number;
+  from: number;  // int frame where this should start
   height: number;
   row: number;
   left: number;

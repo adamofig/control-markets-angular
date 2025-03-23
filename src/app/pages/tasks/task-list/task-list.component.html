@@ -8,6 +8,8 @@
     <div>No hay tareas</div>
   </p-card>
 </div>
+} @else { @if(viewTable){
+<app-quick-table [tableData]="tasks" [columns]="columns" (onSelect)="selectItem($event)"></app-quick-table>
 } @else {
 <div class="flex flex-column gap-3">
   @for (task of tasks; track task.id) {
@@ -57,8 +59,7 @@
   </div>
   }
 </div>
-
-@if (showTaksDetails) {
+} @if (showTaksDetails) {
 <p-dialog [(visible)]="showTaksDetails" [modal]="true" [draggable]="false" [resizable]="false">
   <div>
     <p>Nombre: {{ selectedTask.name }}</p>

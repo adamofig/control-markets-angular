@@ -38,6 +38,10 @@ export class VideoGeneratorService {
     return this.httpService.postDataToService(Endpoints.VideoGenerators.VideoGenerator, videoGenerator);
   }
 
+  public async partialUpdateVideoGenerator(id: string, videoGenerator: Partial<IVideoProjectGenerator>): Promise<IVideoProjectGenerator> {
+    return this.httpService.patchDataToService(Endpoints.VideoGenerators.VideoGenerator + `/${id}`, videoGenerator);
+  }
+
   public async deleteVideoGenerator(id: string) {
     return this.httpService.deleteDataFromService(`${Endpoints.VideoGenerators.VideoGenerator}/${id}`);
   }

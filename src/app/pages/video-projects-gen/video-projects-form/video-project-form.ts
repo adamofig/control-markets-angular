@@ -24,6 +24,10 @@ import { CompositionEditorComponent } from '../composition-editor-adapter/compos
 import { IAgentSource } from '../../sources/models/sources.model';
 import { downloadVideoSourceAsComposition } from '../composition-editor-adapter/overlay-download.util';
 import { TimeLineManager } from '../timeline/timeline-manager/timeline-manager';
+import { TaskListComponent } from '../../tasks/task-list/task-list.component';
+import { DialogModule } from 'primeng/dialog';
+
+import { ConversationCardListsComponent } from '@dataclouder/ngx-agent-cards';
 
 @Component({
   selector: 'app-video-project-form',
@@ -45,6 +49,9 @@ import { TimeLineManager } from '../timeline/timeline-manager/timeline-manager';
     CompositionEditorComponent,
     MarkdownModule,
     TimeLineManager,
+    TaskListComponent,
+    DialogModule,
+    ConversationCardListsComponent,
   ],
   templateUrl: './video-project-form.html',
   styleUrl: './video-project-form.css',
@@ -52,6 +59,10 @@ import { TimeLineManager } from '../timeline/timeline-manager/timeline-manager';
 })
 export class VideoProjectFormComponent implements OnInit {
   public instructions: string = '';
+
+  public showTaksDetails = false;
+
+  public showAgentDetails = false;
 
   public fragmentExtraction = {
     instructions: '',

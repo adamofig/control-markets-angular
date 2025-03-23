@@ -5,22 +5,26 @@ import { CaptionOverlay, ClipOverlay, CompositionProps, FPS, OverlayType } from 
 import { Caption as CaptionRVE } from './composition-editor-adapter.models';
 
 export function getVideoOverlay(videoSource: IAgentSource, overlay: IOverlayPlan): ClipOverlay {
-  const _timelineStartSec = overlay.timelineStartSec || 0;
-  const _timelineEndSec = overlay.timelineEndSec || 0;
-  const _durationInSeconds = overlay.fragment.durationSec;
-  const _overlayStartSec = overlay.fragment.startSec || 0;
-  const _overlayEndSec = overlay.fragment.endSec || 0;
+  const _timelineStartSec = overlay.timelineStartSec ? parseFloat(overlay.timelineStartSec.toFixed(2)) : 0;
+  const _timelineEndSec = overlay.timelineEndSec ? parseFloat(overlay.timelineEndSec.toFixed(2)) : 0;
+  const _overlayStartSec = overlay.fragment.startSec ? parseFloat(overlay.fragment.startSec.toFixed(2)) : 0;
+  const _overlayEndSec = overlay.fragment.endSec ? parseFloat(overlay.fragment.endSec.toFixed(2)) : 0;
+  let _durationInSeconds = overlay.fragment.durationSec ? parseFloat(overlay.fragment.durationSec.toFixed(2)) : 0;
+  if (!_durationInSeconds && _overlayEndSec > 0) {
+    _durationInSeconds = _overlayEndSec - _overlayStartSec;
+  }
 
-  const videoOverlay = {
-    id: 1,
+  const videoOverlay: ClipOverlay = {
+    row: 0, // temporal
+    id: 1, // temporal
     left: 53,
     top: 68,
     width: 964,
     height: 1780,
     // TIME IN FRAMES, i think this 3 allows calculate the time in frames of the overlay.
-    from: _timelineStartSec * FPS,
-    durationInFrames: _durationInSeconds ? _durationInSeconds * FPS : 0,
-    videoStartTime: _overlayStartSec * FPS,
+    from: Math.floor(_timelineStartSec * FPS),
+    durationInFrames: _durationInSeconds ? Math.floor(_durationInSeconds * FPS) : 0,
+    videoStartTime: Math.floor(_overlayStartSec * FPS),
     // TIME IN SECONDS METADATA.
     _timelineStartSec,
     _timelineEndSec,
@@ -29,11 +33,10 @@ export function getVideoOverlay(videoSource: IAgentSource, overlay: IOverlayPlan
     _overlayEndSec,
 
     rotation: 0,
-    row: 0,
     isDragging: false,
     type: OverlayType.VIDEO,
     content: videoSource.thumbnail?.url || '',
-    src: videoSource.video.video.url,
+    src: videoSource.video.video.url || '',
     styles: {
       animation: {
         exit: 'fade',
@@ -66,6 +69,7 @@ export function getCaptionsOverlay(videoSource: IAgentSource, offsetSeconds: num
   console.log('captions', captions);
   const captionsOverlay: CaptionOverlay = {
     id: 2,
+    row: 0,
     left: 53,
     top: 68,
     width: 964,
@@ -74,7 +78,6 @@ export function getCaptionsOverlay(videoSource: IAgentSource, offsetSeconds: num
     from: 0,
     captions: captionsRVE,
     type: OverlayType.CAPTION,
-    row: 0,
     isDragging: false,
     rotation: 0,
   };
@@ -118,8 +121,12 @@ export function downloadComposition(videoProject: IVideoProjectGenerator) {
     fps: 30,
   };
 
+  let row = 0;
   for (const overlay of videoProject.compositionPlan?.overlays || []) {
-    const source = videoProject.sources?.find(source => source.reference?.id === overlay.sourceId);
+    const source = videoProject.sources?.find(source => {
+      const id = source.reference?.id || source.reference?._id;
+      return id === overlay.sourceId;
+    });
     if (!source) throw new Error('No source found');
     console.log('source', source);
 
@@ -129,7 +136,14 @@ export function downloadComposition(videoProject: IVideoProjectGenerator) {
 
       if (source.reference?.video?.captions) {
         const captionsOverlay: CaptionOverlay = getCaptionsOverlay(source.reference, videoOverlay._overlayStartSec || 0);
+        captionsOverlay.row = row;
+        videoOverlay.row = row + 1;
+        row = row + 2;
         composition.overlays.push(captionsOverlay);
+      } else {
+        // Caption should have lower row number to be above video overlay
+        videoOverlay.row = row;
+        row++;
       }
     }
   }
