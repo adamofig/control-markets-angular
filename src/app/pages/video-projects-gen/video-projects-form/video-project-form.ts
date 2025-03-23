@@ -27,7 +27,7 @@ import { TimeLineManager } from '../timeline/timeline-manager/timeline-manager';
 import { TaskListComponent } from '../../tasks/task-list/task-list.component';
 import { DialogModule } from 'primeng/dialog';
 
-import { ConversationCardListsComponent } from '@dataclouder/ngx-agent-cards';
+import { AgentCardListComponent } from '@dataclouder/ngx-agent-cards';
 
 @Component({
   selector: 'app-video-project-form',
@@ -51,7 +51,7 @@ import { ConversationCardListsComponent } from '@dataclouder/ngx-agent-cards';
     TimeLineManager,
     TaskListComponent,
     DialogModule,
-    ConversationCardListsComponent,
+    AgentCardListComponent,
   ],
   templateUrl: './video-project-form.html',
   styleUrl: './video-project-form.css',
@@ -207,5 +207,14 @@ export class VideoProjectFormComponent implements OnInit {
     console.log('source', source.reference?.video);
 
     this.toastService.success({ title: 'Composición descargada', subtitle: 'La composición ha sido descargada correctamente' });
+  }
+
+  public async selectAgent(agent: any) {
+    this.showAgentDetails = false;
+    this.videoProject!.agent = agent;
+
+    await this.videoGeneratorService.addAgent(this.videoProject!.id, agent._id);
+    this.cdr.detectChanges();
+    console.log('agent', agent);
   }
 }

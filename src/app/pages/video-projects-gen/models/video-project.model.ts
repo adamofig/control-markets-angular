@@ -1,5 +1,7 @@
 import { CloudStorageData } from '@dataclouder/ngx-cloud-storage';
 import { IAgentSource } from '../../sources/models/sources.model';
+import { IAgentTask } from '../../tasks/models/tasks-models';
+import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 
 export interface AuditDate {
   createdAt?: string;
@@ -14,6 +16,13 @@ export interface SourceWithReference {
   thumbnail?: CloudStorageData;
 }
 
+export interface AgentCardWithReference {
+  id: string;
+  title: string;
+  reference?: IAgentCard;
+  assets?: Record<string, CloudStorageData>;
+}
+
 export interface ICompositionPlan {
   overlays: IOverlayPlan[];
 }
@@ -24,6 +33,9 @@ export interface IVideoProjectGenerator extends AuditDate {
   description?: string;
   type?: string;
   sources?: SourceWithReference[];
+  // Having one is temporary in the future probably will migrate to array.
+  agent?: Partial<AgentCardWithReference>;
+  task?: Partial<IAgentTask>;
   compositionPlan?: ICompositionPlan;
 }
 

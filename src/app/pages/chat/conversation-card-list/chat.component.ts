@@ -8,7 +8,7 @@ import {
   ChatUserSettings,
   IConversationSettings,
   ChatRole,
-  ConversationCardListsComponent,
+  AgentCardListComponent,
   AudioSpeed,
   CONVERSATION_AI_TOKEN,
   AgentCardsAbstractService,
@@ -23,7 +23,7 @@ import { MenuItem } from 'primeng/api';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonContent, ConversationCardListsComponent],
+  imports: [CommonModule, FormsModule, IonContent, AgentCardListComponent],
 })
 export class ChatComponentPage implements OnInit {
   public chatUserSettings: ChatUserSettings = {

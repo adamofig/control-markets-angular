@@ -38,6 +38,15 @@ export class VideoGeneratorService {
     return this.httpService.postDataToService(Endpoints.VideoGenerators.VideoGenerator, videoGenerator);
   }
 
+  public async updateVideoGenerator(id: string, videoGenerator: Partial<IVideoProjectGenerator>): Promise<IVideoProjectGenerator> {
+    return this.httpService.putDataToService(Endpoints.VideoGenerators.VideoGenerator + `/${id}`, videoGenerator);
+  }
+
+  public async addAgent(VideoProjectId: string, agentId: string) {
+    const data = 'add-agent-card';
+    return this.httpService.patchDataToService(Endpoints.VideoGenerators.VideoGenerator + `/${VideoProjectId}/add-agent-card/${agentId}`);
+  }
+
   public async partialUpdateVideoGenerator(id: string, videoGenerator: Partial<IVideoProjectGenerator>): Promise<IVideoProjectGenerator> {
     return this.httpService.patchDataToService(Endpoints.VideoGenerators.VideoGenerator + `/${id}`, videoGenerator);
   }

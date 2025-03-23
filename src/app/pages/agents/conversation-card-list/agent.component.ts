@@ -8,7 +8,7 @@ import {
   ChatUserSettings,
   IConversationSettings,
   ChatRole,
-  ConversationCardListsComponent,
+  AgentCardListComponent,
   AudioSpeed,
   IAgentCard,
   AgentCardsAbstractService,
@@ -25,7 +25,7 @@ import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx
   templateUrl: './agent.component.html',
   styleUrls: ['./agent.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonContent, ConversationCardListsComponent],
+  imports: [CommonModule, FormsModule, IonContent, AgentCardListComponent],
 })
 export class ChatComponentPage {
   public conversationUserSettings: ChatUserSettings = {
