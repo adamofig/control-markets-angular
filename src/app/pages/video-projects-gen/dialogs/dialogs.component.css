@@ -1,3 +1,26 @@
 :host {
   display: block;
 }
+
+.dialog-form {
+  padding: 0.5rem 0;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dialog-add-button {
+  display: flex;
+  justify-content: center;
+}
+
+:host ::ng-deep textarea.p-inputtext {
+  width: 100%;
+  resize: vertical;
+}
+
+:host ::ng-deep .p-card {
+  margin-bottom: 1rem;
+}

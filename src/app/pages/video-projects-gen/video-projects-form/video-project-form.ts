@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ICompositionPlan, IFragmentExtraction, IVideoProjectGenerator, SourceWithReference } from '../models/video-project.model';
 import { VideoGeneratorService } from '../services/video-project-gen.service';
@@ -28,6 +28,7 @@ import { TaskListComponent } from '../../tasks/task-list/task-list.component';
 import { DialogModule } from 'primeng/dialog';
 
 import { AgentCardListComponent } from '@dataclouder/ngx-agent-cards';
+import { DialogsComponent } from '../dialogs/dialogs.component';
 
 @Component({
   selector: 'app-video-project-form',
@@ -52,6 +53,7 @@ import { AgentCardListComponent } from '@dataclouder/ngx-agent-cards';
     TaskListComponent,
     DialogModule,
     AgentCardListComponent,
+    DialogsComponent,
   ],
   templateUrl: './video-project-form.html',
   styleUrl: './video-project-form.css',
@@ -59,6 +61,8 @@ import { AgentCardListComponent } from '@dataclouder/ngx-agent-cards';
 })
 export class VideoProjectFormComponent implements OnInit {
   public instructions: string = '';
+
+  public dialogsForm: FormArray = this.fb.array([] as any[]);
 
   public showTaksDetails = false;
 
@@ -223,5 +227,14 @@ export class VideoProjectFormComponent implements OnInit {
     this.videoProject!.task = task;
     this.cdr.detectChanges();
     debugger;
+  }
+
+  public saveDialogs() {
+    debugger;
+    this.videoProject!.dialogs = this.dialogsForm.value;
+
+    this.videoGeneratorService.updateVideoGenerator(this.videoGeneratorId, { dialogs: this.videoProject!.dialogs });
+    this.cdr.detectChanges();
+    this.toastService.success({ title: 'Diálogos guardados', subtitle: 'Los diálogos han sido guardados correctamente' });
   }
 }

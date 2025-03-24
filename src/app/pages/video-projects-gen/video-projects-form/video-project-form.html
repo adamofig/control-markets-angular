@@ -98,6 +98,14 @@
 
 <br />
 
+<p-card header="Diálogos">
+  @if (videoProject) {
+  <app-dialogs [dialogsForm]="dialogsForm" [videoProject]="videoProject"></app-dialogs>
+  <p-button (click)="saveDialogs()" label="Save Dialogs" icon="pi pi-save" iconPos="right"></p-button>
+  }
+</p-card>
+<br />
+
 <p-card header="Extractor de fragmentos">
   <p-select
     [options]="videoProject?.sources"

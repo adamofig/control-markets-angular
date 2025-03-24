@@ -1,0 +1,24 @@
+<div>
+  <span *ngFor="let dialog of dialogControls; let i = index">
+    <div [formGroup]="dialog" class="dialog-form">
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-trash" severity="danger" [disabled]="dialogsForm.length <= 1" (click)="removeDialog(i)" />
+        </p-inputgroup-addon>
+
+        <input pInputText id="content-{{ i }}" pInputText formControlName="content" placeholder="Enter dialog content" />
+
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-ellipsis-v" severity="secondary" />
+        </p-inputgroup-addon>
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-play-circle" severity="primary" variant="text" (click)="playAudio(i)" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+    </div>
+  </span>
+
+  <div class="dialog-add-button mt-3">
+    <p-button icon="pi pi-plus" (click)="addDialog()" label="Add Dialog" styleClass="p-button-success"></p-button>
+  </div>
+</div>
