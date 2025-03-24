@@ -27,12 +27,21 @@ export interface ICompositionPlan {
   overlays: IOverlayPlan[];
 }
 
+export interface IDialog {
+  content: string;
+  audio: CloudStorageData;
+  voice: string;
+  transcription: any; // TODO: Define transcription type whisper
+  captions: any; // TODO: Define captions type whisper
+}
+
 export interface IVideoProjectGenerator extends AuditDate {
   id: string;
   name?: string;
   description?: string;
   type?: string;
   sources?: SourceWithReference[];
+  dialogs?: IDialog[];
   // Having one is temporary in the future probably will migrate to array.
   agent?: Partial<AgentCardWithReference>;
   task?: Partial<IAgentTask>;

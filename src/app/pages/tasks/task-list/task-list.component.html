@@ -73,3 +73,15 @@
   </div>
 </p-dialog>
 } }
+
+<div class="paginator-container">
+  <p-paginator
+    currentPageReportTemplate="{{ totalRecords }} tareas"
+    [showCurrentPageReport]="true"
+    (onPageChange)="onPageChange($event)"
+    [first]="paginatorFirst"
+    [rows]="paginatorRows"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[10, 20, 30]">
+  </p-paginator>
+</div>

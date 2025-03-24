@@ -217,4 +217,11 @@ export class VideoProjectFormComponent implements OnInit {
     this.cdr.detectChanges();
     console.log('agent', agent);
   }
+
+  public selectTask(task: any) {
+    this.showTaksDetails = false;
+    this.videoProject!.task = task;
+    this.cdr.detectChanges();
+    debugger;
+  }
 }

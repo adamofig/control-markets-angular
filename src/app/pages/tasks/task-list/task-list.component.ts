@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TasksService } from '../services/tasks.service';
-import { DCFilterBarComponent, FiltersConfig, PaginationBase } from '@dataclouder/ngx-core';
+import { DCFilterBarComponent, FiltersConfig, PaginationBase, PColumn, QuickTableComponent } from '@dataclouder/ngx-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -8,21 +8,27 @@ import { ToastAlertService } from 'src/app/services/toast.service';
 import { DialogModule } from 'primeng/dialog';
 import { ChatMessage, DCConversationPromptBuilderService } from '@dataclouder/ngx-agent-cards';
 import { AgentCardService } from 'src/app/services/agent-cards.service';
-import { QuickTableComponent } from './quick-table/quick-table';
+import { PaginatorModule } from 'primeng/paginator';
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [DCFilterBarComponent, CardModule, ButtonModule, DialogModule, QuickTableComponent],
+  imports: [DCFilterBarComponent, CardModule, ButtonModule, DialogModule, QuickTableComponent, PaginatorModule],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskListComponent extends PaginationBase implements OnInit {
   @Input() public viewTable = false;
+  @Output() public onSelect = new EventEmitter<any>();
 
   public tasks: any[] = [];
   loadingTasks: { [key: string]: boolean } = {};
-  public columns: string[] = ['name', 'description', 'status', 'taskType'];
+  public columns: PColumn[] = [
+    { field: 'name', header: 'Name' },
+    { field: 'description', header: 'Description' },
+    { field: 'status', header: 'Status' },
+    { field: 'taskType', header: 'Task Type' },
+  ];
 
   public showTaksDetails = false;
   public selectedTask: any;
@@ -117,7 +123,6 @@ export class TaskListComponent extends PaginationBase implements OnInit {
 
   public selectItem(item: any) {
     console.log('onSelect');
-    // this.onSelect.emit(item);
-    alert('onSelect');
+    this.onSelect.emit(item);
   }
 }
