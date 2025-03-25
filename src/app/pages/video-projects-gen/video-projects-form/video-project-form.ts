@@ -226,11 +226,9 @@ export class VideoProjectFormComponent implements OnInit {
     this.showTaksDetails = false;
     this.videoProject!.task = task;
     this.cdr.detectChanges();
-    debugger;
   }
 
   public saveDialogs() {
-    debugger;
     this.videoProject!.dialogs = this.dialogsForm.value;
 
     this.videoGeneratorService.updateVideoGenerator(this.videoGeneratorId, { dialogs: this.videoProject!.dialogs });

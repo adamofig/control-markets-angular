@@ -33,7 +33,6 @@ export class ConversationCardChatComponent implements OnInit {
   constructor(private route: ActivatedRoute, private conversationCardsService: AgentCardService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    debugger;
     this.route.paramMap.subscribe(async params => {
       // TODO fix this, card can be passed as param (WIP), or fetched from the service
       this.conversationCard = JSON.parse(params.get('conversationCard')!);

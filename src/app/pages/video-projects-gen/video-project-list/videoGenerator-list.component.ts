@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit }
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-import { DCFilterBarComponent, PaginationBase, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+import { DCFilterBarComponent, PaginationBase, PColumn, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { VideoGeneratorService } from '../services/video-project-gen.service';
 import { IVideoProjectGenerator } from '../models/video-project.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,6 +19,12 @@ import { DatePipe, SlicePipe } from '@angular/common';
 })
 // TODO: extends PaginationBase this handle filter, pagination, and url params ?page=1
 export class VideoGeneratorListComponent extends PaginationBase implements OnInit {
+  // TODO check this fields are good.
+  protected override columns: PColumn[] = [
+    { field: 'name', header: 'Nombre' },
+    { field: 'description', header: 'Descripción' },
+    { field: 'status', header: 'Estado' },
+  ];
   videoGenerators: IVideoProjectGenerator[] = [];
 
   getCustomButtons(item: any): MenuItem[] {
@@ -26,17 +32,17 @@ export class VideoGeneratorListComponent extends PaginationBase implements OnIni
       {
         tooltipOptions: { tooltipLabel: 'Ver detalles', tooltipPosition: 'bottom' },
         icon: 'pi pi-eye',
-        command: () => this.doAction('view', item),
+        // command: () => this.doAction('view', item),
       },
       {
         label: 'Editar',
         icon: 'pi pi-pencil',
-        command: () => this.doAction('edit', item),
+        // command: () => this.doAction('edit', item),
       },
       {
         label: 'Eliminar',
         icon: 'pi pi-trash',
-        command: () => this.doAction('delete', item),
+        // command: () => this.doAction('delete', item),
       },
     ];
   }
@@ -60,29 +66,29 @@ export class VideoGeneratorListComponent extends PaginationBase implements OnIni
   protected override loadData(): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  public async doAction(action: string, item: any) {
-    switch (action) {
-      case 'view':
-        this.router.navigate(['./details', item.id], { relativeTo: this.route });
-        break;
-      case 'delete':
-        const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
-        if (areYouSure) {
-          const results = await this.sourceService.deleteVideoGenerator(item.id);
-          console.log('results', results);
-          this.videoGenerators = this.videoGenerators.filter(videoGenerator => videoGenerator.id !== item.id);
-          this.toastService.success({
-            title: 'Origen eliminado',
-            subtitle: 'El origen ha sido eliminado correctamente',
-          });
-          this.cdr.detectChanges();
-        }
-        break;
-      case 'edit':
-        this.router.navigate(['./edit', item.id], { relativeTo: this.route });
-        break;
-    }
-  }
+  // public async doAction(action: string, item: any) {
+  //   switch (action) {
+  //     case 'view':
+  //       this.router.navigate(['./details', item.id], { relativeTo: this.route });
+  //       break;
+  //     case 'delete':
+  //       const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
+  //       if (areYouSure) {
+  //         const results = await this.sourceService.deleteVideoGenerator(item.id);
+  //         console.log('results', results);
+  //         this.videoGenerators = this.videoGenerators.filter(videoGenerator => videoGenerator.id !== item.id);
+  //         this.toastService.success({
+  //           title: 'Origen eliminado',
+  //           subtitle: 'El origen ha sido eliminado correctamente',
+  //         });
+  //         this.cdr.detectChanges();
+  //       }
+  //       break;
+  //     case 'edit':
+  //       this.router.navigate(['./edit', item.id], { relativeTo: this.route });
+  //       break;
+  //   }
+  // }
 
   onNew() {
     console.log('onNew');
@@ -90,6 +96,6 @@ export class VideoGeneratorListComponent extends PaginationBase implements OnIni
   }
 
   public goToEdit(item: any) {
-    this.doAction('edit', item);
+    // this.doAction('edit', item);
   }
 }
