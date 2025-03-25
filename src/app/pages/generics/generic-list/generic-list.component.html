@@ -1,8 +1,10 @@
-<p-button icon="pi pi-table" label="Go to table View" [link]="true" [routerLink]="['./table']" />
-
+@if (!onlyView) {
+<p-button [icon]="viewType === 'card' ? 'pi pi-table' : 'pi pi-list'" label="Change View" [link]="true" (click)="toggleView()" />
+}
 <div class="generic-list-container">
   <dc-filter-bar (onNew)="onNew()"></dc-filter-bar>
 
+  @if (viewType === 'card') {
   <div class="generic-list-content">
     @for (generic of generics; track generic.id) {
     <div class="card-source">
@@ -25,6 +27,11 @@
     </p-card>
     }
   </div>
+  } @else if ( viewType == 'table'){
+
+  <app-quick-table [columns]="columns" [tableData]="generics" [onlyView]="onlyView" (onSelect)="onSelect.emit($event)"></app-quick-table>
+
+  }
 
   <div class="paginator-container">
     <p-paginator

@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
+
+import { LoadingBarService, LoadingBarComponent } from '@dataclouder/ngx-core';
 import {
   mailOutline,
   mailSharp,
@@ -23,8 +25,6 @@ import {
   radio,
   search,
 } from 'ionicons/icons';
-
-import { LoadingBarComponent } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-root',
