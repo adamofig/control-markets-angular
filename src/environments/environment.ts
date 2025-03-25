@@ -1,16 +1,17 @@
 export const environment = {
   projectName: 'Niche-Market',
-  version: '0.0.14',
+  version: '0.0.20',
   envName: 'DEV',
   production: false,
 
   clientId: '',
   androidClientId: '',
   iosClientId: '',
-  backendNodeUrl: 'http://localhost:8080',
-  // backendNodeUrl: 'https://niche-market-905545672221.us-central1.run.app',
-  backendPythonUrl: 'http://localhost:8011',
-  // backendPythonUrl: 'https://python-server-905545672221.us-central1.run.app',
+  // backendNodeUrl: 'http://localhost:8080',
+  backendNodeUrl: 'https://niche-market-node-905545672221.us-central1.run.app',
+
+  // backendPythonUrl: 'http://localhost:8011',
+  backendPythonUrl: 'https://python-server-905545672221.us-central1.run.app',
 
   mobile: {
     appleAppId: '',
