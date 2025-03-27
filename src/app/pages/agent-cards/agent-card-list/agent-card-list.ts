@@ -10,33 +10,24 @@ import {
   ChatRole,
   AgentCardListComponent,
   AudioSpeed,
-  IAgentCard,
-  AgentCardsAbstractService,
   CONVERSATION_AI_TOKEN,
+  AgentCardsAbstractService,
+  IAgentCard,
 } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { OnActionEvent, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { MenuItem } from 'primeng/api';
-<<<<<<<< HEAD:src/app/pages/agents/agent-card-list/agent-card-list.ts
-import { NotionService } from '../../tasks/services/notion.service';
-import { ToastAlertService } from 'src/app/services/toast.service';
-import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
-========
 import { ButtonModule } from 'primeng/button';
->>>>>>>> upstream/main:src/app/pages/chat/agent-card-list/agent-card-list.ts
 
 @Component({
   selector: 'app-chat',
   templateUrl: './agent-card-list.html',
   styleUrls: ['./agent-card-list.scss'],
   standalone: true,
-<<<<<<<< HEAD:src/app/pages/agents/agent-card-list/agent-card-list.ts
-  imports: [CommonModule, FormsModule, IonContent, AgentCardListComponent],
-========
   imports: [CommonModule, FormsModule, IonContent, AgentCardListComponent, ButtonModule],
->>>>>>>> upstream/main:src/app/pages/chat/agent-card-list/agent-card-list.ts
 })
-export class ChatComponentPage {
-  public conversationUserSettings: ChatUserSettings = {
+export class ChatComponentPage implements OnInit {
+  public chatUserSettings: ChatUserSettings = {
     realTime: false,
     repeatRecording: false,
     fixGrammar: false,
@@ -49,13 +40,9 @@ export class ChatComponentPage {
     speedRate: 1,
   };
 
-<<<<<<<< HEAD:src/app/pages/agents/agent-card-list/agent-card-list.ts
-  public ConversationPromptSettings: IConversationSettings = {
-========
   public viewMode: 'table' | 'cards' = 'table';
 
   public IConversationSettings: IConversationSettings = {
->>>>>>>> upstream/main:src/app/pages/chat/agent-card-list/agent-card-list.ts
     messages: [
       { role: ChatRole.System, content: 'you are a helpful assistant talking about fruits, vegetables and similar' },
       {
@@ -72,16 +59,12 @@ export class ChatComponentPage {
     private router: Router,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private notionService: NotionService,
-    private toastAlert: ToastAlertService,
     @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService,
     @Inject(CONVERSATION_AI_TOKEN) private agentCardService: AgentCardsAbstractService
   ) {
     addIcons({ send, sendOutline, sendSharp });
   }
 
-<<<<<<<< HEAD:src/app/pages/agents/agent-card-list/agent-card-list.ts
-========
   ngOnInit() {
     // Initialize with some dummy messages
   }
@@ -110,7 +93,6 @@ export class ChatComponentPage {
     }
   }
 
->>>>>>>> upstream/main:src/app/pages/chat/agent-card-list/agent-card-list.ts
   public getCustomButtons(card: IAgentCard): MenuItem[] {
     // 🥛 powerfull use of closures
     // [getCustomButtons]: its really hard to explain but, since it use speeddial, i can pass data it self only funtions, and the only way to pass is at initialization time [model]="getCustomButtons(card)"
@@ -137,6 +119,7 @@ export class ChatComponentPage {
   }
 
   public async doAction(action: string, item: any) {
+    debugger;
     const itemId = item._id || item.id;
     switch (action) {
       case 'view':
@@ -149,7 +132,6 @@ export class ChatComponentPage {
           // this.conversationCards = this.conversationCards.filter((card) => card._id !== id);
 
           this.toastService.success({ title: 'Conversation card deleted', subtitle: 'Pero tienes que actualizar la página para ver el cambio' });
-
           this.cdr.detectChanges();
         }
 
@@ -160,59 +142,17 @@ export class ChatComponentPage {
     }
   }
 
-<<<<<<<< HEAD:src/app/pages/agents/agent-card-list/agent-card-list.ts
-  public goToDetails(idCard: any) {
-    console.log('goToDetails', idCard);
-    const navigationExtras: NavigationExtras = {
-      state: {
-        conversation: idCard,
-      },
-    };
-    this.router.navigate(['/page/stack/conversation-details', idCard], navigationExtras);
-  }
-
-  public goToEdit(idCard: any) {
-    if (idCard) {
-      this.router.navigate(['/page/stack/conversation-form', idCard]);
+  handleAction(actionEvent: OnActionEvent) {
+    debugger;
+    console.log('doAction', { item: actionEvent.item, action: actionEvent.action });
+    if (actionEvent.action === 'edit') {
+      this.goToEdit(actionEvent.item._id);
+    } else if (actionEvent.action === 'delete') {
+      this.doAction('delete', actionEvent.item);
+    } else if (actionEvent.action === 'details') {
+      this.goToDetails(actionEvent.item._id);
     } else {
-      this.router.navigate(['/page/stack/conversation-form']);
-    }
-  }
-
-  public handleMenuAction(event: any, action: string, card: IAgentCard) {
-    // const card = data.card; // The card data will be passed from the template
-    switch (action) {
-      case 'createNotionPage':
-        console.log('Creating Notion page:', card);
-        this.createNotionPage(card);
-        break;
-    }
-  }
-
-  public async createNotionPage(card: IAgentCard) {
-    this.toastAlert.info({ title: 'Creando página Notion para tu agente', subtitle: 'Por favor, espere...' });
-
-    console.log('Creating Notion page:', card);
-    const response = await this.notionService.createNotionPage(card);
-    console.log('Response:', response.page);
-    if (response.success) {
-      window.open(response.page.url, '_blank');
-      this.toastAlert.success({ title: 'Página Notion creada correctamente', subtitle: 'Puedes verla en tu Notion' });
-    } else {
-      this.toastAlert.error({ title: 'Error al crear la página Notion', subtitle: response.error });
-========
-  handleAction({ item, action }: { item: any; action: MenuItem }) {
-    
-    console.log('doAction', { item, action });
-    if (action.title === 'edit') {
-      this.goToEdit(item._id);
-    } else if (action.title === 'delete') {
-      this.doAction('delete', item);
-    } else if (action.title === 'details') {
-      this.goToDetails(item._id);
-    } else {
-      console.log('Unknown action:', action);
->>>>>>>> upstream/main:src/app/pages/chat/agent-card-list/agent-card-list.ts
+      console.log('Unknown action:', actionEvent.action);
     }
   }
 }
