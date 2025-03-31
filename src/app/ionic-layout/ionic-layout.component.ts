@@ -26,6 +26,7 @@ import {
   NavController,
   IonAvatar,
   ActionSheetController,
+  MenuController,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 
@@ -78,6 +79,7 @@ export class IonicLayoutComponent implements OnInit {
   public projectName = environment.projectName;
   public version = environment.version;
   public user: any = {};
+  public menuVisible: boolean = true;
 
   public appPages = [
     { title: 'Home', url: '/page/home', icon: 'home' },
@@ -106,7 +108,8 @@ export class IonicLayoutComponent implements OnInit {
     private firebaseAuthService: FirebaseAuthService,
     private router: Router,
     private navController: NavController,
-    private actionSheetController: ActionSheetController
+    private actionSheetController: ActionSheetController,
+    private menuController: MenuController
   ) {
     addIcons(ionicons);
 
@@ -187,5 +190,16 @@ export class IonicLayoutComponent implements OnInit {
     document.documentElement.classList.toggle('ion-palette-dark', this.isDarkMode);
 
     document.body.classList.toggle('dark', this.isDarkMode);
+  }
+
+  toggleMenu() {
+    this.menuVisible = !this.menuVisible;
+    if (window.innerWidth > 992) {
+      // For desktop view, just enable/disable the menu
+      this.menuController.enable(this.menuVisible);
+    } else {
+      // For mobile view, toggle the menu
+      this.menuController.toggle();
+    }
   }
 }
