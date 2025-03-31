@@ -4,14 +4,15 @@ import { DCChatComponent, IConversationSettings, ChatUserSettings, ChatRole, Aud
 import { ActivatedRoute } from '@angular/router';
 import { AgentCardService } from 'src/app/services/agent-cards.service';
 
+// TODO cambiar este nombre.
 @Component({
-  selector: 'app-conversation-card-chat',
+  selector: 'app-agent-card-chat',
   standalone: true,
   imports: [CommonModule, DCChatComponent],
-  templateUrl: './agent-chat.html',
-  styleUrls: ['./agent-chat.scss'],
+  templateUrl: './agent-card-chat.html',
+  styleUrls: ['./agent-card-chat.scss'],
 })
-export class ConversationCardChatComponent implements OnInit {
+export class AgentCardChatComponent implements OnInit {
   @Input() agentCard!: IAgentCard;
   public conversationSettings: IConversationSettings = {
     messages: [{ text: 'you are having a conversation with?', content: 'bot', role: ChatRole.System }],

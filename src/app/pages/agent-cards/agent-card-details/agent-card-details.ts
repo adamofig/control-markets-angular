@@ -6,13 +6,13 @@ import { ButtonModule } from 'primeng/button';
 import { IAgentCard, DcAgentCardDetailsComponent } from '@dataclouder/ngx-agent-cards';
 
 @Component({
-  selector: 'app-conversation-details',
-  templateUrl: './conversation-details.component.html',
-  styleUrls: ['./conversation-details.component.scss'],
+  selector: 'app-agent-card-details',
+  templateUrl: './agent-card-details.html',
+  styleUrls: ['./agent-card-details.scss'],
   standalone: true,
   imports: [CommonModule, DcAgentCardDetailsComponent, ButtonModule],
 })
-export class ConversationDetailsPage implements OnInit {
+export class AgentCardDetailsPage implements OnInit {
   conversationId: any;
 
   constructor(private router: Router, private route: ActivatedRoute) {
