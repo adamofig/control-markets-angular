@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
@@ -10,12 +10,18 @@ import { IAgentCard, DcAgentCardDetailsComponent } from '@dataclouder/ngx-agent-
   templateUrl: './agent-card-details.html',
   styleUrls: ['./agent-card-details.scss'],
   standalone: true,
-  imports: [CommonModule, DcAgentCardDetailsComponent, ButtonModule],
+  imports: [DcAgentCardDetailsComponent],
 })
 export class AgentCardDetailsPage implements OnInit {
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   conversationId: any;
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     // First try to get from state
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras?.state as { conversation: any };

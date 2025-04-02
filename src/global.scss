@@ -197,3 +197,7 @@ body.dark::before {
 .clickable {
     cursor: pointer;
   }
+
+
+  // Shepherd tour styles
+@import "./shepherd.scss";

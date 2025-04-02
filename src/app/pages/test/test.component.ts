@@ -1,67 +1,42 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { SpeechRecognition } from '@capacitor-community/speech-recognition';
-import { Capacitor } from '@capacitor/core';
+
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+
 import { GenericListComponent } from '../generics/generic-list/generic-list.component';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
+import { AudioTourService } from '../../services/audio-tour.service';
+import { stepsIntro } from '../home/steps-tour-home';
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [CommonModule, GenericListComponent, DialogModule, ButtonModule],
+  imports: [GenericListComponent, DialogModule, ButtonModule],
   templateUrl: './test.component.html',
   styleUrl: './test.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TestComponent implements OnInit {
+  private audioTourService = inject(AudioTourService);
+
   isDialogVisible: boolean = false;
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   constructor() {}
+
   ngOnInit(): void {
     console.log('TestComponent');
-    if (Capacitor.isNativePlatform()) {
-      // this.startListening();
-    } else {
-      console.log('Not a native platform!');
-    }
+    // this.setupTour();
   }
 
-  public async startListening() {
-    const permission = await SpeechRecognition.checkPermissions();
-    console.log('startListening', permission);
+  // setupTour(): void {
+  //   // Setup the tour with our steps
+  // }
 
-    const resultPermission = await SpeechRecognition.requestPermissions();
-    console.log('startListening', resultPermission);
-
-    console.log('startListening');
-    const isAvalible = await SpeechRecognition.available();
-    console.log('startListening', isAvalible);
-
-    SpeechRecognition.start({
-      language: 'en-US',
-      maxResults: 2,
-      prompt: 'Say something',
-      partialResults: true,
-      popup: true,
-    });
-
-    // listen to partial results
-
-    SpeechRecognition.addListener('partialResults', (data: any) => {
-      console.log('partialResults was fired', data.matches);
-    });
+  startTour(): void {
+    // Start the tour with intro audio
+    this.audioTourService.setupTour(stepsIntro);
+    this.audioTourService.startTour();
   }
-
-  // SpeechRecognition.available();
-  // SpeechRecognition.start({
-  //   language: "en-US",
-  //   maxResults: 2,
-  //   prompt: "Say something",
-  //   partialResults: true,
-  //   popup: true,
-  // });
-  // // listen to partial results
-  // SpeechRecognition.addListener("partialResults", (data: any) => {
-  //   console.log("partialResults was fired", data.matches);
-  // });
 }

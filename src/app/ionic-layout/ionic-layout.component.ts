@@ -1,41 +1,36 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import {
-  IonApp,
-  IonSplitPane,
-  IonMenu,
-  IonContent,
-  IonList,
-  IonListHeader,
-  IonNote,
-  IonMenuToggle,
-  IonItem,
-  IonIcon,
-  IonLabel,
-  IonRouterLink,
-  IonHeader,
-  IonButtons,
-  IonToolbar,
-  IonTitle,
-  IonMenuButton,
-  IonTabBar,
-  IonTabButton,
-  IonButton,
-  IonFooter,
-  NavController,
-  IonAvatar,
-  ActionSheetController,
-  MenuController,
-} from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-
 import * as ionicons from 'ionicons/icons'; // import all icons
+
+import { addIcons } from 'ionicons';
 
 import { environment } from 'src/environments/environment';
 import { FirebaseAuthService } from '@dataclouder/app-auth';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormsModule } from '@angular/forms';
+import { ActionSheetController, MenuController } from '@ionic/angular';
+import {
+  IonApp,
+  IonIcon,
+  IonSplitPane,
+  IonTabButton,
+  IonTabBar,
+  IonContent,
+  IonAvatar,
+  IonList,
+  IonButton,
+  IonListHeader,
+  IonButtons,
+  IonTitle,
+  IonToolbar,
+  IonLabel,
+  IonHeader,
+  IonNote,
+  IonFooter,
+  IonMenu,
+  IonMenuToggle,
+  IonItem,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-ionic-layout',
@@ -43,38 +38,39 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './ionic-layout.component.css',
   standalone: true,
   imports: [
-    IonAvatar,
     IonFooter,
-    IonButton,
-    IonTabButton,
-    IonTabBar,
-    RouterOutlet,
-    IonTitle,
-    IonToolbar,
-    IonButtons,
-    IonHeader,
-    RouterLink,
-    RouterLinkActive,
-    CommonModule,
-    IonApp,
-    IonSplitPane,
-    IonMenu,
-    IonContent,
-    IonList,
-    IonListHeader,
     IonNote,
+    IonHeader,
+    IonLabel,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonListHeader,
+    IonButton,
+    IonList,
+    IonAvatar,
+    IonContent,
+    IonTabBar,
+    IonTabButton,
+    IonSplitPane,
+    IonIcon,
+    IonApp,
+    IonMenu,
     IonMenuToggle,
     IonItem,
-    IonIcon,
-    IonLabel,
-    IonRouterLink,
-    IonMenuToggle,
-    IonMenuButton,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
     ToggleButtonModule,
     FormsModule,
   ],
 })
 export class IonicLayoutComponent implements OnInit {
+  private firebaseAuthService = inject(FirebaseAuthService);
+  private router = inject(Router);
+  private actionSheetController = inject(ActionSheetController);
+  private menuController = inject(MenuController);
+
   public envName = environment.envName;
   public projectName = environment.projectName;
   public version = environment.version;
@@ -83,13 +79,10 @@ export class IonicLayoutComponent implements OnInit {
 
   public appPages = [
     { title: 'Home', url: '/page/home', icon: 'home' },
-    { title: 'Explore', url: '/page/explore', icon: 'id-card' },
-    { title: 'Sources', url: '/page/sources', icon: 'document-attach' },
-    { title: 'Video Analizer', url: '/page/video-analizer', icon: 'analytics' },
-    { title: 'Video Generator', url: '/page/video-generator', icon: 'videocam' },
-    { title: 'Conversation', url: '/page/chat', icon: 'chatbubble-ellipses' },
+    { title: 'Lessons', url: '/page/lessons', icon: 'eye' },
+    { title: 'Agents Conversation', url: '/page/chat', icon: 'chatbubble-ellipses' },
     { title: 'Generics', url: '/page/generics', icon: 'code-working' },
-    { title: 'Tools', url: '/page/tools', icon: 'code-working' },
+    { title: 'Test', url: '/page/test', icon: 'code-working' },
   ];
 
   public adminPages = [
@@ -104,13 +97,10 @@ export class IonicLayoutComponent implements OnInit {
   // Add this property to track dark mode state
   public isDarkMode: boolean = false;
 
-  constructor(
-    private firebaseAuthService: FirebaseAuthService,
-    private router: Router,
-    private navController: NavController,
-    private actionSheetController: ActionSheetController,
-    private menuController: MenuController
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     addIcons(ionicons);
 
     // Check if dark mode was previously enabled
