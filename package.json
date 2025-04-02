@@ -4,7 +4,7 @@
     "appId": "web.app.niche-market.app",
     "appIdDev": "web.app.niche-market.app.dev"
   },
-  "version": "0.0.20",
+  "version": "0.0.21",
   "author": "Ionic Framework",
   "homepage": "dataclouder.dev",
   "scripts": {
