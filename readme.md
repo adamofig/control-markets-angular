@@ -12,23 +12,12 @@ Run these commands to get started quickly:
 
 ```bash
 # 1. Clone the repository (replace 'your-project-directory' with your desired directory name)
-git clone https://github.com/dataclouder-dev/startup-template-angular.git your-project-directory
-cd your-project-directory
+git clone https://github.com/dataclouder-dev/startup-template-angular.git
 
-# 2. Run the setup script
-# This script will ask for your domain, then update the Makefile,
-# rename the project, and initialize Firebase.
+# 2. Run the setup script will ask you for a name to rename the project.
 node scripts/setup_project.js
 
-# 3. Start the development server
-npm run start
-# Or using make: make start
-
-# 4. Build the project for production
-npm run build
-
-# 5. Deploy to Firebase
-# (Ensure .firebaserc is configured correctly by the init-project step)
+# 3. Deploy to Firebase
 make deploy
 
 ```
@@ -341,7 +330,7 @@ No existe --p-primary-color-800 solo primary color
 
 you can style Cards, Inputs, etc and important compoents using primeng guidelines.
 
-### changing and inspecting styling
+## 💇‍♂️changing and inspecting styling 🖍️
 
 if you dont know what to change some times you will see something like, --ion-text-color-rgb to see a clue.
 
@@ -351,9 +340,13 @@ To start with, I higly recoment have alreay your palet.
 
 There are 3 important concepts:
 
-- /src/my-preset.ts // Start here add the colors you want. this will override default style for Nora (Just a theme) then you can access your variables with --p-primary-color or --p-primary-200 for specific color.
+**/src/my-preset.ts**
 
-- /src/global.scss: here is only to override Ionic variables. you defined for prime ng components, but undertunately this are not linked, also if you definition not change automatically, if you change varible example changing color for --p-primary-color works for prime ng components but not for ionic components. so since the very beggining you need to define darkmode or other teams if you want.
+- Start here add the colors you want. this will override default style for Nora (Just a theme) then you can access your variables with `--p-primary-color` or `--p-primary-200` for specific color.
+
+**/src/global.scss**
+
+- here is only to override Ionic variables. you defined for prime ng components, but undertunately this are not linked, also if you definition not change automatically, if you change varible example changing color for `--p-primary-color` works for prime ng components but not for ionic components. so since the very beggining you need to define darkmode or other teams if you want.
 
 i see this global.scss in 3 sections.
 

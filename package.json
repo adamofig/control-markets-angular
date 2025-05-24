@@ -55,7 +55,7 @@
     "@dataclouder/app-auth": "^0.0.37",
     "@dataclouder/ngx-agent-cards": "^0.1.9",
     "@dataclouder/ngx-cloud-storage": "^0.0.22",
-    "@dataclouder/ngx-core": "^0.1.12",
+    "@dataclouder/ngx-core": "^0.1.13",
     "@dataclouder/ngx-lessons": "^0.1.2",
     "@dataclouder/ngx-mic": "^0.1.0",
     "@dataclouder/ngx-tts": "^0.0.1",
