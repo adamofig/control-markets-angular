@@ -34,7 +34,6 @@ export class UserDataExchangeService implements UserDataExchangeAbstractService 
     // sustituye todos los {{char}} {{user}} {{target}} {{base}} por el valor de la propiedad
 
     const userData = this.getUserDataExchange();
-
     return {
       user: userData.name,
     };
@@ -46,6 +45,7 @@ export class UserDataExchangeService implements UserDataExchangeAbstractService 
       superHearing: true,
       repeatRecording: true,
       fixGrammar: true,
+      synthVoice: true,
     };
     return settings;
   }

@@ -1,10 +1,15 @@
 import { Injectable, inject } from '@angular/core';
-import { Endpoints } from '../../core/enums';
 import { GenericType, IGeneric } from './models/generics.model';
 import { FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN, HttpCoreService } from '@dataclouder/ngx-core';
-import { ToastAlertService } from 'src/app/services/toast.service';
 
 const server = 'primary';
+// TODO add your own end points
+const Endpoints = {
+  Generics: {
+    Generics: 'api/generic',
+    GenericsFiltered: 'api/generic/query',
+  },
+};
 
 const RemoveSimpleDataExample = [
   { id: '1', name: 'Generic 1', description: 'Description with short description', type: GenericType.Gen1 },
@@ -28,7 +33,7 @@ const RemoveSimpleDataExample = [
 })
 export class GenericService {
   private httpService = inject(HttpCoreService);
-  private toastService = inject<ToastAlertService>(TOAST_ALERTS_TOKEN);
+  private toastService = inject(TOAST_ALERTS_TOKEN);
 
   public async getGenerics(): Promise<IGeneric[]> {
     try {

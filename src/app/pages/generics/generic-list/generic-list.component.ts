@@ -76,7 +76,6 @@ export class GenericListComponent extends PaginationBase implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.filterConfig.returnProps = { _id: 1, id: 1, name: 1, description: 1, updatedAt: 1, image: 1 };
-    debugger;
     const response = await this.sourceService.getFilteredGenerics(this.filterConfig);
     this.generics.set(response.rows);
     this.cdr.detectChanges();
@@ -96,7 +95,6 @@ export class GenericListComponent extends PaginationBase implements OnInit {
   public toggleView() {
     this.viewType = this.viewType === 'card' ? 'table' : 'card';
     console.log(this.viewType, this.generics());
-    debugger;
     this.cdr.detectChanges();
   }
 
