@@ -1,6 +1,6 @@
 import { createTikTokStyleCaptions, TikTokPage } from '@remotion/captions';
 import { IAgentSource } from '../../sources/models/sources.model';
-import { ICompositionPlan, IOverlayPlan, IVideoProjectGenerator, SourceWithReference } from '../models/video-project.model';
+import { ICompositionPlan, IOverlayPlan, IVideoProjectGenerator } from '../models/video-project.model';
 import { CaptionOverlay, ClipOverlay, CompositionProps, FPS, OverlayType } from './composition-editor-adapter.models';
 import { Caption as CaptionRVE } from './composition-editor-adapter.models';
 
@@ -56,10 +56,10 @@ export function getCaptionsOverlay(videoSource: IAgentSource, offsetSeconds: num
   const captionsRVE = tikTokCaptions.pages.map(remotionTiktokPageToCaptionRVE);
   console.log('Result of transform captionsRVE', captionsRVE);
   // adjust millseconds to video start time
-  captionsRVE.forEach(caption => {
+  captionsRVE.forEach((caption: any) => {
     caption.startMs = caption.startMs - offsetSeconds * 1000;
     caption.endMs = caption.endMs - offsetSeconds * 1000;
-    caption.words.forEach(word => {
+    caption.words.forEach((word: any) => {
       word.startMs = word.startMs - offsetSeconds * 1000;
       word.endMs = word.endMs - offsetSeconds * 1000;
     });
@@ -91,7 +91,7 @@ function remotionTiktokPageToCaptionRVE(page: TikTokPage): CaptionRVE {
     endMs: page.tokens.length > 0 ? page.tokens[page.tokens.length - 1].toMs : page.startMs,
     timestampMs: page.startMs,
     confidence: null,
-    words: page.tokens.map(token => ({
+    words: page.tokens.map((token: any) => ({
       word: token.text,
       startMs: token.fromMs,
       endMs: token.toMs,

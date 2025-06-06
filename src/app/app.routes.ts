@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthGuardService } from './services/auth-guard.service';
 import { redirectToIfAuth } from '@dataclouder/app-auth';
+
 import { RouteNames } from './core/enums';
 
 export const routes: Routes = [
@@ -26,7 +27,6 @@ export const routes: Routes = [
       },
     ],
   },
-
   {
     path: 'auth',
     children: [

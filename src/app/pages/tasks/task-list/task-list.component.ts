@@ -44,7 +44,7 @@ export class TaskListComponent extends PaginationBase implements OnInit {
     private promptBuilderService: DCConversationPromptBuilderService,
     private agentCardService: AgentCardService
   ) {
-    super(route, router);
+    super();
   }
   ngOnInit() {
     this.getTasks();

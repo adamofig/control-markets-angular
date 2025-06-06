@@ -1,7 +1,9 @@
 # Variables for deployment
-PROJECT_ID ?= niche-market-dev#Firebase/Google project ID
-PROJECT_NAME ?= niche-market#Name of the project package format, use - instead of spaces
-APP_ID ?= web.app.niche-market.app # User for mobile apps.
+ENV ?= dev
+EXT ?= io
+PROJECT_NAME ?= niche-market
+PROJECT_ID ?= $(PROJECT_NAME)-$(ENV) #Firebase/Google project ID
+APP_ID ?= $(EXT).$(PROJECT_NAME).$(ENV) # User for mobile apps. example com.my-startup.app
 DISPLAY_NAME ?= $(PROJECT_NAME)
 
 help:

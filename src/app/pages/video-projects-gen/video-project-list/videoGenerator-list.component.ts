@@ -51,11 +51,9 @@ export class VideoGeneratorListComponent extends PaginationBase implements OnIni
   constructor(
     @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService,
     private sourceService: VideoGeneratorService,
-    router: Router,
-    route: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) {
-    super(route, router);
+    super();
   }
 
   async ngOnInit(): Promise<void> {
@@ -69,7 +67,6 @@ export class VideoGeneratorListComponent extends PaginationBase implements OnIni
   }
 
   public override doAction(actionEvent: OnActionEvent): void {
-    debugger;
     const { action, item } = actionEvent;
     switch (action) {
       case 'view':

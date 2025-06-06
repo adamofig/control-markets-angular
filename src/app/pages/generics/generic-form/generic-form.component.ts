@@ -18,7 +18,6 @@ import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { DialogModule } from 'primeng/dialog';
 import { GenericListComponent } from '../generic-list/generic-list.component';
-import { QuickTableComponent } from '../quick-table/quick-table';
 
 @Component({
   selector: 'app-source-form',

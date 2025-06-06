@@ -75,7 +75,7 @@ function renameFiles(dir) {
 }
 
 if (!newName) {
-  console.error('Error: Please set the newName variable before running the script.');
+  console.error(' ⚠️ Not Yet: Please set the newName variable before running the script. Line 12 🤔 should be SINGULAR name not plural');
   process.exit(1);
 }
 

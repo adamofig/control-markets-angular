@@ -39,7 +39,7 @@ export class AgentCardDetailsPage implements OnInit {
 
   ngOnInit() {
     if (!this.conversationId) {
-      this.router.navigate(['/page/chat']);
+      this.router.navigate(['/page/agents']);
     }
   }
 

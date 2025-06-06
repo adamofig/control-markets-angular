@@ -64,7 +64,7 @@ export class VideoGeneratorService {
   }
 
   public async getAndSaveBestFragments(instructions: string) {
-    const response = await this.agentCardService.callInstruction(instructions, { provider: 'google' });
+    const response = await this.agentCardService.callInstruction(instructions);
     console.log(response);
     return response;
     // const response = await this.agentCardService.callChatCompletion({ messages });

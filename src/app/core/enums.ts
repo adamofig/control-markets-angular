@@ -34,19 +34,25 @@ export const Endpoints = {
     Generics: 'api/generics',
     GenericsFiltered: 'api/generics/query',
   },
+  Whisper: {
+    TranscribeBytes: 'api/whisper/transcribe-bytes',
+  },
+  Vertex: {
+    tts: 'api/vertex/tts/synthesize',
+  },
   Admin: {
     Claims: 'api/admin/claims', // :email
   },
   Tools: {
     DownloadYoutubeSong: 'api/tools/download-youtube-song',
   },
-  ConversationCard: {
+  AgentCard: {
     TranslateConversation: 'api/conversation_card/translate',
-    Conversation: 'api/agent-cards/conversation',
-    ConversationQuery: 'api/agent-cards/conversation/query',
-    AgentChat: 'api/conversation/agent/chat',
-    ListModels: 'api/conversation/agent/list_models',
-    Whisper: 'api/conversation/whisper',
+    Card: 'api/agent-cards',
+    ConversationQuery: 'api/agent-cards/query',
+    Chat: 'api/agent-cards/chat',
+    ListModels: 'api/agent-cards/list_models',
+    Whisper: 'api/agent-cards/whisper',
   },
 
   VideoGenerators: {
@@ -77,8 +83,9 @@ export const Endpoints = {
   },
 
   Lessons: {
-    Lesson: 'api/lessonv2/lesson',
-    QueryLessons: 'api/lessonv2/query',
+    Save: 'api/lesson/lesson',
+    Main: 'api/lesson',
+    QueryLessons: 'api/lesson/query',
   },
 
   Sources: {

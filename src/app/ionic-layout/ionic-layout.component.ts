@@ -80,14 +80,14 @@ export class IonicLayoutComponent implements OnInit {
   public appPages = [
     { title: 'Home', url: '/page/home', icon: 'home' },
     { title: 'Lessons', url: '/page/lessons', icon: 'eye' },
-    { title: 'Agents Conversation', url: '/page/chat', icon: 'chatbubble-ellipses' },
+    { title: 'Agents Conversation', url: '/page/agents', icon: 'chatbubble-ellipses' },
     { title: 'Generics', url: '/page/generics', icon: 'code-working' },
     { title: 'Test', url: '/page/test', icon: 'code-working' },
   ];
 
   public adminPages = [
-    { title: 'Admin Users', url: '/page/admin-user', icon: 'people' },
-    { title: 'Admin Other', url: '/page/admin-other', icon: 'settings' },
+    { title: 'Admin Users', url: '/page/admin/users', icon: 'people' },
+    { title: 'Admin Other', url: '/page/admin', icon: 'settings' },
   ];
 
   public testingPages = [{ title: 'Test', url: '/page/test', icon: 'code-working' }];
@@ -96,9 +96,6 @@ export class IonicLayoutComponent implements OnInit {
 
   // Add this property to track dark mode state
   public isDarkMode: boolean = false;
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
   constructor() {
     addIcons(ionicons);

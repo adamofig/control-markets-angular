@@ -36,14 +36,14 @@ export class AgentCardListPage implements OnInit {
   public chatUserSettings: ChatUserSettings = {
     realTime: false,
     repeatRecording: false,
-    fixGrammar: false,
     superHearing: false,
     voice: 'default',
-    autoTranslate: false,
     highlightWords: false,
     synthVoice: false,
     speed: AudioSpeed.Regular,
     speedRate: 1,
+    userMessageTask: false,
+    assistantMessageTask: false,
   };
 
   public viewMode: 'table' | 'cards' = 'table';

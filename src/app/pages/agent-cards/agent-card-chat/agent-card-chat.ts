@@ -2,9 +2,8 @@ import { ChangeDetectorRef, Component, Input, OnInit, inject } from '@angular/co
 
 import { DCChatComponent, IConversationSettings, ChatUserSettings, ChatRole, AudioSpeed, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute } from '@angular/router';
-import { AgentCardService } from 'src/app/services/agent-cards.service';
+import { AgentCardService } from 'src/app/services/agent-card-service';
 
-// TODO cambiar este nombre.
 @Component({
   selector: 'app-agent-card-chat',
   standalone: true,
@@ -25,20 +24,15 @@ export class AgentCardChatComponent implements OnInit {
   public chatUserSettings: ChatUserSettings = {
     realTime: false,
     repeatRecording: false,
-    fixGrammar: false,
     superHearing: false,
     voice: 'en-US',
-    autoTranslate: false,
     synthVoice: false,
     highlightWords: false,
     speedRate: 1,
     speed: AudioSpeed.Regular,
+    userMessageTask: false,
+    assistantMessageTask: false,
   };
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(async params => {
@@ -53,5 +47,6 @@ export class AgentCardChatComponent implements OnInit {
       }
     });
   }
+
   // Add your component logic here
 }

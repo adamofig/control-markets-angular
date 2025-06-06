@@ -75,7 +75,7 @@ export class CaptionExtractionService {
       const prompt = getPromptTranslatePaginatedCaptions(JSON.stringify(chuck));
       console.log('Prompt', prompt);
 
-      const response = await this.agentCardService.callInstruction(prompt, { provider: 'google' });
+      const response = await this.agentCardService.callInstruction(prompt);
       console.log('Response', response);
       const translationChuck = extractJsonFromString(response.content);
       console.log('Translated pages', translationChuck);

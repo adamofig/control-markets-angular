@@ -2,11 +2,11 @@
 <p-button [icon]="viewType === 'card' ? 'pi pi-table' : 'pi pi-list'" label="Change View" [link]="true" (click)="toggleView()" />
 }
 <div class="generic-list-container">
-  <dc-filter-bar (onNew)="onNew()"></dc-filter-bar>
+  <dc-filter-bar [options]="filterBarOptions" (onNew)="onNew()" (onFilterAction)="doAction($event)"></dc-filter-bar>
 
   @if (viewType === 'card') {
   <div class="generic-list-content">
-    @for (generic of generics; track generic.id) {
+    @for (generic of generics(); track generic.id) {
     <div class="card-source">
       <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
         <p-speeddial
@@ -21,7 +21,7 @@
         <span>{{ generic.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
       </p-card>
     </div>
-    } @if (generics.length === 0) {
+    } @if (generics().length === 0) {
     <p-card>
       <p>No generics found</p>
     </p-card>
@@ -29,7 +29,7 @@
   </div>
   } @else if ( viewType == 'table'){
 
-  <app-quick-table [columns]="columns" [tableData]="generics" [onlyView]="onlyView()" (onSelect)="onSelect.emit($event)"></app-quick-table>
+  <app-quick-table [tableData]="generics()"></app-quick-table>
 
   }
 
