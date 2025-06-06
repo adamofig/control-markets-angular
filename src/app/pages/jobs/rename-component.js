@@ -8,8 +8,8 @@ const readline = require('readline');
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
 const directory = './';
-const oldName = 'generic';
-const newName = ''; // Replace this with your desired name
+const oldName = 'job';
+const newName = 'job'; // Replace this with your desired name
 
 function toKebabCase(str) {
   return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();

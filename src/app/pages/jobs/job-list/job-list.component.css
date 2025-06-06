@@ -3,13 +3,13 @@
   height: 100%;
 }
 
-.generic-list-container {
+.job-list-container {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.generic-list-content {
+.job-list-content {
   margin-top: 10px;
   flex: 1;
   overflow-y: auto;

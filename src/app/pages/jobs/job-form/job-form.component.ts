@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IGeneric } from '../models/generics.model';
-import { GenericService } from '../generics.service';
+import { IAgentJob } from '../models/jobs.model';
+import { JobService } from '../jobs.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
@@ -17,7 +17,7 @@ import { AspectType, CropperComponentModal, ResolutionType, CloudStorageData } f
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { DialogModule } from 'primeng/dialog';
-import { GenericListComponent } from '../generic-list/generic-list.component';
+import { JobListComponent } from '../job-list/job-list.component';
 
 @Component({
   selector: 'app-source-form',
@@ -34,23 +34,23 @@ import { GenericListComponent } from '../generic-list/generic-list.component';
     CropperComponentModal,
     FormlyModule,
     DialogModule,
-    GenericListComponent,
+    JobListComponent,
   ],
-  templateUrl: './generic-form.component.html',
-  styleUrl: './generic-form.component.css',
+  templateUrl: './job-form.component.html',
+  styleUrl: './job-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class GenericFormComponent implements OnInit {
+export class JobFormComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private genericService = inject(GenericService);
+  private jobService = inject(JobService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
   private cdr = inject(ChangeDetectorRef);
 
   public storageImgSettings = {
-    path: `generics`,
+    path: `jobs`,
     cropSettings: { aspectRatio: AspectType.Square, resolutions: [ResolutionType.MediumLarge], resizeToWidth: 700 },
   };
 
@@ -59,7 +59,7 @@ export class GenericFormComponent implements OnInit {
     { key: 'content', type: 'textarea', props: { label: 'Content', placeholder: 'Content', required: false } },
   ];
 
-  public genericForm = this.fb.group({
+  public jobForm = this.fb.group({
     name: ['', Validators.required],
     description: [''],
     image: [{} as CloudStorageData],
@@ -76,7 +76,7 @@ export class GenericFormComponent implements OnInit {
 
   public selectedPeople: any[] = [{ id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/images/face-3.jpg' }];
 
-  public genericTypes = [
+  public jobTypes = [
     { label: 'Type 1', value: 'type1' },
     { label: 'Type 2', value: 'type2' },
     { label: 'Type 3', value: 'type3' },
@@ -93,25 +93,32 @@ export class GenericFormComponent implements OnInit {
 
   constructor() {}
 
-  public generic: IGeneric | null = null;
-  public genericId = this.route.snapshot.params['id'];
+  public job: IAgentJob | null = null;
+  public jobId = this.route.snapshot.params['id'];
 
   async ngOnInit(): Promise<void> {
-    if (this.genericId) {
-      this.generic = await this.genericService.getGeneric(this.genericId);
-      if (this.generic) {
-        this.genericForm.patchValue(this.generic);
+    if (this.jobId) {
+      this.job = await this.jobService.getJob(this.jobId);
+      if (this.job) {
+        // this.jobForm.patchValue({
+        //   name: this.job.task.name,
+        //   description: this.job.response.content,
+        //   image: this.job.task.assets.image,
+        //   type: this.job.task.type,
+        //   relation: {},
+        //   extension: {},
+        // });
       }
     }
   }
 
   async save() {
-    if (this.genericForm.valid) {
-      const generic = { ...this.generic, ...this.genericForm.value } as IGeneric;
+    if (this.jobForm.valid) {
+      const job = { ...this.job, ...this.jobForm.value } as IAgentJob;
 
-      const result = await this.genericService.saveGeneric(generic);
+      const result = await this.jobService.saveJob(job);
 
-      if (!this.genericId) {
+      if (!this.jobId) {
         this.router.navigate([result.id], { relativeTo: this.route });
       }
       this.toastService.success({ title: 'Origen guardado', subtitle: 'El origen ha sido guardado correctamente' });
@@ -128,7 +135,7 @@ export class GenericFormComponent implements OnInit {
   }
 
   public handleImageUpload(event: any) {
-    // this.genericForm.patchValue({ image: event });
+    // this.jobForm.patchValue({ image: event });
     alert('Image uploaded');
   }
 
@@ -145,10 +152,10 @@ export class GenericFormComponent implements OnInit {
     console.log(this.relationPopupSelector);
   }
 
-  public handleRelationSelection(relation: IGeneric) {
+  public handleRelationSelection(relation: any) {
     console.log(relation);
 
-    // this.genericForm.patchValue({ relation: relation });
+    // this.jobForm.patchValue({ relation: relation });
     this.isDialogVisible = false;
     this.relationPopupSelector.push(relation);
     this.cdr.detectChanges();

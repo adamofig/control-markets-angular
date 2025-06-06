@@ -1,8 +1,8 @@
-<h3>Generics Form</h3>
+<h3>Jobs Form</h3>
 
 <div class="source-form-card">
-  <p-card [header]="genericId ? 'Edit Generic' : 'New Generic'">
-    <form [formGroup]="genericForm">
+  <p-card [header]="jobId ? 'Edit Job' : 'New Job'">
+    <form [formGroup]="jobForm">
       <div style="display: flex; gap: 10px">
         <div class="form-field">
           <label class="block" pTooltip="Image should be handle after upload">Subir imagen</label>
@@ -25,7 +25,7 @@
 
       <div class="form-field">
         <label for="type" class="block">Type</label>
-        <p-select id="type" [options]="genericTypes" formControlName="type" optionLabel="label" optionValue="value" placeholder="Select a type" />
+        <p-select id="type" [options]="jobTypes" formControlName="type" optionLabel="label" optionValue="value" placeholder="Select a type" />
       </div>
 
       <!-- Different is releation contains a whole object meanwhile type is only string -->
@@ -38,7 +38,7 @@
         <div class="form-field">
           <label class="block" pTooltip="Ejemplo use formly">Extension</label>
 
-          <formly-form [fields]="extraFields" [form]="genericForm.controls.extension"></formly-form>
+          <formly-form [fields]="extraFields" [form]="jobForm.controls.extension"></formly-form>
         </div>
       </div>
 
@@ -78,7 +78,7 @@
     </form>
 
     <div style="display: flex; justify-content: flex-end">
-      <p-button (click)="save()" label="Save Generic" [disabled]="!genericForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
+      <p-button (click)="save()" label="Save Job" [disabled]="!jobForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
     </div>
 
     <div>
@@ -88,7 +88,7 @@
     </div>
 
     <p-dialog header="Search for relation" [(visible)]="isDialogVisible" [modal]="true">
-      <app-generic-list [onlyView]="true" [viewType]="'table'" (onSelect)="handleRelationSelection($event)"></app-generic-list>
+      <app-job-list [onlyView]="true" [viewType]="'table'" (onSelect)="handleRelationSelection($event)"></app-job-list>
     </p-dialog>
   </p-card>
 </div>

@@ -176,24 +176,24 @@ export const routes: Routes = [
       },
 
       {
-        path: 'generics',
-        loadComponent: () => import('./pages/generics/generics.component').then(m => m.GenericsComponent),
+        path: 'jobs',
+        loadComponent: () => import('./pages/jobs/jobs.component').then(m => m.JobsComponent),
         children: [
           {
             path: '',
-            loadComponent: () => import('./pages/generics/generic-list/generic-list.component').then(m => m.GenericListComponent),
+            loadComponent: () => import('./pages/jobs/job-list/job-list.component').then(m => m.JobListComponent),
           },
           {
             path: 'edit',
-            loadComponent: () => import('./pages/generics/generic-form/generic-form.component').then(m => m.GenericFormComponent),
+            loadComponent: () => import('./pages/jobs/job-form/job-form.component').then(m => m.JobFormComponent),
           },
           {
             path: 'edit/:id',
-            loadComponent: () => import('./pages/generics/generic-form/generic-form.component').then(m => m.GenericFormComponent),
+            loadComponent: () => import('./pages/jobs/job-form/job-form.component').then(m => m.JobFormComponent),
           },
           {
             path: 'details/:id',
-            loadComponent: () => import('./pages/generics/generic-detail/generic-detail.component').then(m => m.GenericDetailComponent),
+            loadComponent: () => import('./pages/jobs/job-detail/job-detail.component').then(m => m.JobDetailComponent),
           },
         ],
       },

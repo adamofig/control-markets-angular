@@ -1,35 +1,35 @@
 @if (!onlyView()) {
 <p-button [icon]="viewType === 'card' ? 'pi pi-table' : 'pi pi-list'" label="Change View" [link]="true" (click)="toggleView()" />
 }
-<div class="generic-list-container">
+<div class="job-list-container">
   <dc-filter-bar [options]="filterBarOptions" (onNew)="onNew()" (onFilterAction)="doAction($event)"></dc-filter-bar>
 
   @if (viewType === 'card') {
-  <div class="generic-list-content">
-    @for (generic of generics(); track generic.id) {
+  <div class="job-list-content">
+    @for (job of jobs(); track job.id) {
     <div class="card-source">
       <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
         <p-speeddial
-          [model]="getCustomButtons(generic)"
+          [model]="getCustomButtons(job)"
           [radius]="70"
           type="quarter-circle"
           direction="down-left"
           [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
       </div>
-      <p-card [header]="generic.name">
-        <p class="m-0">{{ generic.description | slice : 0 : 250 }}...</p>
-        <span>{{ generic.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
+      <p-card [header]="job.task.name">
+        <p class="m-0">{{ job.infoFromSources | slice : 0 : 250 }}...</p>
+        <span>{{ job.response.content | date : 'dd/MM/yyyy HH:mm' }}</span>
       </p-card>
     </div>
-    } @if (generics().length === 0) {
+    } @if (jobs().length === 0) {
     <p-card>
-      <p>No generics found</p>
+      <p>No jobs found</p>
     </p-card>
     }
   </div>
   } @else if ( viewType == 'table'){
 
-  <app-quick-table [tableData]="generics()"></app-quick-table>
+  <app-quick-table [tableData]="jobs()"></app-quick-table>
 
   }
 

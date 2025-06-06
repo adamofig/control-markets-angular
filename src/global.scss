@@ -40,8 +40,8 @@
     // NOTE: tab bar is the one at the bottom. 
     --ion-tab-bar-background: transparent;
     --ion-tab-bar-background-focused: var(--p-primary-50);
-    --ion-tab-bar-color: var(--p-primary-color);
-    --ion-tab-bar-color-selected: var(--p-teal-600) ;
+    --ion-tab-bar-color: var(--p-stone-600);
+    --ion-tab-bar-color-selected: var(--p-stone-700) ;
     --ion-tab-bar-border-color: var(--p-primary-200);
 
     // NOTE: tool bar is the one at the top
@@ -52,8 +52,8 @@
     --ion-toolbar-segment-background: var(--p-primary-color);
 
     // Note: items exists on menu, this will change the left menu bar. 
-    --ion-item-border-color: var(--p-primary-100);
-    --ion-item-color: var(--p-primary-color) ; // this is the text in menu left bar.
+    --ion-item-border-color: var(--p-stone-100);
+    --ion-item-color: var(--p-stone-500) ; // this is the text in menu left bar.
     --ion-text-color-rgb: var(--p-primary-color) ; // this control the icon not sure what other colors
     --ion-item-backdrop: blur(3px) ;
     --ion-item-background: transparent; /* Changed to red color */
@@ -70,7 +70,7 @@
     // --primary-dark-color: #74FAC9;  // You can change this hex color
 
     --ion-background-color: transparent; // background apply for multiple ionic sections. 
-    --ion-text-color: var(--primary-dark-color); // general text: 
+    --ion-text-color: var(--p-yellow-50); // general text: 
     --ion-backdrop-color: var(--primary-dark-color); // backdrop color, not sure where it aplies
     --ion-color-primary: var(--primary-dark-color);
     --ion-backdrop-opacity: 0.6;
@@ -79,8 +79,8 @@
 
     // NOTE: tab bar is the one at the bottom. 
     --ion-tab-bar-background-focused: var(--p-primary-50);
-    --ion-tab-bar-color: var(--primary-dark-color);
-    --ion-tab-bar-color-selected: var(--p-teal-200) ;
+    --ion-tab-bar-color: var(--p-amber-400);
+    --ion-tab-bar-color-selected: var(--p-yellow-500) ;
     --ion-tab-bar-border-color: var(--p-primary-200);
     --ion-tab-bar-background: transparent;
 
@@ -93,7 +93,7 @@
 
     // Note: items exists on menu, this will change the left menu bar. 
     --ion-item-border-color: var(--primary-dark-color);
-    --ion-item-color: var(--primary-dark-color) ; // this is the text in menu left bar.
+    --ion-item-color: var(--p-amber-400) ; // this is the text in menu left bar.
     --ion-text-color-rgb: var(--primary-dark-color) ; // this control the icon not sure what other colors
     --ion-item-backdrop: blur(3px) ;
     --ion-item-background: transparent;

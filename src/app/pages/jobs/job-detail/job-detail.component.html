@@ -1,0 +1,74 @@
+@if (job(); as jobData) {
+<div>
+  <h2>Job Details</h2>
+
+  <div class="section">
+    <h4>Task</h4>
+    <p><strong>Name:</strong> {{ jobData.task?.name }}</p>
+  </div>
+
+  @if (jobData.agentCard) {
+  <div class="section">
+    <h4>Agent Card</h4>
+    <p><strong>Title:</strong> {{ jobData.agentCard.title }}</p>
+    <!-- <p><strong>Name:</strong> {{ agentCard?.name }}</p> -->
+    @if (jobData.agentCard.assets?.image?.url; as imageUrl) {
+    <div>
+      <p><strong>Image:</strong></p>
+      <img [src]="imageUrl" width="200" />
+    </div>
+    }
+  </div>
+  } @if (jobData.infoFromSources; as info) {
+  <div class="section">
+    <h4>Information From Sources</h4>
+    <pre>{{ info }}</pre>
+  </div>
+  } @if (jobData.messages && jobData.messages.length > 0) {
+  <div class="section">
+    <h4>Messages</h4>
+    @for (message of jobData.messages; track message.role + message.content; let i = $index) {
+    <div class="message">
+      <p>
+        <strong>Role {{ i + 1 }}:</strong> {{ message.role }}
+      </p>
+      <p><strong>Content:</strong></p>
+      <pre>{{ message.content }}</pre>
+    </div>
+    }
+  </div>
+  } @if (jobData.response; as response) {
+  <div class="section">
+    <h4>Response</h4>
+    <div class="message">
+      <p><strong>Role:</strong> {{ response.role }}</p>
+      <p><strong>Content:</strong></p>
+      <pre>{{ response.content }}</pre>
+    </div>
+  </div>
+  } @if (jobData.sources && jobData.sources.length > 0) {
+  <div class="section">
+    <h4>Sources</h4>
+    <ul>
+      @for (source of jobData.sources; track source.id) {
+      <li>
+        <!-- Assuming ISourceTask has a 'name' or 'title' property to display -->
+        <!-- Adjust this part based on the actual structure of ISourceTask -->
+        <p>{{ source.id }} - {{ source.type }}</p>
+      </li>
+      }
+    </ul>
+  </div>
+  }
+</div>
+} @else {
+<p>Loading job details or no job data available...</p>
+}
+
+<br />
+<details>
+  <summary>Raw JSON Data</summary>
+  <pre>
+    {{ job() | json }}
+  </pre>
+</details>

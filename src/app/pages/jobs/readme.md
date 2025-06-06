@@ -4,13 +4,13 @@
 
 ### 1) Copy Folder and fix imports
 
-- Usally is references in generic Service, ToastAlertService, HttpService and Endpoints
-- add endpints for generics.
+- Usally is references in job Service, ToastAlertService, HttpService and Endpoints
+- add endpints for jobs.
 
 ```
-  Generics: {
-    Generics: 'api/generic',
-    GenericsFiltered: 'api/generic/query',
+  Jobs: {
+    Jobs: 'api/job',
+    JobsFiltered: 'api/job/query',
   },
 ```
 
@@ -24,7 +24,7 @@ cd src/app/pages/sources
 
 - Add the new name for your component: script can rename all folders and Classes and everything node rename-components.js
 
-### 4) Starting building your collection table what every, change current IGeneric to your data bussiness.
+### 4) Starting building your collection table what every, change current IJob to your data bussiness.
 
 Backend and Front
 

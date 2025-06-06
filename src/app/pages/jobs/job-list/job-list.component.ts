@@ -11,8 +11,8 @@ import {
   TOAST_ALERTS_TOKEN,
   ToastAlertsAbstractService,
 } from '@dataclouder/ngx-core';
-import { GenericService } from '../generics.service';
-import { IGeneric } from '../models/generics.model';
+import { JobService } from '../jobs.service';
+import { IAgentJob } from '../models/jobs.model';
 import { RouterModule } from '@angular/router';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { MenuItem } from 'primeng/api';
@@ -21,7 +21,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 
 @Component({
-  selector: 'app-generic-list',
+  selector: 'app-job-list',
   imports: [
     CardModule,
     ButtonModule,
@@ -34,23 +34,23 @@ import { TableModule } from 'primeng/table';
     TableModule,
     QuickTableComponent,
   ],
-  templateUrl: './generic-list.component.html',
-  styleUrl: './generic-list.component.css',
+  templateUrl: './job-list.component.html',
+  styleUrl: './job-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GenericListComponent extends PaginationBase implements OnInit {
+export class JobListComponent extends PaginationBase implements OnInit {
   // Services
   private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
-  private sourceService = inject(GenericService);
+  private sourceService = inject(JobService);
   private cdr = inject(ChangeDetectorRef);
 
   // Inputs
   @Input() viewType: 'table' | 'card' = 'card';
   readonly onlyView = input<boolean>(true);
-  readonly onSelect = output<IGeneric>();
+  readonly onSelectJob = output<IAgentJob>();
 
   // States
-  generics: WritableSignal<IGeneric[]> = signal<IGeneric[]>([]);
+  jobs: WritableSignal<IAgentJob[]> = signal<IAgentJob[]>([]);
   columns: any[] = ['name', 'description', 'updatedAt', 'image'];
   filterBarOptions: ListFilterBarOptions = { showActions: true, showCreateButton: true, showViewButton: true };
 
@@ -59,27 +59,27 @@ export class GenericListComponent extends PaginationBase implements OnInit {
       {
         tooltipOptions: { tooltipLabel: 'Ver detalles', tooltipPosition: 'bottom' },
         icon: 'pi pi-eye',
-        // command: () => this.doAction({ item, action: 'view' }),
+        command: () => this.doAction({ item, action: 'view' }),
       },
       {
         label: 'Editar',
         icon: 'pi pi-pencil',
-        // command: () => this.doAction({ item, action: 'edit' }),
+        command: () => this.doAction({ item, action: 'edit' }),
       },
       {
         label: 'Eliminar',
         icon: 'pi pi-trash',
-        // command: () => this.doAction({ item, action: 'delete' }),
+        command: () => this.doAction({ item, action: 'delete' }),
       },
     ];
   }
 
   async ngOnInit(): Promise<void> {
     this.filterConfig.returnProps = { _id: 1, id: 1, name: 1, description: 1, updatedAt: 1, image: 1 };
-    const response = await this.sourceService.getFilteredGenerics(this.filterConfig);
-    this.generics.set(response.rows);
+    const response = await this.sourceService.getFilteredJobs(this.filterConfig);
+    this.jobs.set(response.rows);
     this.cdr.detectChanges();
-    console.log(this.generics(), this.viewType);
+    console.log(this.jobs(), this.viewType);
     this.cdr.detectChanges();
   }
 
@@ -94,13 +94,14 @@ export class GenericListComponent extends PaginationBase implements OnInit {
 
   public toggleView() {
     this.viewType = this.viewType === 'card' ? 'table' : 'card';
-    console.log(this.viewType, this.generics());
+    console.log(this.viewType, this.jobs());
     this.cdr.detectChanges();
   }
 
-  public selectItem(generic: IGeneric) {
+  public selectItem(job: IAgentJob) {
+    debugger;
     console.log('onSelect');
-    this.onSelect.emit(generic);
+    this.onSelectJob.emit(job);
   }
 
   public override async doAction(actionEvent: OnActionEvent) {
@@ -117,8 +118,8 @@ export class GenericListComponent extends PaginationBase implements OnInit {
       case 'delete':
         const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
         if (areYouSure) {
-          await this.sourceService.deleteGeneric(item.id);
-          this.generics.set(this.generics().filter(generic => generic.id !== item.id));
+          await this.sourceService.deleteJob(item.id);
+          this.jobs.set(this.jobs().filter(job => job.id !== item.id));
           this.toastService.success({
             title: 'Origen eliminado',
             subtitle: 'El origen ha sido eliminado correctamente',
