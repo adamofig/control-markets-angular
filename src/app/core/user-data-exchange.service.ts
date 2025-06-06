@@ -46,6 +46,8 @@ export class UserDataExchangeService implements UserDataExchangeAbstractService 
       repeatRecording: true,
       fixGrammar: true,
       synthVoice: true,
+      userMessageTask: false,
+      assistantMessageTask: false,
     };
     return settings;
   }

@@ -24,14 +24,14 @@ export class AgentCardChatComponent implements OnInit {
   public chatUserSettings: ChatUserSettings = {
     realTime: false,
     repeatRecording: false,
-    fixGrammar: false,
     superHearing: false,
     voice: 'en-US',
-    autoTranslate: false,
     synthVoice: false,
     highlightWords: false,
     speedRate: 1,
     speed: AudioSpeed.Regular,
+    userMessageTask: false,
+    assistantMessageTask: false,
   };
 
   ngOnInit(): void {

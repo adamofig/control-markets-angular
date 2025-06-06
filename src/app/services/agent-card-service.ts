@@ -103,6 +103,8 @@ export class AgentCardService implements AgentCardsAbstractService {
         modelName: '',
         provider: '',
         speed: AudioSpeed.Regular,
+        userMessageTask: false,
+        assistantMessageTask: false,
       } as ChatUserSettings);
     }
   }
