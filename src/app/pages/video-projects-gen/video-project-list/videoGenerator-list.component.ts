@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit }
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-import { DCFilterBarComponent, PaginationBase, PColumn, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+import { DCFilterBarComponent, OnActionEvent, PaginationBase, PColumn, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { VideoGeneratorService } from '../services/video-project-gen.service';
 import { IVideoProjectGenerator } from '../models/video-project.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,21 +28,22 @@ export class VideoGeneratorListComponent extends PaginationBase implements OnIni
   videoGenerators: IVideoProjectGenerator[] = [];
 
   getCustomButtons(item: any): MenuItem[] {
+    debugger;
     return [
       {
         tooltipOptions: { tooltipLabel: 'Ver detalles', tooltipPosition: 'bottom' },
         icon: 'pi pi-eye',
-        // command: () => this.doAction('view', item),
+        command: () => this.doAction({ action: 'view', item }),
       },
       {
         label: 'Editar',
         icon: 'pi pi-pencil',
-        // command: () => this.doAction('edit', item),
+        command: () => this.doAction({ action: 'edit', item }),
       },
       {
         label: 'Eliminar',
         icon: 'pi pi-trash',
-        // command: () => this.doAction('delete', item),
+        command: () => this.doAction({ action: 'delete', item }),
       },
     ];
   }
@@ -66,29 +67,32 @@ export class VideoGeneratorListComponent extends PaginationBase implements OnIni
   protected override loadData(): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  // public async doAction(action: string, item: any) {
-  //   switch (action) {
-  //     case 'view':
-  //       this.router.navigate(['./details', item.id], { relativeTo: this.route });
-  //       break;
-  //     case 'delete':
-  //       const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
-  //       if (areYouSure) {
-  //         const results = await this.sourceService.deleteVideoGenerator(item.id);
-  //         console.log('results', results);
-  //         this.videoGenerators = this.videoGenerators.filter(videoGenerator => videoGenerator.id !== item.id);
-  //         this.toastService.success({
-  //           title: 'Origen eliminado',
-  //           subtitle: 'El origen ha sido eliminado correctamente',
-  //         });
-  //         this.cdr.detectChanges();
-  //       }
-  //       break;
-  //     case 'edit':
-  //       this.router.navigate(['./edit', item.id], { relativeTo: this.route });
-  //       break;
-  //   }
-  // }
+
+  public override doAction(actionEvent: OnActionEvent): void {
+    debugger;
+    const { action, item } = actionEvent;
+    switch (action) {
+      case 'view':
+        this.router.navigate(['./details', item.id], { relativeTo: this.route });
+        break;
+      case 'delete':
+        const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
+        if (areYouSure) {
+          const results = this.sourceService.deleteVideoGenerator(item.id);
+          console.log('results', results);
+          this.videoGenerators = this.videoGenerators.filter(videoGenerator => videoGenerator.id !== item.id);
+          this.toastService.success({
+            title: 'Origen eliminado',
+            subtitle: 'El origen ha sido eliminado correctamente',
+          });
+          this.cdr.detectChanges();
+        }
+        break;
+      case 'edit':
+        this.router.navigate(['./edit', item.id], { relativeTo: this.route });
+        break;
+    }
+  }
 
   onNew() {
     console.log('onNew');
