@@ -27,11 +27,7 @@
           }
         </div>
 
-        <p-select
-          [options]="agentOptions"
-          [placeholder]="'Select an agent card'"
-          [style]="{ width: '100%' }"
-          (onChange)="onAgentCardChange($event)">
+        <p-select [options]="agentOptions" [placeholder]="'Select an agent card'" [style]="{ width: '100%' }" (onChange)="onAgentCardChange($event)">
           <ng-template #selectedItem let-selectedOption>
             <div style="display: flex; align-items: center; gap: 10px" *ngIf="selectedOption">
               <img [src]="selectedOption.assets?.image?.url" style="width: 18px" />
@@ -65,11 +61,7 @@
         <p>Sin fuentes</p>
         }
 
-        <p-select
-          [options]="sourcesOptions"
-          [placeholder]="'Select data sources for task'"
-          [style]="{ width: '100%' }"
-          (onChange)="addSourceToTask($event)">
+        <p-select [options]="sourcesOptions" [placeholder]="'Select data sources for task'" [style]="{ width: '100%' }" (onChange)="addSourceToTask($event)">
           <ng-template #selectedItem let-selectedOption>
             <div style="display: flex; align-items: center; gap: 10px" *ngIf="selectedOption">
               <img [src]="selectedOption.assets?.image?.url" style="width: 18px" />
@@ -112,34 +104,16 @@
 
       <div style="display: flex; gap: 10px">
         <div class="form-field">
-          <label class="block" pTooltip="El agente tiene dominio sobre esta base de datos">Resultados en Base de Notion</label>
-          <p-select
-            styleClass="w-full"
-            [options]="dbOptions"
-            optionLabel="name"
-            formControlName="output"
-            placeholder="Select Notion DB"
-            class="w-full">
+          <label class="block" pTooltip="El agente tiene dominio sobre esta base de datos">Escribir directamente en Notion</label>
+          <p-select styleClass="w-full" [options]="dbOptions" optionLabel="name" formControlName="output" placeholder="Select Notion DB" class="w-full">
           </p-select>
         </div>
-        <p-button
-          (onClick)="getNotionDBs()"
-          pTooltip="Buscar bases en Notion"
-          tooltipPosition="left"
-          severity="secondary"
-          size="small"
-          icon="pi pi-search" />
+        <p-button (onClick)="getNotionDBs()" pTooltip="Buscar bases en Notion" tooltipPosition="left" severity="secondary" size="small" icon="pi pi-search" />
       </div>
 
       <div class="form-field">
         <label for="description" class="block">Description</label>
-        <textarea
-          class="textmin"
-          rows="3"
-          pInputTextarea
-          id="description"
-          formControlName="description"
-          placeholder="Enter task description"></textarea>
+        <textarea class="textmin" rows="3" pInputTextarea id="description" formControlName="description" placeholder="Enter task description"></textarea>
       </div>
 
       <div class="form-field">

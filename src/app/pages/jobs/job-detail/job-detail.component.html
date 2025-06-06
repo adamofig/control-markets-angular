@@ -7,6 +7,16 @@
     <p><strong>Name:</strong> {{ jobData.task?.name }}</p>
   </div>
 
+  <p-card header="Response: {{ jobData.response?.role }}">
+    @if (jobData.response; as response) {
+    <div class="section">
+      <div class="message">
+        <pre>{{ response.content }}</pre>
+      </div>
+    </div>
+    }
+  </p-card>
+
   @if (jobData.agentCard) {
   <div class="section">
     <h4>Agent Card</h4>
@@ -27,24 +37,16 @@
   } @if (jobData.messages && jobData.messages.length > 0) {
   <div class="section">
     <h4>Messages</h4>
-    @for (message of jobData.messages; track message.role + message.content; let i = $index) {
-    <div class="message">
-      <p>
-        <strong>Role {{ i + 1 }}:</strong> {{ message.role }}
-      </p>
-      <p><strong>Content:</strong></p>
-      <pre>{{ message.content }}</pre>
-    </div>
-    }
-  </div>
-  } @if (jobData.response; as response) {
-  <div class="section">
-    <h4>Response</h4>
-    <div class="message">
-      <p><strong>Role:</strong> {{ response.role }}</p>
-      <p><strong>Content:</strong></p>
-      <pre>{{ response.content }}</pre>
-    </div>
+    <p-accordion [activeIndex]="null">
+      @for (message of jobData.messages; track message.role + message.content; let i = $index) {
+      <p-accordion-panel>
+        <p-accordion-header>Message {{ i + 1 }} - Role: {{ message.role }}</p-accordion-header>
+        <p-accordion-content>
+          <pre>{{ message.content }}</pre>
+        </p-accordion-content>
+      </p-accordion-panel>
+      }
+    </p-accordion>
   </div>
   } @if (jobData.sources && jobData.sources.length > 0) {
   <div class="section">

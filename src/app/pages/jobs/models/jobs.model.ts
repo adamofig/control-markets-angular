@@ -18,7 +18,7 @@ export interface MessageAI {
   content: string;
 }
 
-export interface IAgentJob {
+export interface IAgentJob extends AuditDate {
   _id?: string;
   id?: string;
   task: Partial<IAgentTask>; // Relation with the task

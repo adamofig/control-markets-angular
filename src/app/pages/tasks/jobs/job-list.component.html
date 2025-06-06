@@ -15,7 +15,6 @@
           <h4>{{ job.task.name }}</h4>
         </div>
       </ng-template>
-      <!-- <ng-template #title> {{ job.task.name }}</ng-template> -->
       <ng-template #subtitle>
         Agente: {{ job.agentCard.name }} Fecha: {{ job.createdAt | date : 'dd/MM/yyyy HH:mm' }}
         <br />
@@ -27,7 +26,7 @@
 
         <br />
       </ng-template>
-      <p>{{ job.response.content | slice : 0 : 300 }}{{ job.response.content.length > 300 ? '...' : '' }}</p>
+      <p>{{ job.response?.content | slice : 0 : 300 }}{{ job.response?.content?.length > 300 ? '...' : '' }}</p>
       <ng-template #footer>
         <div class="flex gap-4 mt-1">
           <div class="job-actions">
@@ -50,7 +49,7 @@
     }
 
     <p>Response</p>
-    <p>{{ selectedJob.response.content }}</p>
+    <p>{{ selectedJob.response?.content }}</p>
     <!-- Add more job details as needed -->
   </div>
 </p-dialog>

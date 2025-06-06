@@ -16,9 +16,9 @@
           direction="down-left"
           [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
       </div>
-      <p-card [header]="job.task.name">
+      <p-card [header]="job?.task?.name">
         <p class="m-0">{{ job.infoFromSources | slice : 0 : 250 }}...</p>
-        <span>{{ job.response.content | date : 'dd/MM/yyyy HH:mm' }}</span>
+        <span>{{ job.createdAt | date : 'dd/MM/yyyy HH:mm' }}</span>
       </p-card>
     </div>
     } @if (jobs().length === 0) {
@@ -27,7 +27,7 @@
     </p-card>
     }
   </div>
-  } @else if ( viewType == 'table'){
+  } @else if ( viewType === 'table'){
 
   <app-quick-table [tableData]="jobs()"></app-quick-table>
 

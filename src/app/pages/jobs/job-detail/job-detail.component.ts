@@ -4,10 +4,11 @@ import { JsonPipe } from '@angular/common';
 import { JobService } from '../jobs.service';
 import { IAgentJob } from '../models/jobs.model';
 import { AccordionModule } from 'primeng/accordion';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-job-detail',
-  imports: [JsonPipe, AccordionModule],
+  imports: [JsonPipe, AccordionModule, CardModule],
   templateUrl: './job-detail.component.html',
   styleUrl: './job-detail.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

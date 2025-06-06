@@ -75,7 +75,7 @@ export class JobListComponent extends PaginationBase implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.filterConfig.returnProps = { _id: 1, id: 1, name: 1, description: 1, updatedAt: 1, image: 1 };
+    this.filterConfig.returnProps = { _id: 1, id: 1, task: 1, response: 1, agentCard: 1, createdAt: 1 };
     const response = await this.sourceService.getFilteredJobs(this.filterConfig);
     this.jobs.set(response.rows);
     this.cdr.detectChanges();
