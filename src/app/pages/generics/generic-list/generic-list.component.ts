@@ -59,17 +59,17 @@ export class GenericListComponent extends PaginationBase implements OnInit {
       {
         tooltipOptions: { tooltipLabel: 'Ver detalles', tooltipPosition: 'bottom' },
         icon: 'pi pi-eye',
-        // command: () => this.doAction({ item, action: 'view' }),
+        command: () => this.doAction({ item, action: 'view' }),
       },
       {
         label: 'Editar',
         icon: 'pi pi-pencil',
-        // command: () => this.doAction({ item, action: 'edit' }),
+        command: () => this.doAction({ item, action: 'edit' }),
       },
       {
         label: 'Eliminar',
         icon: 'pi pi-trash',
-        // command: () => this.doAction({ item, action: 'delete' }),
+        command: () => this.doAction({ item, action: 'delete' }),
       },
     ];
   }

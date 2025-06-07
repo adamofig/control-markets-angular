@@ -404,3 +404,26 @@ https://coolors.co/2d0c62-74fac9-7fd6d2-5cbae7-3677bd
 Add as upstream.
 
 make merge-upstream, the first time will add your project, then ill ask you to fix conflicts.
+
+# Docker For Complete App.
+
+### Create Image
+
+I leave 2 versions, dockerfile and dockerfile.complete
+
+- dockerfile: only copy your build, so ng build --prod first.
+
+- dockerfile.complete is for the app and the backend.
+
+// El flujo es crear mis imagenes y exportar en la otra maquina.
+
+```
+docker build -t dc-angular .
+
+docker run -p 8080:80 dc-angular
+
+docker save dc-angular > dc-angular.tar
+
+docker load < dc-angular.tar
+
+```
