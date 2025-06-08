@@ -68,6 +68,8 @@
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "@primeng/themes": "^19.0.10",
+    "@remotion/captions": "^4.0.273",
+    "@remotion/openai-whisper": "^4.0.273",
     "@ricky0123/vad-web": "^0.0.22",
     "@tailwindcss/postcss": "^4.1.4",
     "@types/marked": "^5.0.2",
@@ -77,8 +79,10 @@
     "force": "^0.0.3",
     "ionicons": "^7.4.0",
     "marked": "^15.0.8",
+    "mermaid": "^11.4.1",
     "ngx-image-cropper": "^9.1.5",
     "ngx-markdown": "^19.1.1",
+    "ngx-vflow": "^1.10.0",
     "npm-check-updates": "^17.1.16",
     "postcss": "^8.5.3",
     "primeicons": "^7.0.0",
@@ -89,10 +93,7 @@
     "tailwindcss": "^4.1.4",
     "tslib": "^2.8.1",
     "turndown": "^7.2.0",
-    "zone.js": "~0.15.0",
-    "@remotion/captions": "^4.0.273",
-    "@remotion/openai-whisper": "^4.0.273",
-    "mermaid": "^11.4.1"
+    "zone.js": "~0.15.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.2.5",

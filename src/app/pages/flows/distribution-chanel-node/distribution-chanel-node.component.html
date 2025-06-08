@@ -1,0 +1,6 @@
+<div class="custom-node" selectable [class.custom-node_selected]="selected()">
+  <img style="position: absolute; top: 0; left: 0" [src]="data()?.image" alt="" />
+  <p class="text-node">{{ data()?.text }}</p>
+
+  <handle type="target" position="left" id="b" />
+</div>

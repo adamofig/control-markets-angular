@@ -4,10 +4,10 @@
 
   <div class="section">
     <h4>Task</h4>
-    <p><strong>Name:</strong> {{ jobData.task?.name }}</p>
+    <p><strong>Name:</strong> {{ jobData.task.name }}</p>
   </div>
 
-  <p-card header="Response: {{ jobData.response?.role }}">
+  <p-card header="Response: {{ jobData.response.role }}">
     @if (jobData.response; as response) {
     <div class="section">
       <div class="message">

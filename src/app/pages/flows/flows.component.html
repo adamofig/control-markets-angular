@@ -1,0 +1,19 @@
+<!-- <vflow view="auto" [nodes]="nodes" [background]="backDots" /> -->
+
+<div style="color: rebeccapurple; height: 100px">
+  <button (click)="createEdge({ source: '1', target: '2' })">Create Edge</button>
+</div>
+
+<vflow view="auto" [nodes]="nodes" [edges]="edges" [background]="backDots" (onConnect)="createEdge($event)">
+  <ng-template let-ctx nodeHtml>
+    <div class="custom-node" selectable [class.custom-node_selected]="ctx.selected()">
+      <img style="position: absolute; top: 0; left: 0" [src]="ctx.node.data().image" alt="" />
+      <p class="text-node">{{ ctx.node.data().text }}</p>
+
+      <handle type="source" position="top" id="a" />
+      <handle type="source" position="right" id="b" />
+      <handle type="source" position="bottom" id="c" />
+      <handle type="source" position="left" id="d" />
+    </div>
+  </ng-template>
+</vflow>

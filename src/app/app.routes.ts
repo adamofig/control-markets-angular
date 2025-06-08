@@ -96,6 +96,11 @@ export const routes: Routes = [
     loadComponent: () => import('./ionic-layout/ionic-layout.component').then(m => m.IonicLayoutComponent),
     children: [
       {
+        path: 'flows',
+        loadComponent: () => import('./pages/flows/flows.component').then(m => m.FlowsComponent),
+      },
+
+      {
         path: 'home',
         loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
       },
