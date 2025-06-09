@@ -32,6 +32,8 @@ import { FirebaseAuthService } from '@dataclouder/app-auth';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
+import { UserService } from '../dc-user-module/user.service';
+import { IUser } from '@dataclouder/ngx-users';
 
 @Component({
   selector: 'app-ionic-layout',
@@ -73,11 +75,12 @@ export class IonicLayoutComponent implements OnInit {
   private router = inject(Router);
   private actionSheetController = inject(ActionSheetController);
   private menuController = inject(MenuController);
+  public userService = inject(UserService);
 
   public envName = environment.envName;
   public projectName = environment.projectName;
   public version = environment.version;
-  public user: any = {};
+  public user: IUser | null = this.userService.getUser();
   public menuVisible: boolean = true;
 
   public appPages = [
@@ -111,13 +114,6 @@ export class IonicLayoutComponent implements OnInit {
   ngOnInit(): void {
     this.firebaseAuthService.authState$.subscribe((auth: any) => {
       if (auth) {
-        this.user = {
-          email: auth.email,
-          displayName: auth.displayName,
-          photoURL: auth.photoURL,
-          emailVerified: auth.emailVerified,
-          isAdmin: auth.email === 'admin@example.com',
-        };
         // this.isAdmin = this.user.isAdmin;
         this.isAdmin = true;
       }

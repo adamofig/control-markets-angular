@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { ChatUserSettings, UserDataExchange, UserDataExchangeAbstractService } from '@dataclouder/ngx-agent-cards';
+import { UserDataExchange, UserDataExchangeAbstractService } from '@dataclouder/ngx-agent-cards';
 import { UserService } from '../dc-user-module/user.service';
+import { ChatUserSettings } from '@dataclouder/ngx-core';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class UserDataExchangeService implements UserDataExchangeAbstractService 
     return {
       name: userData?.firstname || 'Usuario',
       gender: userData?.gender || 'Masculino',
-      imgUrl: 'assets/images/default_conversation_card.webp',
+      imgUrl: 'assets/defaults/images/default_conversation_card.webp',
       // age: new Date().getFullYear() - new Date(userData?.birthday).getFullYear(),
       age: 20,
     };
