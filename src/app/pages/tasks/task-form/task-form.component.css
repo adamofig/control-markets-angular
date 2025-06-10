@@ -122,3 +122,12 @@ label {
     transition: all 0.3s ease;
 }
 
+
+.task-form-background-image {
+  width: 900px;
+  border-radius: 15px;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  opacity: 0.6;
+}

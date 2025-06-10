@@ -18,8 +18,8 @@
   </ng-template>
 </vflow>
 
-<p-dialog header="Search for relation" [(visible)]="isDialogVisible" [modal]="true" [style]="{ width: '100%', height: '100%' }">
-  <dc-agent-card-lists (onAction)="handleRelationSelection($event)" />
+<p-dialog header="Agregar un agente" [draggable]="false" [(visible)]="isDialogVisible" [modal]="true" [style]="{ width: '85%', height: '85%' }">
+  <dc-agent-card-lists viewMode="table" (onAction)="handleRelationSelection($event)" />
 
   <!-- <app-agent-card-list (onSelect)="handleRelationSelection($event)"></app-agent-card-list> -->
 </p-dialog>

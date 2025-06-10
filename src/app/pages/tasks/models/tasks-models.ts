@@ -16,6 +16,8 @@ export interface IAgentTask {
   agentCards: Partial<IAgentCard>[];
   status: string;
 
+  image: any;
+
   taskType: AgentTaskType;
   taskAttached: Partial<IAgentTask>;
 

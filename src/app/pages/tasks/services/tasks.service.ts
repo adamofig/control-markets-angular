@@ -23,7 +23,7 @@ export class TasksService {
     return this.httpService.getDataFromService(`${Endpoints.Tasks.Task}/${id}`);
   }
 
-  public saveTask(task: IAgentTask) {
+  public saveTask(task: Partial<IAgentTask>) {
     return this.httpService.postDataToService(Endpoints.Tasks.Save, task);
   }
 

@@ -7,7 +7,7 @@ import { OutcomeNodeComponent } from './outcome-node/outcome-node.component';
 import { TaskNodeComponent } from './task-node/task-node.component';
 import { DialogModule } from 'primeng/dialog';
 import { AgentCardListPage } from '../agent-cards/agent-card-list/agent-card-list';
-import { AgentCardListComponent } from '@dataclouder/ngx-agent-cards';
+import { AgentCardListComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { OnActionEvent } from '@dataclouder/ngx-core';
 
 @Component({
@@ -120,6 +120,22 @@ export class FlowsComponent {
 
   handleRelationSelection(event: OnActionEvent) {
     console.log('handleRelationSelection', event);
-    debugger;
+    const card: IAgentCard = event.item;
+    this.createAgentNode(card);
+  }
+
+  public createAgentNode(card: IAgentCard) {
+    this.nodes = [
+      ...this.nodes,
+      {
+        id: this.nodes.length.toString(),
+        point: signal({ x: 100, y: 100 }),
+        type: AgentNodeComponent as any,
+        data: {
+          text: card.title || card.characterCard?.data?.name,
+          image: card.assets?.image?.url,
+        } as any,
+      },
+    ];
   }
 }

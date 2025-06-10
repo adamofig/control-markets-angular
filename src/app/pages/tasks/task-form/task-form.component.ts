@@ -29,6 +29,7 @@ import { NotionService } from '../services/notion.service';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ToastAlertService } from 'src/app/services/toast.service';
 import { SourceService } from '../../sources/sources.service';
+import { AspectType, ResolutionType, CropperComponentModal } from '@dataclouder/ngx-cloud-storage';
 
 @Component({
   selector: 'app-task-edit',
@@ -46,6 +47,7 @@ import { SourceService } from '../../sources/sources.service';
     ChipModule,
     TooltipModule,
     ProviderSelectorComponent,
+    CropperComponentModal,
   ],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.css',
@@ -57,6 +59,11 @@ export class TaskFormComponent implements OnInit {
   public selectedSource: string = '';
   public selectedAssets: any = null;
   public id = this.route.snapshot.params['id'];
+
+  public storageImgSettings = {
+    path: `jobs`,
+    cropSettings: { aspectRatio: AspectType.Banner, resolutions: [ResolutionType.MediumLarge], resizeToWidth: 700 },
+  };
 
   public dbOptions: any[] = [];
 
@@ -98,24 +105,11 @@ export class TaskFormComponent implements OnInit {
     this.getAgentCards();
     this.getAgentSources();
     this.getAgentTasks();
+  }
 
-    // this.taskForm.controls.taskType.valueChanges.subscribe(async value => {
-    //   if (value === AgentTaskType.REVIEW_TASK) {
-    //     // this.taskForm.controls.taskAttached.setValidators([Validators.required]);
-    //     // this.taskForm.controls.taskAttached.enable();
-    //     const optionAttached = await this.tasksService.getFilteredTasks({});
-    //     console.log('Task attached options:', optionAttached);
-    //     this.taskAttachedOptions = optionAttached.rows.map((task: IAgentTask) => ({
-    //       name: task.name,
-    //       id: task._id,
-    //     }));
-    //     console.log('Task attached options:', this.taskAttachedOptions);
-    //   } else {
-    //     // this.taskForm.controls.taskAttached.clearValidators();
-    //     this.taskForm.controls.taskAttached.disable();
-    //   }
-    //   // this.taskForm.controls.taskAttached.updateValueAndValidity();
-    // });
+  public handleImageUpload(event: any) {
+    debugger;
+    this.uploadImage(event);
   }
 
   private async getAgentTasks() {
@@ -130,11 +124,7 @@ export class TaskFormComponent implements OnInit {
       if (this.task?.output?.type === 'notion_database') {
         this.dbOptions = [this.task.output];
       }
-      console.log('Task:', this.task);
-
       this.taskForm.patchValue(this.task as any);
-      console.log('Task:', this.taskForm.value);
-
       this.cdr.detectChanges();
     }
   }
@@ -166,6 +156,17 @@ export class TaskFormComponent implements OnInit {
         this.toastService.success({ title: 'Tarea actualizada', subtitle: 'Tarea actualizada correctamente' });
       }
     }
+  }
+
+  public async uploadImage(image: any) {
+    const taskData: Partial<IAgentTask> = {
+      id: this.task?.id || '',
+      image: image,
+    };
+
+    await this.tasksService.saveTask(taskData);
+
+    this.toastService.success({ title: 'Tarea actualizada', subtitle: 'Tarea actualizada correctamente' });
   }
 
   private async getAgentCards() {

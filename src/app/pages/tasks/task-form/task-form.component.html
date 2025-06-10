@@ -1,5 +1,15 @@
 <div class="task-form-card">
   <p-card [header]="id ? 'Edit Task' : 'New Task'">
+    <div style="display: flex; justify-content: center">
+      <img class="task-form-background-image" [src]="task?.image?.url || 'assets/defaults/background/default-background.webp'" />
+      <div style="position: absolute; top: 10px; right: 10px">
+        <dc-cropper-modal
+          [buttonLabel]="'Subir imagen'"
+          [imgStorageSettings]="storageImgSettings"
+          (imageUploaded)="handleImageUpload($event)"></dc-cropper-modal>
+      </div>
+    </div>
+
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-4">
       <div class="form-field">
         <label for="name" class="block">Title</label>
