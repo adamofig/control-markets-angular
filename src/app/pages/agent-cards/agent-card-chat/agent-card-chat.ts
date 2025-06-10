@@ -1,8 +1,9 @@
 import { ChangeDetectorRef, Component, Input, OnInit, inject } from '@angular/core';
 
-import { DCChatComponent, IConversationSettings, ChatUserSettings, ChatRole, AudioSpeed, IAgentCard } from '@dataclouder/ngx-agent-cards';
+import { DCChatComponent, IConversationSettings, ChatRole, AudioSpeed, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute } from '@angular/router';
 import { AgentCardService } from 'src/app/services/agent-card-service';
+import { ChatUserSettings } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-agent-card-chat',

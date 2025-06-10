@@ -1,9 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IUser, PlanType, PermissionType, RolType } from '../../dc-user-module/user.class';
+import { PlanType, PermissionType, RolType } from '../../dc-user-module/user.class';
 
 import { UserService } from 'src/app/dc-user-module/user.service';
+import { IUser } from '@dataclouder/ngx-users';
 
 @Component({
   selector: 'app-profile',

@@ -5,7 +5,6 @@ import { IonContent } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { sendOutline, sendSharp, send } from 'ionicons/icons';
 import {
-  ChatUserSettings,
   IConversationSettings,
   ChatRole,
   AgentCardListComponent,
@@ -15,7 +14,7 @@ import {
   IAgentCard,
 } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { OnActionEvent, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+import { ChatUserSettings, OnActionEvent, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 

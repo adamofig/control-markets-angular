@@ -4,7 +4,6 @@ import {
   ChatRole,
   AgentCardsAbstractService,
   ConversationMessagesDTO,
-  ChatUserSettings,
   IAgentCard,
   TranscriptionsWhisper,
   IConversationSettings,
@@ -13,7 +12,7 @@ import {
 import { HttpService } from './http.service';
 import { UserService } from '../dc-user-module/user.service';
 import { Endpoints } from '../core/enums';
-import { FiltersConfig, IFilterQueryResponse } from '@dataclouder/ngx-core';
+import { ChatUserSettings, FiltersConfig, IFilterQueryResponse } from '@dataclouder/ngx-core';
 
 export type AudioGenerated = { blobUrl: string; transcription: any };
 export type TTSRequest = { text: string; voice: string; generateTranscription: boolean; speedRate: number; speed?: string; ssml?: string };

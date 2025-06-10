@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { Endpoints } from '../core/enums';
-import { IPersonalData, IUser } from './user.class';
+import { IUser } from '@dataclouder/ngx-users';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +9,6 @@ import { IPersonalData, IUser } from './user.class';
 export class UserService {
   private httpService = inject(HttpService);
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
   public user: IUser | null = null;
 
   public async findUserWithToken(): Promise<IUser | null> {
