@@ -1,3 +1,13 @@
 :host {
   display: block;
 }
+
+
+.agent-card-image {
+  width: 90px;
+  height: 120px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 15px;
+  border: 1px solid #f9ea86;
+}

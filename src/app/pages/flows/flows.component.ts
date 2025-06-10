@@ -5,21 +5,31 @@ import { AgentNodeComponent } from './agent-node/agent-node.component';
 import { DistributionChanelNodeComponent } from './distribution-chanel-node/distribution-chanel-node.component';
 import { OutcomeNodeComponent } from './outcome-node/outcome-node.component';
 import { TaskNodeComponent } from './task-node/task-node.component';
+import { DialogModule } from 'primeng/dialog';
+import { AgentCardListPage } from '../agent-cards/agent-card-list/agent-card-list';
+import { AgentCardListComponent } from '@dataclouder/ngx-agent-cards';
+import { OnActionEvent } from '@dataclouder/ngx-core';
 
 @Component({
   templateUrl: './flows.component.html',
   styleUrl: './flows.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [Vflow],
+  imports: [Vflow, DialogModule, AgentCardListComponent],
 })
 export class FlowsComponent {
+  public isDialogVisible = false;
   public backDots = {
     backgroundColor: 'transparent',
     color: '#f4fc0088',
     type: 'dots' as any,
     size: 1,
   };
+
+  public showAgents() {
+    this.isDialogVisible = true;
+  }
+
   public nodes: DynamicNode[] = [
     // {
     //   id: '1',
@@ -39,15 +49,6 @@ export class FlowsComponent {
       type: 'default',
       text: signal('Default'),
     },
-
-    // {
-    //   id: '4',
-    //   point: signal({ x: 350, y: 350 }),
-    //   type: CircularNodeComponent as any,
-    //   data: signal({
-    //     text: 'Circular Node',
-    //   }),
-    // },
 
     {
       id: '4',
@@ -115,5 +116,10 @@ export class FlowsComponent {
         },
       },
     ];
+  }
+
+  handleRelationSelection(event: OnActionEvent) {
+    console.log('handleRelationSelection', event);
+    debugger;
   }
 }

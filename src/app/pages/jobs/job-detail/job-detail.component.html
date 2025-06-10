@@ -2,34 +2,41 @@
 <div>
   <h2>Job Details</h2>
 
+  @if (jobData.agentCard) {
   <div class="section">
-    <h4>Task</h4>
-    <p><strong>Name:</strong> {{ jobData.task.name }}</p>
+    <h4>Agent Card</h4>
+    <p><strong>Title:</strong> {{ jobData.agentCard.title }}</p>
+    @if (jobData.agentCard.assets?.image?.url; as imageUrl) {
+    <div>
+      <div style="width: 200px">
+        <img class="agent-card-image" [src]="imageUrl" width="200" />
+      </div>
+    </div>
+    }
+  </div>
+  }
+
+  <div class="section">
+    <p><strong>Task Name:</strong> {{ jobData.task.name }}</p>
   </div>
 
   <p-card header="Response: {{ jobData.response.role }}">
-    @if (jobData.response; as response) {
+    @if (jobData.result; as result) {
     <div class="section">
+      <h4>{{ result.title }}</h4>
       <div class="message">
-        <pre>{{ response.content }}</pre>
+        <pre>{{ result.content }}</pre>
       </div>
     </div>
     }
   </p-card>
 
-  @if (jobData.agentCard) {
-  <div class="section">
-    <h4>Agent Card</h4>
-    <p><strong>Title:</strong> {{ jobData.agentCard.title }}</p>
-    <!-- <p><strong>Name:</strong> {{ agentCard?.name }}</p> -->
-    @if (jobData.agentCard.assets?.image?.url; as imageUrl) {
-    <div>
-      <p><strong>Image:</strong></p>
-      <img [src]="imageUrl" width="200" />
-    </div>
-    }
-  </div>
-  } @if (jobData.infoFromSources; as info) {
+  <p-divider></p-divider>
+  <h4>Distribuir en canales</h4>
+
+  <p-button (click)="distribute('blog')" label="Enviar a blog"></p-button>
+
+  @if (jobData.infoFromSources; as info) {
   <div class="section">
     <h4>Information From Sources</h4>
     <pre>{{ info }}</pre>

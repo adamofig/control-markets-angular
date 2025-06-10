@@ -9,6 +9,9 @@ const Endpoints = {
     Jobs: 'api/agent-jobs',
     JobsFiltered: 'api/agent-jobs/query',
   },
+  Distribution: {
+    Channels: 'api/agent-distribution-channels',
+  },
 };
 
 @Injectable({
@@ -43,5 +46,10 @@ export class JobService {
 
   public async deleteJob(id: string) {
     return this.httpService.delete(`${Endpoints.Jobs.Jobs}/${id}`);
+  }
+
+  public async distributeJob(id: string, channel: string) {
+    const payload = { id, channel };
+    return this.httpService.post(`${Endpoints.Distribution.Channels}`, payload);
   }
 }

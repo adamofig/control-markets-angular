@@ -25,6 +25,7 @@ export interface IAgentJob extends AuditDate {
   agentCard?: Partial<IAgentCard>; // Relation with the agent card
   messages: MessageAI[]; // Messages of the chat
   response: MessageAI; // Response of the AI
+  result: any;
   responseFormat: string; // Format of the response
   sources?: ISourceTask[]; // Relation with sources.
   infoFromSources?: string; // Consolidated information from sources
