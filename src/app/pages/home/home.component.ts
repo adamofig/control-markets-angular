@@ -12,7 +12,7 @@ import { AudioTourService } from 'src/app/services/audio-tour.service';
 import { stepsIntro } from './steps-tour-home';
 import { LessonsService } from 'src/app/pages/lessons/lessons.service';
 import { AgentCardService } from 'src/app/services/agent-card-service';
-import { IAgentCard, DCConversationCardUIComponent } from '@dataclouder/ngx-agent-cards';
+import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ILesson } from '@dataclouder/ngx-lessons';
 import { DcLessonCardComponent } from '@dataclouder/ngx-lessons';
 
@@ -28,7 +28,7 @@ register();
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ButtonModule, InputTextModule, CardModule, DcLessonCardComponent, DCConversationCardUIComponent],
+  imports: [CommonModule, ButtonModule, InputTextModule, CardModule, DcLessonCardComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

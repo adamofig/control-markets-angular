@@ -1,8 +1,0 @@
-{
-  "userIgnoreFilters": [
-    "android/",
-    "node_modules/",
-    "ios/",
-    "www/"
-  ]
-}
