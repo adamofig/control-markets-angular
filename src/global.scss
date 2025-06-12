@@ -1,3 +1,6 @@
+@use "./shepherd.scss";
+@use 'swiper/css/bundle';
+
 // 1) Importing css libraries
 @import "primeicons/primeicons.css";
 
@@ -20,7 +23,6 @@
 
 @import "@ionic/angular/css/palettes/dark.class.css"; 
 
-@import 'swiper/css/bundle';
 
 
 
@@ -204,4 +206,3 @@ body.dark::before {
 
 
   // Shepherd tour styles
-@import "./shepherd.scss";
