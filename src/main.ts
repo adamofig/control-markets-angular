@@ -75,7 +75,7 @@ export const appConfig: ApplicationConfig = {
       }
       return initializeApp(environment.firebase);
     }),
-    { provide: HTTP_CORE_CONFIG, useValue: { primaryUrl: environment.backendNodeUrl, secondaryUrl: environment.backendNodeUrl } },
+    { provide: HTTP_CORE_CONFIG, useValue: { primaryUrl: environment.backendNodeUrl, secondaryUrl: environment.backendPythonUrl } },
 
     provideStorage(() => getStorage()),
 

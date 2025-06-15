@@ -56,10 +56,14 @@ Make is required for the auto setup. It usually comes pre-installed on Unix-base
 
    Update the Makefile variables with your project name and app ID.
 
-2. Rename the project:
+2. Rename the project or run the setup script (Requires python in the future i'll build with node. ):
 
    ```bash
+   # Rename the project just rename files, but dont create new project in firebase.
    make rename-project
+
+   # Run the setup script renate and create files needed to deploy to firebase
+   node scripts/setup_project.js
    ```
 
    This command will rename all necessary files and variables (requires Python).
@@ -232,6 +236,15 @@ Start the development server:
 ```bash
 npm run start
 ```
+
+### Start a new component.
+
+In the future i'll create a script to do this.
+
+1. Generante in app/pages
+2. Most likely create a service. 2.1) Select and icon https://ionic.io/ionicons and get only the name, app will adjust depending platform.
+3. Go to Ionic-Layout.component.html and change the bottom tool, this shows at the buttom.
+4. Go to ionic-layout.component.ts and appPages this shows in the left menu.
 
 ## 📄 License
 
