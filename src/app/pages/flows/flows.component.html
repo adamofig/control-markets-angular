@@ -1,7 +1,8 @@
 <!-- <vflow view="auto" [nodes]="nodes" [background]="backDots" /> -->
 
-<div style="color: rebeccapurple; height: 100px">
+<div style="color: rebeccapurple; height: 40px">
   <button (click)="showAgents()">Create Edge</button>
+  <button (click)="saveFlow()">Save Flow</button>
 </div>
 
 <vflow view="auto" [nodes]="nodes" [edges]="edges" [background]="backDots" (onConnect)="createEdge($event)">
@@ -20,6 +21,4 @@
 
 <p-dialog header="Agregar un agente" [draggable]="false" [(visible)]="isDialogVisible" [modal]="true" [style]="{ width: '85%', height: '85%' }">
   <dc-agent-card-lists viewMode="table" (onAction)="handleRelationSelection($event)" />
-
-  <!-- <app-agent-card-list (onSelect)="handleRelationSelection($event)"></app-agent-card-list> -->
 </p-dialog>

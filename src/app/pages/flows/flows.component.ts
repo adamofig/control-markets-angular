@@ -6,7 +6,6 @@ import { DistributionChanelNodeComponent } from './distribution-chanel-node/dist
 import { OutcomeNodeComponent } from './outcome-node/outcome-node.component';
 import { TaskNodeComponent } from './task-node/task-node.component';
 import { DialogModule } from 'primeng/dialog';
-import { AgentCardListPage } from '../agent-cards/agent-card-list/agent-card-list';
 import { AgentCardListComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { OnActionEvent } from '@dataclouder/ngx-core';
 
@@ -19,6 +18,7 @@ import { OnActionEvent } from '@dataclouder/ngx-core';
 })
 export class FlowsComponent {
   public isDialogVisible = false;
+  public isDialogVisible2 = false;
   public backDots = {
     backgroundColor: 'transparent',
     color: '#f4fc0088',
@@ -31,18 +31,6 @@ export class FlowsComponent {
   }
 
   public nodes: DynamicNode[] = [
-    // {
-    //   id: '1',
-    //   point: signal({ x: 100, y: 100 }),
-    //   type: 'html-template',
-    //   data: signal({
-    //     customType: 'agent-card',
-    //     text: 'This is the node',
-    //     image:
-    //       'https://firebasestorage.googleapis.com/v0/b/niche-market-dev.firebasestorage.app/o/conversation-cards%2F67e1e0dba60280a761d75d8a%2Fnull-wtecyekgx8b.webp?alt=media&token=e6e2470e-bf5c-4a5f-9007-e508a3f359c2',
-    //   }),
-    // },
-
     {
       id: '3',
       point: signal({ x: 250, y: 250 }),
@@ -137,5 +125,9 @@ export class FlowsComponent {
         } as any,
       },
     ];
+  }
+
+  public saveFlow() {
+    console.log('saveFlow', this.nodes, this.edges);
   }
 }
