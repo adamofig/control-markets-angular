@@ -7,9 +7,9 @@ export const environment = {
   clientId: '',
   androidClientId: '',
   iosClientId: '',
+  n8nUrl: 'http://192.168.2.5:5678/webhook-test',
   backendNodeUrl: 'http://localhost:8080',
   // backendNodeUrl: 'https://niche-market-node-905545672221.us-central1.run.app',
-
   // backendPythonUrl: 'http://localhost:8011',
   backendPythonUrl: 'https://python-server-905545672221.us-central1.run.app',
 

@@ -11,6 +11,7 @@ export const environment = {
   backendNodeUrl: 'https://niche-market-node-905545672221.us-central1.run.app',
   // backendPythonUrl: 'http://localhost:8000',
   backendPythonUrl: 'https://python-server-905545672221.us-central1.run.app',
+  n8nUrl: 'http://192.168.2.5:5678/webhook',
 
   mobile: {
     appleAppId: '',

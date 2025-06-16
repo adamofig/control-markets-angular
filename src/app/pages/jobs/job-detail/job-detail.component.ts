@@ -7,6 +7,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { ButtonModule } from 'primeng/button';
+import { N8nService } from 'src/app/services/n8n.service';
 
 @Component({
   selector: 'app-job-detail',
@@ -18,6 +19,7 @@ import { ButtonModule } from 'primeng/button';
 export class JobDetailComponent implements OnInit {
   private genericService = inject(JobService);
   private activatedRoute = inject(ActivatedRoute);
+  private n8nService = inject(N8nService);
 
   public jobId: string = this.activatedRoute.snapshot.paramMap.get('id') as string;
 
@@ -33,8 +35,8 @@ export class JobDetailComponent implements OnInit {
   }
 
   public async distribute(channel: string) {
-    debugger;
-    await this.genericService.distributeJob(this.jobId, channel);
+    await this.n8nService.startGithubFlow(this.jobId);
+    // await this.genericService.distributeJob(this.jobId, channel);
     debugger;
     this.loadJob();
   }
