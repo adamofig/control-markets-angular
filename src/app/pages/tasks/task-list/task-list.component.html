@@ -1,9 +1,9 @@
-<dc-filter-bar (onNew)="onNew()"></dc-filter-bar>
+<dc-filter-bar (onNew)="onNew()" [options]="filterBarOptions" (onFilterAction)="doFilterBarAction($event)"></dc-filter-bar>
 
 <br />
 
 @if (tasks.length === 0) {
-<div class="flex flex-column gap-3">
+<div class="gap-3">
   <p-card>
     <div>No hay tareas</div>
   </p-card>
@@ -11,9 +11,9 @@
 } @else { @if(viewTable){
 <app-quick-table [tableData]="tasks" [columns]="columns" (onSelect)="selectItem($event)"></app-quick-table>
 } @else {
-<div class="flex flex-column gap-3">
+<div class="gap-3">
   @for (task of tasks; track task.id) {
-  <div style="margin-bottom: 10px" class="flex flex-column gap-3">
+  <div style="margin-bottom: 10px">
     <p-card [header]="task.name">
       <div style="display: flex; gap: 10px">
         <div>

@@ -22,7 +22,6 @@ export class AgentNodeComponent extends CustomNodeComponent<NodeData> implements
     super();
     effect(() => {
       console.log('agent-node', this.data()?.text);
-      debugger;
     });
   }
 
@@ -33,6 +32,7 @@ export class AgentNodeComponent extends CustomNodeComponent<NodeData> implements
       baseZIndex: 10000,
       draggable: true,
       closable: true,
+      data: this.data(),
     });
   }
 }

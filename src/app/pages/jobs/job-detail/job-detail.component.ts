@@ -37,7 +37,7 @@ export class JobDetailComponent implements OnInit {
   public async distribute(channel: string) {
     await this.n8nService.startGithubFlow(this.jobId);
     // await this.genericService.distributeJob(this.jobId, channel);
-    debugger;
+
     this.loadJob();
   }
 }

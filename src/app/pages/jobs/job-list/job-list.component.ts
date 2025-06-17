@@ -99,7 +99,6 @@ export class JobListComponent extends PaginationBase implements OnInit {
   }
 
   public selectItem(job: IAgentJob) {
-    debugger;
     console.log('onSelect');
     this.onSelectJob.emit(job);
   }

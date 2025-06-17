@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TasksService } from '../services/tasks.service';
-import { DCFilterBarComponent, FiltersConfig, PaginationBase, PColumn, QuickTableComponent } from '@dataclouder/ngx-core';
+import { DCFilterBarComponent, FiltersConfig, ListFilterBarOptions, OnActionEvent, PaginationBase, PColumn, QuickTableComponent } from '@dataclouder/ngx-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -26,7 +26,7 @@ export class TaskListComponent extends PaginationBase implements OnInit {
   public columns: PColumn[] = [
     { field: 'name', header: 'Name' },
     { field: 'description', header: 'Description' },
-    { field: 'status', header: 'Status' },
+    { field: 'image.url', header: 'Image', type: 'image' },
     { field: 'taskType', header: 'Task Type' },
   ];
 
@@ -34,6 +34,8 @@ export class TaskListComponent extends PaginationBase implements OnInit {
   public selectedTask: any;
 
   public filters: FiltersConfig = { filters: {}, page: 0, rowsPerPage: 10, sort: { _id: -1 } };
+
+  public filterBarOptions: ListFilterBarOptions = { showActions: true, showCreateButton: true, showViewButton: true };
 
   constructor(
     private tasksService: TasksService,
@@ -124,5 +126,14 @@ export class TaskListComponent extends PaginationBase implements OnInit {
   public selectItem(item: any) {
     console.log('onSelect');
     this.onSelect.emit(item);
+  }
+
+  public doFilterBarAction(actionEvent: OnActionEvent) {
+    if (actionEvent.action === 'changeView') {
+      this.viewTable = !this.viewTable;
+    } else {
+      console.log('doFilterBarAction', actionEvent);
+      this.doAction(actionEvent);
+    }
   }
 }

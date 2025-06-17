@@ -1,18 +1,20 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal, Type } from '@angular/core';
 import { Connection, DynamicNode, Edge, Vflow } from 'ngx-vflow';
-import { CircularNodeComponent, NodeData } from './circular-node.component';
-import { AgentNodeComponent } from './agent-node/agent-node.component';
-import { DistributionChanelNodeComponent } from './distribution-chanel-node/distribution-chanel-node.component';
-import { OutcomeNodeComponent } from './outcome-node/outcome-node.component';
-import { TaskNodeComponent } from './task-node/task-node.component';
+import { CircularNodeComponent, NodeData } from '../circular-node.component';
+import { AgentNodeComponent } from '../agent-node/agent-node.component';
+import { DistributionChanelNodeComponent } from '../distribution-chanel-node/distribution-chanel-node.component';
+import { OutcomeNodeComponent } from '../outcome-node/outcome-node.component';
+import { TaskNodeComponent } from '../task-node/task-node.component';
 import { DialogModule } from 'primeng/dialog';
 import { AgentCardListComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { OnActionEvent } from '@dataclouder/ngx-core';
-import { IFlow } from './models/generics.model';
+import { IFlow } from '../models/generics.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FlowService } from './flows.service';
+import { FlowService } from '../flows.service';
 import { ButtonModule } from 'primeng/button';
 import { nanoid } from 'nanoid';
+import { FlowStateService } from '../flow-state.service';
+import { TaskListComponent } from '../../tasks/task-list/task-list.component';
 
 // Node Type Mapping
 const NODE_TYPE_MAP: { [key: string]: Type<any> | 'default' } = {
@@ -53,15 +55,21 @@ function getNodeComponentFromString(typeString: string): Type<any> | 'default' {
   styleUrl: './flows.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [Vflow, DialogModule, AgentCardListComponent, ButtonModule],
+  imports: [Vflow, DialogModule, AgentCardListComponent, ButtonModule, TaskListComponent],
 })
 export class FlowsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private flowService = inject(FlowService);
+  public flowStateService = inject(FlowStateService);
 
   public isDialogVisible = false;
-  public isDialogVisible2 = false;
+
+  public dialogs = {
+    isAgentVisible: false,
+    isTaskVisible: false,
+  };
+
   public backDots = {
     backgroundColor: 'transparent',
     color: '#f4fc0088',
@@ -73,10 +81,10 @@ export class FlowsComponent implements OnInit {
   public flowId = this.route.snapshot.params['id'];
 
   async ngOnInit(): Promise<void> {
-    debugger;
     if (this.flowId) {
       this.flow = await this.flowService.getFlow(this.flowId);
       if (this.flow) {
+        this.flowStateService.setFlow(this.flow);
         this.loadFlow(this.flow as any);
         // this.flowForm.patchValue(this.flow);
       }
@@ -84,7 +92,6 @@ export class FlowsComponent implements OnInit {
       this.flow = {
         id: '',
       };
-      debugger;
       this.flowService.saveFlow(this.flow).then(flow => {
         this.flowId = flow.id;
         this.router.navigate([this.flowId], { relativeTo: this.route });
@@ -96,69 +103,72 @@ export class FlowsComponent implements OnInit {
     this.isDialogVisible = true;
   }
 
-  public nodes: DynamicNode[] = [
-    {
-      id: '3',
-      point: signal({ x: 250, y: 250 }),
-      type: 'default',
-      text: signal('Default'),
-    },
+  // public nodes: DynamicNode[] = [];
+  // public edges: Edge[] = [];
 
-    {
-      id: '4',
-      point: signal({ x: 450, y: 450 }),
-      type: AgentNodeComponent as any,
-      data: {
-        text: 'Circular Node',
-        image:
-          'https://firebasestorage.googleapis.com/v0/b/niche-market-dev.firebasestorage.app/o/conversation-cards%2F67e1e0dba60280a761d75d8a%2Fnull-wtecyekgx8b.webp?alt=media&token=e6e2470e-bf5c-4a5f-9007-e508a3f359c2',
-      } as any,
-    },
+  // = [
+  //   {
+  //     id: '3',
+  //     point: signal({ x: 250, y: 250 }),
+  //     type: 'default',
+  //     text: signal('Default'),
+  //   },
 
-    {
-      id: '5',
-      point: signal({ x: 150, y: 450 }),
-      type: DistributionChanelNodeComponent as any,
-      data: {
-        text: 'Distribution Chanel Node',
-        image: 'https://vleeko.net/wp-content/uploads/2014/10/blog.jpg',
-      } as any,
-    },
+  //   {
+  //     id: '4',
+  //     point: signal({ x: 450, y: 450 }),
+  //     type: AgentNodeComponent as any,
+  //     data: {
+  //       text: 'Circular Node',
+  //       image:
+  //         'https://firebasestorage.googleapis.com/v0/b/niche-market-dev.firebasestorage.app/o/conversation-cards%2F67e1e0dba60280a761d75d8a%2Fnull-wtecyekgx8b.webp?alt=media&token=e6e2470e-bf5c-4a5f-9007-e508a3f359c2',
+  //     } as any,
+  //   },
 
-    {
-      id: '6',
-      point: signal({ x: 150, y: 350 }),
-      type: OutcomeNodeComponent as any,
-      data: {
-        text: 'Outcome Node',
-        image:
-          'https://firebasestorage.googleapis.com/v0/b/niche-market-dev.firebasestorage.app/o/conversation-cards%2F67e1e0dba60280a761d75d8a%2Fnull-wtecyekgx8b.webp?alt=media&token=e6e2470e-bf5c-4a5f-9007-e508a3f359c2',
-      } as any,
-    },
+  //   {
+  //     id: '5',
+  //     point: signal({ x: 150, y: 450 }),
+  //     type: DistributionChanelNodeComponent as any,
+  //     data: {
+  //       text: 'Distribution Chanel Node',
+  //       image: 'https://vleeko.net/wp-content/uploads/2014/10/blog.jpg',
+  //     } as any,
+  //   },
 
-    {
-      id: '7',
-      point: signal({ x: 550, y: 150 }),
-      type: TaskNodeComponent as any,
-      data: {
-        text: 'Task Node',
-        image:
-          'https://www.monitask.com/wp-content/uploads/2024/02/master-your-task-management-%E2%80%A8how-the-1-3-5-rule-revolutionizes-%E2%80%A8to-do-lists.png',
-      } as any,
-    },
-  ];
+  //   {
+  //     id: '6',
+  //     point: signal({ x: 150, y: 350 }),
+  //     type: OutcomeNodeComponent as any,
+  //     data: {
+  //       text: 'Outcome Node',
+  //       image:
+  //         'https://firebasestorage.googleapis.com/v0/b/niche-market-dev.firebasestorage.app/o/conversation-cards%2F67e1e0dba60280a761d75d8a%2Fnull-wtecyekgx8b.webp?alt=media&token=e6e2470e-bf5c-4a5f-9007-e508a3f359c2',
+  //     } as any,
+  //   },
 
-  public edges: Edge[] = [
-    {
-      id: '1 -> 2',
-      source: '1',
-      target: '2',
-    },
-  ];
+  //   {
+  //     id: '7',
+  //     point: signal({ x: 550, y: 150 }),
+  //     type: TaskNodeComponent as any,
+  //     data: {
+  //       text: 'Task Node',
+  //       image:
+  //         'https://www.monitask.com/wp-content/uploads/2024/02/master-your-task-management-%E2%80%A8how-the-1-3-5-rule-revolutionizes-%E2%80%A8to-do-lists.png',
+  //     } as any,
+  //   },
+  // ];
+
+  // public edges: Edge[] = [
+  //   {
+  //     id: '1 -> 2',
+  //     source: '1',
+  //     target: '2',
+  //   },
+  // ];
 
   public createEdge({ source, target }: Connection) {
-    this.edges = [
-      ...this.edges,
+    const edges = [
+      ...this.flowStateService.edges(),
       {
         id: `${source} -> ${target}`,
         source,
@@ -170,19 +180,21 @@ export class FlowsComponent implements OnInit {
         },
       },
     ];
+
+    // this.flowStateService.edges.set(edges);
   }
 
   handleRelationSelection(event: OnActionEvent) {
     console.log('handleRelationSelection', event);
-    debugger;
+
     const card: IAgentCard = event.item;
     this.createAgentNode(card);
     this.isDialogVisible = false;
   }
 
   public createAgentNode(card: IAgentCard) {
-    this.nodes = [
-      ...this.nodes,
+    const nodes = [
+      ...this.flowStateService.nodes(),
       {
         id: nanoid(),
         point: signal({ x: 100, y: 100 }),
@@ -195,6 +207,7 @@ export class FlowsComponent implements OnInit {
         } as any,
       },
     ];
+    this.flowStateService.nodes.set(nodes);
   }
 
   public async saveFlow() {
@@ -210,7 +223,7 @@ export class FlowsComponent implements OnInit {
   }
 
   public serializeFlow(): { nodes: any[]; edges: any[] } {
-    const serializableNodes = this.nodes.map(node => {
+    const serializableNodes = this.flowStateService.nodes().map(node => {
       const plainPoint = node.point();
       let serializableText: string | undefined;
       let serializableData: any | undefined;
@@ -243,7 +256,7 @@ export class FlowsComponent implements OnInit {
       return serializableNode;
     });
 
-    const serializableEdges = this.edges.map(edge => ({ ...edge }));
+    const serializableEdges = this.flowStateService.edges().map(edge => ({ ...edge }));
 
     console.log('Saving flow:', { nodes: serializableNodes, edges: serializableEdges });
     return {
@@ -258,7 +271,7 @@ export class FlowsComponent implements OnInit {
       return;
     }
 
-    this.nodes = savedFlowData.nodes.map((plainNode: any) => {
+    const nodes = savedFlowData.nodes.map((plainNode: any) => {
       const nodeType = getNodeComponentFromString(plainNode.type);
       let dynamicNode: DynamicNode;
 
@@ -281,8 +294,24 @@ export class FlowsComponent implements OnInit {
       return dynamicNode;
     });
 
-    this.edges = savedFlowData.edges.map((edge: any) => ({ ...edge }));
+    this.flowStateService.nodes.set(nodes);
 
-    console.log('Flow loaded:', this.nodes, this.edges);
+    this.flowStateService.edges.set(savedFlowData.edges.map((edge: any) => ({ ...edge })));
+
+    console.log('Flow loaded:', this.flowStateService.getFlow()?.nodes, this.flowStateService.getFlow()?.edges);
   }
+
+  public showDialog(key: string) {
+    // this.isDialogVisible = true;
+    this.dialogs.isAgentVisible = false;
+    this.dialogs.isTaskVisible = false;
+
+    (this.dialogs as any)[key] = true;
+
+    console.log(this.dialogs);
+
+    this.isDialogVisible = true;
+  }
+
+  public showSelection() {}
 }

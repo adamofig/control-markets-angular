@@ -1,1 +1,5 @@
-<div>Outcome Details</div>
+<div>
+  <p>Outcome Details</p>
+  <pre style="max-width: 300px; overflow: auto">{{ dynamicDialogConfig.data | json }}</pre>
+  <button pButton label="Iniciar" (click)="startFlow()"></button>
+</div>

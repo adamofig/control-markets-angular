@@ -105,11 +105,11 @@ export const routes: Routes = [
           },
           {
             path: 'edit',
-            loadComponent: () => import('./pages/flows/flows.component').then(m => m.FlowsComponent),
+            loadComponent: () => import('./pages/flows/flow-workspace/flows.component').then(m => m.FlowsComponent),
           },
           {
             path: 'edit/:id',
-            loadComponent: () => import('./pages/flows/flows.component').then(m => m.FlowsComponent),
+            loadComponent: () => import('./pages/flows/flow-workspace/flows.component').then(m => m.FlowsComponent),
           },
         ],
       },

@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-distribution-chanel-details',
-  imports: [ButtonModule],
+  imports: [ButtonModule, JsonPipe],
   templateUrl: './distribution-chanel-details.html',
   styleUrl: './distribution-chanel-details.css',
   standalone: true,
@@ -11,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
 })
 export class DistributionChanelDetailsComponent {
   constructor() {}
+  public dynamicDialogConfig = inject(DynamicDialogConfig);
 
   public startFlow(): void {}
 }

@@ -28,7 +28,6 @@ export class VideoGeneratorListComponent extends PaginationBase implements OnIni
   videoGenerators: IVideoProjectGenerator[] = [];
 
   getCustomButtons(item: any): MenuItem[] {
-    debugger;
     return [
       {
         tooltipOptions: { tooltipLabel: 'Ver detalles', tooltipPosition: 'bottom' },

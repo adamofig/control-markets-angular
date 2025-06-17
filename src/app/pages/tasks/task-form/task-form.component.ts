@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IAgentCard, ProviderSelectorComponent } from '@dataclouder/ngx-agent-cards';
+import { IAgentCard, ModelSelectorComponent } from '@dataclouder/ngx-agent-cards';
 import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
@@ -46,7 +46,7 @@ import { AspectType, ResolutionType, CropperComponentModal } from '@dataclouder/
     AutoCompleteModule,
     ChipModule,
     TooltipModule,
-    ProviderSelectorComponent,
+    ModelSelectorComponent,
     CropperComponentModal,
   ],
   templateUrl: './task-form.component.html',
@@ -108,7 +108,6 @@ export class TaskFormComponent implements OnInit {
   }
 
   public handleImageUpload(event: any) {
-    debugger;
     this.uploadImage(event);
   }
 

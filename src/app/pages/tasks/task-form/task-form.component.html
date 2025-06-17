@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-4">
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
       <div class="form-field">
         <label for="name" class="block">Title</label>
         <br />
@@ -132,7 +132,7 @@
         <p-dropdown id="status" [options]="statuses" formControlName="status" placeholder="Select Status" class="w-full"> </p-dropdown>
       </div>
 
-      <dc-provider-selector [parentForm]="taskForm.controls.model"></dc-provider-selector>
+      <!-- <dc-model-selector [modelForm]="taskForm.controls.model"></dc-model-selector> -->
 
       <div class="flex justify-content-end mt-4">
         <p-button type="submit" label="Save Task" [disabled]="!taskForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
