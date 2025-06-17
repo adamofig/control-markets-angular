@@ -97,7 +97,21 @@ export const routes: Routes = [
     children: [
       {
         path: 'flows',
-        loadComponent: () => import('./pages/flows/flows.component').then(m => m.FlowsComponent),
+        loadComponent: () => import('./pages/flows/flow-outlet').then(m => m.FlowOutletComponent),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/flows/flow-list/flow-list').then(m => m.FlowListComponent),
+          },
+          {
+            path: 'edit',
+            loadComponent: () => import('./pages/flows/flows.component').then(m => m.FlowsComponent),
+          },
+          {
+            path: 'edit/:id',
+            loadComponent: () => import('./pages/flows/flows.component').then(m => m.FlowsComponent),
+          },
+        ],
       },
 
       {

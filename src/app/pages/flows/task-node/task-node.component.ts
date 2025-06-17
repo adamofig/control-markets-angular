@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef
 import { CustomNodeComponent, Vflow } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
-import { TaskDetailsComponent } from '../task-details/task-details';
+import { TaskDetailsComponent } from './task-details/task-details';
 
 export type NodeData = {
   text: string;

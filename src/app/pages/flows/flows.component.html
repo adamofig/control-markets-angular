@@ -1,8 +1,12 @@
 <!-- <vflow view="auto" [nodes]="nodes" [background]="backDots" /> -->
 
 <div style="color: rebeccapurple; height: 40px">
-  <button (click)="showAgents()">Create Edge</button>
-  <button (click)="saveFlow()">Save Flow</button>
+  <p-button (click)="showAgents()" label="Add Agent" icon="pi pi-user" [rounded]="true" severity="success" [outlined]="true" />
+  <p-button icon="pi pi-plus" label="Add Task" [rounded]="true" severity="warn" [outlined]="true" />
+  <p-button icon="pi pi-heart" label="Add Distribution Channel" [rounded]="true" severity="help" [outlined]="true" />
+
+  <p-button (click)="saveFlow()" label="Save Flow" icon="pi pi-save" [rounded]="true" severity="secondary" [outlined]="true" />
+  <p-button icon="pi pi-play" label="Run Flow" [rounded]="true" severity="primary" [outlined]="true" />
 </div>
 
 <vflow view="auto" [nodes]="nodes" [edges]="edges" [background]="backDots" (onConnect)="createEdge($event)">

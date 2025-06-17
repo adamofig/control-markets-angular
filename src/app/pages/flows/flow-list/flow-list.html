@@ -1,0 +1,47 @@
+@if (!onlyView()) {
+<p-button [icon]="viewType === 'card' ? 'pi pi-table' : 'pi pi-list'" label="Change View" [link]="true" (click)="toggleView()" />
+}
+<div class="generic-list-container">
+  <dc-filter-bar [options]="filterBarOptions" (onNew)="onNew()" (onFilterAction)="doAction($event)"></dc-filter-bar>
+
+  @if (viewType === 'card') {
+  <div class="generic-list-content">
+    @for (generic of flows(); track generic.id) {
+    <div class="card-source">
+      <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
+        <p-speeddial
+          [model]="getCustomButtons(generic)"
+          [radius]="70"
+          type="quarter-circle"
+          direction="down-left"
+          [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
+      </div>
+      <p-card (click)="selectItem(generic)" [header]="generic.name">
+        <p class="m-0">{{ generic.name | slice : 0 : 250 }}...</p>
+        <span>{{ generic.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
+      </p-card>
+    </div>
+    } @if (flows().length === 0) {
+    <p-card>
+      <p>No flows found</p>
+    </p-card>
+    }
+  </div>
+  } @else if ( viewType === 'table'){
+
+  <app-quick-table [tableData]="flows()"></app-quick-table>
+
+  }
+
+  <div class="paginator-container">
+    <p-paginator
+      currentPageReportTemplate="{{ totalRecords }} conversations"
+      [showCurrentPageReport]="true"
+      (onPageChange)="onPageChange($event)"
+      [first]="paginatorFirst"
+      [rows]="paginatorRows"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="[10, 20, 30]">
+    </p-paginator>
+  </div>
+</div>
