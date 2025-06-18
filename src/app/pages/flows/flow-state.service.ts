@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { IFlow } from './models/generics.model';
+import { IAgentFlows } from './models/flows.model';
 import { DynamicNode, Edge } from 'ngx-vflow';
 
 //  This must have all the edges and node so i can go thoew every one.
@@ -7,7 +7,7 @@ import { DynamicNode, Edge } from 'ngx-vflow';
   providedIn: 'root',
 })
 export class FlowStateService {
-  private flow = signal<IFlow | null>(null);
+  private flow = signal<IAgentFlows | null>(null);
 
   public nodes = signal<DynamicNode[]>([]);
 
@@ -17,7 +17,7 @@ export class FlowStateService {
     return this.flow();
   }
 
-  public setFlow(flow: IFlow) {
+  public setFlow(flow: IAgentFlows) {
     this.flow.set(flow);
   }
 }

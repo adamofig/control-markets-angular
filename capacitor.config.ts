@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'web.app.niche-market.app',
-  appName: 'niche-market',
+  appId: 'ad.golden.dev ',
+  appName: 'golden',
   webDir: 'www',
 };
 

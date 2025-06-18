@@ -12,7 +12,7 @@ import {
   ToastAlertsAbstractService,
 } from '@dataclouder/ngx-core';
 import { FlowService } from '../flows.service';
-import { IFlow } from '../models/generics.model';
+import { IAgentFlows } from '../models/flows.model';
 import { RouterModule } from '@angular/router';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { MenuItem } from 'primeng/api';
@@ -47,10 +47,10 @@ export class FlowListComponent extends PaginationBase implements OnInit {
   // Inputs
   @Input() viewType: 'table' | 'card' = 'card';
   readonly onlyView = input<boolean>(true);
-  readonly onSelect = output<IFlow>();
+  readonly onSelect = output<IAgentFlows>();
 
   // States
-  flows: WritableSignal<IFlow[]> = signal<IFlow[]>([]);
+  flows: WritableSignal<IAgentFlows[]> = signal<IAgentFlows[]>([]);
   columns: any[] = ['name', 'description', 'updatedAt', 'image'];
   filterBarOptions: ListFilterBarOptions = { showActions: true, showCreateButton: true, showViewButton: true };
 
@@ -98,7 +98,7 @@ export class FlowListComponent extends PaginationBase implements OnInit {
     this.cdr.detectChanges();
   }
 
-  public selectItem(generic: IFlow) {
+  public selectItem(generic: IAgentFlows) {
     console.log('onSelect');
     this.onSelect.emit(generic);
   }

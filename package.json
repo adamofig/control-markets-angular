@@ -1,10 +1,10 @@
 {
-  "name": "niche-market",
+  "name": "golden",
   "config": {
-    "appId": "web.app.niche-market.app",
-    "appIdDev": "web.app.niche-market.app.dev"
+    "appId": "ad.golden.dev ",
+    "appIdDev": "ad.golden.dev .dev"
   },
-  "version": "0.0.21",
+  "version": "0.0.22",
   "author": "Ionic Framework",
   "homepage": "dataclouder.dev",
   "scripts": {

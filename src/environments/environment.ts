@@ -1,6 +1,6 @@
 export const environment = {
-  projectName: 'Niche-Market',
-  version: '0.0.21',
+  projectName: 'Golden',
+  version: '0.0.22',
   envName: 'DEV',
   production: false,
 
@@ -19,12 +19,12 @@ export const environment = {
     androidClientId: '',
     iosClientId: '',
   },
-  firebase: {
-    apiKey: 'AIzaSyAQkpxs0id--VjwHQ4LiNEEZrgpvf40IqI',
-    authDomain: 'niche-market-dev.firebaseapp.com',
-    projectId: 'niche-market-dev',
-    storageBucket: 'niche-market-dev.firebasestorage.app',
-    messagingSenderId: '905545672221',
-    appId: '1:905545672221:web:684727e6a1c0d99bd508f4',
+    firebase: {
+    apiKey: 'AIzaSyAecVnUj1-IjKGDvBarhufKAfO-Y-RyTXw',
+    authDomain: 'golden-ad-dev.firebaseapp.com',
+    projectId: 'golden-ad-dev',
+    storageBucket: 'golden-ad-dev.firebasestorage.app',
+    messagingSenderId: '164740776065',
+    appId: '1:164740776065:web:e2c59fd82d71fe6817cd80',
   },
 };

@@ -6,7 +6,7 @@ import { TaskDetailsComponent } from './task-details/task-details';
 
 export type NodeData = {
   text: string;
-  image: string;
+  image: any;
 };
 
 @Component({
@@ -23,6 +23,7 @@ export class TaskNodeComponent extends CustomNodeComponent<NodeData> implements 
   constructor() {
     super();
     effect(() => {
+      debugger;
       console.log('task-node', this.data()?.text);
     });
   }

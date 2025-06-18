@@ -1,7 +1,7 @@
 # Variables for deployment
 ENV ?= dev
-EXT ?= io
-PROJECT_NAME ?= niche-market
+EXT ?= ad
+PROJECT_NAME ?= golden-ad
 PROJECT_ID ?= $(PROJECT_NAME)-$(ENV) #Firebase/Google project ID
 APP_ID ?= $(EXT).$(PROJECT_NAME).$(ENV) # User for mobile apps. example com.my-startup.app
 DISPLAY_NAME ?= $(PROJECT_NAME)
@@ -32,13 +32,13 @@ install-deps:
 	npm install
 
 init-project: check-deps
-	@echo "Initializing Firebase project..."
+	@echo " 🚀 Initializing Firebase project $(PROJECT_ID), lets login first 🧎‍♂️ and Hope none one has taken this name 🙏  ... " 
 	firebase login
 	@echo "Creating Firebase project... firebase projects:create $(PROJECT_ID) --display-name "$(DISPLAY_NAME)""
 	firebase projects:create $(PROJECT_ID) --display-name "$(DISPLAY_NAME)"
 	make create-firebase-app
 	@echo "Installing project dependencies..."
-	npm install
+	npm install --force
 	@echo "Project initialized successfully!"
 	@echo "IMPORTANT: Please manually enable authentication and email, google and apple providers in https://console.firebase.google.com/project/$(PROJECT_ID)/authentication"
 

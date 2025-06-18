@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { IFlow } from './models/generics.model';
+import { IAgentFlows } from './models/flows.model';
 import { FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN, HttpCoreService } from '@dataclouder/ngx-core';
 
 const server = 'primary';
@@ -18,9 +18,9 @@ export class FlowService {
   private httpService = inject(HttpCoreService);
   private toastService = inject(TOAST_ALERTS_TOKEN);
 
-  public async getFlows(): Promise<IFlow[]> {
+  public async getFlows(): Promise<IAgentFlows[]> {
     try {
-      const response = await this.httpService.get<IFlow[]>(Endpoints.Generics.Generics, server);
+      const response = await this.httpService.get<IAgentFlows[]>(Endpoints.Generics.Generics, server);
       this.toastService.success({ title: 'Se han encontrado generics', subtitle: 'Mostrando información' });
       return response;
     } catch (error) {
@@ -30,15 +30,15 @@ export class FlowService {
   }
 
   public async getFilteredFlows(filter: FiltersConfig) {
-    return this.httpService.post<IFilterQueryResponse<IFlow>>(Endpoints.Generics.GenericsFiltered, filter, server);
+    return this.httpService.post<IFilterQueryResponse<IAgentFlows>>(Endpoints.Generics.GenericsFiltered, filter, server);
   }
 
-  public async getFlow(id: string): Promise<IFlow> {
-    return this.httpService.get<IFlow>(`${Endpoints.Generics.Generics}/${id}`);
+  public async getFlow(id: string): Promise<IAgentFlows> {
+    return this.httpService.get<IAgentFlows>(`${Endpoints.Generics.Generics}/${id}`);
   }
 
-  public async saveFlow(flow: IFlow): Promise<IFlow> {
-    return this.httpService.post<IFlow>(Endpoints.Generics.Generics, flow);
+  public async saveFlow(flow: IAgentFlows): Promise<IAgentFlows> {
+    return this.httpService.post<IAgentFlows>(Endpoints.Generics.Generics, flow);
   }
 
   public async deleteFlow(id: string) {

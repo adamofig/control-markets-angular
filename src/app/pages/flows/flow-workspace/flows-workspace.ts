@@ -8,7 +8,7 @@ import { TaskNodeComponent } from '../task-node/task-node.component';
 import { DialogModule } from 'primeng/dialog';
 import { AgentCardListComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { OnActionEvent, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
-import { IFlow } from '../models/generics.model';
+import { IAgentFlows } from '../models/flows.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlowService } from '../flows.service';
 import { ButtonModule } from 'primeng/button';
@@ -54,8 +54,8 @@ function getNodeComponentFromString(typeString: string): Type<any> | 'default' {
 }
 
 @Component({
-  templateUrl: './flows.component.html',
-  styleUrl: './flows.component.css',
+  templateUrl: './flows-workspace.html',
+  styleUrl: './flows-workspace.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [Vflow, DialogModule, AgentCardListComponent, ButtonModule, TaskListComponent, InputTextModule, FormsModule],
@@ -82,7 +82,7 @@ export class FlowsComponent implements OnInit {
     size: 1,
   };
 
-  public flow: IFlow | null = null;
+  public flow: IAgentFlows | null = null;
   public flowId = this.route.snapshot.params['id'];
 
   async ngOnInit(): Promise<void> {
@@ -205,7 +205,7 @@ export class FlowsComponent implements OnInit {
   public async saveFlow() {
     const flowData = this.serializeFlow();
     console.log('Flow saved:', flowData);
-    const flow: IFlow = {
+    const flow: IAgentFlows = {
       id: this.flowId,
       name: this.flowName,
       nodes: flowData.nodes,

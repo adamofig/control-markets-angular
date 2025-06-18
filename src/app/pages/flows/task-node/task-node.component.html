@@ -1,5 +1,5 @@
 <div class="custom-node" selectable [class.custom-node_selected]="selected()" (dblclick)="openModal()">
-  <img style="position: absolute; top: 0; left: 0" [src]="data()?.image" alt="" />
+  <img style="position: absolute; top: 0; left: 0; object-fit: cover; width: 100%; height: 100%" [src]="data()?.image?.url" alt="" />
   <p class="text-node">{{ data()?.text }}</p>
 
   <handle type="target" position="left" id="b" />
