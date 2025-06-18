@@ -1,6 +1,23 @@
 <!-- <vflow view="auto" [nodes]="nodes" [background]="backDots" /> -->
 
-<div style="color: rebeccapurple; height: 40px">
+<div style="display: flex; align-items: center; gap: 10px">
+  <input
+    placeholder="Escribe el nombre del flujo"
+    type="text"
+    pInputText
+    [(ngModel)]="flowName"
+    pSize="small"
+    style="
+      background-color: transparent !important;
+
+      border-radius: 40px;
+      border: none;
+      outline: none;
+      font-size: 12px;
+      font-weight: bold;
+      width: 200px;
+    " />
+
   <p-button (click)="showDialog('isAgentVisible')" label="Add Agent" icon="pi pi-user" [rounded]="true" severity="success" [outlined]="true" />
   <p-button (click)="showDialog('isTaskVisible')" icon="pi pi-plus" label="Add Task" [rounded]="true" severity="warn" [outlined]="true" />
   <p-button icon="pi pi-heart" label="Add Distribution Channel" [rounded]="true" severity="help" [outlined]="true" />
@@ -21,13 +38,17 @@
       <handle type="source" position="left" id="d" />
     </div>
   </ng-template>
+
+  <ng-template let-ctx edgeLabelHtml>
+    <p-button icon="pi pi-times" (click)="deleteEdge(ctx.edge)" [rounded]="true" [text]="true" severity="danger" />
+  </ng-template>
 </vflow>
 
 <p-dialog header="Agregar Entidad" [draggable]="false" [(visible)]="isDialogVisible" [modal]="true" [style]="{ width: '85%', height: '85%' }">
   @if(dialogs.isAgentVisible) {
-  <dc-agent-card-lists viewMode="table" (onAction)="handleRelationSelection($event)" />
+  <dc-agent-card-lists viewMode="table" (onAction)="addAgentToFlow($event)" />
   } @if(dialogs.isTaskVisible) {
   <p>Entidad.</p>
-  <app-task-list viewMode="table" (onSelect)="handleRelationSelection($event)" />
+  <app-task-list viewMode="table" (onSelect)="addTaskToFlow($event)" />
   }
 </p-dialog>

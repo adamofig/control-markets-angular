@@ -6,19 +6,19 @@
 
   @if (viewType === 'card') {
   <div class="generic-list-content">
-    @for (generic of flows(); track generic.id) {
+    @for (flow of flows(); track flow.id) {
     <div class="card-source">
       <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
         <p-speeddial
-          [model]="getCustomButtons(generic)"
+          [model]="getCustomButtons(flow)"
           [radius]="70"
           type="quarter-circle"
           direction="down-left"
           [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
       </div>
-      <p-card (click)="selectItem(generic)" [header]="generic.name">
-        <p class="m-0">{{ generic.name | slice : 0 : 250 }}...</p>
-        <span>{{ generic.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
+      <p-card (click)="selectItem(flow)" [header]="flow.name || 'Sin nombre'">
+        <!-- <p class="m-0">{{ flow.name | slice : 0 : 250 }}...</p> -->
+        <span>{{ flow.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
       </p-card>
     </div>
     } @if (flows().length === 0) {

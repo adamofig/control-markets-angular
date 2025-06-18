@@ -20,14 +20,15 @@ import { PaginatorModule } from 'primeng/paginator';
 export class TaskListComponent extends PaginationBase implements OnInit {
   @Input() public viewTable = false;
   @Output() public onSelect = new EventEmitter<any>();
+  @Input() override viewMode = 'cards' as 'cards' | 'table';
 
   public tasks: any[] = [];
   loadingTasks: { [key: string]: boolean } = {};
   public columns: PColumn[] = [
-    { field: 'name', header: 'Name' },
-    { field: 'description', header: 'Description' },
     { field: 'image.url', header: 'Image', type: 'image' },
-    { field: 'taskType', header: 'Task Type' },
+    { field: 'name', header: 'Name', type: 'text' },
+    { field: 'description', header: 'Description', type: 'text' },
+    { field: 'taskType', header: 'Task Type', type: 'text' },
   ];
 
   public showTaksDetails = false;
@@ -48,6 +49,7 @@ export class TaskListComponent extends PaginationBase implements OnInit {
   ) {
     super();
   }
+
   ngOnInit() {
     this.getTasks();
   }
@@ -124,6 +126,7 @@ export class TaskListComponent extends PaginationBase implements OnInit {
   }
 
   public selectItem(item: any) {
+    // Creo que debería usar solo un on action no tener onselect causa conflictos, para proximas funcionalidades.
     console.log('onSelect');
     this.onSelect.emit(item);
   }
