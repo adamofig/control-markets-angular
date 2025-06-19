@@ -142,7 +142,7 @@ To initialize your project with Firebase:
    bash
 
    ```bash
-   make init-project
+   make init-firebase
    ```
 
 This script depends on Firebase SDK, Node, and npm. If you don't have these, they will be installed automatically. The script will log you into Firebase via the CLI, opening a browser window for authentication.
@@ -163,21 +163,18 @@ There's one manual step that couldn't be automated: enabling authentication prov
 
 ## 🎉 Success!
 
-You're all set! You can now authenticate using any account - even create fake email accounts for testing. and you should the users autenticated in firebase, but were are not done yet, becouse now backend need to create user app data, and only then when the backend is able to retrive this, user  can use the app. otherwise will be send to not_found. 
+You're all set! You can now authenticate using any account - even create fake email accounts for testing. and you should the users autenticated in firebase, but were are not done yet, becouse now backend need to create user app data, and only then when the backend is able to retrive this, user can use the app. otherwise will be send to not_found.
 
+### Creating Google Credentials.
 
-
-### Creating Google Credentials. 
-Firebase uses Google Cloud under the hood, so at the end you also have a Google cloud project. go to your project credentials sections, check the example for quick link substitube 'custom-pokemon-cards' with your project id. 
+Firebase uses Google Cloud under the hood, so at the end you also have a Google cloud project. go to your project credentials sections, check the example for quick link substitube 'custom-pokemon-cards' with your project id.
 
 https://console.cloud.google.com/apis/credentials?invt=AbubAw&project=custom-pokemon-cards
 
-put a name like backend-keys and grant the editor role.  (if you know Google Cloud then you know, add minimal priviledge)
+put a name like backend-keys and grant the editor role. (if you know Google Cloud then you know, add minimal priviledge)
 
 ![alt text](image-4.png)
 
-Then create a key for your service account, this will be downloable as json format, place it in the project in .cred/keys.json, and now backend is able to decofied authenticated request,  and we can finally navigate in the app. 
+Then create a key for your service account, this will be downloable as json format, place it in the project in .cred/keys.json, and now backend is able to decofied authenticated request, and we can finally navigate in the app.
 
-Optinally you can set python backend. 
-
-
+Optinally you can set python backend.

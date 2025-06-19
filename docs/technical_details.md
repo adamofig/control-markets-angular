@@ -41,7 +41,7 @@ Refer to the main `readme.md` for detailed setup instructions, including automat
   ```bash
   npm install
   ```
-  (Or use `make init-project` for guided setup)
+  (Or use `make init-firebase` for guided setup)
 - **Running Locally (Web):**
   ```bash
   npm start # Runs ng serve (development configuration)
