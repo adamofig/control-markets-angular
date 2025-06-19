@@ -1,10 +1,15 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef, computed, effect, inject } from '@angular/core';
+import { CommonModule, JsonPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnInit, computed, effect, inject } from '@angular/core';
 import { ComponentDynamicNode, CustomNodeComponent, Vflow } from 'ngx-vflow';
+import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TaskDetailsComponent } from './task-details/task-details';
 import { IAgentTask } from '../../tasks/models/tasks-models';
 import { FlowExecutionStateService } from '../flow-execution-state.service';
+import { FlowDiagramStateService } from '../flow-diagram-state.service';
+import { IFlowExecutionState } from '../models/flows.model';
+import { TagModule } from 'primeng/tag';
 
 export interface CustomTaskNode extends ComponentDynamicNode {
   agentTask: IAgentTask;
@@ -12,7 +17,7 @@ export interface CustomTaskNode extends ComponentDynamicNode {
 
 @Component({
   selector: 'app-task-node',
-  imports: [Vflow, DialogModule],
+  imports: [Vflow, DialogModule, ButtonModule, CommonModule, JsonPipe, TagModule],
   templateUrl: './task-node.component.html',
   styleUrl: './task-node.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,6 +26,27 @@ export interface CustomTaskNode extends ComponentDynamicNode {
 export class TaskNodeComponent extends CustomNodeComponent<CustomTaskNode> implements OnInit {
   public dialogService = inject(DialogService);
   public flowExecutionStateService = inject(FlowExecutionStateService);
+  public flowDiagramStateService = inject(FlowDiagramStateService);
+
+  public agentTask = computed(() => this.node()?.data?.agentTask);
+
+  public override ngOnInit(): void {
+    super.ngOnInit();
+    console.log('task-node', this.agentTask());
+  }
+
+  public taskExecutionState = computed(() => {
+    console.log('taskExecutionState', this.agentTask());
+
+    const executionState: IFlowExecutionState | null = this.flowExecutionStateService.flowExecutionState();
+    if (executionState) {
+      const executionTask = executionState?.tasks[this.node().id];
+      console.log('-------state', executionState);
+
+      return executionTask;
+    }
+    return null;
+  });
 
   constructor() {
     super();
@@ -28,10 +54,12 @@ export class TaskNodeComponent extends CustomNodeComponent<CustomTaskNode> imple
       // console.log('task-node', this.data()?.agentTask);
     });
 
-    // probar primero aqui
-    computed(() => {
-      return this.flowExecutionStateService.getFlowExecutionState()?.tasks[this.node().id];
+    effect(() => {
+      const stateFromService = this.flowExecutionStateService.flowExecutionState();
+      console.log('[TaskNodeComponent] Effect triggered. flowExecutionState from service:', stateFromService, 'for node ID:', this.node()?.id);
     });
+
+    // probar primero aqui
   }
 
   public isDialogVisible = false;
@@ -47,5 +75,9 @@ export class TaskNodeComponent extends CustomNodeComponent<CustomTaskNode> imple
       data: this.node(),
       width: '450px',
     });
+  }
+
+  removeNode(): void {
+    this.flowDiagramStateService.removeNode(this.node().id);
   }
 }

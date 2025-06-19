@@ -1,3 +1,10 @@
-<div>Task Details</div>
+<div>Detalles de task</div>
 
-<pre>{{ task | json }}</pre>
+<details>
+  <summary>Node ID {{ this.node.id }}</summary>
+  <pre style="max-width: 300px; overflow: auto">{{ this.node | json }}</pre>
+</details>
+<details>
+  <summary>Task ID {{ this.agentTask.id }}</summary>
+  <pre style="max-width: 300px; overflow: auto">{{ this.agentTask | json }}</pre>
+</details>

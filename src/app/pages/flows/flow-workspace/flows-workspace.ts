@@ -17,7 +17,6 @@ import { TaskListComponent } from '../../tasks/task-list/task-list.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { IAgentTask } from '../../tasks/models/tasks-models';
-import { Firestore, doc, docData, DocumentReference, collection, collectionData } from '@angular/fire/firestore';
 import { FlowExecutionStateService } from '../flow-execution-state.service';
 
 // Node Type Mapping
@@ -61,12 +60,10 @@ function getNodeComponentFromString(typeString: string): Type<any> | 'default' {
   imports: [Vflow, DialogModule, AgentCardListComponent, ButtonModule, TaskListComponent, InputTextModule, FormsModule],
 })
 export class FlowsComponent implements OnInit {
-  private firestore = inject(Firestore); // Removed { optional: true } as Firestore should now be properly provided
-
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private flowService = inject(FlowService);
-  public FlowDiagramStateService = inject(FlowDiagramStateService);
+  public flowDiagramStateService = inject(FlowDiagramStateService);
   public ngZone = inject(NgZone);
   public toastService = inject(TOAST_ALERTS_TOKEN);
   public flowExecutionStateService = inject(FlowExecutionStateService);
@@ -87,7 +84,7 @@ export class FlowsComponent implements OnInit {
   public flow: IAgentFlows | null = null;
   public flowId = this.route.snapshot.params['id'];
 
-  public flowExecutionState = signal<any>(null);
+  public flowExecutionState = this.flowExecutionStateService.getFlowExecutionStateSignal(); // Updated to use service signal
 
   async ngOnInit(): Promise<void> {
     if (this.flowId) {
@@ -96,8 +93,10 @@ export class FlowsComponent implements OnInit {
 
       if (this.flow) {
         this.flowName = this.flow.name as string;
-        this.FlowDiagramStateService.setFlow(this.flow);
+        this.flowDiagramStateService.setFlow(this.flow);
         this.loadFlow(this.flow as any);
+        // Initialize listener for a specific execution ID, replace '68533d06437a99b8f96c4047' with dynamic ID if needed
+        this.flowExecutionStateService.initializeExecutionStateListener('68545a7ad91f3bbf9369ed29');
       }
     } else {
       this.flow = {
@@ -106,18 +105,12 @@ export class FlowsComponent implements OnInit {
       this.flowService.saveFlow(this.flow).then(flow => {
         this.flowId = flow.id;
         this.router.navigate([this.flowId], { relativeTo: this.route });
+        // Initialize listener for a specific execution ID, replace '68533d06437a99b8f96c4047' with dynamic ID if needed
+        // Or perhaps initialize when a new flow is created and an execution starts
+        // For now, assuming a default or known execution ID
+        this.flowExecutionStateService.initializeExecutionStateListener('68545a7ad91f3bbf9369ed29');
       });
     }
-
-    const itemCollection: DocumentReference<any> = doc(this.firestore!, 'flows_execution_state/68533d06437a99b8f96c4047');
-
-    this.ngZone.run(() => {
-      const data$ = docData(itemCollection);
-      data$.subscribe(data => {
-        // this.flowExecutionState.set(data);
-        this.flowExecutionStateService.setFlowExecutionState(data);
-      });
-    });
   }
 
   public showAgents() {
@@ -126,7 +119,7 @@ export class FlowsComponent implements OnInit {
 
   public createEdge({ source, target }: Connection) {
     const edges = [
-      ...this.FlowDiagramStateService.edges(),
+      ...this.flowDiagramStateService.edges(),
       {
         id: `${source} -> ${target}`,
         source,
@@ -145,27 +138,24 @@ export class FlowsComponent implements OnInit {
       },
     ];
 
-    this.FlowDiagramStateService.edges.set(edges as Edge[]);
+    this.flowDiagramStateService.edges.set(edges as Edge[]);
   }
 
-  // Removed deleteEdge, addAgentToFlow, addTaskToFlow, createAgentNode, createTaskNode
-  // These are now handled by FlowDiagramStateService
-
-  // Updated calls to use FlowDiagramStateService
   deleteEdge(edge: Edge) {
-    this.FlowDiagramStateService.deleteEdge(edge);
+    this.flowDiagramStateService.deleteEdge(edge);
   }
 
   addAgentToFlow(event: OnActionEvent): void {
     const card: IAgentCard = event.item;
-    this.FlowDiagramStateService.addAgentToFlow(card);
+    this.flowDiagramStateService.addAgentToFlow(card);
     this.isDialogVisible = false;
   }
 
   addTaskToFlow(event: OnActionEvent) {
     console.log('addTaskToFlow', event);
     const task: IAgentTask = event.item;
-    this.FlowDiagramStateService.addTaskToFlow(task);
+    this.flowDiagramStateService.addTaskToFlow(task);
+
     this.isDialogVisible = false;
   }
 
@@ -188,7 +178,7 @@ export class FlowsComponent implements OnInit {
   }
 
   public serializeFlow(): { nodes: any[]; edges: any[] } {
-    const serializableNodes = this.FlowDiagramStateService.nodes().map(node => {
+    const serializableNodes = this.flowDiagramStateService.nodes().map(node => {
       const plainPoint = node.point();
       let serializableText: string | undefined;
       let serializableData: any | undefined;
@@ -221,7 +211,7 @@ export class FlowsComponent implements OnInit {
       return serializableNode;
     });
 
-    const serializableEdges = this.FlowDiagramStateService.edges().map(edge => ({ ...edge }));
+    const serializableEdges = this.flowDiagramStateService.edges().map(edge => ({ ...edge }));
 
     console.log('Saving flow:', { nodes: serializableNodes, edges: serializableEdges });
     return {
@@ -259,11 +249,11 @@ export class FlowsComponent implements OnInit {
       return dynamicNode;
     });
 
-    this.FlowDiagramStateService.nodes.set(nodes);
+    this.flowDiagramStateService.nodes.set(nodes);
 
-    this.FlowDiagramStateService.edges.set(savedFlowData.edges.map((edge: any) => ({ ...edge })));
+    this.flowDiagramStateService.edges.set(savedFlowData.edges.map((edge: any) => ({ ...edge })));
 
-    console.log('Flow loaded:', this.FlowDiagramStateService.getFlow()?.nodes, this.FlowDiagramStateService.getFlow()?.edges);
+    console.log('Flow loaded:', this.flowDiagramStateService.getFlow()?.nodes, this.flowDiagramStateService.getFlow()?.edges);
   }
 
   public showDialog(key: string) {
@@ -281,7 +271,7 @@ export class FlowsComponent implements OnInit {
   public showSelection() {}
 
   public runFlow() {
-    console.log('Flow running:', this.FlowDiagramStateService.getFlow()?.nodes, this.FlowDiagramStateService.getFlow()?.edges);
+    console.log('Flow running:', this.flowDiagramStateService.getFlow()?.nodes, this.flowDiagramStateService.getFlow()?.edges);
     this.flowService.runFlow(this.flowId || this.flow?.id || '');
   }
 }

@@ -22,6 +22,13 @@ export class FlowDiagramStateService {
     return this.flow();
   }
 
+  public getTargetNodesForSource(nodeId: string): string[] {
+    console.log('getTargetNodes', this.edges());
+    return this.edges()
+      .filter(edge => edge.source === nodeId)
+      .map(edge => edge.target);
+  }
+
   public setFlow(flow: IAgentFlows) {
     this.flow.set(flow);
   }
@@ -34,37 +41,32 @@ export class FlowDiagramStateService {
 
   public addAgentToFlow(agentCard: IAgentCard): void {
     this._createAgentNode(agentCard);
-    // Potentially handle dialog visibility if this service becomes responsible for it
-    // For now, assuming the component handles dialogs.
   }
 
   public addTaskToFlow(task: IAgentTask): void {
     this._createTaskNode(task);
-    // Potentially handle dialog visibility
   }
 
   private _createAgentNode(card: IAgentCard): void {
     const newNode: DynamicNode = {
-      id: nanoid(),
+      id: 'agent-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position, can be made configurable
       type: AgentNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
-      data: signal({
-        // Wrapped data with signal()
+      data: {
         agentCard: card,
-      }),
+      } as any,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
 
   private _createTaskNode(task: IAgentTask): void {
     const newNode: DynamicNode = {
-      id: nanoid(),
+      id: 'task-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position
       type: TaskNodeComponent as Type<any>, // Ensure Type<any> is appropriate
-      data: signal({
-        // Wrapped data with signal()
+      data: {
         agentTask: task,
-      }),
+      } as any, // not writable for now, but if i change i need to change serializer.
     };
     this.nodes.set([...this.nodes(), newNode]);
   }

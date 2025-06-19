@@ -26,7 +26,7 @@
   <p-button icon="pi pi-play" label="Run Flow" (click)="runFlow()" [rounded]="true" severity="primary" [outlined]="true" />
 </div>
 
-<vflow view="auto" [nodes]="FlowDiagramStateService.nodes()" [edges]="FlowDiagramStateService.edges()" [background]="backDots" (onConnect)="createEdge($event)">
+<vflow view="auto" [nodes]="flowDiagramStateService.nodes()" [edges]="flowDiagramStateService.edges()" [background]="backDots" (onConnect)="createEdge($event)">
   <ng-template let-ctx nodeHtml>
     <div class="custom-node" selectable [class.custom-node_selected]="ctx.selected()">
       <img style="position: absolute; top: 0; left: 0" [src]="ctx.node.data().image" alt="" />

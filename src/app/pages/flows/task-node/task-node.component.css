@@ -4,8 +4,8 @@
 
 
 .custom-node {
-  width: 150px;
-  height: 110px;
+  width:200px;
+  height: 140px;
   position: relative;
   background: #33ff00a0;
   border: 2px solid rgb(34, 255, 0);
@@ -31,4 +31,10 @@
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
   position: absolute;
   bottom: 5px;
+}
+
+.tag {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 }

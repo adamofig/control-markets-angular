@@ -6,6 +6,8 @@ import { FlowDiagramStateService } from '../flow-diagram-state.service';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ButtonModule } from 'primeng/button';
 import { FlowExecutionStateService } from '../flow-execution-state.service';
+import { IFlowExecutionState } from '../models/flows.model';
+import { TagModule } from 'primeng/tag';
 
 export interface CustomAgentNode extends ComponentDynamicNode {
   agentCard: IAgentCard;
@@ -13,7 +15,7 @@ export interface CustomAgentNode extends ComponentDynamicNode {
 
 @Component({
   selector: 'app-agent-node',
-  imports: [Vflow, ButtonModule],
+  imports: [Vflow, ButtonModule, TagModule],
   templateUrl: './agent-node.component.html',
   styleUrl: './agent-node.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,6 +24,36 @@ export class AgentNodeComponent extends CustomNodeComponent<CustomAgentNode> imp
   public dialogService = inject(DialogService);
   public flowDiagramStateService = inject(FlowDiagramStateService);
   public flowExecutionStateService = inject(FlowExecutionStateService);
+  public agentCard = computed(() => this.node()?.data?.agentCard);
+
+  // Entender como obtener el agent card.y monitorear el state.
+  public agentExecutionState = computed(() => {
+    console.log('taskExecutionState', this.agentCard());
+    const agentId: string = this.agentCard()?.id || this.agentCard()?._id || '';
+
+    const executionState: IFlowExecutionState | null = this.flowExecutionStateService.flowExecutionState();
+    if (executionState) {
+      const taskId: string = agentId;
+
+      const targetNodes = this.flowDiagramStateService.getTargetNodesForSource(this.node().id);
+      console.log('targetNodes', targetNodes);
+
+      if (targetNodes.length > 0) {
+        const taskNodeId = targetNodes[0];
+        const state = this.flowExecutionStateService.getFlowExecutionState();
+        const targetTask = state?.tasks[taskNodeId];
+        const job = targetTask?.jobs[this.node().id];
+
+        return job;
+      }
+
+      const executionTask = executionState?.tasks[taskId];
+      console.log('-------state', executionState);
+
+      return executionTask;
+    }
+    return null;
+  });
 
   constructor() {
     super();
@@ -36,11 +68,6 @@ export class AgentNodeComponent extends CustomNodeComponent<CustomAgentNode> imp
 
   override ngOnInit(): void {
     super.ngOnInit();
-    // console.log('agent-node', this.flowDiagramStateService.edges());
-    // const edge = this.flowDiagramStateService.edges().find(edge => edge.target === this.node().id);
-    // if (edge) {
-    //   this.taskAssignedId = edge.source;
-    // }
   }
 
   openModal(): void {

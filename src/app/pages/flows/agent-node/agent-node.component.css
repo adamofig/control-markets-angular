@@ -4,8 +4,8 @@
 
 
 .custom-node {
-  width: 100px;
-  height: 140px;
+  width: 120px;
+  height: 160px;
   position: relative;
   background: linear-gradient(to right, #00d2ff, #3a7bd5);
   border: 2px solid rgb(255, 225, 0);
@@ -42,4 +42,10 @@
 
 .custom-node:hover .hover-button {
   display: block;
+}
+
+.tag {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 }

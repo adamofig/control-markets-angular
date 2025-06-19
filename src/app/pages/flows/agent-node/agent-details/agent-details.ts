@@ -30,7 +30,7 @@ export class AgentDetailsComponent {
     console.log('agent-details', this.dynamicDialogConfig.data);
     this.data = this.dynamicDialogConfig.data.data;
     this.node = this.dynamicDialogConfig.data.node;
-    debugger;
+
     console.log('agent-details', this.data, this.node);
   }
 
