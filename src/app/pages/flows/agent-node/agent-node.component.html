@@ -1,6 +1,8 @@
 <div class="custom-node" selectable [class.custom-node_selected]="selected()" (dblclick)="openModal()">
   <img style="position: absolute; top: 0; left: 0" [src]="data()?.agentCard?.assets?.image?.url" alt="" />
-  <!-- <p class="text-node">{{ data() }}</p> -->
+  <p class="text-node">{{ data()?.agentCard?.characterCard?.data?.name }}</p>
+
+  <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
 
   <handle type="source" position="right" />
   <handle type="target" position="left" />

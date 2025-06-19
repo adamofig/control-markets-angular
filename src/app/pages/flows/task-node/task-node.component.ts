@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef, computed, effect, inject } from '@angular/core';
 import { ComponentDynamicNode, CustomNodeComponent, Vflow } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TaskDetailsComponent } from './task-details/task-details';
 import { IAgentTask } from '../../tasks/models/tasks-models';
+import { FlowExecutionStateService } from '../flow-execution-state.service';
 
 export interface CustomTaskNode extends ComponentDynamicNode {
   agentTask: IAgentTask;
@@ -19,11 +20,17 @@ export interface CustomTaskNode extends ComponentDynamicNode {
 })
 export class TaskNodeComponent extends CustomNodeComponent<CustomTaskNode> implements OnInit {
   public dialogService = inject(DialogService);
+  public flowExecutionStateService = inject(FlowExecutionStateService);
 
   constructor() {
     super();
     effect(() => {
       // console.log('task-node', this.data()?.agentTask);
+    });
+
+    // probar primero aqui
+    computed(() => {
+      return this.flowExecutionStateService.getFlowExecutionState()?.tasks[this.node().id];
     });
   }
 

@@ -11,13 +11,14 @@ import { IAgentFlows } from '../models/flows.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlowService } from '../flows.service';
 import { ButtonModule } from 'primeng/button';
-import { nanoid } from 'nanoid';
-import { FlowDiagramStateService } from '../flow-state.service';
+// import { nanoid } from 'nanoid'; // Removed as it's now used in FlowDiagramStateService
+import { FlowDiagramStateService } from '../flow-diagram-state.service';
 import { TaskListComponent } from '../../tasks/task-list/task-list.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { IAgentTask } from '../../tasks/models/tasks-models';
 import { Firestore, doc, docData, DocumentReference, collection, collectionData } from '@angular/fire/firestore';
+import { FlowExecutionStateService } from '../flow-execution-state.service';
 
 // Node Type Mapping
 const NODE_TYPE_MAP: { [key: string]: Type<any> | 'default' } = {
@@ -68,6 +69,7 @@ export class FlowsComponent implements OnInit {
   public FlowDiagramStateService = inject(FlowDiagramStateService);
   public ngZone = inject(NgZone);
   public toastService = inject(TOAST_ALERTS_TOKEN);
+  public flowExecutionStateService = inject(FlowExecutionStateService);
 
   public flowName = '';
 
@@ -112,7 +114,8 @@ export class FlowsComponent implements OnInit {
     this.ngZone.run(() => {
       const data$ = docData(itemCollection);
       data$.subscribe(data => {
-        this.flowExecutionState.set(data);
+        // this.flowExecutionState.set(data);
+        this.flowExecutionStateService.setFlowExecutionState(data);
       });
     });
   }
@@ -145,53 +148,25 @@ export class FlowsComponent implements OnInit {
     this.FlowDiagramStateService.edges.set(edges as Edge[]);
   }
 
+  // Removed deleteEdge, addAgentToFlow, addTaskToFlow, createAgentNode, createTaskNode
+  // These are now handled by FlowDiagramStateService
+
+  // Updated calls to use FlowDiagramStateService
   deleteEdge(edge: Edge) {
-    const edges = this.FlowDiagramStateService.edges().filter(e => e.id !== edge.id);
-    this.FlowDiagramStateService.edges.set(edges);
+    this.FlowDiagramStateService.deleteEdge(edge);
   }
 
   addAgentToFlow(event: OnActionEvent): void {
     const card: IAgentCard = event.item;
-    this.createAgentNode(card);
+    this.FlowDiagramStateService.addAgentToFlow(card);
     this.isDialogVisible = false;
   }
 
   addTaskToFlow(event: OnActionEvent) {
     console.log('addTaskToFlow', event);
-
     const task: IAgentTask = event.item;
-    this.createTaskNode(task);
+    this.FlowDiagramStateService.addTaskToFlow(task);
     this.isDialogVisible = false;
-  }
-
-  public createAgentNode(card: IAgentCard) {
-    const nodes = [
-      ...this.FlowDiagramStateService.nodes(),
-      {
-        id: nanoid(),
-        point: signal({ x: 100, y: 100 }),
-        type: AgentNodeComponent as any,
-        data: {
-          agentCard: card,
-        } as any,
-      },
-    ];
-    this.FlowDiagramStateService.nodes.set(nodes);
-  }
-
-  public createTaskNode(task: IAgentTask) {
-    const nodes = [
-      ...this.FlowDiagramStateService.nodes(),
-      {
-        id: nanoid(),
-        point: signal({ x: 100, y: 100 }),
-        type: TaskNodeComponent as any,
-        data: {
-          agentTask: task,
-        } as any,
-      },
-    ];
-    this.FlowDiagramStateService.nodes.set(nodes);
   }
 
   public async saveFlow() {

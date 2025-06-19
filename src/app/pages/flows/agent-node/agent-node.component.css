@@ -32,3 +32,14 @@
   position: absolute;
   bottom: 5px;
 }
+.custom-node .hover-button {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  /* Add any other styling for the button here */
+}
+
+.custom-node:hover .hover-button {
+  display: block;
+}
