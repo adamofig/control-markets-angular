@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef, effect, inject } from '@angular/core';
-import { CustomNodeComponent, Vflow } from 'ngx-vflow';
+import { ComponentDynamicNode, CustomNodeComponent, Vflow } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TaskDetailsComponent } from './task-details/task-details';
+import { IAgentTask } from '../../tasks/models/tasks-models';
 
-export type NodeData = {
-  text: string;
-  image: any;
-};
+export interface CustomTaskNode extends ComponentDynamicNode {
+  agentTask: IAgentTask;
+}
 
 @Component({
   selector: 'app-task-node',
@@ -17,14 +17,13 @@ export type NodeData = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class TaskNodeComponent extends CustomNodeComponent<NodeData> implements OnInit {
+export class TaskNodeComponent extends CustomNodeComponent<CustomTaskNode> implements OnInit {
   public dialogService = inject(DialogService);
 
   constructor() {
     super();
     effect(() => {
-      debugger;
-      console.log('task-node', this.data()?.text);
+      // console.log('task-node', this.data()?.agentTask);
     });
   }
 
@@ -38,6 +37,8 @@ export class TaskNodeComponent extends CustomNodeComponent<NodeData> implements 
       baseZIndex: 10000,
       draggable: true,
       closable: true,
+      data: this.node(),
+      width: '450px',
     });
   }
 }

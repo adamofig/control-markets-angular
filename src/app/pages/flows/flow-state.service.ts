@@ -6,7 +6,7 @@ import { DynamicNode, Edge } from 'ngx-vflow';
 @Injectable({
   providedIn: 'root',
 })
-export class FlowStateService {
+export class FlowDiagramStateService {
   private flow = signal<IAgentFlows | null>(null);
 
   public nodes = signal<DynamicNode[]>([]);

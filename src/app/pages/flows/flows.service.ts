@@ -5,9 +5,9 @@ import { FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN, HttpCoreServic
 const server = 'primary';
 // TODO add your own end points
 const Endpoints = {
-  Generics: {
-    Generics: 'api/agent-flows',
-    GenericsFiltered: 'api/agent-flows/query',
+  Flows: {
+    Flows: 'api/agent-flows',
+    FlowsFiltered: 'api/agent-flows/query',
   },
 };
 
@@ -20,28 +20,32 @@ export class FlowService {
 
   public async getFlows(): Promise<IAgentFlows[]> {
     try {
-      const response = await this.httpService.get<IAgentFlows[]>(Endpoints.Generics.Generics, server);
-      this.toastService.success({ title: 'Se han encontrado generics', subtitle: 'Mostrando información' });
+      const response = await this.httpService.get<IAgentFlows[]>(Endpoints.Flows.Flows, server);
+      this.toastService.success({ title: 'Se han encontrado Flows', subtitle: 'Mostrando información' });
       return response;
     } catch (error) {
-      this.toastService.warn({ title: 'Error fetching generics', subtitle: 'Showing Default Data' });
+      this.toastService.warn({ title: 'Error fetching Flows', subtitle: 'Showing Default Data' });
       return [];
     }
   }
 
   public async getFilteredFlows(filter: FiltersConfig) {
-    return this.httpService.post<IFilterQueryResponse<IAgentFlows>>(Endpoints.Generics.GenericsFiltered, filter, server);
+    return this.httpService.post<IFilterQueryResponse<IAgentFlows>>(Endpoints.Flows.FlowsFiltered, filter, server);
   }
 
   public async getFlow(id: string): Promise<IAgentFlows> {
-    return this.httpService.get<IAgentFlows>(`${Endpoints.Generics.Generics}/${id}`);
+    return this.httpService.get<IAgentFlows>(`${Endpoints.Flows.Flows}/${id}`);
   }
 
   public async saveFlow(flow: IAgentFlows): Promise<IAgentFlows> {
-    return this.httpService.post<IAgentFlows>(Endpoints.Generics.Generics, flow);
+    return this.httpService.post<IAgentFlows>(Endpoints.Flows.Flows, flow);
   }
 
   public async deleteFlow(id: string) {
-    return this.httpService.delete(`${Endpoints.Generics.Generics}/${id}`);
+    return this.httpService.delete(`${Endpoints.Flows.Flows}/${id}`);
+  }
+
+  public async runFlow(flowid: string) {
+    return this.httpService.post<IAgentFlows>(`${Endpoints.Flows.Flows}/run/${flowid}`, {});
   }
 }

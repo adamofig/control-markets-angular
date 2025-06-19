@@ -4,6 +4,7 @@ export interface AuditDate {
 }
 
 export interface IAgentFlows extends AuditDate {
+  _id?: string;
   id: string;
   name?: string;
   nodes?: any[];

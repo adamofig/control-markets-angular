@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal, Type } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, NgZone, OnInit, signal, Type } from '@angular/core';
 import { Connection, DynamicNode, Edge, Vflow } from 'ngx-vflow';
-import { CircularNodeComponent, NodeData } from '../circular-node.component';
 import { AgentNodeComponent } from '../agent-node/agent-node.component';
 import { DistributionChanelNodeComponent } from '../distribution-chanel-node/distribution-chanel-node.component';
 import { OutcomeNodeComponent } from '../outcome-node/outcome-node.component';
@@ -13,11 +12,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FlowService } from '../flows.service';
 import { ButtonModule } from 'primeng/button';
 import { nanoid } from 'nanoid';
-import { FlowStateService } from '../flow-state.service';
+import { FlowDiagramStateService } from '../flow-state.service';
 import { TaskListComponent } from '../../tasks/task-list/task-list.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { IAgentTask } from '../../tasks/models/tasks-models';
+import { Firestore, doc, docData, DocumentReference, collection, collectionData } from '@angular/fire/firestore';
 
 // Node Type Mapping
 const NODE_TYPE_MAP: { [key: string]: Type<any> | 'default' } = {
@@ -26,7 +26,6 @@ const NODE_TYPE_MAP: { [key: string]: Type<any> | 'default' } = {
   DistributionChanelNodeComponent: DistributionChanelNodeComponent,
   OutcomeNodeComponent: OutcomeNodeComponent,
   TaskNodeComponent: TaskNodeComponent,
-  CircularNodeComponent: CircularNodeComponent,
   default: 'default',
 };
 
@@ -61,19 +60,20 @@ function getNodeComponentFromString(typeString: string): Type<any> | 'default' {
   imports: [Vflow, DialogModule, AgentCardListComponent, ButtonModule, TaskListComponent, InputTextModule, FormsModule],
 })
 export class FlowsComponent implements OnInit {
+  private firestore = inject(Firestore); // Removed { optional: true } as Firestore should now be properly provided
+
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private flowService = inject(FlowService);
-  public flowStateService = inject(FlowStateService);
+  public FlowDiagramStateService = inject(FlowDiagramStateService);
+  public ngZone = inject(NgZone);
   public toastService = inject(TOAST_ALERTS_TOKEN);
+
   public flowName = '';
 
   public isDialogVisible = false;
 
-  public dialogs = {
-    isAgentVisible: false,
-    isTaskVisible: false,
-  };
+  public dialogs = { isAgentVisible: false, isTaskVisible: false };
 
   public backDots = {
     backgroundColor: 'transparent',
@@ -85,14 +85,17 @@ export class FlowsComponent implements OnInit {
   public flow: IAgentFlows | null = null;
   public flowId = this.route.snapshot.params['id'];
 
+  public flowExecutionState = signal<any>(null);
+
   async ngOnInit(): Promise<void> {
     if (this.flowId) {
       this.flow = await this.flowService.getFlow(this.flowId);
+      this.flowId = this.flow?._id;
+
       if (this.flow) {
         this.flowName = this.flow.name as string;
-        this.flowStateService.setFlow(this.flow);
+        this.FlowDiagramStateService.setFlow(this.flow);
         this.loadFlow(this.flow as any);
-        // this.flowForm.patchValue(this.flow);
       }
     } else {
       this.flow = {
@@ -103,6 +106,15 @@ export class FlowsComponent implements OnInit {
         this.router.navigate([this.flowId], { relativeTo: this.route });
       });
     }
+
+    const itemCollection: DocumentReference<any> = doc(this.firestore!, 'flows_execution_state/68533d06437a99b8f96c4047');
+
+    this.ngZone.run(() => {
+      const data$ = docData(itemCollection);
+      data$.subscribe(data => {
+        this.flowExecutionState.set(data);
+      });
+    });
   }
 
   public showAgents() {
@@ -110,9 +122,8 @@ export class FlowsComponent implements OnInit {
   }
 
   public createEdge({ source, target }: Connection) {
-    debugger;
     const edges = [
-      ...this.flowStateService.edges(),
+      ...this.FlowDiagramStateService.edges(),
       {
         id: `${source} -> ${target}`,
         source,
@@ -122,17 +133,7 @@ export class FlowsComponent implements OnInit {
             type: 'arrow',
           },
         },
-
         edgeLabels: {
-          // center: {
-          //   type: 'default',
-          //   text: 'Some Text',
-          //   style: {
-          //     color: 'black',
-          //     lineHeight: '80%',
-          //     borderRadius: '5px',
-          //   },
-          // },
           start: {
             type: 'html-template',
             data: { color: '#122c26' },
@@ -141,18 +142,15 @@ export class FlowsComponent implements OnInit {
       },
     ];
 
-    this.flowStateService.edges.set(edges as Edge[]);
+    this.FlowDiagramStateService.edges.set(edges as Edge[]);
   }
 
   deleteEdge(edge: Edge) {
-    debugger;
-    const edges = this.flowStateService.edges().filter(e => e.id !== edge.id);
-    this.flowStateService.edges.set(edges);
+    const edges = this.FlowDiagramStateService.edges().filter(e => e.id !== edge.id);
+    this.FlowDiagramStateService.edges.set(edges);
   }
 
-  addAgentToFlow(event: OnActionEvent) {
-    console.log('addAgentToFlow', event);
-
+  addAgentToFlow(event: OnActionEvent): void {
     const card: IAgentCard = event.item;
     this.createAgentNode(card);
     this.isDialogVisible = false;
@@ -168,42 +166,37 @@ export class FlowsComponent implements OnInit {
 
   public createAgentNode(card: IAgentCard) {
     const nodes = [
-      ...this.flowStateService.nodes(),
+      ...this.FlowDiagramStateService.nodes(),
       {
         id: nanoid(),
         point: signal({ x: 100, y: 100 }),
         type: AgentNodeComponent as any,
         data: {
-          id: card.id || card._id,
-          text: card.title || card.characterCard?.data?.name,
-          image: card.assets?.image?.url,
-          record: card,
+          agentCard: card,
         } as any,
       },
     ];
-    this.flowStateService.nodes.set(nodes);
+    this.FlowDiagramStateService.nodes.set(nodes);
   }
 
   public createTaskNode(task: IAgentTask) {
     const nodes = [
-      ...this.flowStateService.nodes(),
+      ...this.FlowDiagramStateService.nodes(),
       {
         id: nanoid(),
         point: signal({ x: 100, y: 100 }),
         type: TaskNodeComponent as any,
         data: {
-          id: task.id || task._id,
-          text: task.name,
-          image: task.image,
-          record: task,
+          agentTask: task,
         } as any,
       },
     ];
-    this.flowStateService.nodes.set(nodes);
+    this.FlowDiagramStateService.nodes.set(nodes);
   }
 
   public async saveFlow() {
     const flowData = this.serializeFlow();
+
     console.log('Flow saved:', flowData);
     const flow: IAgentFlows = {
       id: this.flowId,
@@ -220,7 +213,7 @@ export class FlowsComponent implements OnInit {
   }
 
   public serializeFlow(): { nodes: any[]; edges: any[] } {
-    const serializableNodes = this.flowStateService.nodes().map(node => {
+    const serializableNodes = this.FlowDiagramStateService.nodes().map(node => {
       const plainPoint = node.point();
       let serializableText: string | undefined;
       let serializableData: any | undefined;
@@ -253,7 +246,7 @@ export class FlowsComponent implements OnInit {
       return serializableNode;
     });
 
-    const serializableEdges = this.flowStateService.edges().map(edge => ({ ...edge }));
+    const serializableEdges = this.FlowDiagramStateService.edges().map(edge => ({ ...edge }));
 
     console.log('Saving flow:', { nodes: serializableNodes, edges: serializableEdges });
     return {
@@ -291,11 +284,11 @@ export class FlowsComponent implements OnInit {
       return dynamicNode;
     });
 
-    this.flowStateService.nodes.set(nodes);
+    this.FlowDiagramStateService.nodes.set(nodes);
 
-    this.flowStateService.edges.set(savedFlowData.edges.map((edge: any) => ({ ...edge })));
+    this.FlowDiagramStateService.edges.set(savedFlowData.edges.map((edge: any) => ({ ...edge })));
 
-    console.log('Flow loaded:', this.flowStateService.getFlow()?.nodes, this.flowStateService.getFlow()?.edges);
+    console.log('Flow loaded:', this.FlowDiagramStateService.getFlow()?.nodes, this.FlowDiagramStateService.getFlow()?.edges);
   }
 
   public showDialog(key: string) {
@@ -311,4 +304,9 @@ export class FlowsComponent implements OnInit {
   }
 
   public showSelection() {}
+
+  public runFlow() {
+    console.log('Flow running:', this.FlowDiagramStateService.getFlow()?.nodes, this.FlowDiagramStateService.getFlow()?.edges);
+    this.flowService.runFlow(this.flowId || this.flow?.id || '');
+  }
 }

@@ -7,6 +7,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth, initializeAuth, indexedDBLocalPersistence } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 // Ionic
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
@@ -86,6 +87,7 @@ bootstrapApplication(AppComponent, {
         return getAuth();
       }
     }),
+    provideFirestore(() => getFirestore()),
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
 
     // Translate Providers
