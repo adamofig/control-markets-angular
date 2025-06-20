@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FlowService } from '../flows.service';
 import { ButtonModule } from 'primeng/button';
 // import { nanoid } from 'nanoid'; // Removed as it's now used in FlowDiagramStateService
-import { FlowDiagramStateService } from '../services/flow-diagram-state.service';
+import { DynamicNodeWithData, FlowDiagramStateService } from '../services/flow-diagram-state.service';
 import { TaskListComponent } from '../../tasks/task-list/task-list.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
@@ -233,7 +233,7 @@ export class FlowsComponent implements OnInit {
 
     const nodes = savedFlowData.nodes.map((plainNode: any) => {
       const nodeType = getNodeComponentFromString(plainNode.type);
-      let dynamicNode: DynamicNode;
+      let dynamicNode: DynamicNodeWithData;
 
       if (nodeType === 'default') {
         dynamicNode = {
@@ -280,5 +280,9 @@ export class FlowsComponent implements OnInit {
     const result: any = await this.flowService.runFlow(this.flowId || this.flow?.id || '');
     console.log('Flow result:', result);
     this.flowExecutionStateService.initializeExecutionStateListener(result.executionId);
+  }
+
+  public addDistributionNode() {
+    this.flowDiagramStateService.addDistributionNode();
   }
 }

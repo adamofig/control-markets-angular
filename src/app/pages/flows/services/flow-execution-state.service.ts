@@ -50,8 +50,6 @@ export class FlowExecutionStateService {
           // Here you can trigger your actions for each job in newlyCompleted
           newlyCompleted.forEach(job => {
             this.flowDiagramStateService.addOutcomeToFlow(job);
-            debugger;
-            // Example: this.triggerActionForJob(job);
           });
         }
       });

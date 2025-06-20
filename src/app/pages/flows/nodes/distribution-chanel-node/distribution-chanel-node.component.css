@@ -4,11 +4,11 @@
 
 
 .custom-node {
-  width: 110px;
-  height: 110px;
+  width: 120px;
+  height: 120px;
   position: relative;
-  background: #ff00ff;
-  border: 2px solid rgb(251, 0, 255);
+  background: #9fdefb;
+  border: 2px solid rgb(0, 174, 255);
   border-radius: 50%;
   overflow: hidden;
 

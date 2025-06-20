@@ -4,6 +4,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { OutcomeDetailsComponent } from './outcome-details/outcome-details';
 import { IAgentJob } from 'src/app/pages/jobs/models/jobs.model';
+import { JobDetailComponent } from 'src/app/pages/jobs/job-detail/job-detail.component';
 
 export interface CustomOutcomeNode extends ComponentDynamicNode {
   outcomeJob: IAgentJob | null;
@@ -23,6 +24,7 @@ export class OutcomeNodeComponent extends CustomNodeComponent<CustomOutcomeNode>
   public outcomeJob: IAgentJob | null = null;
 
   @ViewChild('dialog') dialog!: ViewContainerRef;
+
   constructor() {
     super();
     effect(() => {
@@ -35,14 +37,15 @@ export class OutcomeNodeComponent extends CustomNodeComponent<CustomOutcomeNode>
 
   openModal(): void {
     this.isDialogVisible = true;
-    this.dialogService.open(OutcomeDetailsComponent, {
+    this.dialogService.open(JobDetailComponent, {
       header: 'Outcome Node',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       draggable: true,
       closable: true,
-      data: {
-        job: this.outcomeJob,
+      width: '650px',
+      inputValues: {
+        jobInput: this.outcomeJob,
       },
     });
   }

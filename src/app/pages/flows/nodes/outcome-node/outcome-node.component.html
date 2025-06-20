@@ -1,10 +1,11 @@
 <div class="custom-node" selectable [class.custom-node_selected]="selected()" (dblclick)="openModal()">
+  <div style="height: 100%; overflow-y: scroll">
+    <p class="text-node">{{ outcomeJob?._id }}</p>
+    <p style="font-size: 10px">
+      {{ outcomeJob?.result?.content || 'No response' }}
+    </p>
+  </div>
   <!-- <img style="position: absolute; top: 0; left: 0" [src]="data()?.image" alt="" /> -->
-  <p class="text-node">{{ data()?.outcomeJob?.id }}</p>
-  <p>
-    ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum
-    dolor sit amet consectetur adipisicing elit. Quisquam, quod.
-  </p>
 
   <handle type="target" position="left" id="b" />
   <handle type="source" position="right" id="b" />
