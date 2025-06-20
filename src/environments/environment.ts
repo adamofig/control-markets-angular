@@ -1,6 +1,6 @@
 export const environment = {
   projectName: 'Golden',
-  version: '0.0.22',
+  version: '0.0.24',
   envName: 'DEV',
   production: false,
 
@@ -8,6 +8,7 @@ export const environment = {
   androidClientId: '',
   iosClientId: '',
   n8nUrl: 'http://192.168.2.5:5678/webhook-test',
+  // backendNodeUrl: 'https://golden-ad-node-164740776065.us-central1.run.app',
   backendNodeUrl: 'http://localhost:8080',
   // backendNodeUrl: 'https://niche-market-node-905545672221.us-central1.run.app',
   // backendPythonUrl: 'http://localhost:8011',
@@ -19,7 +20,7 @@ export const environment = {
     androidClientId: '',
     iosClientId: '',
   },
-    firebase: {
+  firebase: {
     apiKey: 'AIzaSyAecVnUj1-IjKGDvBarhufKAfO-Y-RyTXw',
     authDomain: 'golden-ad-dev.firebaseapp.com',
     projectId: 'golden-ad-dev',

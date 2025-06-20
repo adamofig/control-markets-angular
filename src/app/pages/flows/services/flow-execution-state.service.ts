@@ -1,5 +1,5 @@
 import { Injectable, signal, inject, NgZone } from '@angular/core';
-import { IFlowExecutionState, StatusJob } from './models/flows.model';
+import { IFlowExecutionState, StatusJob } from '../models/flows.model';
 import { Firestore, doc, docData, DocumentReference } from '@angular/fire/firestore';
 
 @Injectable({

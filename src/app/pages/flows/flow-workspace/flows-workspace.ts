@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, NgZone, OnInit, signal, Type } from '@angular/core';
 import { Connection, DynamicNode, Edge, Vflow } from 'ngx-vflow';
-import { AgentNodeComponent } from '../agent-node/agent-node.component';
-import { DistributionChanelNodeComponent } from '../distribution-chanel-node/distribution-chanel-node.component';
-import { OutcomeNodeComponent } from '../outcome-node/outcome-node.component';
-import { TaskNodeComponent } from '../task-node/task-node.component';
+import { AgentNodeComponent } from '../nodes/agent-node/agent-node.component';
+import { DistributionChanelNodeComponent } from '../nodes/distribution-chanel-node/distribution-chanel-node.component';
+import { OutcomeNodeComponent } from '../nodes/outcome-node/outcome-node.component';
+import { TaskNodeComponent } from '../nodes/task-node/task-node.component';
 import { DialogModule } from 'primeng/dialog';
 import { AgentCardListComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { OnActionEvent, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
@@ -12,12 +12,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FlowService } from '../flows.service';
 import { ButtonModule } from 'primeng/button';
 // import { nanoid } from 'nanoid'; // Removed as it's now used in FlowDiagramStateService
-import { FlowDiagramStateService } from '../flow-diagram-state.service';
+import { FlowDiagramStateService } from '../services/flow-diagram-state.service';
 import { TaskListComponent } from '../../tasks/task-list/task-list.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { IAgentTask } from '../../tasks/models/tasks-models';
-import { FlowExecutionStateService } from '../flow-execution-state.service';
+import { FlowExecutionStateService } from '../services/flow-execution-state.service';
 
 // Node Type Mapping
 const NODE_TYPE_MAP: { [key: string]: Type<any> | 'default' } = {
@@ -96,7 +96,7 @@ export class FlowsComponent implements OnInit {
         this.flowDiagramStateService.setFlow(this.flow);
         this.loadFlow(this.flow as any);
         // Initialize listener for a specific execution ID, replace '68533d06437a99b8f96c4047' with dynamic ID if needed
-        this.flowExecutionStateService.initializeExecutionStateListener('68545a7ad91f3bbf9369ed29');
+        // this.flowExecutionStateService.initializeExecutionStateListener('68545a7ad91f3bbf9369ed29');
       }
     } else {
       this.flow = {
@@ -108,7 +108,7 @@ export class FlowsComponent implements OnInit {
         // Initialize listener for a specific execution ID, replace '68533d06437a99b8f96c4047' with dynamic ID if needed
         // Or perhaps initialize when a new flow is created and an execution starts
         // For now, assuming a default or known execution ID
-        this.flowExecutionStateService.initializeExecutionStateListener('68545a7ad91f3bbf9369ed29');
+        // this.flowExecutionStateService.initializeExecutionStateListener('68545a7ad91f3bbf9369ed29');
       });
     }
   }
@@ -270,8 +270,10 @@ export class FlowsComponent implements OnInit {
 
   public showSelection() {}
 
-  public runFlow() {
+  public async runFlow() {
     console.log('Flow running:', this.flowDiagramStateService.getFlow()?.nodes, this.flowDiagramStateService.getFlow()?.edges);
-    this.flowService.runFlow(this.flowId || this.flow?.id || '');
+    const result: any = await this.flowService.runFlow(this.flowId || this.flow?.id || '');
+    console.log('Flow result:', result);
+    this.flowExecutionStateService.initializeExecutionStateListener(result.executionId);
   }
 }

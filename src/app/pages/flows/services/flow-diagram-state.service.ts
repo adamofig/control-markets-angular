@@ -1,11 +1,11 @@
 import { Injectable, signal, Type } from '@angular/core';
-import { IAgentFlows } from './models/flows.model';
+import { IAgentFlows } from '../models/flows.model';
 import { DynamicNode, Edge } from 'ngx-vflow';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
-import { IAgentTask } from '../tasks/models/tasks-models'; // Corrected path
+import { IAgentTask } from '../../tasks/models/tasks-models'; // Corrected path
 import { nanoid } from 'nanoid'; // Added
-import { AgentNodeComponent } from './agent-node/agent-node.component'; // Corrected path
-import { TaskNodeComponent } from './task-node/task-node.component'; // Corrected path
+import { AgentNodeComponent } from '../nodes/agent-node/agent-node.component'; // Corrected path
+import { TaskNodeComponent } from '../nodes/task-node/task-node.component'; // Corrected path
 
 //  This must have all the edges and node so i can go thoew every one.
 @Injectable({

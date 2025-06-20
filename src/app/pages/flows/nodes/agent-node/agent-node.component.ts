@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, OnInit, computed, effect, inject } 
 import { ComponentDynamicNode, CustomNodeComponent, DynamicNode, Vflow } from 'ngx-vflow';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AgentDetailsComponent } from './agent-details/agent-details';
-import { FlowDiagramStateService } from '../flow-diagram-state.service';
+import { FlowDiagramStateService } from '../../services/flow-diagram-state.service';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ButtonModule } from 'primeng/button';
-import { FlowExecutionStateService } from '../flow-execution-state.service';
-import { IFlowExecutionState } from '../models/flows.model';
+import { FlowExecutionStateService } from '../../services/flow-execution-state.service';
+import { IFlowExecutionState } from '../../models/flows.model';
 import { TagModule } from 'primeng/tag';
 
 export interface CustomAgentNode extends ComponentDynamicNode {

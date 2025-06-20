@@ -20,12 +20,22 @@
     <p><strong>Task Name:</strong> {{ jobData.task.name }}</p>
   </div>
 
-  <p-card header="Response: {{ jobData.response.role }}">
+  <p-card header="Result: {{ jobData.response.role }}">
     @if (jobData.result; as result) {
     <div class="section">
       <h4>{{ result.title }}</h4>
       <div class="message">
         <pre>{{ result.content }}</pre>
+      </div>
+    </div>
+    }
+  </p-card>
+
+  <p-card header="Response: {{ jobData.response.role }}">
+    @if (jobData.response) {
+    <div class="section">
+      <div class="message">
+        <pre>{{ jobData.response.content }}</pre>
       </div>
     </div>
     }

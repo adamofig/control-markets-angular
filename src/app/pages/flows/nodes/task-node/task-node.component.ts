@@ -5,10 +5,10 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TaskDetailsComponent } from './task-details/task-details';
-import { IAgentTask } from '../../tasks/models/tasks-models';
-import { FlowExecutionStateService } from '../flow-execution-state.service';
-import { FlowDiagramStateService } from '../flow-diagram-state.service';
-import { IFlowExecutionState } from '../models/flows.model';
+import { IAgentTask } from '../../../tasks/models/tasks-models';
+import { FlowExecutionStateService } from '../../services/flow-execution-state.service';
+import { FlowDiagramStateService } from '../../services/flow-diagram-state.service';
+import { IFlowExecutionState } from '../../models/flows.model';
 import { TagModule } from 'primeng/tag';
 
 export interface CustomTaskNode extends ComponentDynamicNode {
