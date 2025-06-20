@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef, effect, inject } from '@angular/core';
-import { CustomNodeComponent, Vflow } from 'ngx-vflow';
+import { ComponentDynamicNode, CustomNodeComponent, Vflow } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { OutcomeDetailsComponent } from './outcome-details/outcome-details';
+import { IAgentJob } from 'src/app/pages/jobs/models/jobs.model';
 
-export type NodeData = {
-  text: string;
-  image: string;
-};
+export interface CustomOutcomeNode extends ComponentDynamicNode {
+  outcomeJob: IAgentJob | null;
+}
 
 @Component({
   selector: 'app-outcome-node',
@@ -17,14 +17,17 @@ export type NodeData = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class OutcomeNodeComponent extends CustomNodeComponent<NodeData> implements OnInit {
+export class OutcomeNodeComponent extends CustomNodeComponent<CustomOutcomeNode> implements OnInit {
   public dialogService = inject(DialogService);
+
+  public outcomeJob: IAgentJob | null = null;
 
   @ViewChild('dialog') dialog!: ViewContainerRef;
   constructor() {
     super();
     effect(() => {
-      console.log('outcome-node', this.data()?.text);
+      console.log('outcome-node', this.data()?.outcomeJob);
+      this.outcomeJob = this.data()?.outcomeJob || null;
     });
   }
 
@@ -38,6 +41,9 @@ export class OutcomeNodeComponent extends CustomNodeComponent<NodeData> implemen
       baseZIndex: 10000,
       draggable: true,
       closable: true,
+      data: {
+        job: this.outcomeJob,
+      },
     });
   }
 }

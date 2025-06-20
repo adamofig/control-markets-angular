@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { UserDataExchange, UserDataExchangeAbstractService } from '@dataclouder/ngx-agent-cards';
 import { Endpoints } from 'src/app/core/enums';
 import { HttpService } from 'src/app/services/http.service';
-import { IAgentJob, IAgentTask } from '../models/tasks-models';
+import { IAgentJob } from '../../jobs/models/jobs.model';
+// import { IAgentJob, IAgentTask } from '../models/tasks-models';
 
 @Injectable({
   providedIn: 'root',

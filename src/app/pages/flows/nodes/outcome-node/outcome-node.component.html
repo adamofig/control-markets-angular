@@ -1,6 +1,10 @@
 <div class="custom-node" selectable [class.custom-node_selected]="selected()" (dblclick)="openModal()">
-  <img style="position: absolute; top: 0; left: 0" [src]="data()?.image" alt="" />
-  <p class="text-node">{{ data()?.text }}</p>
+  <!-- <img style="position: absolute; top: 0; left: 0" [src]="data()?.image" alt="" /> -->
+  <p class="text-node">{{ data()?.outcomeJob?.id }}</p>
+  <p>
+    ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum
+    dolor sit amet consectetur adipisicing elit. Quisquam, quod.
+  </p>
 
   <handle type="target" position="left" id="b" />
   <handle type="source" position="right" id="b" />

@@ -26,13 +26,16 @@ export enum StatusJob {
 }
 
 export interface IJobExecutionState {
-  id: string;
+  nodeId: string;
+  agentCardId: string;
   status: StatusJob;
   messages: MessageLog[];
+  outcomeId: string;
 }
 
 export interface ITaskExecutionState {
-  id: string;
+  nodeId: string;
+  taskId: string;
   status: StatusJob;
   jobs: Record<string, IJobExecutionState>;
 }

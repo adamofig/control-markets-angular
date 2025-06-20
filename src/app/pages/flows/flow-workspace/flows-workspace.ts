@@ -83,6 +83,7 @@ export class FlowsComponent implements OnInit {
 
   public flow: IAgentFlows | null = null;
   public flowId = this.route.snapshot.params['id'];
+  public executionId = this.route.snapshot.params['executionId']; // Added outcomeId
 
   public flowExecutionState = this.flowExecutionStateService.getFlowExecutionStateSignal(); // Updated to use service signal
 
@@ -95,8 +96,12 @@ export class FlowsComponent implements OnInit {
         this.flowName = this.flow.name as string;
         this.flowDiagramStateService.setFlow(this.flow);
         this.loadFlow(this.flow as any);
-        // Initialize listener for a specific execution ID, replace '68533d06437a99b8f96c4047' with dynamic ID if needed
-        // this.flowExecutionStateService.initializeExecutionStateListener('68545a7ad91f3bbf9369ed29');
+
+        if (this.executionId) {
+          console.log(`Flow loaded with executionId: ${this.executionId}`);
+
+          this.flowExecutionStateService.initializeExecutionStateListener(this.executionId);
+        }
       }
     } else {
       this.flow = {

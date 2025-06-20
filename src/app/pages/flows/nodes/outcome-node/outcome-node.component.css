@@ -4,8 +4,8 @@
 
 
 .custom-node {
-  width: 110px;
-  height: 110px;
+  width: 200px;
+  height: 250px;
   position: relative;
   background: linear-gradient(to right, #00d2ff, #3a7bd5);
   border: 2px solid rgb(26, 220, 178);

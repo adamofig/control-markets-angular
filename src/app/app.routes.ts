@@ -111,6 +111,10 @@ export const routes: Routes = [
             path: 'edit/:id',
             loadComponent: () => import('./pages/flows/flow-workspace/flows-workspace').then(m => m.FlowsComponent),
           },
+          {
+            path: 'edit/:id/:executionId',
+            loadComponent: () => import('./pages/flows/flow-workspace/flows-workspace').then(m => m.FlowsComponent),
+          },
         ],
       },
 

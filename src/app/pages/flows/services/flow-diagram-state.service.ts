@@ -1,17 +1,22 @@
-import { Injectable, signal, Type } from '@angular/core';
-import { IAgentFlows } from '../models/flows.model';
+import { inject, Injectable, signal, Type } from '@angular/core';
+import { IAgentFlows, IJobExecutionState } from '../models/flows.model';
 import { DynamicNode, Edge } from 'ngx-vflow';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
 import { IAgentTask } from '../../tasks/models/tasks-models'; // Corrected path
 import { nanoid } from 'nanoid'; // Added
 import { AgentNodeComponent } from '../nodes/agent-node/agent-node.component'; // Corrected path
 import { TaskNodeComponent } from '../nodes/task-node/task-node.component'; // Corrected path
+import { OutcomeNodeComponent } from '../nodes/outcome-node/outcome-node.component';
+import { JobService } from '../../jobs/jobs.service';
+import { IAgentJob } from '../../jobs/models/jobs.model';
 
 //  This must have all the edges and node so i can go thoew every one.
 @Injectable({
   providedIn: 'root',
 })
 export class FlowDiagramStateService {
+  private jobService = inject(JobService);
+
   private flow = signal<IAgentFlows | null>(null);
 
   public nodes = signal<DynamicNode[]>([]);
@@ -41,6 +46,23 @@ export class FlowDiagramStateService {
 
   public addAgentToFlow(agentCard: IAgentCard): void {
     this._createAgentNode(agentCard);
+  }
+
+  public async addOutcomeToFlow(outcome: IJobExecutionState) {
+    const outcomeJob = await this.jobService.getJob(outcome.outcomeId);
+    this._createOutcomeNode(outcomeJob);
+  }
+
+  private _createOutcomeNode(outcomeJob: IAgentJob): void {
+    const newNode: DynamicNode = {
+      id: 'outcome-node-' + nanoid(),
+      point: signal({ x: 100, y: 100 }), // Default position, can be made configurable
+      type: OutcomeNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      data: {
+        outcomeJob: outcomeJob,
+      } as any, // not writable for now, but if i change i need to change serializer.
+    };
+    this.nodes.set([...this.nodes(), newNode]);
   }
 
   public addTaskToFlow(task: IAgentTask): void {
