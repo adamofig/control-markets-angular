@@ -8,8 +8,9 @@ import { TaskDetailsComponent } from './task-details/task-details';
 import { IAgentTask } from '../../../tasks/models/tasks-models';
 import { FlowExecutionStateService } from '../../services/flow-execution-state.service';
 import { FlowDiagramStateService } from '../../services/flow-diagram-state.service';
-import { IFlowExecutionState } from '../../models/flows.model';
+import { IFlowExecutionState, StatusJob } from '../../models/flows.model';
 import { TagModule } from 'primeng/tag';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 export interface CustomTaskNode extends ComponentDynamicNode {
   agentTask: IAgentTask;
@@ -17,7 +18,7 @@ export interface CustomTaskNode extends ComponentDynamicNode {
 
 @Component({
   selector: 'app-task-node',
-  imports: [Vflow, DialogModule, ButtonModule, CommonModule, JsonPipe, TagModule],
+  imports: [Vflow, DialogModule, ButtonModule, CommonModule, JsonPipe, TagModule, ProgressSpinnerModule],
   templateUrl: './task-node.component.html',
   styleUrl: './task-node.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,6 +29,7 @@ export class TaskNodeComponent extends CustomNodeComponent<CustomTaskNode> imple
   public flowExecutionStateService = inject(FlowExecutionStateService);
   public flowDiagramStateService = inject(FlowDiagramStateService);
 
+  public statusJob = StatusJob;
   public agentTask = computed(() => this.node()?.data?.agentTask);
 
   public override ngOnInit(): void {

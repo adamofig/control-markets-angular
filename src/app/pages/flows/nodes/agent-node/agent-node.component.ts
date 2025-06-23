@@ -6,8 +6,9 @@ import { FlowDiagramStateService } from '../../services/flow-diagram-state.servi
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ButtonModule } from 'primeng/button';
 import { FlowExecutionStateService } from '../../services/flow-execution-state.service';
-import { IFlowExecutionState } from '../../models/flows.model';
+import { IFlowExecutionState, StatusJob } from '../../models/flows.model';
 import { TagModule } from 'primeng/tag';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 export interface CustomAgentNode extends ComponentDynamicNode {
   agentCard: IAgentCard;
@@ -15,7 +16,7 @@ export interface CustomAgentNode extends ComponentDynamicNode {
 
 @Component({
   selector: 'app-agent-node',
-  imports: [Vflow, ButtonModule, TagModule],
+  imports: [Vflow, ButtonModule, TagModule, ProgressSpinnerModule],
   templateUrl: './agent-node.component.html',
   styleUrl: './agent-node.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,6 +26,8 @@ export class AgentNodeComponent extends CustomNodeComponent<CustomAgentNode> imp
   public flowDiagramStateService = inject(FlowDiagramStateService);
   public flowExecutionStateService = inject(FlowExecutionStateService);
   public agentCard = computed(() => this.node()?.data?.agentCard);
+
+  public statusJob = StatusJob;
 
   // Entender como obtener el agent card.y monitorear el state.
   public agentExecutionState = computed(() => {

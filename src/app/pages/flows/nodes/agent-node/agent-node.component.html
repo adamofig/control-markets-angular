@@ -5,13 +5,21 @@
     <br />
     ID Agent: {{ agentCard()?._id }}
   </p>
-  <!-- <p class="text-node">
-    ID: {{ node()?.id }}
-    <br />
-    {{ data()?.agentCard?.characterCard?.data?.name }}
-  </p> -->
 
   <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
+
+  @if(agentExecutionState()?.status === statusJob.IN_PROGRESS) {
+  <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">
+    <p-progress-spinner
+      strokeWidth="10"
+      fill="transparent"
+      animationDuration=".6
+    
+    
+    s"
+      [style]="{ width: '50px', height: '50px' }" />
+  </span>
+  }
 
   <p-tag class="tag" [value]="agentExecutionState()?.status" severity="danger" />
 

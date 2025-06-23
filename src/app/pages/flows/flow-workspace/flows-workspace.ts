@@ -326,7 +326,7 @@ export class FlowsComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = (e: ProgressEvent<FileReader>) => {
           const markdownContent = e.target?.result as string;
-          debugger;
+
           this.flowDiagramStateService.addSourceNode(markdownContent);
           console.log('New source node added with markdown content from file:', file.name);
           // Reset file input to allow selecting the same file again if needed

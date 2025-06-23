@@ -57,7 +57,7 @@ export class SourcesNodeComponent extends CustomNodeComponent<CustomSourceNode> 
 
   openModal(): void {
     this.isDialogVisible = true;
-    debugger;
+
     this.dialogService.open(SourcesDetailsComponent, {
       // Updated component
       header: 'Source Node', // Updated header

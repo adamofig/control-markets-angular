@@ -4,6 +4,12 @@
 
   <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
 
+  @if(taskExecutionState()?.status === statusJob.IN_PROGRESS) {
+  <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">
+    <p-progress-spinner strokeWidth="10" fill="transparent" animationDuration="1s" [style]="{ width: '50px', height: '50px' }" />
+  </span>
+  }
+
   <!-- Add this for debugging -->
   <!-- <div style="background-color: yellow; padding: 5px; margin-top: 5px">DEBUG: Task State: {{ taskExecutionState() | json }}</div> -->
 

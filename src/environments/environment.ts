@@ -1,6 +1,6 @@
 export const environment = {
   projectName: 'Golden',
-  version: '0.0.24',
+  version: '0.0.25',
   envName: 'DEV',
   production: false,
 

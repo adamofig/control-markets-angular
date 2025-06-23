@@ -72,7 +72,6 @@ export class FlowDiagramStateService {
     this.nodes.update(nodes => nodes.map(node => (node.id === nodeId ? { ...node, data } : node)));
     //
     console.log('updateNodeData', this.nodes());
-    debugger;
   }
 
   findOutcomeNodeByAgentCardId(agentCardId: string): DynamicNodeWithData | undefined {
