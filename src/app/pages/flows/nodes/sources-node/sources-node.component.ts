@@ -1,34 +1,36 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef, effect, inject } from '@angular/core';
 import { ComponentDynamicNode, CustomNodeComponent, Vflow } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
-import { OutcomeDetailsComponent } from './outcome-details/outcome-details';
-import { IAgentJob } from 'src/app/pages/jobs/models/jobs.model';
-import { JobDetailComponent } from 'src/app/pages/jobs/job-detail/job-detail.component';
+import { SourcesDetailsComponent } from './sources-details/sources-details.component'; // Updated import
+import { IAgentSource } from 'src/app/pages/sources/models/sources.model'; // Corrected import
 import { ButtonModule } from 'primeng/button';
 import { FlowDiagramStateService } from '../../services/flow-diagram-state.service';
 import { FlowComponentRefStateService } from '../../services/flow-component-ref-state.service';
 
-export interface CustomOutcomeNode extends ComponentDynamicNode {
-  outcomeJob: IAgentJob | null;
+export interface CustomSourceNode extends ComponentDynamicNode {
+  // Renamed interface
+  agentSource: IAgentSource | null; // Updated property name
 }
 
 @Component({
-  selector: 'app-outcome-node',
+  selector: 'app-sources-node', // Updated selector
   imports: [Vflow, DialogModule, ButtonModule],
-  templateUrl: './outcome-node.component.html',
-  styleUrl: './outcome-node.component.css',
+  templateUrl: './sources-node.component.html', // Updated template URL
+  styleUrl: './sources-node.component.css', // Updated style URL
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class OutcomeNodeComponent extends CustomNodeComponent<CustomOutcomeNode> implements OnInit, OnDestroy {
+export class SourcesNodeComponent extends CustomNodeComponent<CustomSourceNode> implements OnInit, OnDestroy {
+  // Renamed class
   public dialogService = inject(DialogService);
   public flowDiagramStateService = inject(FlowDiagramStateService);
   public flowComponentRefStateService = inject(FlowComponentRefStateService);
 
-  public outcomeJob: IAgentJob | null = null;
+  public source: IAgentSource | null = null; // Updated property
 
   @ViewChild('dialog') dialog!: ViewContainerRef;
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   override ngOnInit() {
     super.ngOnInit();
@@ -42,26 +44,29 @@ export class OutcomeNodeComponent extends CustomNodeComponent<CustomOutcomeNode>
   constructor() {
     super();
     effect(() => {
-      console.log('outcome-node', this.data()?.outcomeJob);
-
-      this.outcomeJob = this.data()?.outcomeJob || null;
+      console.log('sources-node source:', this.data()?.agentSource); // Updated log and property
+      this.source = this.data()?.agentSource || null; // Updated property
     });
+  }
+
+  public triggerFileInput(): void {
+    this.fileInput.nativeElement.click();
   }
 
   public isDialogVisible = false;
 
   openModal(): void {
     this.isDialogVisible = true;
-    this.dialogService.open(JobDetailComponent, {
-      header: 'Outcome Node',
+    debugger;
+    this.dialogService.open(SourcesDetailsComponent, {
+      // Updated component
+      header: 'Source Node', // Updated header
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       draggable: true,
       closable: true,
       width: '650px',
-      inputValues: {
-        jobInput: this.outcomeJob,
-      },
+      data: this.data(),
     });
   }
 

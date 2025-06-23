@@ -8,6 +8,7 @@
   <!-- <div style="background-color: yellow; padding: 5px; margin-top: 5px">DEBUG: Task State: {{ taskExecutionState() | json }}</div> -->
 
   <p-tag class="tag" [value]="taskExecutionState()?.status" severity="danger" />
-  <handle type="target" position="left" id="b" />
-  <handle type="source" position="right" id="b" />
+  <handle type="target" position="left" id="left" />
+  <handle type="source" position="right" id="right" />
+  <handle type="target" position="top" id="top" />
 </div>

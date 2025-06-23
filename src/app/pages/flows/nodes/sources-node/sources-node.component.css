@@ -4,12 +4,12 @@
 
 
 .custom-node {
-  width: 200px;
-  height: 250px;
+  width: 190px;
+  height: 230px;
   position: relative;
   /* background: #f0f0e7; */ /* Removed background color */
-  border: 2px solid rgb(26, 220, 178);
-  border-radius: 10%;
+  border: 2px solid rgb(246, 130, 91);
+  border-radius: 30%;
   overflow: hidden; /* Important to contain the blurred background */
 
   display: flex; /* Keep flex for alignment if needed, or adjust as per content */
@@ -35,6 +35,8 @@
   -webkit-filter: blur(8px); /* For Safari */
   z-index: 1;
   border-radius: inherit; /* Inherit border-radius from parent */
+  background-color: rgba(0, 0, 0, 0.5);
+
 }
 
 .card-content {

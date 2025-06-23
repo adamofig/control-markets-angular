@@ -1,10 +1,16 @@
 <div class="custom-node" selectable [class.custom-node_selected]="selected()" (dblclick)="openModal()">
-  <div style="height: 100%; overflow-y: scroll">
-    <p class="text-node">{{ outcomeJob?._id }}</p>
-    <p style="font-size: 10px">
-      {{ outcomeJob?.result?.content || 'No response' }}
+  <div
+    class="card-background"
+    [style.background-image]="outcomeJob?.agentCard?.assets?.image?.url ? 'url(' + outcomeJob?.agentCard?.assets?.image?.url + ')' : null"></div>
+  <div class="card-content">
+    <p class="main-text">
+      {{ this.data()?.outcomeJob?.result?.content || 'No response' }}
+      <!-- {{ outcomeJob?.result?.content || 'No response' }} -->
     </p>
   </div>
+
+  <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
+
   <!-- <img style="position: absolute; top: 0; left: 0" [src]="data()?.image" alt="" /> -->
 
   <handle type="target" position="left" id="b" />

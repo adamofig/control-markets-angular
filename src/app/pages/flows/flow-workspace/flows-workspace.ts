@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, NgZone, OnInit, signal, Type } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, NgZone, OnInit, signal, Type, ViewChild } from '@angular/core';
 import { Connection, DynamicNode, Edge, Vflow } from 'ngx-vflow';
 import { AgentNodeComponent } from '../nodes/agent-node/agent-node.component';
 import { DistributionChanelNodeComponent } from '../nodes/distribution-chanel-node/distribution-chanel-node.component';
@@ -18,6 +18,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { IAgentTask } from '../../tasks/models/tasks-models';
 import { FlowExecutionStateService } from '../services/flow-execution-state.service';
+import { IAgentJob } from '../../jobs/models/jobs.model';
+import { SourcesNodeComponent } from '../nodes/sources-node/sources-node.component';
 
 // Node Type Mapping
 const NODE_TYPE_MAP: { [key: string]: Type<any> | 'default' } = {
@@ -26,6 +28,7 @@ const NODE_TYPE_MAP: { [key: string]: Type<any> | 'default' } = {
   DistributionChanelNodeComponent: DistributionChanelNodeComponent,
   OutcomeNodeComponent: OutcomeNodeComponent,
   TaskNodeComponent: TaskNodeComponent,
+  SourcesNodeComponent: SourcesNodeComponent,
   default: 'default',
 };
 
@@ -87,6 +90,8 @@ export class FlowsComponent implements OnInit {
 
   public flowExecutionState = this.flowExecutionStateService.getFlowExecutionStateSignal(); // Updated to use service signal
 
+  @ViewChild('sourceFileInput') sourceFileInput!: ElementRef<HTMLInputElement>;
+
   async ngOnInit(): Promise<void> {
     if (this.flowId) {
       this.flow = await this.flowService.getFlow(this.flowId);
@@ -123,6 +128,26 @@ export class FlowsComponent implements OnInit {
   }
 
   public createEdge({ source, target }: Connection) {
+    // search node.
+
+    // Check if new edge is from agent to task
+    const sourceNode = this.flowDiagramStateService.nodes().find(node => node.id === source);
+    const targetNode = this.flowDiagramStateService.nodes().find(node => node.id === target);
+
+    console.log('sourceNode', AgentNodeComponent.name, 'real node', (sourceNode?.type as any)?.name);
+
+    if ((sourceNode?.type as any)?.name === AgentNodeComponent.name) {
+      if ((targetNode?.type as any)?.name === TaskNodeComponent.name) {
+        console.log('Agent to Task means connection from agent to task just happended');
+
+        const outcomeJobEmpty: Partial<IAgentJob> = {
+          agentCard: sourceNode?.data?.agentCard,
+          task: targetNode?.data?.agentTask,
+        };
+        this.flowDiagramStateService.createOutcomeNode(outcomeJobEmpty as IAgentJob);
+      }
+    }
+
     const edges = [
       ...this.flowDiagramStateService.edges(),
       {
@@ -284,5 +309,47 @@ export class FlowsComponent implements OnInit {
 
   public addDistributionNode() {
     this.flowDiagramStateService.addDistributionNode();
+  }
+
+  public addSourceNode(): void {
+    // Trigger the hidden file input
+    this.sourceFileInput.nativeElement.click();
+  }
+
+  public onSourceFileSelected(event: Event): void {
+    const element = event.currentTarget as HTMLInputElement;
+    const fileList: FileList | null = element.files;
+
+    if (fileList && fileList.length > 0) {
+      const file = fileList[0];
+      if (file.name.endsWith('.md')) {
+        const reader = new FileReader();
+        reader.onload = (e: ProgressEvent<FileReader>) => {
+          const markdownContent = e.target?.result as string;
+          debugger;
+          this.flowDiagramStateService.addSourceNode(markdownContent);
+          console.log('New source node added with markdown content from file:', file.name);
+          // Reset file input to allow selecting the same file again if needed
+          if (this.sourceFileInput) {
+            this.sourceFileInput.nativeElement.value = '';
+          }
+        };
+        reader.onerror = e => {
+          console.error('Error reading file:', e);
+          // Reset file input
+          if (this.sourceFileInput) {
+            this.sourceFileInput.nativeElement.value = '';
+          }
+        };
+        reader.readAsText(file);
+      } else {
+        console.warn('Please select a Markdown (.md) file.');
+        this.toastService.info({ title: 'Invalid File', subtitle: 'Please select a Markdown (.md) file.' }); // Changed to info
+        // Reset file input
+        if (this.sourceFileInput) {
+          this.sourceFileInput.nativeElement.value = '';
+        }
+      }
+    }
   }
 }

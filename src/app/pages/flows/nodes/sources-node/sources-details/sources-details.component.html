@@ -1,0 +1,10 @@
+<div>
+  <p>Source Details</p>
+
+  <markdown>
+    {{ source | json }}
+  </markdown>
+
+  <!-- Optional: Add a button or other elements to interact with sourceData -->
+  <button pButton label="Show Source Info in Console" (click)="displaySourceInfo()"></button>
+</div>

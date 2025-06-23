@@ -21,11 +21,9 @@ export class OutcomeDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.dynamicDialogConfig.data);
-    debugger;
   }
 
   public startFlow(): void {
     console.log(this.dynamicDialogConfig.data);
-    debugger;
   }
 }

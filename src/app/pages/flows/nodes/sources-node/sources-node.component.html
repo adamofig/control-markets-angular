@@ -1,0 +1,13 @@
+<div class="custom-node" selectable [class.custom-node_selected]="selected()" (dblclick)="openModal()">
+  <div class="card-background" [style.background-image]="source?.thumbnail?.url ? 'url(' + source?.thumbnail?.url + ')' : null"></div>
+  <div class="card-content">
+    <p class="main-text">
+      {{ this.data()?.agentSource?.content || 'No source name' }}
+    </p>
+  </div>
+
+  <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
+
+  <!-- <handle type="target" position="top" id="b" /> -->
+  <handle type="source" position="bottom" id="b" />
+</div>
