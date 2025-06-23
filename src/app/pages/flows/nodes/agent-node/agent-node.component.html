@@ -1,6 +1,7 @@
 <div class="custom-node" selectable [class.custom-node_selected]="selected()" (dblclick)="openModal()">
   <img style="position: absolute; top: 0; left: 0" [src]="data()?.agentCard?.assets?.image?.url" alt="" />
   <p class="text-node" style="font-size: 8px">
+    <!-- {{ agentCard()?.conversationSettings?.model?.quality || 'No se sabe' }} -->
     ID Node: {{ node()?.id }}
     <br />
     ID Agent: {{ agentCard()?._id }}
@@ -10,14 +11,7 @@
 
   @if(agentExecutionState()?.status === statusJob.IN_PROGRESS) {
   <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">
-    <p-progress-spinner
-      strokeWidth="10"
-      fill="transparent"
-      animationDuration=".6
-    
-    
-    s"
-      [style]="{ width: '50px', height: '50px' }" />
+    <p-progress-spinner strokeWidth="10" fill="transparent" animationDuration=".6s" [style]="{ width: '50px', height: '50px' }" />
   </span>
   }
 

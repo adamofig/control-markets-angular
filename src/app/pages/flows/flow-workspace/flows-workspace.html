@@ -23,8 +23,8 @@
   <p-button icon="pi pi-heart" label="Add Distribution Channel" [rounded]="true" severity="help" [outlined]="true" (click)="addDistributionNode()" />
   <p-button (click)="addSourceNode()" icon="pi pi-file-import" label="Add Source" [rounded]="true" severity="info" [outlined]="true" />
 
-  <p-button (click)="saveFlow()" label="Save Flow" icon="pi pi-save" [rounded]="true" severity="secondary" [outlined]="true" />
-  <p-button icon="pi pi-play" label="Run Flow" (click)="runFlow()" [rounded]="true" severity="primary" [outlined]="true" />
+  <p-button (click)="saveFlow()" label="Save Flow" icon="pi pi-save" [rounded]="true" severity="secondary" [outlined]="true" [loading]="isSavingFlow()" />
+  <p-button icon="pi pi-play" label="Run Flow" (click)="runFlow()" [rounded]="true" severity="primary" [outlined]="true" [loading]="isRunningFlow()" />
 </div>
 
 <!-- Hidden file input for adding sources -->

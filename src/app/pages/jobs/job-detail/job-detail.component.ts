@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, inject, signal, computed } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 import { JobService } from '../jobs.service';
@@ -9,10 +9,11 @@ import { DividerModule } from 'primeng/divider';
 import { ButtonModule } from 'primeng/button';
 import { N8nService } from 'src/app/services/n8n.service';
 import { MarkdownModule } from 'ngx-markdown';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-job-detail',
-  imports: [JsonPipe, AccordionModule, CardModule, DividerModule, ButtonModule, MarkdownModule],
+  imports: [JsonPipe, AccordionModule, CardModule, DividerModule, ButtonModule, MarkdownModule, TagModule],
   templateUrl: './job-detail.component.html',
   styleUrl: './job-detail.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,6 +27,14 @@ export class JobDetailComponent implements OnInit {
 
   public job = signal<IAgentJob | null>(null);
   @Input() jobInput: IAgentJob | null = null;
+
+  public resultWordCount = computed(() => {
+    const currentJob = this.job();
+    if (!currentJob?.result?.content) {
+      return 0;
+    }
+    return currentJob.result.content.trim().split(/\s+/).length;
+  });
 
   ngOnInit(): void {
     this.loadJob();
@@ -45,5 +54,12 @@ export class JobDetailComponent implements OnInit {
     // await this.genericService.distributeJob(this.jobId, channel);
 
     this.loadJob();
+  }
+
+  public getWordCount(text: string | undefined | null): number {
+    if (!text) {
+      return 0;
+    }
+    return text.trim().split(/\s+/).length;
   }
 }

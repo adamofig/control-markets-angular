@@ -34,8 +34,16 @@
         <markdown>
           {{ jobData.result.content }}
         </markdown>
+        <p style="font-size: 0.8em; color: gray">Word count: {{ resultWordCount() }}</p>
       </div>
-      <p style="color: brown">tags: {{ jobData.result?.tags?.join(', ') }}</p>
+      @if (jobData.result?.tags && jobData.result.tags.length > 0) {
+      <div style="margin-top: 10px">
+        <strong>Tags:</strong>
+        @for (tag of jobData.result.tags; track tag) {
+        <p-tag severity="secondary" [value]="tag" [style]="{ 'margin-right': '5px' }"></p-tag>
+        }
+      </div>
+      }
     </div>
   </p-card>
   } @if (jobData.response) {

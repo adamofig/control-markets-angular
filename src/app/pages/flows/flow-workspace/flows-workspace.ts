@@ -72,6 +72,8 @@ export class FlowsComponent implements OnInit {
   public flowExecutionStateService = inject(FlowExecutionStateService);
 
   public flowName = '';
+  public isSavingFlow = signal(false);
+  public isRunningFlow = signal(false);
 
   public isDialogVisible = false;
 
@@ -190,21 +192,32 @@ export class FlowsComponent implements OnInit {
   }
 
   public async saveFlow() {
-    const flowData = this.serializeFlow();
+    this.isSavingFlow.set(true);
+    try {
+      const flowData = this.serializeFlow();
 
-    console.log('Flow saved:', flowData);
-    const flow: IAgentFlows = {
-      id: this.flowId,
-      name: this.flowName,
-      nodes: flowData.nodes,
-      edges: flowData.edges,
-    };
-    const response = await this.flowService.saveFlow(flow);
-    this.toastService.success({
-      title: 'Flow saved successfully',
-      subtitle: 'Flow saved successfully',
-    });
-    console.log('Flow saved:', response);
+      console.log('Flow saved:', flowData);
+      const flow: IAgentFlows = {
+        id: this.flowId,
+        name: this.flowName,
+        nodes: flowData.nodes,
+        edges: flowData.edges,
+      };
+      const response = await this.flowService.saveFlow(flow);
+      this.toastService.success({
+        title: 'Flow saved successfully',
+        subtitle: 'Flow saved successfully',
+      });
+      console.log('Flow saved:', response);
+    } catch (error) {
+      console.error('Error saving flow:', error);
+      this.toastService.error({
+        title: 'Error saving flow',
+        subtitle: 'An error occurred while saving the flow.',
+      });
+    } finally {
+      this.isSavingFlow.set(false);
+    }
   }
 
   public serializeFlow(): { nodes: any[]; edges: any[] } {
@@ -301,10 +314,30 @@ export class FlowsComponent implements OnInit {
   public showSelection() {}
 
   public async runFlow() {
-    console.log('Flow running:', this.flowDiagramStateService.getFlow()?.nodes, this.flowDiagramStateService.getFlow()?.edges);
-    const result: any = await this.flowService.runFlow(this.flowId || this.flow?.id || '');
-    console.log('Flow result:', result);
-    this.flowExecutionStateService.initializeExecutionStateListener(result.executionId);
+    this.isRunningFlow.set(true);
+    try {
+      await this.saveFlow(); // It's good practice to save before running
+      console.log('Flow running:', this.flowDiagramStateService.getFlow()?.nodes, this.flowDiagramStateService.getFlow()?.edges);
+      const result: any = await this.flowService.runFlow(this.flowId || this.flow?.id || '');
+      console.log('Flow result:', result);
+      if (result && result.executionId) {
+        this.flowExecutionStateService.initializeExecutionStateListener(result.executionId);
+      } else {
+        console.warn('Execution ID not found in runFlow response.');
+        this.toastService.warn({
+          title: 'Run Flow Warning',
+          subtitle: 'Could not initialize execution listener, execution ID missing.',
+        });
+      }
+    } catch (error) {
+      console.error('Error running flow:', error);
+      this.toastService.error({
+        title: 'Error Running Flow',
+        subtitle: 'An error occurred while trying to run the flow.',
+      });
+    } finally {
+      this.isRunningFlow.set(false);
+    }
   }
 
   public addDistributionNode() {

@@ -4,7 +4,7 @@
     "appId": "ad.golden.dev ",
     "appIdDev": "ad.golden.dev .dev"
   },
-  "version": "0.0.25",
+  "version": "0.0.26",
   "author": "Ionic Framework",
   "homepage": "dataclouder.dev",
   "scripts": {
