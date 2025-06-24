@@ -22,6 +22,13 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
   providedIn: 'root',
 })
 export class AgentCardService implements AgentCardsAbstractService {
+  getAllConversationCards(): Promise<IAgentCard[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  partialUpdateAgentCard(partialAgentCard: IAgentCard): Promise<IAgentCard> {
+    throw new Error('Method not implemented.');
+  }
   completeAgentCard(idCard: string): Promise<any> {
     alert('Please implement this method');
     throw new Error('Method not implemented.');
@@ -130,18 +137,18 @@ export class AgentCardService implements AgentCardsAbstractService {
     return audioData;
   }
 
-  public deleteConversationCard(id: string): Promise<IAgentCard> {
+  public deleteAgentCard(id: string): Promise<IAgentCard> {
     return this.httpService.deleteDataFromService(`${Endpoints.AgentCard.Card}/${id}`);
   }
 
-  public findConversationCardByID(id: string): Promise<IAgentCard> {
+  public findAgentCardByID(id: string): Promise<IAgentCard> {
     return this.httpService.getDataFromService(`${Endpoints.AgentCard.Card}/${id}`);
   }
-  public getAllConversationCards(): Promise<IAgentCard[]> {
+  public getAllAgentCards(): Promise<IAgentCard[]> {
     return this.httpService.getDataFromService(`${Endpoints.AgentCard.Card}`);
   }
 
-  async saveConversationCard(conversation: IAgentCard): Promise<IAgentCard> {
+  async saveAgentCard(conversation: IAgentCard): Promise<IAgentCard> {
     if (conversation.id || conversation._id) {
       return await this.httpService.putDataFromService(`${Endpoints.AgentCard.Card}/${conversation._id}`, conversation);
     } else {
