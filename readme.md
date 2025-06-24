@@ -10,6 +10,10 @@ for fundamental overview about the whole template read the [Overview](docs/overv
 
 ## ⚡ TLDR;
 
+The whole project aims is to create startup quickly, consist in multiple templates ready to use. For now uses google cloud as cloud provider,
+
+This repository contains the ionic/angular template.
+
 Run these commands to get started quickly:
 
 ```bash
@@ -23,6 +27,10 @@ node scripts/setup_project.js
 make deploy
 
 ```
+
+Then understand architecture and install backend in the other repository.
+
+![alt text](./docs/overview-tech.png)
 
 ## ✨ Features
 
@@ -85,7 +93,7 @@ Make is required for the auto setup. It usually comes pre-installed on Unix-base
 
 3. Initialize the project:
    ```bash
-   make init-project
+   make init-firebase
    ```
    This will verify dependencies and create a new Firebase project automatically.
 
@@ -148,7 +156,7 @@ That's all at this point. You should be able to run the app and be able to sign 
 
 ```bash
 
-    npm run install or make init-project
+    npm run install or make init-firebase
     npm run start or make start
 ```
 

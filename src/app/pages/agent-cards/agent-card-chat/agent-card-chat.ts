@@ -41,7 +41,7 @@ export class AgentCardChatComponent implements OnInit {
       this.agentCard = JSON.parse(params.get('conversationCard')!);
       if (!this.agentCard) {
         const id = params.get('id') as string;
-        const card = await this.conversationCardsService.findConversationCardByID(id);
+        const card = await this.conversationCardsService.findAgentCardByID(id);
         console.log('card', card);
         this.agentCard = card;
         this.cdr.detectChanges();

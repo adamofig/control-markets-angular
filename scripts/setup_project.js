@@ -78,9 +78,9 @@ async function main() {
     execSync('make rename-project', { stdio: 'inherit' });
     console.log("3. 'make rename-project' completed.");
 
-    console.log("\n4. Running 'make init-project'...");
-    execSync('make init-project', { stdio: 'inherit' });
-    console.log("4. 'make init-project' completed.");
+    console.log("\n4. Running 'make init-firebase'...");
+    execSync('make init-firebase', { stdio: 'inherit' });
+    console.log("4. 'make init-firebase' completed.");
 
     console.log("\n5. Setup script finished successfully!");
     console.log("You can now start the development server with 'npm run start' or 'make start'.");

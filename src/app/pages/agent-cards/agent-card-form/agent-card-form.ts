@@ -70,7 +70,7 @@ export class AgentCardFormPage implements OnInit {
         characterCard: { ...originalCard.characterCard, data: response },
         lang: dataEvent.targetLang,
       };
-      await this.conversationCardsService.saveConversationCard(trasnlatedCard);
+      await this.conversationCardsService.saveAgentCard(trasnlatedCard);
 
       const successToast = await this.toastController.create({
         message: 'Conversación traducida correctamente. Revisa para confirmar, vuelvelo a intentar si no es correcto.',

@@ -8,7 +8,7 @@ DISPLAY_NAME ?= $(PROJECT_NAME)
 
 help:
 	@echo "Available commands:"
-	@echo "  init-project    - Initialize new Firebase project with configuration"
+	@echo "  init-firebase    - Initialize new Firebase project with configuration"
 	@echo "  check-deps     - Check required dependencies"
 	@echo "  install-deps   - Install required dependencies"
 	@echo "  rename-project - Rename project using provided PROJECT_NAME and APP_ID"
@@ -31,7 +31,7 @@ install-deps:
 	npm install -g firebase-tools
 	npm install
 
-init-project: check-deps
+init-firebase: check-deps
 	@echo " 🚀 Initializing Firebase project $(PROJECT_ID), lets login first 🧎‍♂️ and Hope none one has taken this name 🙏  ... " 
 	firebase login
 	@echo "Creating Firebase project... firebase projects:create $(PROJECT_ID) --display-name "$(DISPLAY_NAME)""

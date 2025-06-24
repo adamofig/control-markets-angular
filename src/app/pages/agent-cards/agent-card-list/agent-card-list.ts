@@ -129,7 +129,7 @@ export class AgentCardListPage implements OnInit {
       case 'delete':
         const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
         if (areYouSure) {
-          await this.agentCardService.deleteConversationCard(item.id);
+          await this.agentCardService.deleteAgentCard(item.id);
           // this.conversationCards = this.conversationCards.filter((card) => card._id !== id);
 
           this.toastService.success({ title: 'Conversation card deleted', subtitle: 'Pero tienes que actualizar la página para ver el cambio' });
