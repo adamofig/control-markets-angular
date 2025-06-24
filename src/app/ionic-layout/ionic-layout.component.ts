@@ -89,6 +89,7 @@ export class IonicLayoutComponent implements OnInit {
     { title: 'Agents Conversation', url: '/page/agents', icon: 'chatbubble-ellipses' },
     { title: 'Generics', url: '/page/generics', icon: 'code-working' },
     { title: 'Test', url: '/page/test', icon: 'code-working' },
+    { title: 'Profile', url: '/page/stack/profile', icon: 'person' },
   ];
 
   public adminPages = [

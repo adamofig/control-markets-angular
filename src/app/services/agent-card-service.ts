@@ -13,6 +13,7 @@ import { HttpService } from './http.service';
 import { UserService } from '../dc-user-module/user.service';
 import { Endpoints } from '../core/enums';
 import { ChatUserSettings, FiltersConfig, IFilterQueryResponse } from '@dataclouder/ngx-core';
+import { IUser } from '@dataclouder/ngx-users';
 
 export type AudioGenerated = { blobUrl: string; transcription: any };
 export type TTSRequest = { text: string; voice: string; generateTranscription: boolean; speedRate: number; speed?: string; ssml?: string };
@@ -81,13 +82,13 @@ export class AgentCardService implements AgentCardsAbstractService {
   async saveConversationUserChatSettings(conversation: ChatUserSettings): Promise<ChatUserSettings> {
     console.log('saveConversationUserChatSettings', conversation);
     const data = await this.userService.saveUser({ conversationSettings: conversation });
-    this.userService.user!.conversationSettings = conversation as ChatUserSettings;
+    this.userService.user.set({ ...(this.userService.user() as IUser), conversationSettings: conversation });
     return Promise.resolve(conversation);
   }
 
   getConversationUserChatSettings(): Promise<ChatUserSettings> {
-    if (this.userService.user?.conversationSettings) {
-      return Promise.resolve(this.userService.user?.conversationSettings as ChatUserSettings);
+    if (this.userService.user()?.conversationSettings) {
+      return Promise.resolve(this.userService.user()?.conversationSettings as ChatUserSettings);
     } else {
       return Promise.resolve({
         realTime: false,

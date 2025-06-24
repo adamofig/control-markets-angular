@@ -40,7 +40,7 @@ export class AuthGuardService {
           return of(this.router.parseUrl('/auth/login'));
         }
 
-        if (user) {
+        if (user()) {
           return of(true);
         }
 

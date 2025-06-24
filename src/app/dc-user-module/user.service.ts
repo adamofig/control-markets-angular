@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal, WritableSignal } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { Endpoints } from '../core/enums';
 import { IUser } from '@dataclouder/ngx-users';
@@ -9,15 +9,17 @@ import { IUser } from '@dataclouder/ngx-users';
 export class UserService {
   private httpService = inject(HttpService);
 
-  public user: IUser | null = null;
+  public user: WritableSignal<IUser | null> = signal(null);
 
   public async findUserWithToken(): Promise<IUser | null> {
-    this.user = await this.httpService.getDataFromService(Endpoints.GetUser);
-    return this.user;
+    const userData = await this.httpService.getDataFromService<IUser | null>(Endpoints.GetUser);
+    this.user.set(userData);
+    console.log(this.user());
+    return this.user();
   }
 
   public getUser(): IUser | null {
-    return this.user;
+    return this.user();
   }
 
   public async saveUser(user: Partial<IUser>) {

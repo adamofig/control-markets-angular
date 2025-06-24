@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -5,22 +6,21 @@ import { PlanType, PermissionType, RolType } from '../../dc-user-module/user.cla
 
 import { UserService } from 'src/app/dc-user-module/user.service';
 import { IUser } from '@dataclouder/ngx-users';
+import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
   standalone: true,
-  imports: [IonicModule, ReactiveFormsModule],
+  imports: [IonicModule, ReactiveFormsModule, CommonModule],
 })
 export class ProfileComponent implements OnInit {
   private fb = inject(FormBuilder);
-  private userService = inject(UserService);
+  public userService = inject(UserService);
+  private toastService = inject(TOAST_ALERTS_TOKEN);
 
   profileForm: FormGroup;
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
   constructor() {
     this.profileForm = this.fb.group({
@@ -34,6 +34,7 @@ export class ProfileComponent implements OnInit {
         lastname: [''],
         gender: [''],
         birthday: [null],
+        emotionalName: [''],
       }),
     });
 
@@ -50,7 +51,11 @@ export class ProfileComponent implements OnInit {
       const userData: IUser = this.profileForm.value;
       console.log('Form submitted:', userData);
       this.userService.saveUser(userData);
+      this.toastService.success({ title: 'Profile updated', subtitle: 'Your profile has been updated successfully' });
       // Handle form submission
+    } else {
+      console.log('Form is invalid');
+      this.toastService.error({ title: 'Form is invalid', subtitle: 'Please fill in all the fields' });
     }
   }
 
