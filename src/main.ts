@@ -19,13 +19,12 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // DC Libs
-import { provideChatAIService, provideUserDataExchange } from '@dataclouder/ngx-agent-cards';
+import { DefaultAgentCardsService, provideAgentCardService, provideUserDataExchange } from '@dataclouder/ngx-agent-cards';
 import { provideLessonsService, provideNotionService } from '@dataclouder/ngx-lessons';
 import { provideAuthConfig } from '@dataclouder/app-auth';
 import { HTTP_CORE_CONFIG, provideToastAlert } from '@dataclouder/ngx-core';
 // Local
 import { environment } from './environments/environment';
-import { AgentCardService } from './app/services/agent-card-service';
 import { ToastAlertService } from './app/services/toast.service';
 import { LessonsService } from './app/pages/lessons/lessons.service';
 import { authInterceptor } from './app/services/interception.service';
@@ -101,12 +100,14 @@ export const appConfig: ApplicationConfig = {
         },
       })
     ),
-    // Dataclouder Providers
-    provideChatAIService(AgentCardService),
+    //  📊 Dataclouder Providers
+    // provideChatAIService(AgentCardService),
     provideToastAlert(ToastAlertService),
     provideLessonsService(LessonsService),
     provideUserDataExchange(UserDataExchangeService),
     provideNotionService(NotionService),
+    provideAgentCardService(DefaultAgentCardsService), // Trick provide the same.
+
     provideAuthConfig({
       clientIds: {
         androidClientId: environment.mobile.androidClientId,

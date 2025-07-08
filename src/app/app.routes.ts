@@ -29,10 +29,11 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
+    loadComponent: () => import('./auth/auth-layout.component').then(m => m.AuthLayoutComponent),
     children: [
       {
         path: '',
-        redirectTo: RouteNames.Signup,
+        redirectTo: RouteNames.Signin,
         pathMatch: 'full',
       },
       {
@@ -40,7 +41,6 @@ export const routes: Routes = [
         loadComponent: () => import('./login/login.page').then(m => m.LoginComponent),
         canActivate: [redirectToIfAuth('page/home')],
       },
-
       {
         path: RouteNames.Signup,
         loadComponent: () => import('./login/signup.component').then(m => m.AppSignupComponent),
@@ -171,7 +171,25 @@ export const routes: Routes = [
       },
       {
         path: 'agents',
-        loadComponent: () => import('./pages/agent-cards/agent-card-list/agent-card-list').then(m => m.AgentCardListPage),
+        loadComponent: () => import('./pages/agent-cards/agent-card-router').then(m => m.AgentCardRouter),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/agent-cards/agent-card-list/agent-card-list').then(m => m.AgentCardListPage),
+          },
+          {
+            path: 'edit',
+            loadComponent: () => import('./pages/agent-cards/agent-card-form/agent-card-form').then(m => m.AgentCardFormPage),
+          },
+          {
+            path: 'edit/:id',
+            loadComponent: () => import('./pages/agent-cards/agent-card-form/agent-card-form').then(m => m.AgentCardFormPage),
+          },
+          {
+            path: 'details/:id',
+            loadComponent: () => import('./pages/agent-cards/agent-card-details/agent-card-details').then(m => m.AgentCardDetailsPage),
+          },
+        ],
       },
     ],
   },

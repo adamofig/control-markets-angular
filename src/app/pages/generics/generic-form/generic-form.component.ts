@@ -88,11 +88,6 @@ export class GenericFormComponent implements OnInit {
     { id: 'Relation 3', name: 'relation3', description: 'Description with short description' },
   ];
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
-
   public generic: IGeneric | null = null;
   public genericId = this.route.snapshot.params['id'];
 
