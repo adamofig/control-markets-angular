@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree, Route, UrlSegment } from '@angular/router';
 
 import { from, fromEvent, Observable, of } from 'rxjs';
-import { mergeMap, concatMap, tap, first, catchError } from 'rxjs/operators';
+import { mergeMap, concatMap, tap, catchError } from 'rxjs/operators';
 import { UserService } from '../dc-user-module/user.service';
 import { ToastAlertService } from './toast.service';
 import { FirebaseAuthService } from '@dataclouder/app-auth';

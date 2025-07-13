@@ -33,10 +33,11 @@ import { UserDataExchangeService } from './app/core/user-data-exchange.service';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { NotionService } from './app/services/notion.service';
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, isDevMode } from '@angular/core';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyFieldInput } from './app/pages/generics/generic-form/formly-components/input';
 import { FormlyFieldTextArea } from './app/pages/generics/generic-form/formly-components/textarea';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   console.log('Before interception request:', req.url);
@@ -129,7 +130,10 @@ export const appConfig: ApplicationConfig = {
         ],
         validationMessages: [{ name: 'required', message: 'This field is required' }],
       })
-    ),
+    ), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
   ],
 };
 

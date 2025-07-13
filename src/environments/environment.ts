@@ -4,6 +4,8 @@ export const environment = {
   envName: 'DEV',
   production: false,
 
+  authenticationRequired: false,
+
   backendNodeUrl: 'http://localhost:8080',
   // backendNodeUrl: 'https://dataclouder-dev-node-server-514401908603.us-central1.run.app',
   // backendPythonUrl: 'http://localhost:8000',
