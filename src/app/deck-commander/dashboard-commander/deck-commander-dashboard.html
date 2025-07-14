@@ -6,15 +6,15 @@
 
   <div class="header">
     <h1>Touch Stream Deck</h1>
-    <div class="status" id="status">{{ status }}</div>
+    <div class="status" id="status">{{ status() }}</div>
   </div>
 
   <div class="grid" id="buttonGrid">
-    @for (button of buttons; track button.id) {
+    @for (button of buttons(); track button.id) {
     <div class="button" [attr.data-id]="button.id" (click)="handleButtonPress(button)">
       <div class="touch-feedback"></div>
-      <div class="button-icon">{{ button.icon }}</div>
-      <div class="button-label">{{ button.label }}</div>
+      <div class="button-icon">{{ button.emoji }}</div>
+      <div class="button-label">{{ button.name }}</div>
     </div>
     }
   </div>

@@ -6,8 +6,8 @@ const server = 'primary';
 // TODO add your own end points
 const Endpoints = {
   DeckCommanders: {
-    DeckCommanders: 'api/DeckCommander',
-    DeckCommandersFiltered: 'api/DeckCommander/query',
+    DeckCommanders: 'DeckCommander',
+    DeckCommandersFiltered: 'DeckCommander/query',
   },
 };
 
@@ -41,5 +41,9 @@ export class DeckCommanderService extends EntityCommunicationService<IDeckComman
 
   public async deleteDeckCommander(id: string) {
     this.remove(id);
+  }
+
+  public async executeCommand(deckCommander: IDeckCommander): Promise<IDeckCommander> {
+    return this.httpService.post<IDeckCommander>(`api/${Endpoints.DeckCommanders.DeckCommanders}/execute`, deckCommander);
   }
 }

@@ -1,9 +1,4 @@
-import { CloudStorageData } from '@dataclouder/ngx-cloud-storage';
-
-export interface AuditDate {
-  createdAt?: string;
-  updatedAt?: string;
-}
+import { IAuditable } from '@dataclouder/ngx-core';
 
 export enum DeckCommanderType {
   Gen1 = 'gen1',
@@ -17,12 +12,19 @@ export interface IDeckCommanderRelation {
   description: string;
 }
 
-export interface IDeckCommander extends AuditDate {
-  _id: string;
-  id: string;
+export enum CommandType {
+  Button = 'button',
+}
+
+export interface IDeckCommander {
+  _id?: string;
+  id?: string;
   name?: string;
-  image?: CloudStorageData;
   description?: string;
-  type?: string;
-  relation?: IDeckCommanderRelation;
+  img?: string;
+  type?: CommandType;
+  command?: string;
+  action?: string;
+  emoji?: string;
+  auditable?: IAuditable;
 }

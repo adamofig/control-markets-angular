@@ -18,7 +18,7 @@
       </div>
       <p-card [header]="generic.name">
         <p class="m-0">{{ generic.description | slice : 0 : 250 }}...</p>
-        <span>{{ generic.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
+        <span>{{ generic?.auditable?.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
       </p-card>
     </div>
     } @if (generics().length === 0) {

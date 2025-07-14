@@ -146,6 +146,10 @@ export const routes: Routes = [
             path: 'details/:id',
             loadComponent: () => import('./deck-commander/deck-commander-detail/deck-commander-detail.component').then(m => m.DeckCommanderDetailComponent),
           },
+          {
+            path: 'dashboard',
+            loadComponent: () => import('./deck-commander/dashboard-commander/deck-commander-dashboard').then(m => m.DeckCommanderComponent),
+          },
         ],
       },
 

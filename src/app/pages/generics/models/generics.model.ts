@@ -1,9 +1,5 @@
 import { CloudStorageData } from '@dataclouder/ngx-cloud-storage';
-
-export interface AuditDate {
-  createdAt?: string;
-  updatedAt?: string;
-}
+import { IAuditable } from '@dataclouder/ngx-core';
 
 export enum GenericType {
   Gen1 = 'gen1',
@@ -17,7 +13,7 @@ export interface IGenericRelation {
   description: string;
 }
 
-export interface IGeneric extends AuditDate {
+export interface IGeneric {
   _id: string;
   id: string;
   name?: string;
@@ -25,4 +21,5 @@ export interface IGeneric extends AuditDate {
   description?: string;
   type?: string;
   relation?: IGenericRelation;
+  auditable?: IAuditable;
 }

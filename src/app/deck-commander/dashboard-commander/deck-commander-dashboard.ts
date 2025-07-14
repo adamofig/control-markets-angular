@@ -1,34 +1,30 @@
-import { Component, OnInit, OnDestroy, Inject, Renderer2, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, Renderer2, HostListener, inject, signal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { DeckCommanderService } from '../deck-commanders.service';
+import { IDeckCommander } from '../models/deck-commanders.model';
 
 @Component({
   selector: 'app-deck-commander',
-  templateUrl: './deck-commander.component.html',
-  styleUrls: ['./deck-commander.component.scss'],
+  templateUrl: './deck-commander-dashboard.html',
+  styleUrls: ['./deck-commander-dashboard.scss'],
 })
 export class DeckCommanderComponent implements OnInit, OnDestroy {
-  buttons = [
-    { id: 'mic', icon: '🎤', label: 'Microphone', action: 'toggleMic' },
-    { id: 'camera', icon: '📹', label: 'Camera', action: 'toggleCamera' },
-    { id: 'screen', icon: '🖥️', label: 'Screen Share', action: 'toggleScreen' },
-    { id: 'music', icon: '🎵', label: 'Music', action: 'toggleMusic' },
-    { id: 'lights', icon: '💡', label: 'Lights', action: 'toggleLights' },
-    { id: 'discord', icon: '💬', label: 'Discord', action: 'openDiscord' },
-    { id: 'obs', icon: '🎬', label: 'OBS Studio', action: 'openOBS' },
-    { id: 'twitter', icon: '🐦', label: 'Twitter', action: 'openTwitter' },
-    { id: 'volume', icon: '🔊', label: 'Volume', action: 'adjustVolume' },
-    { id: 'timer', icon: '⏰', label: 'Timer', action: 'startTimer' },
-    { id: 'weather', icon: '🌤️', label: 'Weather', action: 'showWeather' },
-    { id: 'settings', icon: '⚙️', label: 'Settings', action: 'openSettings' },
-  ];
+  private deckCommanderService = inject(DeckCommanderService);
+  private renderer = inject(Renderer2);
+  private document = inject(DOCUMENT);
 
-  status = 'Ready';
+  buttons = signal<IDeckCommander[]>([]);
+  status = signal('Ready');
+
   private kioskExitListeners: (() => void)[] = [];
 
-  constructor(@Inject(DOCUMENT) private document: any, private renderer: Renderer2) {}
+  constructor() {}
 
   ngOnInit() {
     this.updateStatus('Stream Deck Ready');
+    this.deckCommanderService.getDeckCommanders().then(deckCommanders => {
+      this.buttons.set(deckCommanders);
+    });
   }
 
   ngOnDestroy() {
@@ -41,7 +37,10 @@ export class DeckCommanderComponent implements OnInit, OnDestroy {
   @HostListener('document:MSFullscreenChange')
   handleFullscreenChange() {
     const isFullscreen =
-      this.document.fullscreenElement || this.document.webkitFullscreenElement || this.document.mozFullScreenElement || this.document.msFullscreenElement;
+      this.document.fullscreenElement ||
+      (this.document as any).webkitFullscreenElement ||
+      (this.document as any).mozFullScreenElement ||
+      (this.document as any).msFullscreenElement;
 
     const fullscreenBtn = this.document.getElementById('fullscreenBtn');
     if (isFullscreen) {
@@ -54,19 +53,20 @@ export class DeckCommanderComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleButtonPress(button: any) {
+  handleButtonPress(button: IDeckCommander) {
     if (!button) return;
 
+    this.executeCommand(button);
     const buttonElement = this.document.querySelector(`[data-id="${button.id}"]`);
     if (buttonElement) {
-      this.animateButton(buttonElement);
+      this.animateButton(buttonElement as HTMLElement);
     }
 
-    if (typeof (this as any)[button.action] === 'function') {
+    if (button.action && typeof (this as any)[button.action] === 'function') {
       (this as any)[button.action]();
     }
 
-    this.updateStatus(`${button.label} activated`);
+    this.updateStatus(`${button.name} activated`);
 
     setTimeout(() => {
       this.updateStatus('Ready');
@@ -81,15 +81,15 @@ export class DeckCommanderComponent implements OnInit, OnDestroy {
   }
 
   updateStatus(message: string) {
-    this.status = message;
+    this.status.set(message);
   }
 
   toggleFullscreen() {
     if (
       !this.document.fullscreenElement &&
-      !this.document.webkitFullscreenElement &&
-      !this.document.mozFullScreenElement &&
-      !this.document.msFullscreenElement
+      !(this.document as any).webkitFullscreenElement &&
+      !(this.document as any).mozFullScreenElement &&
+      !(this.document as any).msFullscreenElement
     ) {
       this.enterFullscreen();
     } else {
@@ -98,7 +98,7 @@ export class DeckCommanderComponent implements OnInit, OnDestroy {
   }
 
   enterFullscreen() {
-    const elem = this.document.documentElement;
+    const elem = this.document.documentElement as any;
     if (elem.requestFullscreen) {
       elem.requestFullscreen();
     } else if (elem.webkitRequestFullscreen) {
@@ -111,14 +111,15 @@ export class DeckCommanderComponent implements OnInit, OnDestroy {
   }
 
   exitFullscreen() {
-    if (this.document.exitFullscreen) {
-      this.document.exitFullscreen();
-    } else if (this.document.webkitExitFullscreen) {
-      this.document.webkitExitFullscreen();
-    } else if (this.document.mozCancelFullScreen) {
-      this.document.mozCancelFullScreen();
-    } else if (this.document.msExitFullscreen) {
-      this.document.msExitFullscreen();
+    const doc = this.document as any;
+    if (doc.exitFullscreen) {
+      doc.exitFullscreen();
+    } else if (doc.webkitExitFullscreen) {
+      doc.webkitExitFullscreen();
+    } else if (doc.mozCancelFullScreen) {
+      doc.mozCancelFullScreen();
+    } else if (doc.msExitFullscreen) {
+      doc.msExitFullscreen();
     }
   }
 
@@ -202,5 +203,11 @@ export class DeckCommanderComponent implements OnInit, OnDestroy {
   }
   openSettings() {
     this.updateStatus('Opening settings...');
+  }
+
+  public async executeCommand(deckCommander: IDeckCommander) {
+    const results = await this.deckCommanderService.executeCommand(deckCommander);
+    this.updateStatus('Command executed');
+    debugger;
   }
 }
