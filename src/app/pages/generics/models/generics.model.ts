@@ -18,6 +18,7 @@ export interface IGenericRelation {
 }
 
 export interface IGeneric extends AuditDate {
+  _id: string;
   id: string;
   name?: string;
   image?: CloudStorageData;

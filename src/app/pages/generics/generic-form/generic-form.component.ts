@@ -14,7 +14,7 @@ import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
 import { AspectType, CropperComponentModal, ResolutionType, CloudStorageData } from '@dataclouder/ngx-cloud-storage';
 
-import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+import { EntityBaseFormComponent, EntityCommunicationService, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { DialogModule } from 'primeng/dialog';
 import { GenericListComponent } from '../generic-list/generic-list.component';
@@ -41,12 +41,16 @@ import { GenericListComponent } from '../generic-list/generic-list.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class GenericFormComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private genericService = inject(GenericService);
+export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> implements OnInit {
+  protected entityCommunicationService = inject(GenericService);
   private fb = inject(FormBuilder);
-  private router = inject(Router);
-  private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
+
+  public form: FormGroup = this.fb.group({});
+
+  protected override patchForm(entity: IGeneric): void {
+    throw new Error('Method not implemented.');
+  }
+  private genericService = inject(GenericService);
   private cdr = inject(ChangeDetectorRef);
 
   public storageImgSettings = {
@@ -97,19 +101,6 @@ export class GenericFormComponent implements OnInit {
       if (this.generic) {
         this.genericForm.patchValue(this.generic);
       }
-    }
-  }
-
-  async save() {
-    if (this.genericForm.valid) {
-      const generic = { ...this.generic, ...this.genericForm.value } as IGeneric;
-
-      const result = await this.genericService.saveGeneric(generic);
-
-      if (!this.genericId) {
-        this.router.navigate([result.id], { relativeTo: this.route });
-      }
-      this.toastService.success({ title: 'Origen guardado', subtitle: 'El origen ha sido guardado correctamente' });
     }
   }
 

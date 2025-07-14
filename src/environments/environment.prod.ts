@@ -4,7 +4,7 @@ export const environment = {
   envName: 'DEV',
   production: true,
 
-  authenticationRequired: false,
+  authenticationRequired: true,
 
   // backendNodeUrl: 'http://localhost:8080',
   backendNodeUrl: 'https://node-server-514401908603.us-central1.run.app',

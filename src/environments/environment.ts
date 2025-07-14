@@ -3,7 +3,7 @@ export const environment = {
   version: '0.0.11',
   envName: 'DEV',
   production: false,
-  authenticationRequired: false,
+  authenticationRequired: true,
 
   backendNodeUrl: 'http://localhost:8080',
   // backendNodeUrl: 'https://dataclouder-dev-node-server-514401908603.us-central1.run.app',
