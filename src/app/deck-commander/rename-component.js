@@ -2,6 +2,8 @@
 //    The script will rename files/folders/content inside, and also the folder from where it is run.
 // 2) Dont forget to change the oldName and newName variables
 // 3) Manually import the Module and change path in app.module.ts
+
+// 4) Necesita ajustos en el html, debe cambiar con kabeb case, pero la ai le cuesta mucho arreglar esto, a ver que hago despues
 const { readdirSync, statSync, renameSync, readFileSync, writeFileSync } = require('fs');
 const { join, dirname, basename } = require('path');
 const readline = require('readline');
@@ -9,8 +11,8 @@ const readline = require('readline');
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
 const directory = './';
-const oldName = 'generic';
-const newName = ''; // Replace this with your desired name use a format AllCapName
+const oldName = 'DeckCommander';
+const newName = 'DeckCommander'; // Replace this with your desired name use a format AllCapName
 
 function toKebabCase(str) {
   return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();

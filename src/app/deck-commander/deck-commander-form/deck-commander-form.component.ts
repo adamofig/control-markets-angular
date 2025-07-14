@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IGeneric } from '../models/generics.model';
-import { GenericService } from '../generics.service';
+import { IDeckCommander } from '../models/deck-commanders.model';
+import { DeckCommanderService } from '../deck-commanders.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
@@ -16,7 +16,7 @@ import { AspectType, CropperComponentModal, ResolutionType, CloudStorageData } f
 import { EntityBaseFormComponent } from '@dataclouder/ngx-core';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { DialogModule } from 'primeng/dialog';
-import { GenericListComponent } from '../generic-list/generic-list.component';
+import { DeckCommanderListComponent } from '../deck-commander-list/deck-commander-list.component';
 
 @Component({
   selector: 'app-source-form',
@@ -33,27 +33,27 @@ import { GenericListComponent } from '../generic-list/generic-list.component';
     CropperComponentModal,
     FormlyModule,
     DialogModule,
-    GenericListComponent,
+    DeckCommanderListComponent,
   ],
-  templateUrl: './generic-form.component.html',
-  styleUrl: './generic-form.component.css',
+  templateUrl: './deck-commander-form.component.html',
+  styleUrl: './deck-commander-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> implements OnInit {
-  protected entityCommunicationService = inject(GenericService);
+export class DeckCommanderFormComponent extends EntityBaseFormComponent<IDeckCommander> implements OnInit {
+  protected entityCommunicationService = inject(DeckCommanderService);
   private fb = inject(FormBuilder);
 
   public form: FormGroup = this.fb.group({});
 
-  protected override patchForm(entity: IGeneric): void {
+  protected override patchForm(entity: IDeckCommander): void {
     throw new Error('Method not implemented.');
   }
-  private genericService = inject(GenericService);
+  private DeckCommanderService = inject(DeckCommanderService);
   private cdr = inject(ChangeDetectorRef);
 
   public storageImgSettings = {
-    path: `generics`,
+    path: `DeckCommanders`,
     cropSettings: { aspectRatio: AspectType.Square, resolutions: [ResolutionType.MediumLarge], resizeToWidth: 700 },
   };
 
@@ -62,7 +62,7 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
     { key: 'content', type: 'textarea', props: { label: 'Content', placeholder: 'Content', required: false } },
   ];
 
-  public genericForm = this.fb.group({
+  public DeckCommanderForm = this.fb.group({
     name: ['', Validators.required],
     description: [''],
     image: [{} as CloudStorageData],
@@ -79,7 +79,7 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
 
   public selectedPeople: any[] = [{ id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/defaults/images/face-3.jpg' }];
 
-  public genericTypes = [
+  public DeckCommanderTypes = [
     { label: 'Type 1', value: 'type1' },
     { label: 'Type 2', value: 'type2' },
     { label: 'Type 3', value: 'type3' },
@@ -91,14 +91,14 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
     { id: 'Relation 3', name: 'relation3', description: 'Description with short description' },
   ];
 
-  public generic: IGeneric | null = null;
-  public genericId = this.route.snapshot.params['id'];
+  public DeckCommander: IDeckCommander | null = null;
+  public DeckCommanderId = this.route.snapshot.params['id'];
 
   async ngOnInit(): Promise<void> {
-    if (this.genericId) {
-      this.generic = await this.genericService.getGeneric(this.genericId);
-      if (this.generic) {
-        this.genericForm.patchValue(this.generic);
+    if (this.DeckCommanderId) {
+      this.DeckCommander = await this.DeckCommanderService.getDeckCommander(this.DeckCommanderId);
+      if (this.DeckCommander) {
+        this.DeckCommanderForm.patchValue(this.DeckCommander);
       }
     }
   }
@@ -113,7 +113,7 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
   }
 
   public handleImageUpload(event: any) {
-    // this.genericForm.patchValue({ image: event });
+    // this.DeckCommanderForm.patchValue({ image: event });
     alert('Image uploaded');
   }
 
@@ -130,10 +130,10 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
     console.log(this.relationPopupSelector);
   }
 
-  public handleRelationSelection(relation: IGeneric) {
+  public handleRelationSelection(relation: IDeckCommander) {
     console.log(relation);
 
-    // this.genericForm.patchValue({ relation: relation });
+    // this.DeckCommanderForm.patchValue({ relation: relation });
     this.isDialogVisible = false;
     this.relationPopupSelector.push(relation);
     this.cdr.detectChanges();

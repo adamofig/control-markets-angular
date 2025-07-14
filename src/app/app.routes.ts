@@ -126,28 +126,28 @@ export const routes: Routes = [
         ],
       },
 
-      // {
-      //   path: 'deck',
+      {
+        path: 'deck',
 
-      //   children: [
-      //     {
-      //       path: '',
-      //       loadComponent: () => import('./deck-commander/deck-commander-list/deck-commander-list.component').then(m => m.DeckCommanderListComponent),
-      //     },
-      //     {
-      //       path: 'edit',
-      //       loadComponent: () => import('./deck-commander/deck-commander-form/deck-commander-form.component').then(m => m.DeckCommanderFormComponent),
-      //     },
-      //     {
-      //       path: 'edit/:id',
-      //       loadComponent: () => import('./deck-commander/deck-commander-form/deck-commander-form.component').then(m => m.DeckCommanderFormComponent),
-      //     },
-      //     {
-      //       path: 'details/:id',
-      //       loadComponent: () => import('./deck-commander/deck-commander-detail/deck-commander-detail.component').then(m => m.DeckCommanderDetailComponent),
-      //     },
-      //   ],
-      // },
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./deck-commander/deck-commander-list/deck-commander-list.component').then(m => m.DeckCommanderListComponent),
+          },
+          {
+            path: 'edit',
+            loadComponent: () => import('./deck-commander/deck-commander-form/deck-commander-form.component').then(m => m.DeckCommanderFormComponent),
+          },
+          {
+            path: 'edit/:id',
+            loadComponent: () => import('./deck-commander/deck-commander-form/deck-commander-form.component').then(m => m.DeckCommanderFormComponent),
+          },
+          {
+            path: 'details/:id',
+            loadComponent: () => import('./deck-commander/deck-commander-detail/deck-commander-detail.component').then(m => m.DeckCommanderDetailComponent),
+          },
+        ],
+      },
 
       {
         path: 'test',
