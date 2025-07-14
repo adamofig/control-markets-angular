@@ -130,10 +130,11 @@ export const appConfig: ApplicationConfig = {
         ],
         validationMessages: [{ name: 'required', message: 'This field is required' }],
       })
-    ), provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          }),
+    ),
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: true,
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
 };
 

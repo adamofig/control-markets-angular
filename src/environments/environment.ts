@@ -3,7 +3,6 @@ export const environment = {
   version: '0.0.11',
   envName: 'DEV',
   production: false,
-
   authenticationRequired: false,
 
   backendNodeUrl: 'http://localhost:8080',

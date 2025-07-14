@@ -1,7 +1,7 @@
 # Variables for deployment
 ENV ?= dev
 EXT ?= io
-PROJECT_NAME ?= neuro
+PROJECT_NAME ?= dataclouder
 PROJECT_ID ?= $(PROJECT_NAME)-$(ENV) #Firebase/Google project ID
 APP_ID ?= $(EXT).$(PROJECT_NAME).$(ENV) # User for mobile apps. example com.my-startup.app
 DISPLAY_NAME ?= $(PROJECT_NAME)
