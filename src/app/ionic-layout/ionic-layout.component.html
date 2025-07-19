@@ -4,7 +4,7 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header> {{ projectName }}</ion-list-header>
+          <ion-list-header class="project-title"> {{ projectName }}</ion-list-header>
 
           @for (p of appPages; track p; let i = $index) {
           <ion-menu-toggle auto-hide="false">
@@ -45,7 +45,7 @@
               <ion-icon [name]="menuVisible ? 'menu-outline' : 'menu'" slot="icon-only"></ion-icon>
             </ion-button>
           </ion-buttons>
-          <ion-title> {{ projectName }}</ion-title>
+          <ion-title class="project-title"> {{ projectName }}</ion-title>
 
           <ion-buttons slot="end">
             <p-togglebutton [(ngModel)]="isDarkMode" onLabel="" offLabel="" styleClass="w-36" ariaLabel="Do you confirm" (onChange)="toggleDarkMode()">

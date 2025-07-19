@@ -1,5 +1,5 @@
 export const environment = {
-  projectName: 'Golden',
+  projectName: 'Control Markets',
   version: '0.0.28',
   envName: 'DEV',
   production: false,
@@ -13,8 +13,8 @@ export const environment = {
   // backendNodeUrl: 'https://golden-ad-node-164740776065.us-central1.run.app',
   backendNodeUrl: 'http://localhost:8080',
   // backendNodeUrl: 'https://niche-market-node-905545672221.us-central1.run.app',
-  // backendPythonUrl: 'http://localhost:8011',
-  backendPythonUrl: 'https://python-server-905545672221.us-central1.run.app',
+  backendPythonUrl: 'http://localhost:8000',
+  // backendPythonUrl: 'https://python-server-905545672221.us-central1.run.app',
 
   mobile: {
     appleAppId: '',
