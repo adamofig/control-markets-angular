@@ -179,6 +179,29 @@ export const routes: Routes = [
           },
         ],
       },
+
+      {
+        path: 'balancer',
+        loadComponent: () => import('./api-balancer/api-balancers.component').then(m => m.ApiBalancersComponent),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./api-balancer/api-balancer-list/api-balancer-list.component').then(m => m.ApiBalancerListComponent),
+          },
+          {
+            path: 'edit',
+            loadComponent: () => import('./api-balancer/api-balancer-form/api-balancer-form.component').then(m => m.ApiBalancerFormComponent),
+          },
+          {
+            path: 'edit/:id',
+            loadComponent: () => import('./api-balancer/api-balancer-form/api-balancer-form.component').then(m => m.ApiBalancerFormComponent),
+          },
+          {
+            path: 'details/:id',
+            loadComponent: () => import('./api-balancer/api-balancer-detail/api-balancer-detail.component').then(m => m.ApiBalancerDetailComponent),
+          },
+        ],
+      },
     ],
   },
 
