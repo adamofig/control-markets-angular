@@ -4,15 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { sendOutline, sendSharp, send } from 'ionicons/icons';
-import {
-  IConversationSettings,
-  ChatRole,
-  AgentCardListComponent,
-  AudioSpeed,
-  CONVERSATION_AI_TOKEN,
-  AgentCardsAbstractService,
-  IAgentCard,
-} from '@dataclouder/ngx-agent-cards';
+import { IConversationSettings, ChatRole, AgentCardListComponent, AudioSpeed, IAgentCard, DefaultAgentCardsService } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ChatUserSettings, OnActionEvent, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { MenuItem } from 'primeng/api';
@@ -30,7 +22,7 @@ export class AgentCardListPage implements OnInit {
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
   private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
-  private agentCardService = inject<AgentCardsAbstractService>(CONVERSATION_AI_TOKEN);
+  private agentCardService = inject(DefaultAgentCardsService);
 
   public chatUserSettings: ChatUserSettings = {
     realTime: false,
@@ -129,7 +121,7 @@ export class AgentCardListPage implements OnInit {
       case 'delete':
         const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
         if (areYouSure) {
-          await this.agentCardService.deleteAgentCard(item.id);
+          await this.agentCardService.completeAgentCard(item.id);
           // this.conversationCards = this.conversationCards.filter((card) => card._id !== id);
 
           this.toastService.success({ title: 'Conversation card deleted', subtitle: 'Pero tienes que actualizar la página para ver el cambio' });

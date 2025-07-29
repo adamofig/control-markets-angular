@@ -22,7 +22,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MarkdownModule, MARKED_OPTIONS, MERMAID_OPTIONS } from 'ngx-markdown';
 import { SecurityContext } from '@angular/core';
 // DC Libs
-import { provideChatAIService, provideUserDataExchange } from '@dataclouder/ngx-agent-cards';
+import { provideUserDataExchange } from '@dataclouder/ngx-agent-cards';
 import { provideLessonsService, provideNotionService } from '@dataclouder/ngx-lessons';
 import { provideAuthConfig } from '@dataclouder/app-auth';
 import { HTTP_CORE_CONFIG, provideToastAlert } from '@dataclouder/ngx-core';
@@ -119,7 +119,7 @@ bootstrapApplication(AppComponent, {
       })
     ),
     // Dataclouder Providers
-    provideChatAIService(AgentCardService),
+    // provideChatAIService(AgentCardService),
     provideToastAlert(ToastAlertService),
     provideLessonsService(LessonsService),
     provideUserDataExchange(UserDataExchangeService),

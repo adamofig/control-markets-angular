@@ -1,5 +1,5 @@
 <div class="source-form-card">
-  <p-card [header]="sourceId ? 'Edit Source' : 'New Source'">
+  <p-card [header]="entityId() ? 'Edit Source' : 'New Source'">
     <form [formGroup]="sourceForm" class="flex flex-column gap-4">
       <div class="form-field">
         <label for="name">Name</label>
@@ -32,8 +32,8 @@
     </form>
 
     <div class="flex justify-content-end gap-2">
-      @if (sourceId) {
-      <p-button (click)="goToSourceDetail(sourceId)" type="submit" label="Ver detalles" icon="pi pi-check" iconPos="right"> </p-button>
+      @if (entityId()) {
+      <p-button (click)="goToSourceDetail(entityId())" type="submit" label="Ver detalles" icon="pi pi-check" iconPos="right"> </p-button>
       }
 
       <p-button (click)="saveSource()" type="submit" label="Save Source" [disabled]="!sourceForm.valid" icon="pi pi-check" iconPos="right"> </p-button>

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import {
   AudioSpeed,
   ChatRole,
-  AgentCardsAbstractService,
+  // AgentCardsAbstractService,
   ConversationMessagesDTO,
   IAgentCard,
   TranscriptionsWhisper,
@@ -21,7 +21,7 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 @Injectable({
   providedIn: 'root',
 })
-export class AgentCardService implements AgentCardsAbstractService {
+export class AgentCardService {
   getAllConversationCards(): Promise<IAgentCard[]> {
     throw new Error('Method not implemented.');
   }

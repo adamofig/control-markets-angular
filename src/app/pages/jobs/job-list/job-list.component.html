@@ -38,8 +38,8 @@
       currentPageReportTemplate="{{ totalRecords }} conversations"
       [showCurrentPageReport]="true"
       (onPageChange)="onPageChange($event)"
-      [first]="paginatorFirst"
-      [rows]="paginatorRows"
+      [first]="first"
+      [rows]="rows"
       [totalRecords]="totalRecords"
       [rowsPerPageOptions]="[10, 20, 30]">
     </p-paginator>

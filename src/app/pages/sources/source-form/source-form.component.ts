@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IAgentSource, SourceType, SourceTypeOptions } from '../models/sources.model';
@@ -11,7 +11,8 @@ import { Textarea } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { NotionService } from '../../tasks/services/notion.service';
 import { NotionExportType } from '../../tasks/models/notion.models';
-import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+import { EntityCommunicationService, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+import { EntityBaseFormComponent } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-source-form',
@@ -20,7 +21,14 @@ import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx
   styleUrl: './source-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SourceFormComponent implements OnInit {
+export class SourceFormComponent extends EntityBaseFormComponent<IAgentSource> implements OnInit {
+  protected entityCommunicationService = inject(SourceService);
+
+  private toastService = inject(ToastAlertsAbstractService);
+
+  private fb = inject(FormBuilder);
+  private notionService = inject(NotionService);
+
   sourceForm = this.fb.group({
     name: ['', Validators.required],
     description: [''],
@@ -31,34 +39,19 @@ export class SourceFormComponent implements OnInit {
   });
   sourcesTypes = SourceTypeOptions;
 
-  constructor(
-    @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService,
-    private route: ActivatedRoute,
-    private sourceService: SourceService,
-    private fb: FormBuilder,
-    private router: Router,
-    private notionService: NotionService
-  ) {}
+  public form: FormGroup = this.fb.group({});
 
   public source: IAgentSource | null = null;
-  public sourceId = this.route.snapshot.params['id'];
 
-  async ngOnInit(): Promise<void> {
-    if (this.sourceId) {
-      this.source = await this.sourceService.getSource(this.sourceId);
-      if (this.source) {
-        this.sourceForm.patchValue(this.source);
-      }
-    }
-  }
+  async ngOnInit(): Promise<void> {}
 
   async saveSource() {
     if (this.sourceForm.valid) {
       const source = { ...this.source, ...this.sourceForm.value } as IAgentSource;
 
-      const result = await this.sourceService.saveSource(source);
+      const result = await this.entityCommunicationService.saveSource(source);
 
-      if (!this.sourceId) {
+      if (!this.entityId) {
         this.router.navigate([result.id], { relativeTo: this.route });
       }
       this.toastService.success({
@@ -66,6 +59,10 @@ export class SourceFormComponent implements OnInit {
         subtitle: 'El origen ha sido guardado correctamente',
       });
     }
+  }
+
+  protected override patchForm(entity: IAgentSource): void {
+    this.sourceForm.patchValue(entity);
   }
 
   async updateSource() {
@@ -97,7 +94,7 @@ export class SourceFormComponent implements OnInit {
 
   private async updateYoutubeSource() {
     const youtubeUrl = this.sourceForm.controls.sourceUrl.value;
-    const transcript: any = await this.sourceService.getYoutubeContent(youtubeUrl as string);
+    const transcript: any = await this.entityCommunicationService.getYoutubeContent(youtubeUrl as string);
     this.sourceForm.patchValue({
       content: transcript.text,
     });

@@ -6,7 +6,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ToastAlertService } from 'src/app/services/toast.service';
 import { DialogModule } from 'primeng/dialog';
-import { ChatMessage, DCConversationPromptBuilderService } from '@dataclouder/ngx-agent-cards';
+import { ChatMessage, ConversationPromptBuilderService } from '@dataclouder/ngx-agent-cards';
 import { AgentCardService } from 'src/app/services/agent-cards.service';
 import { PaginatorModule } from 'primeng/paginator';
 @Component({
@@ -44,7 +44,7 @@ export class TaskListComponent extends PaginationBase implements OnInit {
     public override route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private toastService: ToastAlertService,
-    private promptBuilderService: DCConversationPromptBuilderService,
+    private promptBuilderService: ConversationPromptBuilderService,
     private agentCardService: AgentCardService
   ) {
     super();

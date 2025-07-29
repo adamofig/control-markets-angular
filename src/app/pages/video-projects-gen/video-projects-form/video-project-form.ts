@@ -50,7 +50,7 @@ import { DialogsComponent } from '../dialogs/dialogs.component';
     CompositionEditorComponent,
     MarkdownModule,
     TimeLineManager,
-    TaskListComponent,
+    // TaskListComponent,
     DialogModule,
     AgentCardListComponent,
     DialogsComponent,
