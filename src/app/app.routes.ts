@@ -158,6 +158,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/test/test.component').then(m => m.TestComponent),
       },
       {
+        path: 'ai-playground',
+        loadComponent: () => import('./pages/ai-playground/ai-playground.component').then(m => m.AiPlaygroundComponent),
+      },
+      {
         path: 'agents',
         loadComponent: () => import('./pages/agent-cards/agent-card-router').then(m => m.AgentCardRouter),
         children: [
