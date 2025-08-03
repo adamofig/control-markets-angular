@@ -34,6 +34,7 @@ import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
 import { UserService } from '../dc-user-module/user.service';
 import { IUser } from '@dataclouder/ngx-users';
+import { PwaInstallComponent } from '../components/pwa-install/pwa-install.component';
 
 @Component({
   selector: 'app-ionic-layout',
@@ -68,6 +69,7 @@ import { IUser } from '@dataclouder/ngx-users';
     IonMenuToggle,
     ToggleButtonModule,
     FormsModule,
+    PwaInstallComponent,
   ],
 })
 export class IonicLayoutComponent implements OnInit {

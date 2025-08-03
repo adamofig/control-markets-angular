@@ -3,6 +3,7 @@ export const environment = {
   version: '0.0.28',
   envName: 'DEV',
   production: false,
+  authenticationRequired: true,
 
   clientId: '',
   androidClientId: '',

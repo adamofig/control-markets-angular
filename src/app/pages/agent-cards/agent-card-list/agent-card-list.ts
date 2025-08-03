@@ -136,15 +136,17 @@ export class AgentCardListPage implements OnInit {
   }
 
   handleAction(actionEvent: OnActionEvent) {
+    debugger;
     console.log('doAction', { item: actionEvent.item, action: actionEvent.action });
     if (actionEvent.action === 'edit') {
       this.goToEdit(actionEvent.item._id);
     } else if (actionEvent.action === 'new') {
-      // this.createNew();
       this.goToEdit();
     } else if (actionEvent.action === 'delete') {
       this.doAction('delete', actionEvent.item);
     } else if (actionEvent.action === 'details') {
+      this.goToDetails(actionEvent.item._id);
+    } else if (actionEvent.action === 'select') {
       this.goToDetails(actionEvent.item._id);
     } else {
       console.log('Unknown action:', actionEvent.action);

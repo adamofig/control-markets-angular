@@ -2,7 +2,9 @@ export const environment = {
   projectName: 'Golden',
   version: '0.0.28',
   envName: 'DEV',
-  production: false,
+  production: true,
+
+  authenticationRequired: true,
 
   clientId: '',
   androidClientId: '',

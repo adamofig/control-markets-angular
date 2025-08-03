@@ -2,7 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import {
   AudioSpeed,
   ChatRole,
-  // AgentCardsAbstractService,
   ConversationMessagesDTO,
   IAgentCard,
   TranscriptionsWhisper,

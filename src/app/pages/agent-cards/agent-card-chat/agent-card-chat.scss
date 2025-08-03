@@ -40,11 +40,27 @@
   width: 100%;
   object-fit: cover;
   object-position: center;
+
+  &.mobile-image {
+    display: block;
+  }
+
+  &.desktop-banner {
+    display: none;
+  }
 }
 
 @media (min-width: 1000px) {
   .centered-image {
-    object-fit: contain;
+    object-fit: cover;
+
+    &.mobile-image {
+      display: none;
+    }
+
+    &.desktop-banner {
+      display: block;
+    }
   }
 }
 
@@ -53,4 +69,19 @@
   z-index: 3;
   height: 100%;
   width: 100%;
+  display: flex;
+}
+
+.chat-container {
+  width: 50%;
+  height: 100%;
+}
+
+.sticker-container {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }

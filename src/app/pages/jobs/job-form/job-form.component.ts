@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IAgentJob } from '../models/jobs.model';
 import { JobService } from '../jobs.service';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
@@ -14,7 +15,7 @@ import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
 import { AspectType, CropperComponentModal, ResolutionType, CloudStorageData } from '@dataclouder/ngx-cloud-storage';
 
-import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+import { EntityBaseFormComponent } from '@dataclouder/ngx-core';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { DialogModule } from 'primeng/dialog';
 import { JobListComponent } from '../job-list/job-list.component';
@@ -45,8 +46,13 @@ export class JobFormComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private jobService = inject(JobService);
   private fb = inject(FormBuilder);
-  private router = inject(Router);
-  private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
+
+  public form: FormGroup = this.fb.group({});
+
+  // protected override patchForm(entity: IGeneric): void {
+  //   throw new Error('Method not implemented.');
+  // }
+  // private genericService = inject(GenericService);
   private cdr = inject(ChangeDetectorRef);
 
   public storageImgSettings = {
@@ -118,10 +124,10 @@ export class JobFormComponent implements OnInit {
 
       const result = await this.jobService.saveJob(job);
 
-      if (!this.jobId) {
-        this.router.navigate([result.id], { relativeTo: this.route });
-      }
-      this.toastService.success({ title: 'Origen guardado', subtitle: 'El origen ha sido guardado correctamente' });
+      // if (!this.jobId) {
+      //   this.router.navigate([result.id], { relativeTo: this.route });
+      // }
+      // this.toastService.success({ title: 'Origen guardado', subtitle: 'El origen ha sido guardado correctamente' });
     }
   }
 

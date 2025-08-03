@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
 import { GoogleAuth, User } from '@codetrix-studio/capacitor-google-auth';
 import { GoogleAuthProvider } from '@angular/fire/auth';
 import { TranslateModule } from '@ngx-translate/core';
@@ -13,7 +12,7 @@ import { Platform } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-auth-component',
-  templateUrl: './login2.page.html',
+  templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, TranslateModule, DcLoginComponent],
@@ -21,7 +20,7 @@ import { Platform } from '@ionic/angular/standalone';
 export class LoginComponent implements OnInit {
   private platform = inject(Platform);
   private fb = inject(FormBuilder);
-  private auth = inject(AuthService);
+  private auth = inject(FirebaseAuthService);
   private firebaseAuthService = inject(FirebaseAuthService);
   private router = inject(Router);
 
@@ -93,9 +92,9 @@ export class LoginComponent implements OnInit {
       formData.append('password', this.formData.get('password')?.value);
       console.log(this.formData);
 
-      this.auth.userRegister(formData).subscribe((data: any) => {
-        console.log(data);
-      });
+      // this.auth.userRegister(formData).subscribe((data: any) => {
+      //   console.log(data);
+      // });
     }
   }
 
