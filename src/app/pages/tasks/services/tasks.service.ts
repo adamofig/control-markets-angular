@@ -1,37 +1,39 @@
 import { Injectable } from '@angular/core';
 import { UserDataExchange, UserDataExchangeAbstractService } from '@dataclouder/ngx-agent-cards';
 import { Endpoints } from 'src/app/core/enums';
-import { HttpService } from 'src/app/services/http.service';
 import { IAgentTask } from '../models/tasks-models';
 import { FiltersConfig, IFilterQueryResponse } from '@dataclouder/ngx-core';
+import { EntityCommunicationService } from '@dataclouder/ngx-core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TasksService {
-  constructor(private httpService: HttpService) {}
+export class TasksService extends EntityCommunicationService<IAgentTask> {
+  constructor() {
+    super('agent-tasks');
+  }
 
   public getTasks() {
-    return this.httpService.getDataFromService(Endpoints.Tasks.List);
+    return this.httpService.get(Endpoints.Tasks.List);
   }
 
   public getFilteredTasks(filters: FiltersConfig): Promise<IFilterQueryResponse<IAgentTask>> {
-    return this.httpService.postDataToService(Endpoints.Tasks.Query, filters);
+    return this.httpService.post(Endpoints.Tasks.Query, filters);
   }
 
   public getTaskById(id: string): Promise<IAgentTask> {
-    return this.httpService.getDataFromService(`${Endpoints.Tasks.Task}/${id}`);
+    return this.httpService.get(`${Endpoints.Tasks.Task}/${id}`);
   }
 
   public saveTask(task: Partial<IAgentTask>) {
-    return this.httpService.postDataToService(Endpoints.Tasks.Save, task);
+    return this.httpService.post(Endpoints.Tasks.Save, task);
   }
 
   public deleteTask(id: string) {
-    return this.httpService.deleteDataFromService(`${Endpoints.Tasks.Task}/${id}`);
+    return this.httpService.delete(`${Endpoints.Tasks.Task}/${id}`);
   }
 
   public executeTask(id: string) {
-    return this.httpService.getDataFromService(`${Endpoints.Tasks.Execute}/${id}`);
+    return this.httpService.get(`${Endpoints.Tasks.Execute}/${id}`);
   }
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { Endpoints } from 'src/app/core/enums';
-import { HttpService } from 'src/app/services/http.service';
+// import { HttpService } from 'src/app/services/http.service';
 import { NotionExportType } from '../models/notion.models';
+import { HttpCoreService } from '@dataclouder/ngx-core';
 
 export type NotionDBResponse = {
   success: boolean;
@@ -22,22 +23,22 @@ export type NotionPageResponse = {
   providedIn: 'root',
 })
 export class NotionService {
-  constructor(private httpService: HttpService) {}
+  constructor(private httpService: HttpCoreService) {}
 
   public getDBAvailible(): Promise<NotionDBResponse> {
-    return this.httpService.getDataFromService(Endpoints.Notion.ListDBs);
+    return this.httpService.get(Endpoints.Notion.ListDBs);
   }
 
   public getPagesAvailable(): Promise<NotionPageResponse> {
-    return this.httpService.getDataFromService(Endpoints.Notion.ListPages);
+    return this.httpService.get(Endpoints.Notion.ListPages);
   }
 
   public createNotionPage(card: IAgentCard): Promise<{ success: boolean; error: string; page: any }> {
-    return this.httpService.getDataFromService(`${Endpoints.Notion.CreatePage}/${card.id}`);
+    return this.httpService.get(`${Endpoints.Notion.CreatePage}/${card.id}`);
   }
 
   public async getPageInSpecificFormat(pageId: string, format: NotionExportType): Promise<any> {
-    const data = await this.httpService.getDataFromService(`${Endpoints.Notion.PageInSpecificFormat}/${pageId}?exportType=${format}`);
+    const data = await this.httpService.get(`${Endpoints.Notion.PageInSpecificFormat}/${pageId}?exportType=${format}`);
     return data;
   }
 

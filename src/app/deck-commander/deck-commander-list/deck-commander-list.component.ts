@@ -41,7 +41,7 @@ import { TableModule } from 'primeng/table';
 export class DeckCommanderListComponent extends PaginationBase implements OnInit {
   // Services
   private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
-  private sourceService = inject(DeckCommanderService);
+  private deckCommanderService = inject(DeckCommanderService);
   private cdr = inject(ChangeDetectorRef);
 
   // Inputs
@@ -76,7 +76,7 @@ export class DeckCommanderListComponent extends PaginationBase implements OnInit
 
   async ngOnInit(): Promise<void> {
     this.filterConfig.returnProps = { _id: 1, id: 1, name: 1, description: 1, updatedAt: 1, image: 1 };
-    const response = await this.sourceService.getFilteredDeckCommanders(this.filterConfig);
+    const response = await this.deckCommanderService.getFilteredDeckCommanders(this.filterConfig);
     this.DeckCommanders.set(response.rows);
     this.cdr.detectChanges();
     console.log(this.DeckCommanders(), this.viewType);
@@ -117,7 +117,7 @@ export class DeckCommanderListComponent extends PaginationBase implements OnInit
       case 'delete':
         const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
         if (areYouSure) {
-          await this.sourceService.deleteDeckCommander(item.id);
+          await this.deckCommanderService.deleteDeckCommander(item.id);
           this.DeckCommanders.set(this.DeckCommanders().filter(DeckCommander => DeckCommander.id !== item.id));
           this.toastService.success({
             title: 'Origen eliminado',

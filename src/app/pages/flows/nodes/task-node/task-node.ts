@@ -4,7 +4,7 @@ import { ComponentDynamicNode, CustomNodeComponent, Vflow } from 'ngx-vflow';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
-import { TaskDetailsComponent } from './task-details/task-details';
+import { TaskDetailsComponent } from './task-details/task-node-details';
 import { IAgentTask } from '../../../tasks/models/tasks-models';
 import { FlowExecutionStateService } from '../../services/flow-execution-state.service';
 import { FlowDiagramStateService } from '../../services/flow-diagram-state.service';
@@ -17,10 +17,10 @@ export interface CustomTaskNode extends ComponentDynamicNode {
 }
 
 @Component({
-  selector: 'app-task-node',
+  selector: 'app-task-node-details',
   imports: [Vflow, DialogModule, ButtonModule, CommonModule, JsonPipe, TagModule, ProgressSpinnerModule],
-  templateUrl: './task-node.component.html',
-  styleUrl: './task-node.component.css',
+  templateUrl: './task-node.html',
+  styleUrl: './task-node.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
@@ -69,7 +69,7 @@ export class TaskNodeComponent extends CustomNodeComponent<CustomTaskNode> imple
   openModal(): void {
     this.isDialogVisible = true;
     this.dialogService.open(TaskDetailsComponent, {
-      header: 'Task Node',
+      header: 'Task Node Details',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       draggable: true,

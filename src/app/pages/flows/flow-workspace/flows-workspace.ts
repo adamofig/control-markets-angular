@@ -3,7 +3,7 @@ import { Connection, DynamicNode, Edge, Vflow } from 'ngx-vflow';
 import { AgentNodeComponent } from '../nodes/agent-node/agent-node.component';
 import { DistributionChanelNodeComponent } from '../nodes/distribution-chanel-node/distribution-chanel-node.component';
 import { OutcomeNodeComponent } from '../nodes/outcome-node/outcome-node.component';
-import { TaskNodeComponent } from '../nodes/task-node/task-node.component';
+import { TaskNodeComponent } from '../nodes/task-node/task-node';
 import { DialogModule } from 'primeng/dialog';
 import { AgentCardListComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { OnActionEvent, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';

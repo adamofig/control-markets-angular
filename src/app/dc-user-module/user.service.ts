@@ -1,5 +1,5 @@
 import { Injectable, inject, signal, WritableSignal } from '@angular/core';
-import { HttpService } from '../services/http.service';
+import { HttpCoreService } from '@dataclouder/ngx-core';
 import { Endpoints } from '../core/enums';
 import { IUser } from '@dataclouder/ngx-users';
 
@@ -7,12 +7,12 @@ import { IUser } from '@dataclouder/ngx-users';
   providedIn: 'root',
 })
 export class UserService {
-  private httpService = inject(HttpService);
+  private httpService = inject(HttpCoreService);
 
   public user: WritableSignal<IUser | null> = signal(null);
 
   public async findUserWithToken(): Promise<IUser | null> {
-    const userData = await this.httpService.getDataFromService<IUser | null>(Endpoints.GetUser);
+    const userData = await this.httpService.get<IUser | null>(Endpoints.GetUser);
     this.user.set(userData);
     console.log(this.user());
     return this.user();
@@ -25,7 +25,7 @@ export class UserService {
   public async saveUser(user: Partial<IUser>) {
     // need id and whatever attribute to update {id: 1, settings: {}}
     try {
-      const results = await this.httpService.postDataToService(Endpoints.PostUser, user);
+      const results = await this.httpService.post(Endpoints.PostUser, user);
       // this.user = user;
       return results;
     } catch (err) {

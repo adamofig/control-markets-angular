@@ -5,9 +5,9 @@ import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl 
 import { Endpoints } from 'src/app/core/enums';
 
 import { AppAuthClaims, ExpireDateOptions, PermissionType, PlanOptions, RolOptions, RolType } from 'src/app/dc-user-module/user.class';
-import { HttpService } from 'src/app/services/http.service';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { PermissionNamePipe } from './permision-name.pipe';
+import { HttpCoreService } from '@dataclouder/ngx-core';
 
 type InputClaim = {
   type: string;
@@ -24,7 +24,7 @@ type InputClaim = {
 })
 export class AdminUserComponent {
   private formBuilder = inject(FormBuilder);
-  private httpService = inject(HttpService);
+  private httpService = inject(HttpCoreService);
   private toastController = inject(ToastController);
 
   public userType = PermissionType;
@@ -128,7 +128,7 @@ export class AdminUserComponent {
 
     this.existingUser = false;
 
-    const claims = await this.httpService.getDataFromService<AppAuthClaims>(`${Endpoints.Admin.Claims}/${email}`);
+    const claims = await this.httpService.get<AppAuthClaims>(`${Endpoints.Admin.Claims}/${email}`);
     this.userClaims = { ...claims };
 
     console.log('claims', claims);
@@ -166,7 +166,7 @@ export class AdminUserComponent {
     const updatedData: any = this.formGroup.value;
     try {
       // TODO: check that the endpoint is correct
-      const claims = await this.httpService.postDataToService(Endpoints.Admin.Claims, updatedData);
+      const claims = await this.httpService.post(Endpoints.Admin.Claims, updatedData);
       await this.showToast(`Los cambios se verán reflejados la próxima vez que ${updatedData.email} inicie sesión`);
 
       // if (this.userService.getUserSnapshot().email === updatedData.email) {
@@ -192,7 +192,7 @@ export class AdminUserComponent {
     if (isConfirmed) {
       const email = this.deleteUserForm;
       try {
-        await this.httpService.deleteDataFromService(`${Endpoints.AdminUser}/${email}`);
+        await this.httpService.delete(`${Endpoints.AdminUser}/${email}`);
         await this.showToast(`El usuario ${email} fue eliminado`);
       } finally {
         this.deleteUserForm = '';

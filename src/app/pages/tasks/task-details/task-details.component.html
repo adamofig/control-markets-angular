@@ -1,0 +1,20 @@
+<div *ngIf="task">
+  <p-card [header]="task.name">
+    <p>{{ task.description }}</p>
+    <div><strong>Status:</strong> {{ task.status }}</div>
+    <div><strong>Task Type:</strong> {{ task.taskType }}</div>
+    <div *ngIf="task.model"><strong>Model:</strong> {{ task.model.provider }} - {{ task.model.modelName }}</div>
+    <div *ngIf="task.sources?.length">
+      <strong>Sources:</strong>
+      <ul>
+        <li *ngFor="let source of task.sources">{{ source.name }}</li>
+      </ul>
+    </div>
+    <div *ngIf="task.agentCards?.length">
+      <strong>Agent Cards:</strong>
+      <ul>
+        <li *ngFor="let agent of task.agentCards">{{ agent.title }}</li>
+      </ul>
+    </div>
+  </p-card>
+</div>

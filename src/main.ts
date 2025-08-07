@@ -18,7 +18,7 @@ import { providePrimeNG } from 'primeng/config';
 // Third Party
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { MarkdownModule, MARKED_OPTIONS, MERMAID_OPTIONS } from 'ngx-markdown';
+import { provideMarkdown, MARKED_OPTIONS, MERMAID_OPTIONS } from 'ngx-markdown';
 import { SecurityContext } from '@angular/core';
 // DC Libs
 import { DefaultAgentCardsService, provideAgentCardService, provideUserDataExchange } from '@dataclouder/ngx-agent-cards';
@@ -72,6 +72,10 @@ fetch('/assets/config.json')
         provideHttpClient(withInterceptors([authInterceptor])),
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         provideIonicAngular(),
+        // 🔥 Firebase
+
+        { provide: FIREBASE_OPTIONS, useValue: config.firebase },
+
         provideFirebaseApp(() => initializeApp(config.firebase)),
         provideStorage(() => getStorage()),
         provideAuth(() => {
@@ -83,7 +87,8 @@ fetch('/assets/config.json')
             return getAuth();
           }
         }),
-        { provide: FIREBASE_OPTIONS, useValue: config.firebase },
+        provideFirestore(() => getFirestore()),
+
         DialogService,
         importProvidersFrom(
           TranslateModule.forRoot({
@@ -112,6 +117,7 @@ fetch('/assets/config.json')
             appleRedirectURI: config.mobile.appleRedirectURI,
           },
         }),
+        provideMarkdown(),
         importProvidersFrom(
           FormlyModule.forRoot({
             types: [

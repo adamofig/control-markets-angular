@@ -41,7 +41,7 @@ import { TableModule } from 'primeng/table';
 export class JobListComponent extends PaginationBase implements OnInit {
   // Services
   private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
-  private sourceService = inject(JobService);
+  private jobService = inject(JobService);
   private cdr = inject(ChangeDetectorRef);
 
   // Inputs
@@ -76,7 +76,7 @@ export class JobListComponent extends PaginationBase implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.filterConfig.returnProps = { _id: 1, id: 1, task: 1, response: 1, agentCard: 1, createdAt: 1 };
-    const response = await this.sourceService.getFilteredJobs(this.filterConfig);
+    const response = await this.jobService.getFilteredJobs(this.filterConfig);
     this.jobs.set(response.rows);
     this.cdr.detectChanges();
     console.log(this.jobs(), this.viewType);
@@ -117,7 +117,7 @@ export class JobListComponent extends PaginationBase implements OnInit {
       case 'delete':
         const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
         if (areYouSure) {
-          await this.sourceService.deleteJob(item.id);
+          await this.jobService.deleteJob(item.id);
           this.jobs.set(this.jobs().filter(job => job.id !== item.id));
           this.toastService.success({
             title: 'Origen eliminado',

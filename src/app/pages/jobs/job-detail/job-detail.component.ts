@@ -8,12 +8,13 @@ import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { ButtonModule } from 'primeng/button';
 import { N8nService } from 'src/app/services/n8n.service';
-import { MarkdownModule } from 'ngx-markdown';
+import { MarkdownComponent } from 'ngx-markdown';
 import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-job-detail',
-  imports: [JsonPipe, AccordionModule, CardModule, DividerModule, ButtonModule, MarkdownModule, TagModule],
+  standalone: true,
+  imports: [JsonPipe, AccordionModule, CardModule, DividerModule, ButtonModule, MarkdownComponent, TagModule],
   templateUrl: './job-detail.component.html',
   styleUrl: './job-detail.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

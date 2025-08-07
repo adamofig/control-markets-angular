@@ -1,7 +1,7 @@
-
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonFooter, IonApp } from '@ionic/angular/standalone';
+import { AppConfigService } from 'src/app/services/app-config.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -14,10 +14,11 @@ import { environment } from 'src/environments/environment';
 })
 export class StackIonicComponent implements OnInit {
   private router = inject(Router);
+  private appConfigService = inject(AppConfigService);
 
   public currentPath: string = ' ';
 
-  public projectName = environment.projectName;
+  public projectName = this.appConfigService.config.projectName;
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);

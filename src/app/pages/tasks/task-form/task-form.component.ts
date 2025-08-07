@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,6 +30,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ToastAlertService } from 'src/app/services/toast.service';
 import { SourceService } from '../../sources/sources.service';
 import { AspectType, ResolutionType, CropperComponentModal } from '@dataclouder/ngx-cloud-storage';
+import { EntityBaseFormComponent, EntityCommunicationService } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-task-edit',
@@ -53,7 +54,14 @@ import { AspectType, ResolutionType, CropperComponentModal } from '@dataclouder/
   styleUrl: './task-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskFormComponent implements OnInit {
+export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> implements OnInit {
+  public form: FormGroup<any> = this.fb.group({});
+
+  protected override entityCommunicationService = inject(TasksService);
+  protected override patchForm(entity: IAgentTask): void {
+    this.form.patchValue(entity);
+  }
+
   public task: IAgentTask | null = null;
   public sourceSuggestions: ISourceTask[] = [];
   public selectedSource: string = '';
@@ -94,13 +102,14 @@ export class TaskFormComponent implements OnInit {
     private agentCardService: AgentCardService,
     private notionService: NotionService,
     private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute,
-    private router: Router,
     private toastService: ToastAlertService,
     private sourceService: SourceService
-  ) {}
+  ) {
+    super();
+  }
 
   async ngOnInit() {
+    debugger;
     await this.getTaskIfIdParam();
     this.getAgentCards();
     this.getAgentSources();

@@ -9,6 +9,7 @@ import { RouteNames } from '../core/enums';
 
 import { FirebaseAuthService, DcLoginComponent } from '@dataclouder/app-auth';
 import { Platform } from '@ionic/angular/standalone';
+import { AppConfigService } from '../services/app-config.service';
 
 @Component({
   selector: 'app-auth-component',
@@ -32,20 +33,18 @@ export class LoginComponent implements OnInit {
   });
   isLoading: boolean = false;
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-  constructor() {}
+  private appConfigService = inject(AppConfigService);
 
   public user: any;
 
-  public envName = environment.envName;
+  public envName = this.appConfigService.config.envName;
 
   async ngOnInit() {
     this.platform.ready().then(() => {
       console.log('READY!');
 
       GoogleAuth.initialize({
-        clientId: environment.mobile.iosClientId,
+        clientId: this.appConfigService.config.mobile.iosClientId,
         scopes: ['profile', 'email'],
         grantOfflineAccess: true,
       });
@@ -99,7 +98,7 @@ export class LoginComponent implements OnInit {
   }
 
   public test() {
-    console.log('Test', environment.mobile.iosClientId);
+    console.log('Test', this.appConfigService.config.mobile.iosClientId);
   }
 
   async signInGoogle() {

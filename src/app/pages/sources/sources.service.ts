@@ -8,6 +8,10 @@ import { EntityCommunicationService } from '@dataclouder/ngx-core';
   providedIn: 'root',
 })
 export class SourceService extends EntityCommunicationService<IAgentSource> {
+  constructor() {
+    super(Endpoints.Sources.Source);
+  }
+
   public async getSources() {
     return this.httpService.get<IAgentSource[]>(Endpoints.Sources.Source);
   }

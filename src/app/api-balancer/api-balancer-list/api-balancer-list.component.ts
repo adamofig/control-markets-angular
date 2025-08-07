@@ -41,7 +41,7 @@ import { TableModule } from 'primeng/table';
 export class ApiBalancerListComponent extends PaginationBase implements OnInit {
   // Services
   private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
-  private sourceService = inject(ApiBalancerService);
+  private apiBalancerService = inject(ApiBalancerService);
   private cdr = inject(ChangeDetectorRef);
 
   // Inputs
@@ -76,7 +76,7 @@ export class ApiBalancerListComponent extends PaginationBase implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.filterConfig.returnProps = { _id: 1, id: 1, name: 1, description: 1, updatedAt: 1, image: 1 };
-    const response = await this.sourceService.getFilteredApiBalancers(this.filterConfig);
+    const response = await this.apiBalancerService.getFilteredApiBalancers(this.filterConfig);
     this.ApiBalancers.set(response.rows);
     this.cdr.detectChanges();
     console.log(this.ApiBalancers(), this.viewType);
@@ -117,7 +117,7 @@ export class ApiBalancerListComponent extends PaginationBase implements OnInit {
       case 'delete':
         const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
         if (areYouSure) {
-          await this.sourceService.deleteApiBalancer(item.id);
+          await this.apiBalancerService.deleteApiBalancer(item.id);
           this.ApiBalancers.set(this.ApiBalancers().filter(ApiBalancer => ApiBalancer.id !== item.id));
           this.toastService.success({
             title: 'Origen eliminado',

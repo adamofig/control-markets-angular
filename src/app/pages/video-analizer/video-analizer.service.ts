@@ -3,6 +3,7 @@ import { Endpoints } from 'src/app/core/enums';
 import { HttpService } from 'src/app/services/http.service';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
+import { HttpCoreService } from '@dataclouder/ngx-core';
 
 export interface VideoAnalysisDto {
   id: string | null;
@@ -15,18 +16,18 @@ export interface VideoAnalysisDto {
   providedIn: 'root',
 })
 export class VideoAnalizerService {
-  constructor(private httpService: HttpService) {}
+  constructor(private httpService: HttpCoreService) {}
 
   public startAnalyzeVideo(videoAnalysis: VideoAnalysisDto) {
-    return this.httpService.postDataToService('api/video-analizer', videoAnalysis, 'python');
+    return this.httpService.post('api/video-analizer', videoAnalysis);
   }
 
   public extractInfo(urls: string[]) {
-    return this.httpService.postDataToService('api/video-analizer/extract-tiktok-data', { urls }, 'python');
+    return this.httpService.post('api/video-analizer/extract-tiktok-data', { urls });
   }
 
   public downloadYoutubeVideo(url: string, options: { video: boolean; audio: boolean; vocals: boolean }) {
-    return this.httpService.receiveFileWithProgress('api/video-analizer/download-youtube-video', { url, options }, 'python');
+    return this.httpService.postObservable('api/video-analizer/download-youtube-video', { url, options });
   }
 
   /**

@@ -4,6 +4,7 @@ import { IonContent, IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, Ion
 import { Router } from '@angular/router';
 import { RouteNames } from 'src/app/core/enums';
 import { environment } from 'src/environments/environment';
+import { AppConfigService } from 'src/app/services/app-config.service';
 
 @Component({
   selector: 'app-landing',
@@ -14,10 +15,11 @@ import { environment } from 'src/environments/environment';
 })
 export class LandingComponent {
   private router = inject(Router);
+  private appConfigService = inject(AppConfigService);
 
-  projectName = environment.projectName;
-  version = environment.version;
-  envName = environment.envName;
+  projectName = this.appConfigService.config.projectName;
+  version = this.appConfigService.config.version;
+  envName = this.appConfigService.config.envName;
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);

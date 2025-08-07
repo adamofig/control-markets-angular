@@ -8,7 +8,7 @@ import {
   IConversationSettings,
   IAgentResponseDTO,
 } from '@dataclouder/ngx-agent-cards';
-import { HttpService } from './http.service';
+import { HttpCoreService } from '@dataclouder/ngx-core';
 import { UserService } from '../dc-user-module/user.service';
 import { Endpoints } from '../core/enums';
 import { ChatUserSettings, FiltersConfig, IFilterQueryResponse } from '@dataclouder/ngx-core';
@@ -37,7 +37,7 @@ export class AgentCardService {
     throw new Error('Method not implemented.');
   }
 
-  private httpService = inject(HttpService);
+  private httpCoreService = inject(HttpCoreService);
   private userService = inject(UserService);
 
   public async callInstruction(text: string): Promise<any> {
@@ -45,42 +45,42 @@ export class AgentCardService {
       throw new Error('Text is required');
     }
     text = `Fix grammar and spelling errors in the following text: '${text}'`;
-    return await this.httpService.postDataToService(`${Endpoints.AgentCard.Chat}`, { text }, 'node');
+    return await this.httpCoreService.post(`${Endpoints.AgentCard.Chat}`, { text });
   }
 
   public async findFilteredAgentCards(paginator: FiltersConfig) {
-    const response = await this.httpService.postDataToService(`${Endpoints.AgentCard.ConversationQuery}`, paginator);
+    const response = await this.httpCoreService.post(`${Endpoints.AgentCard.ConversationQuery}`, paginator);
     return response;
   }
 
   public async findAgentCardByTitle(title: string): Promise<IAgentCard> {
     const filters: FiltersConfig = { filters: { title } };
-    const response = await this.httpService.postDataToService<IFilterQueryResponse<IAgentCard>>(`${Endpoints.AgentCard.ConversationQuery}`, filters);
+    const response = await this.httpCoreService.post<IFilterQueryResponse<IAgentCard>>(`${Endpoints.AgentCard.ConversationQuery}`, filters);
     return response.rows[0];
   }
 
   async filterConversationCards(filters: FiltersConfig): Promise<any> {
-    return await this.httpService.postDataToService(`${Endpoints.AgentCard.ConversationQuery}`, filters);
+    return await this.httpCoreService.post(`${Endpoints.AgentCard.ConversationQuery}`, filters);
   }
 
   public async getAudioTranscriptions(audioBlob: Blob, metadata: any = null): Promise<TranscriptionsWhisper> {
-    return await this.httpService.uploadAudioFile(`${Endpoints.Whisper.TranscribeBytes}`, audioBlob, metadata, 'node');
+    return await this.httpCoreService.uploadFile(`${Endpoints.Whisper.TranscribeBytes}`, audioBlob, metadata);
 
     // return await this.httpService.uploadAudioFile(`${Endpoints.AgentCard.Whisper}`, audioBlob, metadata, 'python');
   }
 
   public async findAgentCards(paginator: FiltersConfig) {
-    const response = await this.httpService.postDataToService(`${Endpoints.AgentCard.ConversationQuery}`, paginator);
+    const response = await this.httpCoreService.post(`${Endpoints.AgentCard.ConversationQuery}`, paginator);
     return response;
   }
 
   public async getListModels(provider: string): Promise<any> {
-    const data = await this.httpService.getDataFromService(`${Endpoints.AgentCard.ListModels}?provider=${provider}`, 'python');
+    const data = await this.httpCoreService.get(`${Endpoints.AgentCard.ListModels}?provider=${provider}`);
     return data;
   }
 
   async translateConversation(currentLang: string, targetLang: string, idCard: string): Promise<ChatUserSettings> {
-    const response = await this.httpService.postDataToService(`${Endpoints.AgentCard.TranslateConversation}`, { currentLang, targetLang, idCard }, 'python');
+    const response = await this.httpCoreService.post(`${Endpoints.AgentCard.TranslateConversation}`, { currentLang, targetLang, idCard });
 
     return response;
   }
@@ -120,7 +120,7 @@ export class AgentCardService {
   }
 
   public async getTextAudioFile(tts: TTSRequest): Promise<AudioGenerated> {
-    const httpReq: any = await this.httpService.postFile(`${Endpoints.Vertex.tts}`, tts, 'node');
+    const httpReq: any = await this.httpCoreService.postFileAndGetBlob(`${Endpoints.Vertex.tts}`, tts);
     const audioData: any = { blobUrl: null, transcription: null };
 
     const transcription = httpReq?.headers.get('transcription');
@@ -137,21 +137,21 @@ export class AgentCardService {
   }
 
   public deleteAgentCard(id: string): Promise<IAgentCard> {
-    return this.httpService.deleteDataFromService(`${Endpoints.AgentCard.Card}/${id}`);
+    return this.httpCoreService.delete(`${Endpoints.AgentCard.Card}/${id}`);
   }
 
   public findAgentCardByID(id: string): Promise<IAgentCard> {
-    return this.httpService.getDataFromService(`${Endpoints.AgentCard.Card}/${id}`);
+    return this.httpCoreService.get(`${Endpoints.AgentCard.Card}/${id}`);
   }
   public getAllAgentCards(): Promise<IAgentCard[]> {
-    return this.httpService.getDataFromService(`${Endpoints.AgentCard.Card}`);
+    return this.httpCoreService.get(`${Endpoints.AgentCard.Card}`);
   }
 
   async saveAgentCard(conversation: IAgentCard): Promise<IAgentCard> {
     if (conversation.id || conversation._id) {
-      return await this.httpService.putDataFromService(`${Endpoints.AgentCard.Card}/${conversation._id}`, conversation);
+      return await this.httpCoreService.put(`${Endpoints.AgentCard.Card}/${conversation._id}`, conversation);
     } else {
-      return await this.httpService.postDataToService(`${Endpoints.AgentCard.Card}`, conversation);
+      return await this.httpCoreService.post(`${Endpoints.AgentCard.Card}`, conversation);
     }
   }
 
@@ -163,7 +163,7 @@ export class AgentCardService {
     messages = messages?.filter((m: any) => m.role != ChatRole.AssistantHelper);
     const conversationFiltered = { ...conversation, messages };
 
-    return await this.httpService.postDataToService(`${Endpoints.AgentCard.Chat}`, conversationFiltered, 'node');
+    return await this.httpCoreService.post(`${Endpoints.AgentCard.Chat}`, conversationFiltered);
   }
 
   getText(): void {

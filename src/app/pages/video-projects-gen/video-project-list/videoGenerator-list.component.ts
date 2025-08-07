@@ -49,14 +49,14 @@ export class VideoGeneratorListComponent extends PaginationBase implements OnIni
 
   constructor(
     @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService,
-    private sourceService: VideoGeneratorService,
+    private videoGeneratorService: VideoGeneratorService,
     private cdr: ChangeDetectorRef
   ) {
     super();
   }
 
   async ngOnInit(): Promise<void> {
-    const response = await this.sourceService.getFilteredVideoGenerators(this.filterConfig);
+    const response = await this.videoGeneratorService.getFilteredVideoGenerators(this.filterConfig);
     this.videoGenerators = response.rows;
     this.cdr.detectChanges();
   }
@@ -74,7 +74,7 @@ export class VideoGeneratorListComponent extends PaginationBase implements OnIni
       case 'delete':
         const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
         if (areYouSure) {
-          const results = this.sourceService.deleteVideoGenerator(item.id);
+          const results = this.videoGeneratorService.deleteVideoGenerator(item.id);
           console.log('results', results);
           this.videoGenerators = this.videoGenerators.filter(videoGenerator => videoGenerator.id !== item.id);
           this.toastService.success({
