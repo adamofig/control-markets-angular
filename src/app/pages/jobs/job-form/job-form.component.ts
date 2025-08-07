@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IAgentJob } from '../models/jobs.model';
+import { IAgentOutcomeJob } from '../models/jobs.model';
 import { JobService } from '../jobs.service';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -99,7 +99,7 @@ export class JobFormComponent implements OnInit {
 
   constructor() {}
 
-  public job: IAgentJob | null = null;
+  public job: IAgentOutcomeJob | null = null;
   public jobId = this.route.snapshot.params['id'];
 
   async ngOnInit(): Promise<void> {
@@ -120,7 +120,7 @@ export class JobFormComponent implements OnInit {
 
   async save() {
     if (this.jobForm.valid) {
-      const job = { ...this.job, ...this.jobForm.value } as IAgentJob;
+      const job = { ...this.job, ...this.jobForm.value } as IAgentOutcomeJob;
 
       const result = await this.jobService.saveJob(job);
 

@@ -25,7 +25,27 @@
     <p><strong>Task Name:</strong> {{ jobData.task.name }}</p>
   </div>
 
-  @if (jobData.result) {
+  @if (jobData.responseFormat === responseFormat.ARRAY) {
+  <div class="section">
+    <h4>Response ARRAY FORMAT</h4>
+    <pre>{{ jobData.result | json }}</pre>
+  </div>
+  } @else if (jobData.responseFormat === responseFormat.JSON) {
+  <div class="section">
+    <h4>Response JSON FORMAT</h4>
+    <pre>{{ jobData.result | json }}</pre>
+  </div>
+  } @else if (jobData.responseFormat === responseFormat.DEFAULT_CONTENT) {
+  <div class="section">
+    <h4>Response DEFAULT FORMAT</h4>
+    <pre>{{ jobData.response }}</pre>
+  </div>
+  } @else {
+  <div class="section">
+    <h4>Response TEXT FORMAT</h4>
+    <pre>{{ jobData.response.content }}</pre>
+  </div>
+  } @if (jobData.result) {
 
   <p-card header="Result">
     <div class="section">

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, i
 import { ActivatedRoute } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 import { JobService } from '../jobs.service';
-import { IAgentJob } from '../models/jobs.model';
+import { IAgentOutcomeJob, ResponseFormat } from '../models/jobs.model';
 import { AccordionModule } from 'primeng/accordion';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
@@ -19,15 +19,17 @@ import { TagModule } from 'primeng/tag';
   styleUrl: './job-detail.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class JobDetailComponent implements OnInit {
+export class OutcomeJobDetailComponent implements OnInit {
   private genericService = inject(JobService);
   private activatedRoute = inject(ActivatedRoute);
   private n8nService = inject(N8nService);
 
+  public responseFormat = ResponseFormat;
+
   public jobId: string = this.activatedRoute.snapshot.paramMap.get('id') as string;
 
-  public job = signal<IAgentJob | null>(null);
-  @Input() jobInput: IAgentJob | null = null;
+  public job = signal<IAgentOutcomeJob | null>(null);
+  @Input() jobInput: IAgentOutcomeJob | null = null;
 
   public resultWordCount = computed(() => {
     const currentJob = this.job();

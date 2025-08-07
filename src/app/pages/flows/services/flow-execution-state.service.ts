@@ -2,7 +2,6 @@ import { Injectable, signal, inject, NgZone } from '@angular/core';
 import { IFlowExecutionState, StatusJob, IJobExecutionState, ITaskExecutionState } from '../models/flows.model';
 import { Firestore, doc, docData, DocumentReference } from '@angular/fire/firestore';
 import { FlowDiagramStateService } from './flow-diagram-state.service';
-import { JobService } from '../../jobs/jobs.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +12,6 @@ export class FlowExecutionStateService {
   public flowExecutionState = signal<IFlowExecutionState | null>(null);
   private previousFlowExecutionState: IFlowExecutionState | null = null;
   private flowDiagramStateService = inject(FlowDiagramStateService);
-  private jobService = inject(JobService);
 
   public getFlowExecutionState() {
     // Returns the current value
@@ -43,17 +41,21 @@ export class FlowExecutionStateService {
         this.setFlowExecutionState(newExecutionState);
 
         // Now, get the newly completed jobs
-        const newlyCompleted = this.getNewlyCompletedJobs();
-
-        if (newlyCompleted.length > 0) {
-          console.log('Newly completed jobs:', newlyCompleted);
-          // Here you can trigger your actions for each job in newlyCompleted
-          newlyCompleted.forEach(job => {
-            this.flowDiagramStateService.addOutcomeToFlow(job);
-          });
-        }
+        this.updateJobNodes();
       });
     });
+  }
+
+  private updateJobNodes() {
+    const justCompletedJobs = this.getJustCompletedJobs();
+
+    if (justCompletedJobs.length > 0) {
+      console.log('justCompletedJobs', justCompletedJobs);
+      // Here you can trigger your actions for each job in newlyCompleted
+      justCompletedJobs.forEach(job => {
+        this.flowDiagramStateService.addOutcomeToFlow(job);
+      });
+    }
   }
 
   // Optional: Method to initialize with a default state if needed
@@ -68,7 +70,7 @@ export class FlowExecutionStateService {
   }
 
   // New method to get newly completed jobs
-  public getNewlyCompletedJobs(): IJobExecutionState[] {
+  public getJustCompletedJobs(): IJobExecutionState[] {
     const currentState = this.flowExecutionState();
     // previousFlowExecutionState is a class property
 

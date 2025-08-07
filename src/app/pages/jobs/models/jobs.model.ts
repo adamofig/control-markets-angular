@@ -18,7 +18,7 @@ export interface MessageAI {
   content: string;
 }
 
-export interface IAgentJob extends AuditDate {
+export interface IAgentOutcomeJob extends AuditDate {
   _id?: string;
   id?: string;
   task: Partial<IAgentTask>; // Relation with the task
@@ -26,7 +26,15 @@ export interface IAgentJob extends AuditDate {
   messages: MessageAI[]; // Messages of the chat
   response: MessageAI; // Response of the AI
   result: any;
-  responseFormat: string; // Format of the response
+  responseFormat: ResponseFormat; // Format of the response
   sources?: ISourceTask[]; // Relation with sources.
   infoFromSources?: string; // Consolidated information from sources
+  inputNodeId?: string;
+}
+
+export enum ResponseFormat {
+  JSON = 'json', // Json whatever format
+  ARRAY = 'array', // Array of objects
+  TEXT = 'text', // Text
+  DEFAULT_CONTENT = 'default_content', // My default json format {content: string, description: string, tags: string[]}
 }

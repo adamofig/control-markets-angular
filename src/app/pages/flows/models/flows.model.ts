@@ -31,6 +31,7 @@ export interface IJobExecutionState {
   status: StatusJob;
   messages: MessageLog[];
   outcomeId: string;
+  inputType: NodeType;
 }
 
 export interface ITaskExecutionState {
@@ -45,4 +46,12 @@ export interface IFlowExecutionState {
   flowId: string; // flow id
   status: StatusJob;
   tasks: Record<string, ITaskExecutionState>;
+}
+
+export enum NodeType {
+  AgentNodeComponent = 'AgentNodeComponent',
+  TaskNodeComponent = 'TaskNodeComponent',
+  SourcesNodeComponent = 'SourcesNodeComponent',
+  OutcomeNodeComponent = 'OutcomeNodeComponent',
+  default = 'default',
 }

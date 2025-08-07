@@ -1,12 +1,12 @@
 import { computed, inject, Injectable, signal, Type } from '@angular/core';
-import { IAgentFlows, IJobExecutionState } from '../models/flows.model';
+import { IAgentFlows, IJobExecutionState, NodeType } from '../models/flows.model';
 import { Connection, CustomNodeComponent, DynamicNode, Edge } from 'ngx-vflow';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
 import { IAgentTask } from '../../tasks/models/tasks-models'; // Corrected path
 import { nanoid } from 'nanoid'; // Added
 import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
 import { JobService } from '../../jobs/jobs.service';
-import { IAgentJob } from '../../jobs/models/jobs.model';
+import { IAgentOutcomeJob } from '../../jobs/models/jobs.model';
 import { FlowComponentRefStateService } from './flow-component-ref-state.service';
 import { IAgentSource } from '../../sources/models/sources.model';
 
@@ -60,16 +60,19 @@ export class FlowDiagramStateService {
 
   public async addOutcomeToFlow(outcome: IJobExecutionState) {
     const outcomeJob = await this.jobService.getJob(outcome.outcomeId);
-    const agentNode = this.findOutcomeNodeByAgentCardId(outcomeJob.agentCard?._id!);
-
-    if (!agentNode) {
-      this.createOutcomeNode(outcomeJob);
-    } else {
-      this.flowComponentRefStateService.updateData(agentNode.id, { outcomeJob });
-      this.updateNodeData(agentNode.id, { outcomeJob });
+    let outcomeJobNode;
+    if (outcome.inputType === NodeType.AgentNodeComponent) {
+      outcomeJobNode = this.findOutcomeNodeByAgentCardId(outcomeJob.agentCard?._id!);
     }
 
-    console.log('agentNode', agentNode);
+    if (!outcomeJobNode) {
+      this.createOutcomeNode(outcomeJob);
+    } else {
+      this.flowComponentRefStateService.updateData(outcomeJobNode.id, { outcomeJob });
+      this.updateNodeData(outcomeJobNode.id, { outcomeJob });
+    }
+
+    console.log('outcomeJobNode', outcomeJobNode);
   }
 
   public updateNodeData(nodeId: string, data: any) {
@@ -82,13 +85,22 @@ export class FlowDiagramStateService {
     return this.nodes().find(node => node?.data?.outcomeJob?.agentCard?._id === agentCardId);
   }
 
-  public createOutcomeNode(outcomeJob: IAgentJob): void {
-    const agentNode = this.nodes().find(node => node?.data?.agentCard?._id === outcomeJob.agentCard?._id);
+  public createOutcomeNode(outcomeJob: IAgentOutcomeJob): void {
+    let inputNode;
+
+    if (outcomeJob.inputNodeId) {
+      inputNode = this.nodes().find(node => node?.id === outcomeJob.inputNodeId);
+    }
+    if (outcomeJob.agentCard) {
+      inputNode = this.nodes().find(node => node?.data?.agentCard?._id === outcomeJob.agentCard?._id);
+      console.log('inputNode', inputNode);
+    } else {
+      inputNode = this.nodes().find(node => node?.data?.agentTask?._id === outcomeJob.task?._id);
+    }
     const taskNode = this.nodes().find(node => node?.data?.agentTask?._id === outcomeJob.task?._id);
 
-    console.log('agentNode', agentNode);
-    const x = taskNode?.point().x! + (taskNode?.point().x! - agentNode?.point().x!);
-    const y = agentNode?.point().y! - 30;
+    const x = taskNode?.point().x! + (taskNode?.point().x! - inputNode?.point().x!);
+    const y = inputNode?.point().y! - 30;
 
     const newNode: DynamicNodeWithData = {
       id: 'outcome-node-' + nanoid(),
@@ -146,11 +158,11 @@ export class FlowDiagramStateService {
 
     if ((sourceNode?.type as any)?.name === AgentNodeComponent.name) {
       if ((targetNode?.type as any)?.name === TaskNodeComponent.name) {
-        const outcomeJobEmpty: Partial<IAgentJob> = {
+        const outcomeJobEmpty: Partial<IAgentOutcomeJob> = {
           agentCard: sourceNode?.data?.agentCard,
           task: targetNode?.data?.agentTask,
         };
-        this.createOutcomeNode(outcomeJobEmpty as IAgentJob);
+        this.createOutcomeNode(outcomeJobEmpty as IAgentOutcomeJob);
       }
     }
 

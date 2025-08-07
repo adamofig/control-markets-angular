@@ -15,8 +15,8 @@ import { FlowExecutionStateService } from '../services/flow-execution-state.serv
 import { FlowOrchestrationService } from '../services/flow-orchestration.service';
 
 @Component({
-  templateUrl: './flows-workspace.html',
-  styleUrl: './flows-workspace.css',
+  templateUrl: './flow-canva.html',
+  styleUrl: './flow-canva.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [Vflow, DialogModule, AgentCardListComponent, ButtonModule, TaskListComponent, InputTextModule, FormsModule],

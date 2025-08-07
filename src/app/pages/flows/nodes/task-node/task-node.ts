@@ -36,34 +36,22 @@ export class TaskNodeComponent extends CustomNodeComponent<CustomTaskNode> imple
 
   public override ngOnInit(): void {
     super.ngOnInit();
-    console.log('task-node', this.agentTask());
   }
 
   public taskExecutionState = computed(() => {
-    console.log('taskExecutionState', this.agentTask());
-
     const executionState: IFlowExecutionState | null = this.flowExecutionStateService.flowExecutionState();
     if (executionState) {
       const executionTask = executionState?.tasks[this.node().id];
-      console.log('-------state', executionState);
-
-      return executionTask;
+      if (executionTask) {
+        console.log('-------state', executionState);
+        return executionTask;
+      }
     }
     return null;
   });
 
   constructor() {
     super();
-    effect(() => {
-      // console.log('task-node', this.data()?.agentTask);
-    });
-
-    effect(() => {
-      const stateFromService = this.flowExecutionStateService.flowExecutionState();
-      console.log('[TaskNodeComponent] Effect triggered. flowExecutionState from service:', stateFromService, 'for node ID:', this.node()?.id);
-    });
-
-    // probar primero aqui
   }
 
   public isDialogVisible = false;

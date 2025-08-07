@@ -12,7 +12,7 @@ import {
   ToastAlertsAbstractService,
 } from '@dataclouder/ngx-core';
 import { JobService } from '../jobs.service';
-import { IAgentJob } from '../models/jobs.model';
+import { IAgentOutcomeJob } from '../models/jobs.model';
 import { RouterModule } from '@angular/router';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { MenuItem } from 'primeng/api';
@@ -47,10 +47,10 @@ export class JobListComponent extends PaginationBase implements OnInit {
   // Inputs
   @Input() viewType: 'table' | 'card' = 'card';
   readonly onlyView = input<boolean>(true);
-  readonly onSelectJob = output<IAgentJob>();
+  readonly onSelectJob = output<IAgentOutcomeJob>();
 
   // States
-  jobs: WritableSignal<IAgentJob[]> = signal<IAgentJob[]>([]);
+  jobs: WritableSignal<IAgentOutcomeJob[]> = signal<IAgentOutcomeJob[]>([]);
   columns: any[] = ['name', 'description', 'updatedAt', 'image'];
   filterBarOptions: ListFilterBarOptions = { showActions: true, showCreateButton: true, showViewButton: true };
 
@@ -98,7 +98,7 @@ export class JobListComponent extends PaginationBase implements OnInit {
     this.cdr.detectChanges();
   }
 
-  public selectItem(job: IAgentJob) {
+  public selectItem(job: IAgentOutcomeJob) {
     console.log('onSelect');
     this.onSelectJob.emit(job);
   }

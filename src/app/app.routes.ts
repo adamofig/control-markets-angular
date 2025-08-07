@@ -66,15 +66,15 @@ export const routes: Routes = [
           },
           {
             path: 'edit',
-            loadComponent: () => import('./pages/flows/flow-workspace/flows-workspace').then(m => m.FlowsComponent),
+            loadComponent: () => import('./pages/flows/flow-workspace/flow-canva').then(m => m.FlowsComponent),
           },
           {
             path: 'edit/:id',
-            loadComponent: () => import('./pages/flows/flow-workspace/flows-workspace').then(m => m.FlowsComponent),
+            loadComponent: () => import('./pages/flows/flow-workspace/flow-canva').then(m => m.FlowsComponent),
           },
           {
             path: 'edit/:id/:executionId',
-            loadComponent: () => import('./pages/flows/flow-workspace/flows-workspace').then(m => m.FlowsComponent),
+            loadComponent: () => import('./pages/flows/flow-workspace/flow-canva').then(m => m.FlowsComponent),
           },
         ],
       },
@@ -181,7 +181,7 @@ export const routes: Routes = [
           },
           {
             path: 'details/:id',
-            loadComponent: () => import('./pages/jobs/job-detail/job-detail.component').then(m => m.JobDetailComponent),
+            loadComponent: () => import('./pages/jobs/job-detail/job-detail.component').then(m => m.OutcomeJobDetailComponent),
           },
         ],
       },

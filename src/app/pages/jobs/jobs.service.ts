@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { IAgentJob } from './models/jobs.model';
+import { IAgentOutcomeJob } from './models/jobs.model';
 import { FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN, HttpCoreService } from '@dataclouder/ngx-core';
 
 const server = 'primary';
@@ -21,9 +21,9 @@ export class JobService {
   private httpService = inject(HttpCoreService);
   private toastService = inject(TOAST_ALERTS_TOKEN);
 
-  public async getJobs(): Promise<IAgentJob[]> {
+  public async getJobs(): Promise<IAgentOutcomeJob[]> {
     try {
-      const response = await this.httpService.get<IAgentJob[]>(Endpoints.Jobs.Jobs, server);
+      const response = await this.httpService.get<IAgentOutcomeJob[]>(Endpoints.Jobs.Jobs, server);
       this.toastService.success({ title: 'Se han encontrado jobs', subtitle: 'Mostrando información' });
       return response;
     } catch (error) {
@@ -33,15 +33,15 @@ export class JobService {
   }
 
   public async getFilteredJobs(filter: FiltersConfig) {
-    return this.httpService.post<IFilterQueryResponse<IAgentJob>>(Endpoints.Jobs.JobsFiltered, filter, server);
+    return this.httpService.post<IFilterQueryResponse<IAgentOutcomeJob>>(Endpoints.Jobs.JobsFiltered, filter, server);
   }
 
-  public async getJob(id: string): Promise<IAgentJob> {
-    return this.httpService.get<IAgentJob>(`${Endpoints.Jobs.Jobs}/${id}`);
+  public async getJob(id: string): Promise<IAgentOutcomeJob> {
+    return this.httpService.get<IAgentOutcomeJob>(`${Endpoints.Jobs.Jobs}/${id}`);
   }
 
-  public async saveJob(job: IAgentJob): Promise<IAgentJob> {
-    return this.httpService.post<IAgentJob>(Endpoints.Jobs.Jobs, job);
+  public async saveJob(job: IAgentOutcomeJob): Promise<IAgentOutcomeJob> {
+    return this.httpService.post<IAgentOutcomeJob>(Endpoints.Jobs.Jobs, job);
   }
 
   public async deleteJob(id: string) {

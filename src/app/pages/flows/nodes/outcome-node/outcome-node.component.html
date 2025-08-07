@@ -1,10 +1,16 @@
 <div class="custom-node" selectable [class.custom-node_selected]="selected()" (dblclick)="openModal()">
-  <div
-    class="card-background"
-    [style.background-image]="outcomeJob?.agentCard?.assets?.image?.url ? 'url(' + outcomeJob?.agentCard?.assets?.image?.url + ')' : null"></div>
+  <div class="card-background" [style.background-image]="backgroundImageUrl"></div>
   <div class="card-content">
     <p class="main-text">
-      {{ this.data()?.outcomeJob?.result?.content || 'No response' }}
+      @if (this.data()?.outcomeJob?.responseFormat === responseFormat.ARRAY) {
+      {{ this.data()?.outcomeJob?.result | json }}
+      } @else if (this.data()?.outcomeJob?.responseFormat === responseFormat.JSON) {
+      {{ this.data()?.outcomeJob?.result | json }}
+      } @else if (this.data()?.outcomeJob?.responseFormat === responseFormat.DEFAULT_CONTENT) {
+      {{ this.data()?.outcomeJob?.response }}
+      } @else {
+      {{ this.data()?.outcomeJob?.response?.content }}
+      }
       <!-- {{ outcomeJob?.result?.content || 'No response' }} -->
     </p>
   </div>

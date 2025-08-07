@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { UserDataExchange, UserDataExchangeAbstractService } from '@dataclouder/ngx-agent-cards';
 import { Endpoints } from 'src/app/core/enums';
 import { HttpService } from 'src/app/services/http.service';
-import { IAgentJob } from '../../jobs/models/jobs.model';
-// import { IAgentJob, IAgentTask } from '../models/tasks-models';
+import { IAgentOutcomeJob } from '../../jobs/models/jobs.model';
+// import { IAgentOutcomeJob, IAgentTask } from '../models/tasks-models';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class JobsService {
     return this.httpService.getDataFromService(`${Endpoints.Jobs.ByTask}/${id}`);
   }
 
-  public saveJob(job: IAgentJob) {
+  public saveJob(job: IAgentOutcomeJob) {
     return this.httpService.postDataToService(Endpoints.Jobs.Save, job);
   }
 

@@ -60,7 +60,7 @@ export const AgentTaskOptions = [
   { label: 'Crear contenido', value: AgentTaskType.CREATE_CONTENT },
 ];
 
-// export interface IAgentJob {
+// export interface IAgentOutcomeJob {
 //   _id?: string;
 //   id?: string;
 //   idTask: string;

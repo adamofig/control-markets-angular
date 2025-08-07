@@ -3,19 +3,20 @@ import { ComponentDynamicNode, CustomNodeComponent, Vflow } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { OutcomeDetailsComponent } from './outcome-details/outcome-details';
-import { IAgentJob } from 'src/app/pages/jobs/models/jobs.model';
-import { JobDetailComponent } from 'src/app/pages/jobs/job-detail/job-detail.component';
+import { IAgentOutcomeJob, ResponseFormat } from 'src/app/pages/jobs/models/jobs.model';
+import { OutcomeJobDetailComponent } from 'src/app/pages/jobs/job-detail/job-detail.component';
 import { ButtonModule } from 'primeng/button';
 import { FlowDiagramStateService } from '../../services/flow-diagram-state.service';
 import { FlowComponentRefStateService } from '../../services/flow-component-ref-state.service';
+import { JsonPipe } from '@angular/common';
 
 export interface CustomOutcomeNode extends ComponentDynamicNode {
-  outcomeJob: IAgentJob | null;
+  outcomeJob: IAgentOutcomeJob | null;
 }
 
 @Component({
   selector: 'app-outcome-node',
-  imports: [Vflow, DialogModule, ButtonModule],
+  imports: [Vflow, DialogModule, ButtonModule, JsonPipe],
   templateUrl: './outcome-node.component.html',
   styleUrl: './outcome-node.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,7 +27,9 @@ export class OutcomeNodeComponent extends CustomNodeComponent<CustomOutcomeNode>
   public flowDiagramStateService = inject(FlowDiagramStateService);
   public flowComponentRefStateService = inject(FlowComponentRefStateService);
 
-  public outcomeJob: IAgentJob | null = null;
+  public outcomeJob: IAgentOutcomeJob | null = null;
+  public responseFormat = ResponseFormat;
+  public backgroundImageUrl: string;
 
   @ViewChild('dialog') dialog!: ViewContainerRef;
 
@@ -41,10 +44,11 @@ export class OutcomeNodeComponent extends CustomNodeComponent<CustomOutcomeNode>
 
   constructor() {
     super();
+    this.backgroundImageUrl = `url('assets/defaults/images/default_2_3.webp')`;
     effect(() => {
-      console.log('outcome-node', this.data()?.outcomeJob);
-
       this.outcomeJob = this.data()?.outcomeJob || null;
+      const imageUrl = this.outcomeJob?.agentCard?.assets?.image?.url;
+      this.backgroundImageUrl = imageUrl ? `url('${imageUrl}')` : `url('assets/defaults/images/default_2_3.webp')`;
     });
   }
 
@@ -52,7 +56,7 @@ export class OutcomeNodeComponent extends CustomNodeComponent<CustomOutcomeNode>
 
   openModal(): void {
     this.isDialogVisible = true;
-    this.dialogService.open(JobDetailComponent, {
+    this.dialogService.open(OutcomeJobDetailComponent, {
       header: 'Outcome Node',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
