@@ -1,16 +1,12 @@
-import { inject, Injectable, signal, Type } from '@angular/core';
+import { computed, inject, Injectable, signal, Type } from '@angular/core';
 import { IAgentFlows, IJobExecutionState } from '../models/flows.model';
 import { Connection, CustomNodeComponent, DynamicNode, Edge } from 'ngx-vflow';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
 import { IAgentTask } from '../../tasks/models/tasks-models'; // Corrected path
 import { nanoid } from 'nanoid'; // Added
-import { AgentNodeComponent } from '../nodes/agent-node/agent-node.component'; // Corrected path
-import { TaskNodeComponent } from '../nodes/task-node/task-node';
-import { SourcesNodeComponent } from '../nodes/sources-node/sources-node.component'; // Added
-import { OutcomeNodeComponent } from '../nodes/outcome-node/outcome-node.component';
+import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
 import { JobService } from '../../jobs/jobs.service';
 import { IAgentJob } from '../../jobs/models/jobs.model';
-import { DistributionChanelNodeComponent } from '../nodes/distribution-chanel-node/distribution-chanel-node.component';
 import { FlowComponentRefStateService } from './flow-component-ref-state.service';
 import { IAgentSource } from '../../sources/models/sources.model';
 
@@ -33,11 +29,19 @@ export class FlowDiagramStateService {
     return this.flow();
   }
 
-  public getTargetNodesForSource(nodeId: string): string[] {
+  public getInputs(nodeId: string): string[] {
     console.log('getTargetNodes', this.edges());
-    return this.edges()
-      .filter(edge => edge.source === nodeId)
-      .map(edge => edge.target);
+
+    const edgesWhereTargetIsNode = this.edges().filter(edge => edge.target === nodeId);
+    const sourceIds = edgesWhereTargetIsNode.map(edge => edge.source);
+    console.log('edgesWhereTargetIsNode', edgesWhereTargetIsNode);
+    return sourceIds;
+  }
+
+  public getInputNodes(nodeId: string): DynamicNodeWithData[] {
+    const inputsIds = this.getInputs(nodeId);
+    const allNodes = this.nodes();
+    return allNodes.filter(node => inputsIds.includes(node.id));
   }
 
   public setFlow(flow: IAgentFlows) {
@@ -74,7 +78,7 @@ export class FlowDiagramStateService {
     console.log('updateNodeData', this.nodes());
   }
 
-  findOutcomeNodeByAgentCardId(agentCardId: string): DynamicNodeWithData | undefined {
+  public findOutcomeNodeByAgentCardId(agentCardId: string): DynamicNodeWithData | undefined {
     return this.nodes().find(node => node?.data?.outcomeJob?.agentCard?._id === agentCardId);
   }
 
@@ -95,7 +99,7 @@ export class FlowDiagramStateService {
 
     this.nodes.set([...this.nodes(), newNode]);
 
-    this.createEdge({ source: taskNode?.id!, target: newNode.id });
+    this._createEdge({ source: taskNode?.id!, target: newNode.id });
   }
 
   public addTaskToFlow(task: IAgentTask): void {
@@ -126,11 +130,6 @@ export class FlowDiagramStateService {
     this.nodes.set([...this.nodes(), newNode]);
   }
 
-  // public removeNodeNoEdge(nodeId: string): void {
-  //   const currentNodes = this.nodes().filter(node => node.id !== nodeId);
-  //   this.nodes.set(currentNodes);
-  // }
-
   public removeNode(nodeId: string): void {
     // Remove the node itself
     const currentNodes = this.nodes().filter(node => node.id !== nodeId);
@@ -141,7 +140,24 @@ export class FlowDiagramStateService {
     this.edges.set(currentEdges);
   }
 
-  private createEdge({ source, target }: Connection) {
+  public createEdge({ source, target }: Connection) {
+    const sourceNode = this.nodes().find(node => node.id === source);
+    const targetNode = this.nodes().find(node => node.id === target);
+
+    if ((sourceNode?.type as any)?.name === AgentNodeComponent.name) {
+      if ((targetNode?.type as any)?.name === TaskNodeComponent.name) {
+        const outcomeJobEmpty: Partial<IAgentJob> = {
+          agentCard: sourceNode?.data?.agentCard,
+          task: targetNode?.data?.agentTask,
+        };
+        this.createOutcomeNode(outcomeJobEmpty as IAgentJob);
+      }
+    }
+
+    this._createEdge({ source, target });
+  }
+
+  private _createEdge({ source, target }: Connection) {
     const edges = [
       ...this.edges(),
       {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { IAgentCard, ModelSelectorComponent } from '@dataclouder/ngx-agent-cards';
@@ -9,18 +9,20 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { IAgentTask, ISourceTask } from '../models/tasks-models';
 import { TasksService } from '../services/tasks.service';
+import { MarkdownComponent } from 'ngx-markdown';
 
 @Component({
   selector: 'app-task-details',
   standalone: true,
-  imports: [CommonModule, ButtonModule, InputTextModule, CardModule, ChipModule, TooltipModule, ModelSelectorComponent],
+  imports: [CommonModule, ButtonModule, InputTextModule, CardModule, ChipModule, TooltipModule, ModelSelectorComponent, MarkdownComponent],
   templateUrl: './task-details.component.html',
   styleUrl: './task-details.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskDetailsComponent implements OnInit {
   public task: IAgentTask | null = null;
-  public id = this.route.snapshot.params['id'];
+  @Input() public id: string | null = null;
+  private routeId = this.route.snapshot.params['id'];
 
   constructor(private tasksService: TasksService, private cdr: ChangeDetectorRef, private route: ActivatedRoute) {}
 
@@ -29,8 +31,9 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   private async getTaskIfIdParam() {
-    if (this.id) {
-      this.task = await this.tasksService.getTaskById(this.id);
+    const taskId = this.id ?? this.routeId;
+    if (taskId) {
+      this.task = await this.tasksService.getTaskById(taskId);
       this.cdr.detectChanges();
     }
   }

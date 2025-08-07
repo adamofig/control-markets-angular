@@ -38,7 +38,7 @@ export class AgentNodeComponent extends CustomNodeComponent<CustomAgentNode> imp
     if (executionState) {
       const taskId: string = agentId;
 
-      const targetNodes = this.flowDiagramStateService.getTargetNodesForSource(this.node().id);
+      const targetNodes = this.flowDiagramStateService.getInputs(this.node().id);
       console.log('targetNodes', targetNodes);
 
       if (targetNodes.length > 0) {

@@ -35,6 +35,18 @@
 
 .tag {
   position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.execute-btn {
+  position: absolute;
   bottom: 5px;
+  right: 5px;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 5px;
   right: 5px;
 }

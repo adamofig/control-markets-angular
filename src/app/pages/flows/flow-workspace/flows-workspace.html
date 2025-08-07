@@ -44,7 +44,7 @@
   </ng-template>
 
   <ng-template let-ctx edgeLabelHtml>
-    <p-button icon="pi pi-times" (click)="deleteEdge(ctx.edge)" [rounded]="true" [text]="true" severity="danger" />
+    <p-button icon="pi pi-times" (click)="flowDiagramStateService.deleteEdge(ctx.edge)" [rounded]="true" [text]="true" severity="danger" />
   </ng-template>
 </vflow>
 

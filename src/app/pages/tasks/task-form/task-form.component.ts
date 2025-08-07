@@ -109,7 +109,6 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
   }
 
   async ngOnInit() {
-    debugger;
     await this.getTaskIfIdParam();
     this.getAgentCards();
     this.getAgentSources();

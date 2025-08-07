@@ -4,13 +4,14 @@ import { ComponentDynamicNode, CustomNodeComponent, Vflow } from 'ngx-vflow';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
-import { TaskDetailsComponent } from './task-details/task-node-details';
+import { TaskNodeDetailsComponent } from './task-details/task-node-details';
 import { IAgentTask } from '../../../tasks/models/tasks-models';
 import { FlowExecutionStateService } from '../../services/flow-execution-state.service';
 import { FlowDiagramStateService } from '../../services/flow-diagram-state.service';
 import { IFlowExecutionState, StatusJob } from '../../models/flows.model';
 import { TagModule } from 'primeng/tag';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { FlowOrchestrationService } from '../../services/flow-orchestration.service';
 
 export interface CustomTaskNode extends ComponentDynamicNode {
   agentTask: IAgentTask;
@@ -28,6 +29,7 @@ export class TaskNodeComponent extends CustomNodeComponent<CustomTaskNode> imple
   public dialogService = inject(DialogService);
   public flowExecutionStateService = inject(FlowExecutionStateService);
   public flowDiagramStateService = inject(FlowDiagramStateService);
+  public flowOrchestrationService = inject(FlowOrchestrationService);
 
   public statusJob = StatusJob;
   public agentTask = computed(() => this.node()?.data?.agentTask);
@@ -68,7 +70,7 @@ export class TaskNodeComponent extends CustomNodeComponent<CustomTaskNode> imple
 
   openModal(): void {
     this.isDialogVisible = true;
-    this.dialogService.open(TaskDetailsComponent, {
+    this.dialogService.open(TaskNodeDetailsComponent, {
       header: 'Task Node Details',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
@@ -81,5 +83,9 @@ export class TaskNodeComponent extends CustomNodeComponent<CustomTaskNode> imple
 
   removeNode(): void {
     this.flowDiagramStateService.removeNode(this.node().id);
+  }
+
+  runNode(): void {
+    this.flowOrchestrationService.runNode(this.flowDiagramStateService.getFlow()?.id!, this.node().id);
   }
 }

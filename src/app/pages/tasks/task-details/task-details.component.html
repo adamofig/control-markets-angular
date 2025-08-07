@@ -1,6 +1,7 @@
-<div *ngIf="task">
+@if(task){
+<div>
   <p-card [header]="task.name">
-    <p>{{ task.description }}</p>
+    <markdown>{{ task.description }}</markdown>
     <div><strong>Status:</strong> {{ task.status }}</div>
     <div><strong>Task Type:</strong> {{ task.taskType }}</div>
     <div *ngIf="task.model"><strong>Model:</strong> {{ task.model.provider }} - {{ task.model.modelName }}</div>
@@ -18,3 +19,4 @@
     </div>
   </p-card>
 </div>
+}

@@ -8,6 +8,7 @@ const Endpoints = {
   Flows: {
     Flows: 'api/agent-flows',
     FlowsFiltered: 'api/agent-flows/query',
+    ExecuteTask: 'api/agent-flows/run-node',
   },
 };
 
@@ -47,5 +48,10 @@ export class FlowService {
 
   public async runFlow(flowid: string) {
     return this.httpService.post<IAgentFlows>(`${Endpoints.Flows.Flows}/run/${flowid}`, {});
+  }
+
+  public async runNode(flowId: string, nodeId: string) {
+    // assummong node is a task
+    return this.httpService.post<IAgentFlows>(`${Endpoints.Flows.ExecuteTask}`, { flowId, nodeId });
   }
 }
