@@ -1,0 +1,26 @@
+<div [formGroup]="formGroup" class="dialog-form">
+  <p-inputgroup>
+    <p-inputgroup-addon>
+      <p-button icon="pi pi-trash" severity="danger" [disabled]="isLast" (click)="onRemove()" />
+    </p-inputgroup-addon>
+
+    <input pInputText [id]="'content-' + index" formControlName="content" placeholder="Enter dialog content" />
+
+    @if(dialog?.audio) {
+    <p-inputgroup-addon>
+      <p-button icon="pi pi-ellipsis-v" severity="secondary" />
+    </p-inputgroup-addon>
+    } @else {
+    <p-inputgroup-addon>
+      <p-button icon="pi pi-plus" severity="secondary" pTooltip="Add Audio" (click)="onAddAudio()" />
+    </p-inputgroup-addon>
+    }
+
+    <p-inputgroup-addon>
+      <p-button icon="pi pi-ellipsis-v" severity="secondary" />
+    </p-inputgroup-addon>
+    <p-inputgroup-addon>
+      <p-button icon="pi pi-play-circle" severity="primary" variant="text" (click)="onPlayAudio()" />
+    </p-inputgroup-addon>
+  </p-inputgroup>
+</div>

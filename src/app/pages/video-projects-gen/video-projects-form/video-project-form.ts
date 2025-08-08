@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ICompositionPlan, IFragmentExtraction, IVideoProjectGenerator, SourceWithReference } from '../models/video-project.model';
 import { VideoGeneratorService } from '../services/video-project-gen.service';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,18 +16,19 @@ import { TagModule } from 'primeng/tag';
 import { AccordionModule } from 'primeng/accordion';
 import { MarkdownModule } from 'ngx-markdown';
 
-import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+import { EntityBaseFormComponent, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 
 import { VideoFragmentExtractorService } from '../services/video-fragment-extractor.service';
 import { CompositionEditorComponent } from '../composition-editor-adapter/composition-editor-adapter';
 import { IAgentSource } from '../../sources/models/sources.model';
 import { downloadVideoSourceAsComposition } from '../composition-editor-adapter/overlay-download.util';
 import { TimeLineManager } from '../timeline/timeline-manager/timeline-manager';
-import { TaskListComponent } from '../../tasks/task-list/task-list.component';
 import { DialogModule } from 'primeng/dialog';
 
 import { AgentCardListComponent } from '@dataclouder/ngx-agent-cards';
 import { DialogsComponent } from '../dialogs/dialogs.component';
+import { ArrayFormHandlerComponent } from '../dialogs/array-form-handler.component';
+import { VideoFormDefinitionService } from './video-project-form-definition.service';
 
 @Component({
   selector: 'app-video-project-form',
@@ -50,16 +50,24 @@ import { DialogsComponent } from '../dialogs/dialogs.component';
     CompositionEditorComponent,
     MarkdownModule,
     TimeLineManager,
-    // TaskListComponent,
     DialogModule,
     AgentCardListComponent,
     DialogsComponent,
+    ArrayFormHandlerComponent,
   ],
   templateUrl: './video-project-form.html',
   styleUrl: './video-project-form.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VideoProjectFormComponent implements OnInit {
+export class VideoProjectFormComponent extends EntityBaseFormComponent<IVideoProjectGenerator> implements OnInit {
+  // override form: FormGroup<any>;
+  protected override entityCommunicationService = inject(VideoGeneratorService);
+
+  private formGroupService = inject(VideoFormDefinitionService);
+
+  protected override patchForm(entity: IVideoProjectGenerator): void {
+    this.form.patchValue(entity);
+  }
   public instructions: string = '';
 
   public dialogsForm: FormArray = this.fb.array([] as any[]);
@@ -73,49 +81,45 @@ export class VideoProjectFormComponent implements OnInit {
     selectedSourceId: '',
   };
 
-  public videoGeneratorForm = this.fb.group({
-    name: ['', Validators.required],
-    description: [''],
-  });
+  public override form = this.formGroupService.createMainForm();
 
   constructor(
-    private route: ActivatedRoute,
     private videoGeneratorService: VideoGeneratorService,
     private fb: FormBuilder,
-    private router: Router,
     private videoFragmentExtractorService: VideoFragmentExtractorService,
     @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    super();
+  }
 
   public videoProject: IVideoProjectGenerator | null = null;
-  public videoGeneratorId = this.route.snapshot.params['id'];
 
   async ngOnInit(): Promise<void> {
-    if (this.videoGeneratorId) {
-      this.videoProject = await this.videoGeneratorService.getVideoGenerator(this.videoGeneratorId);
+    if (this.entityId()) {
+      this.videoProject = await this.videoGeneratorService.getVideoGenerator(this.entityId());
       if (this.videoProject) {
         console.log(this.videoProject);
-        this.videoGeneratorForm.patchValue(this.videoProject);
+        this.form.patchValue(this.videoProject);
       }
     }
   }
 
-  async save() {
-    if (this.videoGeneratorForm.valid) {
-      const videoGenerator = { ...this.videoGeneratorForm.value, ...this.videoProject } as IVideoProjectGenerator;
+  // async save() {
+  //   if (this.videoGeneratorForm.valid) {
+  //     const videoGenerator = { ...this.videoGeneratorForm.value, ...this.videoProject } as IVideoProjectGenerator;
 
-      const result = await this.videoGeneratorService.saveVideoGenerator(videoGenerator);
+  //     const result = await this.videoGeneratorService.saveVideoGenerator(videoGenerator);
 
-      if (!this.videoGeneratorId) {
-        this.router.navigate([result.id], { relativeTo: this.route });
-      }
-      this.toastService.success({
-        title: 'Origen guardado',
-        subtitle: 'El origen ha sido guardado correctamente',
-      });
-    }
-  }
+  //     if (!this.videoGeneratorId) {
+  //       this.router.navigate([result.id], { relativeTo: this.route });
+  //     }
+  //     this.toastService.success({
+  //       title: 'Origen guardado',
+  //       subtitle: 'El origen ha sido guardado correctamente',
+  //     });
+  //   }
+  // }
 
   public addVideo() {
     const url = prompt('¿Estás seguro de querer agregar un video?');
@@ -131,7 +135,7 @@ export class VideoProjectFormComponent implements OnInit {
       return;
     }
 
-    const result: any = await this.videoGeneratorService.addSource(this.videoGeneratorId, idSource);
+    const result: any = await this.videoGeneratorService.addSource(this.entityId(), idSource);
     console.log(result);
     this.videoProject = result;
     this.cdr.detectChanges();
@@ -144,8 +148,8 @@ export class VideoProjectFormComponent implements OnInit {
       return;
     }
 
-    const result = await this.videoGeneratorService.removeSource(this.videoGeneratorId, source.reference._id);
-    this.videoProject = result;
+    const result = await this.videoGeneratorService.removeSource(this.entityId(), source.reference._id);
+    // this.videoProject = result;
     this.cdr.detectChanges();
 
     this.toastService.success({ title: 'Fuente eliminada', subtitle: 'La fuente ha sido eliminada correctamente' });
@@ -228,11 +232,12 @@ export class VideoProjectFormComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  public saveDialogs() {
+  public async saveDialogs() {
     this.videoProject!.dialogs = this.dialogsForm.value;
 
-    this.videoGeneratorService.updateVideoGenerator(this.videoGeneratorId, { dialogs: this.videoProject!.dialogs });
+    // await this.videoGeneratorService.updateVideoGenerator(this.entityId(), { dialogs: this.videoProject!.dialogs });
     this.cdr.detectChanges();
+    await this.videoGeneratorService.partialUpdate(this.entityId(), { dialogs: this.videoProject!.dialogs });
     this.toastService.success({ title: 'Diálogos guardados', subtitle: 'Los diálogos han sido guardados correctamente' });
   }
 }

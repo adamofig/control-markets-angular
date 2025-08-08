@@ -1,24 +1,16 @@
 <div>
-  <span *ngFor="let dialog of dialogControls; let i = index">
-    <div [formGroup]="dialog" class="dialog-form">
-      <p-inputgroup>
-        <p-inputgroup-addon>
-          <p-button icon="pi pi-trash" severity="danger" [disabled]="dialogsForm.length <= 1" (click)="removeDialog(i)" />
-        </p-inputgroup-addon>
-
-        <input pInputText id="content-{{ i }}" pInputText formControlName="content" placeholder="Enter dialog content" />
-
-        <p-inputgroup-addon>
-          <p-button icon="pi pi-ellipsis-v" severity="secondary" />
-        </p-inputgroup-addon>
-        <p-inputgroup-addon>
-          <p-button icon="pi pi-play-circle" severity="primary" variant="text" (click)="playAudio(i)" />
-        </p-inputgroup-addon>
-      </p-inputgroup>
-    </div>
-  </span>
+  @for(dialog of arrayForm.controls; track dialog; let i = $index) {
+  <app-dialog-item
+    [formGroup]="getFormGroup(i)"
+    [dialog]="dialogs?.[i]"
+    [index]="i"
+    [isLast]="arrayForm.length <= 1"
+    (remove)="removeDialog($event)"
+    (playAudio)="playAudio($event)">
+  </app-dialog-item>
+  }
 
   <div class="dialog-add-button mt-3">
-    <p-button icon="pi pi-plus" (click)="addDialog()" label="Add Dialog" styleClass="p-button-success"></p-button>
+    <p-button icon="pi pi-plus" (click)="pushDialogForm()" label="Add Dialog" styleClass="p-button-success"></p-button>
   </div>
 </div>

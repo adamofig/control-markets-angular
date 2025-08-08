@@ -1,8 +1,8 @@
 <h3>Video Project Generator Form</h3>
 
 <div class="source-form-card">
-  <p-card [header]="videoGeneratorId ? 'Edit Project' : 'Nuevo Proyecto de Video'">
-    <form [formGroup]="videoGeneratorForm">
+  <p-card [header]="entityId() ? 'Edit Project' : 'Nuevo Proyecto de Video'">
+    <form [formGroup]="form">
       <div class="form-field">
         <label for="name" class="block">Name</label>
         <input pInputText id="name" type="text" formControlName="name" placeholder="Cuál es el nombre del proyecto?" />
@@ -15,20 +15,12 @@
     </form>
 
     <div style="display: flex; gap: 10px; justify-content: flex-end">
-      <p-button
-        outlined
-        severity="warn"
-        (click)="addSource()"
-        label="Agregar fuente"
-        [disabled]="!videoGeneratorForm.valid"
-        icon="pi pi-paperclip"
-        iconPos="right">
+      <p-button outlined severity="warn" (click)="addSource()" label="Agregar fuente" [disabled]="!form.valid" icon="pi pi-paperclip" iconPos="right">
       </p-button>
 
-      <p-button outlined severity="info" (click)="addVideo()" label="Add Video" [disabled]="!videoGeneratorForm.valid" icon="pi pi-video" iconPos="right">
-      </p-button>
+      <p-button outlined severity="info" (click)="addVideo()" label="Add Video" [disabled]="!form.valid" icon="pi pi-video" iconPos="right"> </p-button>
 
-      <p-button (click)="save()" label="Save" [disabled]="!videoGeneratorForm.valid" icon="pi pi-save" iconPos="right"> </p-button>
+      <p-button (click)="save()" label="Save" [disabled]="!form.valid" icon="pi pi-save" iconPos="right"> </p-button>
     </div>
   </p-card>
 </div>
@@ -98,9 +90,10 @@
 
 <br />
 
-<p-card header="Diálogos">
-  @if (videoProject) {
-  <app-dialogs [dialogsForm]="dialogsForm" [videoProject]="videoProject"></app-dialogs>
+<p-card header="Diálogos"
+  >hahha @if (entity()) { hhaha
+  <!-- <app-array-form-handler [arrayForm]="form.controls.dialogs" entity="dialog"></app-array-form-handler> -->
+  <app-dialogs [arrayForm]="form.controls.dialogs" [dialogs]="entity()?.dialogs"></app-dialogs>
   <p-button (click)="saveDialogs()" label="Save Dialogs" icon="pi pi-save" iconPos="right"></p-button>
   }
 </p-card>

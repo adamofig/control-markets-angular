@@ -2,22 +2,22 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpService } from '../../../services/http.service';
 import { Endpoints } from '../../../core/enums';
 import { IVideoProjectGenerator } from '../models/video-project.model';
-import { FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
+import { EntityCommunicationService, FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { ToastAlertService } from 'src/app/services/toast.service';
 import { AgentCardService } from 'src/app/services/agent-cards.service';
+
+const ENDPOINTS_videoGenerator = 'video-generator';
 @Injectable({
   providedIn: 'root',
 })
-export class VideoGeneratorService {
-  constructor(
-    private httpService: HttpService,
-    @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertService,
-    private agentCardService: AgentCardService
-  ) {}
+export class VideoGeneratorService extends EntityCommunicationService<IVideoProjectGenerator> {
+  constructor(@Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertService, private agentCardService: AgentCardService) {
+    super(ENDPOINTS_videoGenerator);
+  }
 
   public async getVideoGenerators(): Promise<IVideoProjectGenerator[]> {
     try {
-      const response = await this.httpService.getDataFromService(Endpoints.VideoGenerators.VideoGenerator);
+      const response = await this.findAll();
       this.toastService.success({ title: 'Se han encontrado videoGenerators', subtitle: 'Mostrando información' });
       return response;
     } catch (error) {
@@ -27,40 +27,43 @@ export class VideoGeneratorService {
   }
 
   public async getFilteredVideoGenerators(filter: FiltersConfig) {
-    return this.httpService.postDataToService<IFilterQueryResponse<IVideoProjectGenerator>>(Endpoints.VideoGenerators.VideoGeneratorsFiltered, filter);
+    return this.query(filter);
   }
 
   public async getVideoGenerator(id: string): Promise<IVideoProjectGenerator> {
-    return this.httpService.getDataFromService<IVideoProjectGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}`);
+    return this.findOne(id);
   }
 
   public async saveVideoGenerator(videoGenerator: IVideoProjectGenerator): Promise<IVideoProjectGenerator> {
-    return this.httpService.postDataToService(Endpoints.VideoGenerators.VideoGenerator, videoGenerator);
+    return this.createOrUpdate(videoGenerator);
   }
 
   public async updateVideoGenerator(id: string, videoGenerator: Partial<IVideoProjectGenerator>): Promise<IVideoProjectGenerator> {
-    return this.httpService.putDataToService(Endpoints.VideoGenerators.VideoGenerator + `/${id}`, videoGenerator);
+    // return this.update(id, videoGenerator);
+    return null as any;
   }
 
   public async addAgent(VideoProjectId: string, agentId: string) {
     const data = 'add-agent-card';
-    return this.httpService.patchDataToService(Endpoints.VideoGenerators.VideoGenerator + `/${VideoProjectId}/add-agent-card/${agentId}`);
+    // return this.patchDataToService(Endpoints.VideoGenerators.VideoGenerator + `/${VideoProjectId}/add-agent-card/${agentId}`);
+    return null as any;
   }
 
   public async partialUpdateVideoGenerator(id: string, videoGenerator: Partial<IVideoProjectGenerator>): Promise<IVideoProjectGenerator> {
-    return this.httpService.patchDataToService(Endpoints.VideoGenerators.VideoGenerator + `/${id}`, videoGenerator);
+    // return this.patchDataToService(Endpoints.VideoGenerators.VideoGenerator + `/${id}`, videoGenerator);
+    return null as any;
   }
 
   public async deleteVideoGenerator(id: string) {
-    return this.httpService.deleteDataFromService(`${Endpoints.VideoGenerators.VideoGenerator}/${id}`);
+    return this.remove(id);
   }
 
   public async addSource(id: string, sourceId: string) {
-    return this.httpService.patchDataToService<IVideoProjectGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/add-source/${sourceId}`);
+    // return this.patchDataToService<IVideoProjectGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/add-source/${sourceId}`);
   }
 
   public async removeSource(id: string, sourceId: string) {
-    return this.httpService.patchDataToService<IVideoProjectGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/remove-source/${sourceId}`);
+    // return this.patchDataToService<IVideoProjectGenerator>(`${Endpoints.VideoGenerators.VideoGenerator}/${id}/remove-source/${sourceId}`);
   }
 
   public async getAndSaveBestFragments(instructions: string) {

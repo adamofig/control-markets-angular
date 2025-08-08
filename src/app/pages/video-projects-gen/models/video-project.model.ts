@@ -36,6 +36,7 @@ export interface IDialog {
 }
 
 export interface IVideoProjectGenerator extends AuditDate {
+  _id?: string;
   id: string;
   name?: string;
   description?: string;

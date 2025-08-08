@@ -49,10 +49,6 @@ export class JobFormComponent implements OnInit {
 
   public form: FormGroup = this.fb.group({});
 
-  // protected override patchForm(entity: IGeneric): void {
-  //   throw new Error('Method not implemented.');
-  // }
-  // private genericService = inject(GenericService);
   private cdr = inject(ChangeDetectorRef);
 
   public storageImgSettings = {
@@ -94,11 +90,6 @@ export class JobFormComponent implements OnInit {
     { id: 'Relation 3', name: 'relation3', description: 'Description with short description' },
   ];
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
-
   public job: IAgentOutcomeJob | null = null;
   public jobId = this.route.snapshot.params['id'];
 
@@ -106,14 +97,6 @@ export class JobFormComponent implements OnInit {
     if (this.jobId) {
       this.job = await this.jobService.getJob(this.jobId);
       if (this.job) {
-        // this.jobForm.patchValue({
-        //   name: this.job.task.name,
-        //   description: this.job.response.content,
-        //   image: this.job.task.assets.image,
-        //   type: this.job.task.type,
-        //   relation: {},
-        //   extension: {},
-        // });
       }
     }
   }
