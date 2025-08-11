@@ -5,10 +5,11 @@ import { ButtonModule } from 'primeng/button';
 import { ToolsService } from './tools.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { AudioExtractorComponent } from './audio-extractor/audio-extractor.component';
 @Component({
   selector: 'app-tools',
   standalone: true,
-  imports: [CommonModule, CardModule, ButtonModule, InputTextModule, FormsModule],
+  imports: [CommonModule, CardModule, ButtonModule, InputTextModule, FormsModule, AudioExtractorComponent],
   templateUrl: './tools.html',
   styleUrl: './tools.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

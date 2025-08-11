@@ -218,6 +218,8 @@ deploy-release:
 	npm run build:prod
 	firebase deploy --project $(PROJECT_ID) --only hosting:$(PROJECT_ID)
 
+deploy-worker:
+	npx wrangler deploy
 
 	
 start:

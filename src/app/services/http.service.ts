@@ -1,7 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpRequest } from '@angular/common/http';
-
 import { Observable, throwError, lastValueFrom, tap, map } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -138,6 +136,40 @@ export class HttpService {
     );
   }
 
+  public postObservableWithProgress<DataType>(service: string, data: DataType, host = 'nodejs'): Observable<{ progress?: number; blob?: Blob }> {
+    const hostUrl = this.getHostUrl(host);
+    const url = `${hostUrl}/${service}`;
+
+    return this.httpClient
+      .post(url, data, {
+        reportProgress: true,
+        observe: 'events',
+        responseType: 'blob',
+      })
+      .pipe(
+        map(event => {
+          let progress: number | undefined;
+          let blob: Blob | undefined;
+
+          switch (event.type) {
+            case HttpEventType.DownloadProgress:
+              if (event.total) {
+                progress = Math.round((100 * event.loaded) / event.total);
+              }
+              break;
+            case HttpEventType.Response:
+              blob = event.body as Blob;
+              break;
+          }
+          return { progress, blob };
+        }),
+        catchError(err => {
+          this.handleError(err);
+          return throwError(() => err);
+        })
+      );
+  }
+
   public async postFile(service: string, data: any, host = 'nodejs') {
     // use this to get raw response, file with headers simple versión getFile$
     const hostUrl = this.getHostUrl(host);
@@ -211,52 +243,5 @@ export class HttpService {
     const url = `${hostUrl}/${service}`;
     const response$ = this.httpClient.post(url, data, { observe: 'response', responseType: 'blob' });
     return lastValueFrom(response$);
-  }
-
-  /**
-   * Receives a file from the server with progress tracking
-   * @param service The service endpoint
-   * @param data The data to send
-   * @param host The host to use (defaults to 'nodejs')
-   * @returns Promise with the response
-   */
-  public receiveFileWithProgress(service: string, data: any, host = 'nodejs'): Observable<{ event: HttpEvent<any>; progress?: number; blob?: Blob }> {
-    const hostUrl = this.getHostUrl(host);
-    const url = `${hostUrl}/${service}`;
-
-    return this.httpClient.post(url, data, { reportProgress: true, observe: 'events', responseType: 'blob' }).pipe(
-      map(event => {
-        let progress: number | undefined;
-        let blob: Blob | undefined;
-
-        switch (event.type) {
-          case HttpEventType.Sent:
-            console.log('Download started');
-            break;
-          case HttpEventType.UploadProgress:
-            console.log('Upload progress');
-            break;
-          case HttpEventType.DownloadProgress:
-            if (event.total) {
-              // Note: backend need to return Content-Length header to get total in the event and calculate progress
-              progress = Math.round((100 * event.loaded) / event.total);
-              console.log(`Download progress: ${progress}%`);
-            } else {
-              console.log(`Downloaded ${event.loaded} bytes`);
-            }
-            break;
-          case HttpEventType.Response:
-            blob = event.body as Blob;
-            console.log('Download complete');
-            break;
-        }
-
-        return { event, progress, blob };
-      }),
-      catchError(err => {
-        this.handleError(err);
-        return throwError(() => err);
-      })
-    );
   }
 }

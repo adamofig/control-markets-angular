@@ -1,0 +1,8 @@
+{
+    "name": "control-markets",
+    // Update to today's date
+    "compatibility_date": "2025-08-08",
+    "assets": {
+      "directory": "./www/browser"
+    }
+  }

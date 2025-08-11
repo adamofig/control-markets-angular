@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Endpoints } from 'src/app/core/enums';
-import { HttpService } from 'src/app/services/http.service';
 import { Observable } from 'rxjs';
-import { HttpEvent } from '@angular/common/http';
-import { HttpCoreService } from '@dataclouder/ngx-core';
+import { HttpService } from 'src/app/services/http.service';
 
 export interface VideoAnalysisDto {
   id: string | null;
@@ -16,18 +13,18 @@ export interface VideoAnalysisDto {
   providedIn: 'root',
 })
 export class VideoAnalizerService {
-  constructor(private httpService: HttpCoreService) {}
+  constructor(private httpService: HttpService) {}
 
   public startAnalyzeVideo(videoAnalysis: VideoAnalysisDto) {
-    return this.httpService.post('api/video-analizer', videoAnalysis);
+    return this.httpService.postDataToService('api/video-analizer', videoAnalysis);
   }
 
   public extractInfo(urls: string[]) {
-    return this.httpService.post('api/video-analizer/extract-tiktok-data', { urls });
+    return this.httpService.postDataToService('api/video-analizer/extract-tiktok-data', { urls }, 'secondary');
   }
 
   public downloadYoutubeVideo(url: string, options: { video: boolean; audio: boolean; vocals: boolean }) {
-    return this.httpService.postObservable('api/video-analizer/download-youtube-video', { url, options });
+    return this.httpService.postObservableWithProgress('api/video-analizer/download-youtube-video', { url, options }, 'python');
   }
 
   /**
@@ -47,7 +44,7 @@ export class VideoAnalizerService {
     // Create an observable that will handle the download and saving
     return new Observable<{ progress?: number }>(observer => {
       downloadObs.subscribe({
-        next: data => {
+        next: (data: { progress?: number; blob?: Blob }) => {
           // If we have progress data, emit it
           if (data.progress !== undefined) {
             observer.next({ progress: data.progress });

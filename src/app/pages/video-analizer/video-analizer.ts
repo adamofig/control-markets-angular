@@ -109,7 +109,7 @@ export class VideoAnalizerComponent implements OnInit {
     this.videoAnalizerService.downloadYoutubeVideoAndSave(this.youtubeInputUrl, this.youtubeOptions).subscribe({
       next: data => {
         // Only show progress updates if needed
-        // console.log('Download progress:', data.progress);
+        console.log('Download progress:', data.progress);
       },
       complete: () => {
         // Show notification only when the download is complete
@@ -118,6 +118,7 @@ export class VideoAnalizerComponent implements OnInit {
         this.cdr.detectChanges();
       },
       error: error => {
+        console.log(error);
         this.toastAlerts.error({ title: 'error', subtitle: 'Error downloading video' });
         this.isDownloading = false;
         this.cdr.detectChanges();
