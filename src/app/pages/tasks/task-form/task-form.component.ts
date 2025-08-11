@@ -8,7 +8,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
-import { DropdownModule } from 'primeng/dropdown';
 import { SelectModule } from 'primeng/select';
 
 import { TextareaModule } from 'primeng/textarea';
@@ -41,7 +40,6 @@ import { EntityBaseFormComponent, EntityCommunicationService } from '@datacloude
     ButtonModule,
     InputTextModule,
     CardModule,
-    DropdownModule,
     SelectModule,
     TextareaModule,
     AutoCompleteModule,
@@ -102,7 +100,6 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
     private agentCardService: AgentCardService,
     private notionService: NotionService,
     private cdr: ChangeDetectorRef,
-    private toastService: ToastAlertService,
     private sourceService: SourceService
   ) {
     super();

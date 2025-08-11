@@ -1,30 +1,27 @@
-import { ChangeDetectionStrategy, Component, inject, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { IAgentSource, SourceType, SourceTypeOptions } from '../models/sources.model';
 import { SourceService } from '../sources.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
-import { Textarea } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { NotionService } from '../../tasks/services/notion.service';
 import { NotionExportType } from '../../tasks/models/notion.models';
-import { EntityCommunicationService, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+import { ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { EntityBaseFormComponent } from '@dataclouder/ngx-core';
+import { SelectModule } from 'primeng/select';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'app-source-form',
-  imports: [ReactiveFormsModule, CardModule, InputTextModule, DropdownModule, Textarea, ButtonModule],
+  imports: [ReactiveFormsModule, CardModule, InputTextModule, SelectModule, TextareaModule, ButtonModule],
   templateUrl: './source-form.component.html',
   styleUrl: './source-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SourceFormComponent extends EntityBaseFormComponent<IAgentSource> implements OnInit {
+export class SourceFormComponent extends EntityBaseFormComponent<IAgentSource> {
   protected entityCommunicationService = inject(SourceService);
-
-  private toastService = inject(ToastAlertsAbstractService);
 
   private fb = inject(FormBuilder);
   private notionService = inject(NotionService);
@@ -42,8 +39,6 @@ export class SourceFormComponent extends EntityBaseFormComponent<IAgentSource> i
   public form: FormGroup = this.fb.group({});
 
   public source: IAgentSource | null = null;
-
-  async ngOnInit(): Promise<void> {}
 
   async saveSource() {
     if (this.sourceForm.valid) {

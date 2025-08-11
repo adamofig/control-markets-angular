@@ -37,12 +37,11 @@ export class DialogItemComponent {
   }
 
   onAddAudio(): void {
-    const audioFile = this.vertexAudioService.getTextAudioFile({
-      text: this.formGroup.get('content')?.value,
-      voiceName: 'es-ES-Standard-A',
-      languageCode: 'es-ES',
-    });
-
+    // const audioFile = this.vertexAudioService.generateAudio({
+    //   text: this.formGroup.get('content')?.value,
+    //   voiceName: 'es-ES-Standard-A',
+    //   languageCode: 'es-ES',
+    // });
     // LLamar al servicio de generar audio
     // Guardar el audio en el formGroup
     // Guardar el form

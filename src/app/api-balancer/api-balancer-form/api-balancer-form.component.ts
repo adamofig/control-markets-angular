@@ -9,11 +9,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { EntityBaseFormComponent } from '@dataclouder/ngx-core';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-api-balancer-form',
-  imports: [CommonModule, ReactiveFormsModule, CardModule, TextareaModule, ButtonModule, InputTextModule, InputNumberModule],
+  imports: [ReactiveFormsModule, CardModule, TextareaModule, ButtonModule, InputTextModule, InputNumberModule],
   templateUrl: './api-balancer-form.component.html',
   styleUrl: './api-balancer-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

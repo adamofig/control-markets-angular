@@ -4,7 +4,6 @@ import { ICompositionPlan, IFragmentExtraction, IVideoProjectGenerator, SourceWi
 import { VideoGeneratorService } from '../services/video-project-gen.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
-import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { InputTextModule } from 'primeng/inputtext';
@@ -37,7 +36,6 @@ import { VideoFormDefinitionService } from './video-project-form-definition.serv
     FormsModule,
     CardModule,
     TextareaModule,
-    DropdownModule,
     ButtonModule,
     SelectModule,
     InputTextModule,
@@ -87,7 +85,6 @@ export class VideoProjectFormComponent extends EntityBaseFormComponent<IVideoPro
     private videoGeneratorService: VideoGeneratorService,
     private fb: FormBuilder,
     private videoFragmentExtractorService: VideoFragmentExtractorService,
-    @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService,
     private cdr: ChangeDetectorRef
   ) {
     super();
@@ -104,22 +101,6 @@ export class VideoProjectFormComponent extends EntityBaseFormComponent<IVideoPro
       }
     }
   }
-
-  // async save() {
-  //   if (this.videoGeneratorForm.valid) {
-  //     const videoGenerator = { ...this.videoGeneratorForm.value, ...this.videoProject } as IVideoProjectGenerator;
-
-  //     const result = await this.videoGeneratorService.saveVideoGenerator(videoGenerator);
-
-  //     if (!this.videoGeneratorId) {
-  //       this.router.navigate([result.id], { relativeTo: this.route });
-  //     }
-  //     this.toastService.success({
-  //       title: 'Origen guardado',
-  //       subtitle: 'El origen ha sido guardado correctamente',
-  //     });
-  //   }
-  // }
 
   public addVideo() {
     const url = prompt('¿Estás seguro de querer agregar un video?');

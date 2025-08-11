@@ -26,7 +26,7 @@ export class CaptionExtractionService {
     const captions = openAiWhisperApiToCaptions({ transcription: source?.video?.transcription! });
     console.log('Captions', captions);
     // Additional process becouse i don't like the precision of the timestamps
-    captions.captions.forEach(caption => {
+    captions.captions.forEach((caption: Caption) => {
       caption.startMs = Math.round(caption.startMs);
       caption.endMs = Math.round(caption.endMs);
       caption.timestampMs = caption.timestampMs ? Math.round(caption.timestampMs) : null;

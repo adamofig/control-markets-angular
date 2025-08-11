@@ -6,7 +6,6 @@ import { JobService } from '../jobs.service';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
-import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { InputTextModule } from 'primeng/inputtext';
@@ -26,7 +25,6 @@ import { JobListComponent } from '../job-list/job-list.component';
     ReactiveFormsModule,
     CardModule,
     TextareaModule,
-    DropdownModule,
     ButtonModule,
     SelectModule,
     InputTextModule,
@@ -47,7 +45,14 @@ export class JobFormComponent implements OnInit {
   private jobService = inject(JobService);
   private fb = inject(FormBuilder);
 
-  public form: FormGroup = this.fb.group({});
+  public form = this.fb.group({
+    name: ['', Validators.required],
+    description: [''],
+    image: [{} as CloudStorageData],
+    type: [''],
+    relation: [{ id: '', name: '', description: '' }],
+    extension: new FormGroup({}),
+  });
 
   private cdr = inject(ChangeDetectorRef);
 
@@ -147,7 +152,6 @@ export class JobFormComponent implements OnInit {
     // this.jobForm.patchValue({ relation: relation });
     this.isDialogVisible = false;
     this.relationPopupSelector.push(relation);
-    this.cdr.detectChanges();
     alert('Relation selected');
   }
 }

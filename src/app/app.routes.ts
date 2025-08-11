@@ -209,7 +209,7 @@ export const routes: Routes = [
       },
       {
         path: 'video-generator',
-        loadComponent: () => import('./pages/video-projects-gen/videoGenerators.component').then(m => m.VideoGeneratorsComponent),
+        loadComponent: () => import('./pages/video-projects-gen/videoGenerators.component').then(m => m.VideoProjectsGenComponent),
         children: [
           {
             path: '',

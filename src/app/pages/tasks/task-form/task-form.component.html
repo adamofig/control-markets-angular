@@ -94,21 +94,21 @@
       <div class="form-field">
         <label for="taskType" class="block">Task Type</label>
         <br />
-        <p-dropdown id="taskType" [options]="taskTypes" formControlName="taskType" placeholder="Select Task Type" class="w-full"> </p-dropdown>
+        <p-select id="taskType" [options]="taskTypes" formControlName="taskType" placeholder="Select Task Type" class="w-full"> </p-select>
       </div>
 
       @if (taskForm.controls.taskType.value === 'review_task') {
       <div class="form-field">
         <label for="taskAttached" class="block">Tarea a revisar</label>
         <br />
-        <p-dropdown
+        <p-select
           id="taskAttached"
           [options]="taskAttachedOptions"
           formControlName="taskAttached"
           optionLabel="name"
           placeholder="Select Task Attached"
           class="w-full">
-        </p-dropdown>
+        </p-select>
       </div>
       }
 
@@ -129,7 +129,7 @@
       <div class="form-field">
         <label for="status" class="block">Status</label>
         <br />
-        <p-dropdown id="status" [options]="statuses" formControlName="status" placeholder="Select Status" class="w-full"> </p-dropdown>
+        <p-select id="status" [options]="statuses" formControlName="status" placeholder="Select Status" class="w-full"> </p-select>
       </div>
 
       <!-- <dc-model-selector [modelForm]="taskForm.controls.model"></dc-model-selector> -->
