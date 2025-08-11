@@ -69,6 +69,9 @@ fetch('/assets/config.json')
         provideHttpClient(withInterceptors([authInterceptor])),
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         provideIonicAngular(),
+        // 🔥 Firebase
+
+        { provide: FIREBASE_OPTIONS, useValue: config.firebase },
         provideFirebaseApp(() => initializeApp(config.firebase)),
         provideStorage(() => getStorage()),
         provideAuth(() => {
@@ -80,7 +83,6 @@ fetch('/assets/config.json')
             return getAuth();
           }
         }),
-        { provide: FIREBASE_OPTIONS, useValue: config.firebase },
         DialogService,
         importProvidersFrom(
           TranslateModule.forRoot({
