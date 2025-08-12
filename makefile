@@ -12,8 +12,8 @@ NC   := \033[0m # No Color
 # ==============================================================================
 # Variables for deployment
 ENV ?= dev
-EXT ?= ad
-PROJECT_NAME ?= golden-ad
+EXT ?= markets
+PROJECT_NAME ?= control-markets
 PROJECT_ID ?= $(PROJECT_NAME)-$(ENV) #Firebase/Google project ID
 APP_ID ?= $(EXT).$(PROJECT_NAME).$(ENV) # User for mobile apps. example com.my-startup.app
 DISPLAY_NAME ?= $(PROJECT_NAME)
@@ -23,7 +23,7 @@ APP_ENV ?= $(ENV)
 DOCKER_IMAGE_NAME    ?= $(PROJECT_NAME)-front
 IMAGE_FILENAME       := $(DOCKER_IMAGE_NAME).tar
 CONTAINER_NAME       ?= $(PROJECT_NAME)-front-app
-HOST_PORT ?= 7990
+HOST_PORT ?= 8120
 
 
 # If your remote user needs a password for ssh/sudo, set it here or in your .env file.
@@ -85,7 +85,7 @@ deploy-ailab: REMOTE_DEPLOY_PATH = /home/adamo/Documents
 deploy-ailab: PLATFORM = linux/amd64
 deploy-ailab: APP_ENV = ailab
 deploy-ailab: ._remote_deploy_flow
-	@echo "✅ Deployment to AI Lab on http://$(TARGET_HOST):$(HOST_PORT)completed successfully."
+	@echo "✅ Deployment to AI Lab on http://$(TARGET_HOST):$(HOST_PORT) completed successfully."
 
 # Deploy to Firebase Hosting
 deploy:

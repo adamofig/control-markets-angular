@@ -1,0 +1,19 @@
+{
+  "projectName": "Control Markets",
+  "version": "0.0.13",
+  "envName": "DEV",
+  "production": false,
+  "authenticationRequired": true,
+  "backendNodeUrl": "http://ai.lab:8121",
+  "backendPythonUrl": "http://ai.lab:8122",
+  "mobile": {
+  },
+  "firebase": {
+    "apiKey": "AIzaSyAecVnUj1-IjKGDvBarhufKAfO-Y-RyTXw",
+    "authDomain": "golden-ad-dev.firebaseapp.com",
+    "projectId": "golden-ad-dev",
+    "storageBucket": "golden-ad-dev.firebasestorage.app",
+    "messagingSenderId": "164740776065",
+    "appId": "1:164740776065:web:e2c59fd82d71fe6817cd80"
+  }
+}

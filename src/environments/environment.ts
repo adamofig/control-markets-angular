@@ -1,6 +1,6 @@
 export const environment = {
   projectName: 'Control Markets',
-  version: '0.0.28',
+  version: '0.0.34',
   envName: 'DEV',
   production: false,
   authenticationRequired: true,
