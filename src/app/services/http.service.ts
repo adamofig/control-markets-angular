@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpRequest } from '@angular/common/http';
-import { Observable, throwError, lastValueFrom, tap, map } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpEventType } from '@angular/common/http';
+import { Observable, throwError, lastValueFrom, map } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { AppConfigService } from './app-config.service';
 
 function toPlainObject(objectClass: any) {
   return JSON.parse(JSON.stringify(objectClass));
@@ -13,17 +13,13 @@ function toPlainObject(objectClass: any) {
 })
 export class HttpService {
   private httpClient = inject(HttpClient);
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
+  private appConfigService = inject(AppConfigService);
 
   private getHostUrl(host: string = ''): string {
     if (host === 'python') {
-      return environment.backendPythonUrl;
+      return this.appConfigService.config.backendPythonUrl;
     }
-    return environment.backendNodeUrl;
+    return this.appConfigService.config.backendNodeUrl;
   }
 
   public postDataToService<T = any>(service: string, data: any, host = 'nodejs'): Promise<T> {

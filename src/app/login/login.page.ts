@@ -104,11 +104,6 @@ export class LoginComponent implements OnInit {
   async signInGoogle() {
     console.log('Credenciales');
 
-    // await GoogleAuth.initialize({
-    //   clientId: environment.iosClientId,
-    //   scopes: ['profile', 'email'],
-    // });
-
     console.log('Sign in google mostrando credenciales');
     const user: User = await GoogleAuth.signIn();
     console.log('Sign in google mostrando credenciales', user);

@@ -6,9 +6,9 @@ import { DCAgentCardFormComponent, IAgentCard } from '@dataclouder/ngx-agent-car
 
 import { AlertController } from '@ionic/angular/standalone';
 
-import { environment } from 'src/environments/environment';
 import { RouteNames } from 'src/app/core/enums';
 import { AgentCardService } from 'src/app/services/agent-card-service';
+import { AppConfigService } from 'src/app/services/app-config.service';
 
 @Component({
   selector: 'app-agent-card-form',
@@ -19,6 +19,8 @@ import { AgentCardService } from 'src/app/services/agent-card-service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgentCardFormPage implements OnInit {
+  public appConfigService = inject(AppConfigService);
+
   private conversationCardsService = inject(AgentCardService);
   private router = inject(Router);
   private AlertController = inject(AlertController);
@@ -26,7 +28,7 @@ export class AgentCardFormPage implements OnInit {
 
   public currentPath: string = ' ';
 
-  public projectName = environment.projectName;
+  public projectName = this.appConfigService.config.projectName;
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);

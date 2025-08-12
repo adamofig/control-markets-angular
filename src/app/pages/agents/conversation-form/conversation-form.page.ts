@@ -1,44 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular/standalone';
 
 import { DCAgentCardFormComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 
-import {
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
-  IonTitle,
-  IonButton,
-  IonIcon,
-  IonContent,
-  IonRefresher,
-  IonRefresherContent,
-  IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCardContent,
-  IonList,
-  IonListHeader,
-  IonItem,
-  IonAvatar,
-  IonLabel,
-  IonNote,
-  IonFab,
-  IonFabButton,
-  IonTabButton,
-  IonTabBar,
-  IonFooter,
-  IonApp,
-  AlertController,
-} from '@ionic/angular/standalone';
+import { AlertController } from '@ionic/angular/standalone';
 
-import { environment } from 'src/environments/environment';
 import { RouteNames } from 'src/app/core/enums';
 import { AgentCardService } from 'src/app/services/agent-cards.service';
+import { AppConfigService } from 'src/app/services/app-config.service';
 
 @Component({
   selector: 'app-conversation-form',
@@ -50,8 +21,9 @@ import { AgentCardService } from 'src/app/services/agent-cards.service';
 })
 export class ConversationFormPage implements OnInit {
   public currentPath: string = ' ';
+  public appConfigService = inject(AppConfigService);
 
-  public projectName = environment.projectName;
+  public projectName = this.appConfigService.config.projectName;
 
   constructor(
     private conversationCardsService: AgentCardService,
