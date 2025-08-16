@@ -7,4 +7,4 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
 })
-export class AgentCardRouter {}
+export class AgentCardRouterComponent {}

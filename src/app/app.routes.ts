@@ -4,7 +4,6 @@ import { redirectToIfAuth } from '@dataclouder/app-auth';
 
 import { RouteNames } from './core/enums';
 import { authAndUserGuard } from '@dataclouder/ngx-users';
-import { environment } from '../environments/environment';
 
 export const routes: Routes = [
   {
@@ -58,25 +57,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'flows',
-        loadComponent: () => import('./pages/flows/flow-outlet').then(m => m.FlowOutletComponent),
-        children: [
-          {
-            path: '',
-            loadComponent: () => import('./pages/flows/flow-list/flow-list').then(m => m.FlowListComponent),
-          },
-          {
-            path: 'edit',
-            loadComponent: () => import('./pages/flows/flow-workspace/flow-canva').then(m => m.FlowsComponent),
-          },
-          {
-            path: 'edit/:id',
-            loadComponent: () => import('./pages/flows/flow-workspace/flow-canva').then(m => m.FlowsComponent),
-          },
-          {
-            path: 'edit/:id/:executionId',
-            loadComponent: () => import('./pages/flows/flow-workspace/flow-canva').then(m => m.FlowsComponent),
-          },
-        ],
+        loadChildren: () => import('./pages/flows/flows.routes').then(m => m.FLOWS_ROUTES),
       },
 
       {
@@ -86,33 +67,7 @@ export const routes: Routes = [
 
       {
         path: 'tasks',
-        loadComponent: () => import('./pages/tasks/tasks.page').then(m => m.TasksPage),
-        children: [
-          {
-            path: '',
-            loadComponent: () => import('./pages/tasks/task-list/task-list.component').then(m => m.TaskListComponent),
-          },
-          {
-            path: 'jobs',
-            loadComponent: () => import('./pages/tasks/jobs/job-list.component').then(m => m.JobListComponent),
-          },
-          {
-            path: 'jobs/:id',
-            loadComponent: () => import('./pages/tasks/jobs/job-list.component').then(m => m.JobListComponent),
-          },
-          {
-            path: 'edit',
-            loadComponent: () => import('./pages/tasks/task-form/task-form.component').then(m => m.TaskFormComponent),
-          },
-          {
-            path: 'edit/:id',
-            loadComponent: () => import('./pages/tasks/task-form/task-form.component').then(m => m.TaskFormComponent),
-          },
-          {
-            path: 'details/:id',
-            loadComponent: () => import('./pages/tasks/task-details/task-details.component').then(m => m.TaskDetailsComponent),
-          },
-        ],
+        loadChildren: () => import('./pages/tasks/tasks.routes').then(m => m.TASKS_ROUTES),
       },
       {
         path: 'lessons',
@@ -142,70 +97,16 @@ export const routes: Routes = [
       },
       {
         path: 'sources',
-        loadComponent: () => import('./pages/sources/sources.component').then(m => m.SourcesComponent),
-        children: [
-          {
-            path: '',
-            loadComponent: () => import('./pages/sources/source-list/source-list.component').then(m => m.SourceListComponent),
-          },
-          {
-            path: 'edit',
-            loadComponent: () => import('./pages/sources/source-form/source-form.component').then(m => m.SourceFormComponent),
-          },
-          {
-            path: 'edit/:id',
-            loadComponent: () => import('./pages/sources/source-form/source-form.component').then(m => m.SourceFormComponent),
-          },
-          {
-            path: 'details/:id',
-            loadComponent: () => import('./pages/sources/source-detail/source-detail.component').then(m => m.SourceDetailComponent),
-          },
-        ],
+        loadChildren: () => import('./pages/sources/sources.routes').then(m => m.SOURCES_ROUTES),
       },
 
       {
         path: 'jobs',
-        loadComponent: () => import('./pages/jobs/jobs.component').then(m => m.JobsComponent),
-        children: [
-          {
-            path: '',
-            loadComponent: () => import('./pages/jobs/job-list/job-list.component').then(m => m.JobListComponent),
-          },
-          {
-            path: 'edit',
-            loadComponent: () => import('./pages/jobs/job-form/job-form.component').then(m => m.JobFormComponent),
-          },
-          {
-            path: 'edit/:id',
-            loadComponent: () => import('./pages/jobs/job-form/job-form.component').then(m => m.JobFormComponent),
-          },
-          {
-            path: 'details/:id',
-            loadComponent: () => import('./pages/jobs/job-detail/job-detail.component').then(m => m.OutcomeJobDetailComponent),
-          },
-        ],
+        loadChildren: () => import('./pages/jobs/jobs.component').then(m => m.JobsComponent.routes),
       },
       {
         path: 'video-analizer',
-        loadComponent: () => import('./pages/video-analizer/video-router').then(m => m.VideoRouterComponent),
-        children: [
-          {
-            path: '',
-            loadComponent: () => import('./pages/video-analizer/video-analizer').then(m => m.VideoAnalizerComponent),
-          },
-          {
-            path: 'tiktoks',
-            loadComponent: () => import('./pages/video-analizer/tiktoks/tiktok-list').then(m => m.TiktokListComponent),
-          },
-          {
-            path: 'tiktoks/:id',
-            loadComponent: () => import('./pages/video-analizer/tiktoks-user/tiktoks-user').then(m => m.TiktoksUserComponent),
-          },
-          {
-            path: 'tiktoks/:user/analysis/:id',
-            loadComponent: () => import('./pages/video-analizer/tiktok-analysis/tiktok-analysis').then(m => m.TiktokAnalysisComponent),
-          },
-        ],
+        loadChildren: () => import('./pages/video-analizer/video-analizer.routes').then(m => m.VIDEO_ANALIZER_ROUTES),
       },
       {
         path: 'video-generator',
@@ -245,7 +146,7 @@ export const routes: Routes = [
       },
       {
         path: 'agents',
-        loadComponent: () => import('./pages/agent-cards/agent-card-router').then(m => m.AgentCardRouter),
+        loadComponent: () => import('./pages/agent-cards/agent-card-router').then(m => m.AgentCardRouterComponent),
         children: [
           {
             path: '',

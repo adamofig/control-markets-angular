@@ -17,7 +17,7 @@ import { ButtonModule } from 'primeng/button';
   standalone: true,
   imports: [FormsModule, IonContent, AgentCardListComponent, ButtonModule],
 })
-export class AgentCardListPage implements OnInit {
+export class AgentCardListPage {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
@@ -57,10 +57,6 @@ export class AgentCardListPage implements OnInit {
 
   constructor() {
     addIcons({ send, sendOutline, sendSharp });
-  }
-
-  ngOnInit() {
-    // Initialize with some dummy messages
   }
 
   public actions: MenuItem[] = [
