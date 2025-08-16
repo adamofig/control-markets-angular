@@ -92,6 +92,22 @@ deploy:
 	npm run build
 	firebase deploy --project $(PROJECT_ID) --only hosting:$(PROJECT_ID)
 
+# Deploy to Firebase Hosting
+deploy-firebase:
+	@echo "🚀 Building and deploying to Firebase..."
+	npm run prebuild
+	npm run build
+	firebase deploy --only hosting --project $(PROJECT_ID)
+	@echo "✅ Deployment to Firebase completed successfully."
+
+# Deploy to Cloudflare
+deploy-cloudflare:
+	@echo "🚀 Building and deploying to Cloudflare..."
+	npm run prebuild
+	npm run build:prod
+	npx wrangler deploy
+	@echo "✅ Deployment to Cloudflare completed successfully."
+
 # Common remote deployment flow (internal)
 ._remote_deploy_flow: ._build-docker ._transfer ._deploy-remote ._local-cleanup
 
