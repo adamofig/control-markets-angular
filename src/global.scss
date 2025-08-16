@@ -41,6 +41,7 @@
     --ion-backdrop-opacity: 0.6;
     --ion-overlay-background-color: var(--p-zinc-100);
     --ion-border-color: var(--p-primary-900);
+    --shadow-card: #ffffff;
 
     // NOTE: tab bar is the one at the bottom. 
     --ion-tab-bar-background: transparent;
@@ -73,7 +74,7 @@
 
 //  Dark theme
   :root.ion-palette-dark {
-    --primary-dark-color: #4EF9BA;
+    --primary-dark-color: #f7c600;
     // --primary-dark-color: #74FAC9;  // You can change this hex color
 
     --ion-background-color: transparent; // background apply for multiple ionic sections. 
@@ -185,15 +186,17 @@ body.dark::before {
 .p-card{
     background: transparent !important;
     backdrop-filter: blur(2px);
-    border: 1px solid #000;
+    border: 1px solid var(--shadow-card);
     transition: all 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 1px var(--shadow-card), 0 0 2px var(--shadow-card);
 
 }
 
 .p-card:hover {
-    /* filter: drop-shadow(0 0 0.75rem rgb(0, 229, 255)); */
-    filter: drop-shadow(-1px 1px 1px var(--shadow-card));
     transform: translateY(-2px);
+    box-shadow: 0 0 2px var(--shadow-card), 0 0 5px var(--shadow-card), 0 0 8px var(--shadow-card);
   }
   
   
@@ -219,3 +222,35 @@ body.dark::before {
     background: transparent !important;
   }
   
+
+/* Dark theme overrides for PrimeNG components */
+body.dark {
+  .p-card {
+    background: rgba(30, 30, 30, 0.7) !important; /* A dark, semi-transparent background */
+    border: 1px solid var(--primary-dark-color); /* A lighter border color */
+    color: var(--ion-text-color); /* Ensure text inside the card is light */
+    box-shadow: 0 0 1px var(--primary-dark-color), 0 0 2px var(--primary-dark-color);
+  }
+
+  .p-card:hover {
+    box-shadow: 0 0 2px var(--primary-dark-color), 0 0 5px var(--primary-dark-color), 0 0 8px var(--primary-dark-color);
+  }
+
+  .p-card .p-card-title,
+  .p-card .p-card-subtitle,
+  .p-card .p-card-content,
+  .p-card p {
+    color: var(--ion-text-color); /* Explicitly set text color for card sections */
+  }
+
+  .p-select, .p-inputtext, .p-textarea {
+    background: rgba(50, 50, 50, 0.8) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+    color: var(--ion-text-color);
+    border-color: var(--p-stone-400);
+  }
+
+  .p-dropdown {
+    background: rgba(50, 50, 50, 0.8) !important;
+  }
+}

@@ -50,7 +50,7 @@
 
 <p-dialog header="Agregar Entidad" [draggable]="false" [(visible)]="isDialogVisible" [modal]="true" [style]="{ width: '85%', height: '85%' }">
   @if(dialogs.isAgentVisible) {
-  <dc-agent-card-lists viewMode="table" (onAction)="addAgentToFlow($event)" />
+  <dc-agent-card-lists (onAction)="addAgentToFlow($event)" />
   } @if(dialogs.isTaskVisible) {
   <p>Entidad.</p>
   <app-task-list viewMode="table" (onSelect)="addTaskToFlow($event)" />

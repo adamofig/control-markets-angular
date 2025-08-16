@@ -17,7 +17,7 @@ import { FlowOrchestrationService } from '../services/flow-orchestration.service
 @Component({
   templateUrl: './flow-canva.html',
   styleUrl: './flow-canva.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   standalone: true,
   imports: [Vflow, DialogModule, AgentCardListComponent, ButtonModule, TaskListComponent, InputTextModule, FormsModule],
 })
@@ -69,6 +69,7 @@ export class FlowsComponent implements OnInit {
   }
 
   addAgentToFlow(event: OnActionEvent): void {
+    debugger;
     const card: IAgentCard = event.item;
     this.flowDiagramStateService.addAgentToFlow(card);
     this.isDialogVisible = false;
