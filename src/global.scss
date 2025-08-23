@@ -13,20 +13,19 @@
 /* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
+// @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
 
+@import "@ionic/angular/css/padding.css";
+
+// @import "@ionic/angular/css/float-elements.css";
+// @import "@ionic/angular/css/text-alignment.css";
+// @import "@ionic/angular/css/text-transformation.css";
+// @import "@ionic/angular/css/flex-utils.css";
 
 @import "@ionic/angular/css/palettes/dark.class.css"; 
-
-
 
 
 // 2) defining addional variables
@@ -187,15 +186,17 @@ body.dark::before {
 }
 
 .p-card:hover {
-    /* filter: drop-shadow(0 0 0.75rem rgb(0, 229, 255)); */
-    filter: drop-shadow(-1px 1px 1px rgb(40, 1, 64));
-    transform: translateY(-2px);
-    transform: scale(1.01);
+  filter: drop-shadow(0 0 0.1rem rgba(0, 229, 255, 0.5));
+    box-shadow: 0 0 1rem rgba(40, 1, 64, 0.5);
+    transform: scale(1.005);
   }
-
 
   // Shepherd tour styles
   p-paginator {
     background: transparent !important;
   }
-  
+
+  .p-button-icon-only::after {
+    content: '' !important;
+  }
+    
