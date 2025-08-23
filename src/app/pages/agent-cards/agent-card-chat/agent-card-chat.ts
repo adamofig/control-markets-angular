@@ -2,8 +2,8 @@ import { ChangeDetectorRef, Component, Input, OnInit, inject, effect } from '@an
 
 import { DCChatComponent, IConversationSettings, ChatRole, AudioSpeed, IAgentCard, ChatMonitorService } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute } from '@angular/router';
-import { AgentCardService } from 'src/app/services/agent-card-service';
 import { ChatUserSettings } from '@dataclouder/ngx-core';
+import { CONVERSATION_AI_TOKEN } from '@dataclouder/ngx-agent-cards';
 
 @Component({
   selector: 'app-agent-card-chat',
@@ -14,11 +14,12 @@ import { ChatUserSettings } from '@dataclouder/ngx-core';
 })
 export class AgentCardChatComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private conversationCardsService = inject(AgentCardService);
+  private conversationCardsService = inject(CONVERSATION_AI_TOKEN);
   private cdr = inject(ChangeDetectorRef);
   private chatMonitorService = inject(ChatMonitorService);
 
   constructor() {
+    debugger;
     effect(() => {
       const message = this.chatMonitorService.messageAudioWillPlay$();
       if (message) {
@@ -51,7 +52,7 @@ export class AgentCardChatComponent implements OnInit {
       this.agentCard = JSON.parse(params.get('conversationCard')!);
       if (!this.agentCard) {
         const id = params.get('id') as string;
-        const card = await this.conversationCardsService.findAgentCardByID(id);
+        const card = await this.conversationCardsService.findOne(id);
         console.log('loading agent card...');
         this.agentCard = card;
         this.cdr.detectChanges();

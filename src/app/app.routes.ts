@@ -211,7 +211,6 @@ export const routes: Routes = [
 
   {
     path: 'page/stack',
-    canActivate: [AuthGuardService],
 
     loadComponent: () => import('./ionic-layout/stack-ionic/stack-ionic.component').then(m => m.StackIonicComponent),
     children: [
