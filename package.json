@@ -62,7 +62,7 @@
     "@dataclouder/ngx-mic": "^0.1.1",
     "@dataclouder/ngx-tts": "^0.0.2",
     "@dataclouder/ngx-users": "^0.0.8",
-    "@dataclouder/ngx-vertex": "^0.0.10",
+    "@dataclouder/ngx-vertex": "^0.0.12",
     "@ionic/angular": "^8.7.3",
     "@jcesarmobile/ssl-skip": "0.4.0",
     "@ngx-formly/core": "^7.0.0",
