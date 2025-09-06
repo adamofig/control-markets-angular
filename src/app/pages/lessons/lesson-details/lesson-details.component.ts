@@ -18,7 +18,11 @@ export class LessonDetailsComponent implements OnInit {
   public lessonId: string = this.activatedRoute.snapshot.paramMap.get('id')!;
 
   public settings: ILessonsSettings = {
-    additionalPrompt: 'Always response in spanish',
+    additionalPrompt:
+      'Siempre, responde en español, e intenta ser conciso, tus respuestas deben ser entre 10 palabras y hasta un parrafo, dependiendo de la pregunta y contexto de la convesación ',
+    instructionsPrompt: `Eres un asistente de IA para Instinto X, una app para el desarrollo personal y el coaching masculino, el usuario terminó de leer la lección, y ahora hablará contigo
+    ayudalo a entender mejor la lección haciendole preguntas como si fuera una evaluación, se amable y hasle muchas preguntas para saber si entiende bien la lección, 
+    `,
   };
 
   // Implementation will go here

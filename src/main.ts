@@ -36,6 +36,7 @@ import { FormlyFieldInput } from './app/pages/generics/generic-form/formly-compo
 import { FormlyFieldTextArea } from './app/pages/generics/generic-form/formly-components/textarea';
 import { provideServiceWorker } from '@angular/service-worker';
 import { APP_CONFIG, IAppConfig } from './app/services/app-config.service';
+import { provideMarkdown } from 'ngx-markdown';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -69,6 +70,7 @@ fetch('/assets/config.json')
         provideHttpClient(withInterceptors([authInterceptor])),
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         provideIonicAngular(),
+        provideMarkdown(),
         // 🔥 Firebase
 
         { provide: FIREBASE_OPTIONS, useValue: config.firebase },

@@ -88,7 +88,7 @@
     </div>
 
     <p-dialog header="Search for relation" [(visible)]="isDialogVisible" [modal]="true" [style]="{ width: '50vw' }" draggable="false">
-      <app-generic-list [onlyView]="true" [viewType]="'table'" (onSelect)="handleRelationSelection($event)"></app-generic-list>
+      <app-generic-list [onlyView]="true" (onSelect)="handleRelationSelection($event)"></app-generic-list>
     </p-dialog>
   </p-card>
 </div>
