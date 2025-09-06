@@ -4,6 +4,8 @@
 
   <p-button (click)="removeNode()" class="remove-btn" icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" />
 
+  <p-button (click)="runNode()" class="execute-btn" icon="pi pi-play" [rounded]="true" [text]="true" severity="info" />
+
   @if(taskExecutionState()?.status === statusJob.IN_PROGRESS) {
   <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">
     <p-progress-spinner strokeWidth="10" fill="transparent" animationDuration="1s" [style]="{ width: '50px', height: '50px' }" />

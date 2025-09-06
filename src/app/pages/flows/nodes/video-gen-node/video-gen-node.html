@@ -1,0 +1,16 @@
+<div class="container" style="width: 150px; height: auto">
+  <!-- <img width="150px" height="auto" class="image" [src]="node()?.data?.agentAsset?.storage?.url" /> -->
+  Numero de videos task
+</div>
+
+<handle type="target" position="left" id="left" />
+<handle type="source" position="right" id="right" />
+<handle type="target" position="top" id="top" />
+
+<p-button (click)="runNode()" class="execute-btn" icon="pi pi-play" [rounded]="true" [text]="true" severity="info" />
+
+@if(taskExecutionState()?.status === statusJob.IN_PROGRESS) {
+<span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">
+  <p-progress-spinner strokeWidth="10" fill="transparent" animationDuration="1s" [style]="{ width: '50px', height: '50px' }" />
+</span>
+}

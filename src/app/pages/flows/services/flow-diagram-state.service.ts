@@ -10,6 +10,7 @@ import { IAgentOutcomeJob } from '../../jobs/models/jobs.model';
 import { FlowComponentRefStateService } from './flow-component-ref-state.service';
 import { IAgentSource } from '../../sources/models/sources.model';
 import { AssetsNodeComponent } from '../nodes/assetsNode/assets-node.component';
+import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
 
 export type DynamicNodeWithData = DynamicNode & { data?: any };
 
@@ -117,6 +118,15 @@ export class FlowDiagramStateService {
     this.nodes.set([...this.nodes(), newNode]);
 
     this._createEdge({ source: taskNode?.id!, target: newNode.id });
+  }
+
+  public addVideoGenNode() {
+    const newNode: DynamicNodeWithData = {
+      id: 'video-gen-node-' + nanoid(),
+      point: signal({ x: 100, y: 100 }), // Default position
+      type: VideoGenNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
+    };
+    this.nodes.set([...this.nodes(), newNode]);
   }
 
   public addTaskToFlow(task: IAgentTask): void {

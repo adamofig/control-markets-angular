@@ -1,4 +1,5 @@
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
+import { FileStorageData } from '@dataclouder/ngx-cloud-storage';
 
 export interface ISourceTask {
   id: string;
@@ -74,5 +75,5 @@ export interface IAssetNodeData {
   id: string;
   name: string;
   type: string;
-  storage: string;
+  storage: FileStorageData;
 }

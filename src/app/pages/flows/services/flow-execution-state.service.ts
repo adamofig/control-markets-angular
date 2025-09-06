@@ -37,6 +37,7 @@ export class FlowExecutionStateService {
     this.ngZone.run(() => {
       const data$ = docData(itemCollection);
       data$.subscribe(data => {
+        console.log('.......data', data);
         const newExecutionState = data as IFlowExecutionState;
         this.setFlowExecutionState(newExecutionState);
 

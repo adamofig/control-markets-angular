@@ -15,27 +15,27 @@ export class FlowService extends EntityCommunicationService<IAgentFlows> {
   }
 
   public async getFilteredFlows(filter: FiltersConfig) {
-    return this.httpService.post<IFilterQueryResponse<IAgentFlows>>(`api/${Endpoints}/query`, filter, server);
+    return this.httpService.postHttp<IFilterQueryResponse<IAgentFlows>>({ service: `api/${Endpoints}/query`, data: filter });
   }
 
   public async getFlow(id: string): Promise<IAgentFlows> {
-    return this.httpService.get<IAgentFlows>(`api/${Endpoints}/${id}`);
+    return this.httpService.getHttp<IAgentFlows>({ service: `api/${Endpoints}/${id}` });
   }
 
   public async saveFlow(flow: IAgentFlows): Promise<IAgentFlows> {
-    return this.httpService.post<IAgentFlows>(`api/${Endpoints}`, flow);
+    return this.httpService.postHttp<IAgentFlows>({ service: `api/${Endpoints}`, data: flow });
   }
 
   public async deleteFlow(id: string) {
-    return this.httpService.delete(`${Endpoints}/${id}`);
+    return this.httpService.deleteHttp<IAgentFlows>({ service: `${Endpoints}/${id}` });
   }
 
   public async runFlow(flowid: string) {
-    return this.httpService.post<IAgentFlows>(`${Endpoints}/run/${flowid}`, {});
+    return this.httpService.postHttp<IAgentFlows>({ service: `api/${Endpoints}/run/${flowid}`, data: {} });
   }
 
   public async runNode(flowId: string, nodeId: string) {
     // assummong node is a task
-    return this.httpService.post<IAgentFlows>(`${Endpoints}/run-node`, { flowId, nodeId });
+    return this.httpService.postHttp<IAgentFlows>({ service: `api/${Endpoints}/run-node`, data: { flowId, nodeId } });
   }
 }

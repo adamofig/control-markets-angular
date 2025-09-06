@@ -3,6 +3,7 @@ import { DynamicNode } from 'ngx-vflow';
 import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
 import { DynamicNodeWithData, FlowDiagramStateService } from './flow-diagram-state.service';
 import { AssetsNodeComponent } from '../nodes/assetsNode/assets-node.component';
+import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
 
 // Node Type Mapping
 function getNodeTypeMap(): { [key: string]: Type<any> | 'default' } {
@@ -13,6 +14,7 @@ function getNodeTypeMap(): { [key: string]: Type<any> | 'default' } {
     TaskNodeComponent: TaskNodeComponent,
     SourcesNodeComponent: SourcesNodeComponent,
     AssetsNodeComponent: AssetsNodeComponent,
+    VideoGenNodeComponent: VideoGenNodeComponent,
     default: 'default',
   };
 }

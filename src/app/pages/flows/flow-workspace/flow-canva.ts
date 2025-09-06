@@ -170,4 +170,8 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
       }
     }
   }
+
+  public addVideoGenNode() {
+    this.flowDiagramStateService.addVideoGenNode();
+  }
 }
