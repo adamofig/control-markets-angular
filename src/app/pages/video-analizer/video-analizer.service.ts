@@ -16,11 +16,11 @@ export class VideoAnalizerService {
   constructor(private httpService: HttpService) {}
 
   public startAnalyzeVideo(videoAnalysis: VideoAnalysisDto) {
-    return this.httpService.postDataToService('api/video-analizer', videoAnalysis);
+    return this.httpService.postDataToService('api/video-analizer', videoAnalysis, 'python');
   }
 
   public extractInfo(urls: string[]) {
-    return this.httpService.postDataToService('api/video-analizer/extract-tiktok-data', { urls }, 'secondary');
+    return this.httpService.postDataToService('api/video-analizer/extract-tiktok-data', { urls }, 'python');
   }
 
   public downloadYoutubeVideo(url: string, options: { video: boolean; audio: boolean; vocals: boolean }) {
