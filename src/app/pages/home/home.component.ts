@@ -1,4 +1,3 @@
-
 import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild, effect, signal, OnInit } from '@angular/core'; // Import effect
 
 import { InputTextModule } from 'primeng/inputtext';
@@ -12,7 +11,7 @@ import { AudioTourService } from 'src/app/services/audio-tour.service';
 import { stepsIntro } from './steps-tour-home';
 import { LessonsService } from 'src/app/pages/lessons/lessons.service';
 import { AgentCardService } from 'src/app/services/agent-card-service';
-import { IAgentCard } from '@dataclouder/ngx-agent-cards';
+import { AgentCardUI, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ILesson } from '@dataclouder/ngx-lessons';
 import { DcLessonCardComponent } from '@dataclouder/ngx-lessons';
 
@@ -28,7 +27,7 @@ register();
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ButtonModule, InputTextModule, CardModule, DcLessonCardComponent],
+  imports: [ButtonModule, InputTextModule, CardModule, DcLessonCardComponent, AgentCardUI],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -42,6 +41,7 @@ export class HomeComponent implements OnInit {
 
   // Input States
   agentCards = signal<IAgentCard[]>([]);
+  dailyAgentCard = signal<IAgentCard>({} as IAgentCard);
   lessons = signal<ILesson[]>([]);
 
   // View Child
@@ -89,8 +89,9 @@ export class HomeComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const agents = await this.agentCardService.findAgentCards({});
-    this.agentCards.set(agents.rows);
+    const agents = await this.agentCardService.getRandomAgentCard();
+    debugger;
+    this.dailyAgentCard.set(agents[0]);
     const lessons = await this.lessonsService.getLessons({});
 
     this.lessons.set(lessons.rows);
@@ -112,5 +113,9 @@ export class HomeComponent implements OnInit {
 
   public goToLesson(lesson: any) {
     console.log('goToLesson', lesson);
+  }
+
+  public handleAction(event: any) {
+    console.log('handleAction', event);
   }
 }

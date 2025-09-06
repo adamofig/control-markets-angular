@@ -72,6 +72,7 @@ fetch('/assets/config.json')
         provideHttpClient(withInterceptors([authInterceptor])),
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         provideIonicAngular(),
+        provideMarkdown(),
         // 🔥 Firebase
 
         { provide: FIREBASE_OPTIONS, useValue: config.firebase },

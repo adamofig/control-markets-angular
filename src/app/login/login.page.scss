@@ -6,3 +6,8 @@
     box-shadow: none !important;
 }
     
+
+::ng-deep .p-card-body {
+    padding: 0px !important;
+}
+    
