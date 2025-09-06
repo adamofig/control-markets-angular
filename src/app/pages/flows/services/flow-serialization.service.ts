@@ -2,6 +2,7 @@ import { Injectable, Type, signal } from '@angular/core';
 import { DynamicNode } from 'ngx-vflow';
 import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
 import { DynamicNodeWithData, FlowDiagramStateService } from './flow-diagram-state.service';
+import { AssetsNodeComponent } from '../nodes/assetsNode/assets-node.component';
 
 // Node Type Mapping
 function getNodeTypeMap(): { [key: string]: Type<any> | 'default' } {
@@ -11,6 +12,7 @@ function getNodeTypeMap(): { [key: string]: Type<any> | 'default' } {
     OutcomeNodeComponent: OutcomeNodeComponent,
     TaskNodeComponent: TaskNodeComponent,
     SourcesNodeComponent: SourcesNodeComponent,
+    AssetsNodeComponent: AssetsNodeComponent,
     default: 'default',
   };
 }
@@ -33,8 +35,9 @@ function getNodeComponentFromString(typeString: string): Type<any> | 'default' {
   const nodeTypeMap = getNodeTypeMap();
   const component = nodeTypeMap[typeString];
   if (!component) {
-    console.error('Unknown node type string during deserialization:', typeString);
-    throw new Error(`Unknown node type string: ${typeString}`);
+    const error = `Unknown node during deserialization: if ${typeString} is a new Node, add it to the nodeTypeMap in flow-serialization.service.ts`;
+    console.error(error);
+    throw new Error(error);
   }
   return component;
 }

@@ -37,7 +37,7 @@ export class FlowOrchestrationService {
       console.error('Error saving flow:', error);
       this.toastService.error({
         title: 'Error Saving Flow',
-        subtitle: 'An error occurred while saving the flow.',
+        subtitle: `${error}`,
       });
       throw error; // Re-throw to allow the component to handle loading states
     }
@@ -100,9 +100,9 @@ export class FlowOrchestrationService {
     return flow;
   }
 
-  public async createNewFlow(): Promise<void> {
-    const newFlow: IAgentFlows = { id: '' };
-    const savedFlow = await this.flowService.saveFlow(newFlow);
-    this.router.navigate(['../', savedFlow.id], { relativeTo: this.route.parent });
-  }
+  // public async createNewFlow(): Promise<void> {
+  //   const newFlow: IAgentFlows = { id: '' };
+  //   const savedFlow = await this.flowService.saveFlow(newFlow);
+  //   this.router.navigate(['./', savedFlow.id], { relativeTo: this.route });
+  // }
 }

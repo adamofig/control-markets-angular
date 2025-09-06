@@ -19,6 +19,8 @@
     " />
 
   <p-button (click)="showDialog('isAgentVisible')" label="Add Agent" icon="pi pi-user" [rounded]="true" severity="success" [outlined]="true" />
+  <p-button (click)="showDialog('isAssetVisible')" label="Add Asset" icon="pi pi-user" [rounded]="true" severity="success" [outlined]="true" />
+
   <p-button (click)="showDialog('isTaskVisible')" icon="pi pi-plus" label="Add Task" [rounded]="true" severity="warn" [outlined]="true" />
   <p-button icon="pi pi-heart" label="Add Distribution Channel" [rounded]="true" severity="help" [outlined]="true" (click)="addDistributionNode()" />
   <p-button (click)="addSourceNode()" icon="pi pi-file-import" label="Add Source" [rounded]="true" severity="info" [outlined]="true" />
@@ -54,5 +56,7 @@
   } @if(dialogs.isTaskVisible) {
   <p>Entidad.</p>
   <app-task-list viewMode="table" (onSelect)="addTaskToFlow($event)" />
+  } @if(dialogs.isAssetVisible) {
+  <app-assets-uploads (imageUploaded)="addAssetToFlow($event)"></app-assets-uploads>
   }
 </p-dialog>

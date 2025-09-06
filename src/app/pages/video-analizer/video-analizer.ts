@@ -67,7 +67,6 @@ export class VideoAnalizerComponent implements OnInit {
       return;
     }
     this.toastAlerts.info({ title: 'info', subtitle: 'Analyzing video...' });
-    debugger;
     const params: VideoAnalysisDto = { url: this.url.value as string, website: 'youtube', id: '' };
     const source = await this.videoAnalizerService.startAnalyzeVideo(params);
     this.toastAlerts.success({ title: 'success', subtitle: 'Comenzó el analisis del video' });

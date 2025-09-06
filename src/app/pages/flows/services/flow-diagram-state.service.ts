@@ -2,13 +2,14 @@ import { computed, inject, Injectable, signal, Type } from '@angular/core';
 import { IAgentFlows, IJobExecutionState, NodeType } from '../models/flows.model';
 import { Connection, CustomNodeComponent, DynamicNode, Edge } from 'ngx-vflow';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
-import { IAgentTask } from '../../tasks/models/tasks-models'; // Corrected path
+import { IAgentTask, IAssetNodeData } from '../../tasks/models/tasks-models'; // Corrected path
 import { nanoid } from 'nanoid'; // Added
 import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
 import { JobService } from '../../jobs/jobs.service';
 import { IAgentOutcomeJob } from '../../jobs/models/jobs.model';
 import { FlowComponentRefStateService } from './flow-component-ref-state.service';
 import { IAgentSource } from '../../sources/models/sources.model';
+import { AssetsNodeComponent } from '../nodes/assetsNode/assets-node.component';
 
 export type DynamicNodeWithData = DynamicNode & { data?: any };
 
@@ -36,6 +37,10 @@ export class FlowDiagramStateService {
     const sourceIds = edgesWhereTargetIsNode.map(edge => edge.source);
     console.log('edgesWhereTargetIsNode', edgesWhereTargetIsNode);
     return sourceIds;
+  }
+
+  public addNodeToCanvas(node: DynamicNodeWithData) {
+    this.nodes.set([...this.nodes(), node]);
   }
 
   public getInputNodes(nodeId: string): DynamicNodeWithData[] {
@@ -123,9 +128,7 @@ export class FlowDiagramStateService {
       id: 'agent-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position, can be made configurable
       type: AgentNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
-      data: {
-        agentCard: card,
-      } as any,
+      data: { agentCard: card } as any,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -135,9 +138,21 @@ export class FlowDiagramStateService {
       id: 'task-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position
       type: TaskNodeComponent as Type<any>, // Ensure Type<any> is appropriate
-      data: {
-        agentTask: task,
-      }, // not writable for now, but if i change i need to change serializer.
+      data: { agentTask: task } as any,
+    };
+    this.nodes.set([...this.nodes(), newNode]);
+  }
+
+  public addAssetNode(asset: IAssetNodeData): void {
+    this._createAssetNode(asset);
+  }
+
+  private _createAssetNode(asset: IAssetNodeData): void {
+    const newNode: DynamicNodeWithData = {
+      id: 'asset-node-' + nanoid(),
+      point: signal({ x: 100, y: 100 }), // Default position
+      type: AssetsNodeComponent as Type<any>, // Ensure Type<any> is appropriate
+      data: { agentAsset: asset } as any,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }

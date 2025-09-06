@@ -2,31 +2,41 @@ import { ChangeDetectionStrategy, Component, ElementRef, inject, OnInit, signal,
 import { Connection, Vflow } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { AgentCardListComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
-import { OnActionEvent, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
+import { EntityBaseFormComponent, OnActionEvent, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { IAgentFlows } from '../models/flows.model';
 import { ActivatedRoute } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { FlowDiagramStateService } from '../services/flow-diagram-state.service';
 import { TaskListComponent } from '../../tasks/task-list/task-list.component';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormsModule } from '@angular/forms';
-import { IAgentTask } from '../../tasks/models/tasks-models';
+import { FormGroup, FormsModule } from '@angular/forms';
+import { IAgentTask, IAssetNodeData } from '../../tasks/models/tasks-models';
 import { FlowExecutionStateService } from '../services/flow-execution-state.service';
 import { FlowOrchestrationService } from '../services/flow-orchestration.service';
+import { AssetsUploadsComponent } from '../nodes/assets-uploads/assets-uploads.component';
+import { FlowService } from '../flows.service';
 
 @Component({
   templateUrl: './flow-canva.html',
   styleUrl: './flow-canva.css',
   changeDetection: ChangeDetectionStrategy.Default,
   standalone: true,
-  imports: [Vflow, DialogModule, AgentCardListComponent, ButtonModule, TaskListComponent, InputTextModule, FormsModule],
+  imports: [Vflow, DialogModule, AgentCardListComponent, ButtonModule, TaskListComponent, InputTextModule, FormsModule, AssetsUploadsComponent],
 })
-export class FlowsComponent implements OnInit {
-  private route = inject(ActivatedRoute);
+export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> implements OnInit {
+  override form: FormGroup<any> = new FormGroup({});
+
+  protected override patchForm(entity: IAgentFlows): void {
+    this.form.patchValue(entity);
+  }
+
   private flowOrchestrationService = inject(FlowOrchestrationService);
+
+  protected entityCommunicationService = inject(FlowService);
+
   public flowDiagramStateService = inject(FlowDiagramStateService);
   public flowExecutionStateService = inject(FlowExecutionStateService);
-  public toastService = inject(TOAST_ALERTS_TOKEN);
+  // public toastService = inject(TOAST_ALERTS_TOKEN);
 
   public flowName = '';
   public isSavingFlow = signal(false);
@@ -34,7 +44,7 @@ export class FlowsComponent implements OnInit {
 
   public isDialogVisible = false;
 
-  public dialogs = { isAgentVisible: false, isTaskVisible: false };
+  public dialogs = { isAgentVisible: false, isTaskVisible: false, isAssetVisible: false };
 
   public backDots = {
     backgroundColor: 'transparent',
@@ -52,11 +62,9 @@ export class FlowsComponent implements OnInit {
   @ViewChild('sourceFileInput') sourceFileInput!: ElementRef<HTMLInputElement>;
 
   async ngOnInit(): Promise<void> {
-    if (this.flowId) {
+    if (this.entityId()) {
       this.flow = await this.flowOrchestrationService.loadInitialFlow(this.flowId, this.executionId);
       this.flowName = this.flow?.name || '';
-    } else {
-      await this.flowOrchestrationService.createNewFlow();
     }
   }
 
@@ -69,7 +77,6 @@ export class FlowsComponent implements OnInit {
   }
 
   addAgentToFlow(event: OnActionEvent): void {
-    debugger;
     const card: IAgentCard = event.item;
     this.flowDiagramStateService.addAgentToFlow(card);
     this.isDialogVisible = false;
@@ -80,6 +87,12 @@ export class FlowsComponent implements OnInit {
     const task: IAgentTask = event.item;
     this.flowDiagramStateService.addTaskToFlow(task);
 
+    this.isDialogVisible = false;
+  }
+
+  addAssetToFlow(event: IAssetNodeData) {
+    console.log('addAssetToFlow', event);
+    this.flowDiagramStateService.addAssetNode(event);
     this.isDialogVisible = false;
   }
 

@@ -1,0 +1,8 @@
+<p>assets-uploads works!</p>
+
+<dc-cropper-modal
+  id="cropperFirstFrame"
+  #cropperFirstFrame
+  [buttonLabel]="'Upload Image'"
+  [imgStorageSettings]="imageStorageSettings"
+  (imageUploaded)="onImageUploaded($event, 'firstFrame')"></dc-cropper-modal>

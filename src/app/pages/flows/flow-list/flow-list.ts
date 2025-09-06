@@ -1,16 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, input, inject, output, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-import {
-  DCFilterBarComponent,
-  ListFilterBarOptions,
-  OnActionEvent,
-  PaginationBase,
-  QuickTableComponent,
-  TOAST_ALERTS_TOKEN,
-  ToastAlertsAbstractService,
-} from '@dataclouder/ngx-core';
+import { DCFilterBarComponent, QuickTableComponent } from '@dataclouder/ngx-core';
 import { FlowService } from '../flows.service';
 import { IAgentFlows } from '../models/flows.model';
 import { RouterModule } from '@angular/router';
@@ -19,6 +11,7 @@ import { MenuItem } from 'primeng/api';
 import { DatePipe, SlicePipe } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
+import { EntityBaseListComponent } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-generic-list',
@@ -38,21 +31,8 @@ import { TableModule } from 'primeng/table';
   styleUrl: './flow-list.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FlowListComponent extends PaginationBase implements OnInit {
-  // Services
-  private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
-  private flowService = inject(FlowService);
-  private cdr = inject(ChangeDetectorRef);
-
-  // Inputs
-  @Input() viewType: 'table' | 'card' = 'card';
-  readonly onlyView = input<boolean>(true);
-  readonly onSelect = output<IAgentFlows>();
-
-  // States
-  flows: WritableSignal<IAgentFlows[]> = signal<IAgentFlows[]>([]);
-  columns: any[] = ['name', 'description', 'updatedAt', 'image'];
-  filterBarOptions: ListFilterBarOptions = { showActions: true, showCreateButton: true, showViewButton: true };
+export class FlowListComponent extends EntityBaseListComponent<IAgentFlows> implements OnInit {
+  protected override entityCommunicationService = inject(FlowService);
 
   getCustomButtons(item: any): MenuItem[] {
     return [
@@ -72,63 +52,5 @@ export class FlowListComponent extends PaginationBase implements OnInit {
         command: () => this.doAction({ item, action: 'delete' }),
       },
     ];
-  }
-
-  async ngOnInit(): Promise<void> {
-    this.filterConfig.returnProps = { _id: 1, id: 1, name: 1, description: 1, updatedAt: 1, image: 1 };
-    const response = await this.flowService.getFilteredFlows(this.filterConfig);
-    this.flows.set(response.rows);
-    this.cdr.detectChanges();
-    console.log(this.flows(), this.viewType);
-    this.cdr.detectChanges();
-  }
-
-  protected override loadData(): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
-
-  onNew() {
-    console.log('onNew');
-    this.router.navigate(['./edit'], { relativeTo: this.route });
-  }
-
-  public toggleView() {
-    this.viewType = this.viewType === 'card' ? 'table' : 'card';
-    console.log(this.viewType, this.flows());
-    this.cdr.detectChanges();
-  }
-
-  public selectItem(generic: IAgentFlows) {
-    console.log('onSelect');
-    this.onSelect.emit(generic);
-  }
-
-  public override async doAction(actionEvent: OnActionEvent) {
-    const { item, action } = actionEvent;
-
-    if (action == 'changeView') {
-      this.toggleView();
-    }
-
-    switch (action) {
-      case 'view':
-        this.router.navigate(['./edit', item.id], { relativeTo: this.route });
-        break;
-      case 'delete':
-        const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
-        if (areYouSure) {
-          await this.flowService.deleteFlow(item.id);
-          this.flows.set(this.flows().filter(generic => generic.id !== item.id));
-          this.toastService.success({
-            title: 'Origen eliminado',
-            subtitle: 'El origen ha sido eliminado correctamente',
-          });
-          this.cdr.detectChanges();
-        }
-        break;
-      case 'edit':
-        this.router.navigate(['./edit', item.id], { relativeTo: this.route });
-        break;
-    }
   }
 }

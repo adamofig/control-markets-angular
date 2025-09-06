@@ -72,7 +72,6 @@ export class AgentCardListPage {
         conversation: idCard,
       },
     };
-    debugger;
     this.router.navigate(['/page/stack/conversation-details', idCard], navigationExtras);
   }
 

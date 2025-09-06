@@ -90,7 +90,6 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     const agents = await this.agentCardService.getRandomAgentCard();
-    debugger;
     this.dailyAgentCard.set(agents[0]);
     const lessons = await this.lessonsService.getLessons({});
 
