@@ -1,6 +1,6 @@
 import { Injectable, signal, inject, NgZone } from '@angular/core';
-import { IFlowExecutionState, StatusJob, IJobExecutionState, ITaskExecutionState } from '../models/flows.model';
-import { Firestore, doc, docData, DocumentReference } from '@angular/fire/firestore';
+import { IFlowExecutionState, StatusJob, IJobExecutionState, ITaskExecutionState, IFlowExecutionStateV2 } from '../models/flows.model';
+import { Firestore, doc, docData, DocumentReference, getDoc } from '@angular/fire/firestore';
 import { FlowDiagramStateService } from './flow-diagram-state.service';
 
 @Injectable({
@@ -9,8 +9,8 @@ import { FlowDiagramStateService } from './flow-diagram-state.service';
 export class FlowExecutionStateService {
   private firestore = inject(Firestore);
   private ngZone = inject(NgZone);
-  public flowExecutionState = signal<IFlowExecutionState | null>(null);
-  private previousFlowExecutionState: IFlowExecutionState | null = null;
+  public flowExecutionState = signal<IFlowExecutionStateV2 | null>(null);
+  private previousFlowExecutionState: IFlowExecutionStateV2 | null = null;
   private flowDiagramStateService = inject(FlowDiagramStateService);
 
   public getFlowExecutionState() {
@@ -23,7 +23,7 @@ export class FlowExecutionStateService {
     return this.flowExecutionState.asReadonly();
   }
 
-  public setFlowExecutionState(state: IFlowExecutionState) {
+  public setFlowExecutionState(state: IFlowExecutionStateV2) {
     if (state == undefined) {
       return;
     }
@@ -31,19 +31,19 @@ export class FlowExecutionStateService {
     this.flowExecutionState.set(state);
   }
 
-  public initializeExecutionStateListener(flowExecutionId: string): void {
-    const itemCollection: DocumentReference<any> = doc(this.firestore!, `flows_execution_state/${flowExecutionId}`);
+  public getDocReference(flowExecutionId: string) {
+    return doc(this.firestore, `flows_execution_state/${flowExecutionId}`);
+  }
 
-    this.ngZone.run(() => {
-      const data$ = docData(itemCollection);
-      data$.subscribe(data => {
-        console.log('.......data', data);
-        const newExecutionState = data as IFlowExecutionState;
-        this.setFlowExecutionState(newExecutionState);
+  public async initializeExecutionStateListener(flowExecutionId: string): Promise<void> {
+    const docRef = this.getDocReference(flowExecutionId);
 
-        // Now, get the newly completed jobs
-        this.updateJobNodes();
-      });
+    docData(docRef).subscribe(data => {
+      const newExecutionState = data as IFlowExecutionStateV2;
+      this.setFlowExecutionState(newExecutionState);
+
+      // Now, get the newly completed jobs
+      this.updateJobNodes();
     });
   }
 
@@ -61,11 +61,11 @@ export class FlowExecutionStateService {
 
   // Optional: Method to initialize with a default state if needed
   public initializeDefaultState(flowId: string, executionId: string) {
-    const defaultState: IFlowExecutionState = {
-      id: executionId,
+    const defaultState: IFlowExecutionStateV2 = {
+      executionId: executionId,
       flowId: flowId,
       status: StatusJob.PENDING,
-      tasks: {},
+      tasks: [],
     };
     this.flowExecutionState.set(defaultState);
   }
@@ -82,27 +82,20 @@ export class FlowExecutionStateService {
     const newlyCompletedJobs: IJobExecutionState[] = [];
 
     // Iterate over tasks in the current state
-    for (const taskId in currentState.tasks) {
-      if (currentState.tasks.hasOwnProperty(taskId)) {
-        const currentTask: ITaskExecutionState = currentState.tasks[taskId];
+    // Iterate over tasks in the current state
+    for (const currentTask of currentState.tasks) {
+      // Iterate over jobs in the current task
+      for (const currentJob of currentTask.jobs) {
+        if (currentJob.status === StatusJob.COMPLETED) {
+          // Check against previous state
+          const previousTask = this.previousFlowExecutionState?.tasks?.find(t => t.nodeId === currentTask.nodeId);
+          const previousJob = previousTask?.jobs?.find(j => j.nodeId === currentJob.nodeId);
 
-        // Iterate over jobs in the current task
-        for (const jobId in currentTask.jobs) {
-          if (currentTask.jobs.hasOwnProperty(jobId)) {
-            const currentJob: IJobExecutionState = currentTask.jobs[jobId];
-
-            if (currentJob.status === StatusJob.COMPLETED) {
-              // Check against previous state
-              const previousTask = this.previousFlowExecutionState?.tasks?.[taskId];
-              const previousJob = previousTask?.jobs?.[jobId];
-
-              if (!previousJob || previousJob.status !== StatusJob.COMPLETED) {
-                // Job is newly completed if:
-                // 1. It didn't exist in the previous state's corresponding task/job structure.
-                // 2. Or, it existed but its status was not COMPLETED.
-                newlyCompletedJobs.push(currentJob);
-              }
-            }
+          if (!previousJob || previousJob.status !== StatusJob.COMPLETED) {
+            // Job is newly completed if:
+            // 1. It didn't exist in the previous state's corresponding task/job structure.
+            // 2. Or, it existed but its status was not COMPLETED.
+            newlyCompletedJobs.push(currentJob);
           }
         }
       }

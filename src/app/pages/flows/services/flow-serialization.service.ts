@@ -68,6 +68,7 @@ export class FlowSerializationService {
         id: node.id,
         point: plainPoint,
         type: getNodeTypeString(node.type as Type<any> | 'default'),
+        category: node.category,
       };
 
       if (serializableText !== undefined) {
@@ -104,6 +105,7 @@ export class FlowSerializationService {
           point: signal(plainNode.point),
           type: 'default',
           text: signal(plainNode.text !== undefined ? plainNode.text : ''),
+          category: 'other',
         };
       } else {
         dynamicNode = {
@@ -111,6 +113,7 @@ export class FlowSerializationService {
           point: signal(plainNode.point),
           type: nodeType as Type<any>,
           data: { ...plainNode.data },
+          category: plainNode.category,
         };
       }
       return dynamicNode;

@@ -8,7 +8,7 @@ import { TaskNodeDetailsComponent } from './task-details/task-node-details';
 import { IAgentTask } from '../../../tasks/models/tasks-models';
 import { FlowExecutionStateService } from '../../services/flow-execution-state.service';
 import { FlowDiagramStateService } from '../../services/flow-diagram-state.service';
-import { IFlowExecutionState, StatusJob } from '../../models/flows.model';
+import { IFlowExecutionState, IFlowExecutionStateV2, StatusJob } from '../../models/flows.model';
 import { TagModule } from 'primeng/tag';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FlowOrchestrationService } from '../../services/flow-orchestration.service';
@@ -39,9 +39,9 @@ export class TaskNodeComponent extends CustomNodeComponent<CustomTaskNode> imple
   }
 
   public taskExecutionState = computed(() => {
-    const executionState: IFlowExecutionState | null = this.flowExecutionStateService.flowExecutionState();
+    const executionState: IFlowExecutionStateV2 | null = this.flowExecutionStateService.flowExecutionState();
     if (executionState) {
-      const executionTask = executionState?.tasks[this.node().id];
+      const executionTask = executionState?.tasks.find(t => t.nodeId === this.node().id);
       if (executionTask) {
         console.log('-------state', executionState);
         return executionTask;

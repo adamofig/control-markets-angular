@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomNodeComponent, HandleComponent } from 'ngx-vflow';
+import { HandleComponent } from 'ngx-vflow';
 import { ComponentDynamicNode } from 'ngx-vflow';
 import { IAssetNodeData } from 'src/app/pages/tasks/models/tasks-models';
+import { inject } from '@angular/core';
+import { BaseFlowNode } from '../base-flow-node';
+import { Button } from 'primeng/button';
 
 export interface CustomAssetsNode extends ComponentDynamicNode {
   agentAsset: IAssetNodeData;
@@ -12,9 +15,9 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
   templateUrl: './assets-node.component.html',
   styleUrls: ['./assets-node.component.scss'],
   standalone: true,
-  imports: [HandleComponent],
+  imports: [HandleComponent, Button],
 })
-export class AssetsNodeComponent extends CustomNodeComponent<CustomAssetsNode> implements OnInit {
+export class AssetsNodeComponent extends BaseFlowNode<CustomAssetsNode> implements OnInit {
   constructor() {
     super();
   }

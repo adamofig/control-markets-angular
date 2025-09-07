@@ -27,11 +27,15 @@ export enum StatusJob {
 
 export interface IJobExecutionState {
   nodeId: string;
-  agentCardId: string;
+  inputEntityId: string;
+  nodeType: NodeType;
+
   status: StatusJob;
   messages: MessageLog[];
-  outcomeId: string;
-  inputType: NodeType;
+  outputEntityId: string;
+  resultType: 'outcome' | 'generatedAsset' | '';
+
+  // inputType: NodeType;
 }
 
 export interface ITaskExecutionState {
@@ -54,4 +58,18 @@ export enum NodeType {
   SourcesNodeComponent = 'SourcesNodeComponent',
   OutcomeNodeComponent = 'OutcomeNodeComponent',
   default = 'default',
+}
+
+export interface ITaskExecutionStateV2 {
+  id: string; // Creo que no tengo los ids
+  nodeId: string;
+  taskId: string;
+  status: StatusJob;
+  jobs: Array<IJobExecutionState>;
+}
+export interface IFlowExecutionStateV2 {
+  executionId: string; // flow execution id
+  flowId: string; // flow id
+  status: StatusJob;
+  tasks: Array<ITaskExecutionStateV2>;
 }

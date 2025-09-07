@@ -79,7 +79,7 @@
     "@types/marked": "^5.0.2",
     "angular-shepherd": "^20.0.0",
     "date-fns": "^4.1.0",
-    "firebase": "^12.1.0",
+    "@angular/fire": "^19.0.0",
     "force": "^0.0.3",
     "ionicons": "^8.0.13",
     "marked": "^15.0.8",

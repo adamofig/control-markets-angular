@@ -1,13 +1,13 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
-import { CustomNodeComponent, HandleComponent } from 'ngx-vflow';
+import { HandleComponent } from 'ngx-vflow';
 import { ComponentDynamicNode } from 'ngx-vflow';
 import { IAssetNodeData } from 'src/app/pages/tasks/models/tasks-models';
-import { IFlowExecutionState, StatusJob } from '../../models/flows.model';
+import { IFlowExecutionStateV2, StatusJob } from '../../models/flows.model';
 import { FlowExecutionStateService } from '../../services/flow-execution-state.service';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
 import { FlowOrchestrationService } from '../../services/flow-orchestration.service';
-import { FlowDiagramStateService } from '../../services/flow-diagram-state.service';
+import { BaseFlowNode } from '../base-flow-node';
 
 export interface CustomAssetsNode extends ComponentDynamicNode {
   agentAsset: IAssetNodeData;
@@ -20,9 +20,8 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
   standalone: true,
   imports: [HandleComponent, ProgressSpinner, ButtonModule],
 })
-export class VideoGenNodeComponent extends CustomNodeComponent<CustomAssetsNode> implements OnInit {
+export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implements OnInit {
   public flowExecutionStateService = inject(FlowExecutionStateService);
-  public flowDiagramStateService = inject(FlowDiagramStateService);
   public flowOrchestrationService = inject(FlowOrchestrationService);
 
   public statusJob = StatusJob;
@@ -32,9 +31,9 @@ export class VideoGenNodeComponent extends CustomNodeComponent<CustomAssetsNode>
   }
 
   public taskExecutionState = computed(() => {
-    const executionState: IFlowExecutionState | null = this.flowExecutionStateService.flowExecutionState();
+    const executionState: IFlowExecutionStateV2 | null = this.flowExecutionStateService.flowExecutionState();
     if (executionState) {
-      const executionTask = executionState?.tasks[this.node().id];
+      const executionTask = executionState?.tasks.find(t => t.nodeId === this.node().id);
       if (executionTask) {
         console.log('-------state', executionState);
         return executionTask;

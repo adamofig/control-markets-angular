@@ -7,7 +7,7 @@
       } @else if (this.data()?.outcomeJob?.responseFormat === responseFormat.JSON) {
       {{ this.data()?.outcomeJob?.result | json }}
       } @else if (this.data()?.outcomeJob?.responseFormat === responseFormat.DEFAULT_CONTENT) {
-      {{ this.data()?.outcomeJob?.response }}
+      {{ this.data()?.outcomeJob?.response || this.data()?.outcomeJob?.result?.description || 'No response in format DEFAULT_CONTENT' }}
       } @else {
       {{ this.data()?.outcomeJob?.response?.content }}
       }

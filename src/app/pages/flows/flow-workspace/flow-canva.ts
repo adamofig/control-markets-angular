@@ -2,9 +2,8 @@ import { ChangeDetectionStrategy, Component, ElementRef, inject, OnInit, signal,
 import { Connection, Vflow } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { AgentCardListComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
-import { EntityBaseFormComponent, OnActionEvent, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
+import { EntityBaseFormComponent, OnActionEvent } from '@dataclouder/ngx-core';
 import { IAgentFlows } from '../models/flows.model';
-import { ActivatedRoute } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { FlowDiagramStateService } from '../services/flow-diagram-state.service';
 import { TaskListComponent } from '../../tasks/task-list/task-list.component';

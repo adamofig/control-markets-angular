@@ -47,8 +47,11 @@ export class OutcomeNodeComponent extends CustomNodeComponent<CustomOutcomeNode>
     this.backgroundImageUrl = `url('assets/defaults/images/default_2_3.webp')`;
     effect(() => {
       this.outcomeJob = this.data()?.outcomeJob || null;
-      const imageUrl = this.outcomeJob?.agentCard?.assets?.image?.url;
-      this.backgroundImageUrl = imageUrl ? `url('${imageUrl}')` : `url('assets/defaults/images/default_2_3.webp')`;
+      if (this.outcomeJob) {
+        const imageUrl = this.outcomeJob?.agentCard?.assets?.image?.url;
+        this.backgroundImageUrl = imageUrl ? `url('${imageUrl}')` : `url('assets/defaults/images/default_2_3.webp')`;
+        console.log('outcomeJob', this.outcomeJob.result);
+      }
     });
   }
 

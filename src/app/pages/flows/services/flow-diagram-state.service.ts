@@ -12,7 +12,7 @@ import { IAgentSource } from '../../sources/models/sources.model';
 import { AssetsNodeComponent } from '../nodes/assetsNode/assets-node.component';
 import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
 
-export type DynamicNodeWithData = DynamicNode & { data?: any };
+export type DynamicNodeWithData = DynamicNode & { data?: any; category?: 'input' | 'output' | 'process' | 'other' };
 
 //  This must have all the edges and node so i can go thoew every one.
 @Injectable({
@@ -50,6 +50,13 @@ export class FlowDiagramStateService {
     return allNodes.filter(node => inputsIds.includes(node.id));
   }
 
+  public getOutputNodes(nodeId: string): DynamicNodeWithData[] {
+    const edgesWhereSourceIsNode = this.edges().filter(edge => edge.source === nodeId);
+    const targetIds = edgesWhereSourceIsNode.map(edge => edge.target);
+    const allNodes = this.nodes();
+    return allNodes.filter(node => targetIds.includes(node.id));
+  }
+
   public setFlow(flow: IAgentFlows) {
     this.flow.set(flow);
   }
@@ -65,9 +72,9 @@ export class FlowDiagramStateService {
   }
 
   public async addOutcomeToFlow(outcome: IJobExecutionState) {
-    const outcomeJob = await this.jobService.getJob(outcome.outcomeId);
+    const outcomeJob = await this.jobService.getJob(outcome.outputEntityId);
     let outcomeJobNode;
-    if (outcome.inputType === NodeType.AgentNodeComponent) {
+    if (outcome.nodeType === NodeType.AgentNodeComponent) {
       outcomeJobNode = this.findOutcomeNodeByAgentCardId(outcomeJob.agentCard?._id!);
     }
 
@@ -113,6 +120,7 @@ export class FlowDiagramStateService {
       point: signal({ x: x, y: y }), // Default position, can be made configurable
       type: OutcomeNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
       data: { outcomeJob }, // not writable for now, but if i change i need to change serializer.
+      category: 'output',
     };
 
     this.nodes.set([...this.nodes(), newNode]);
@@ -125,6 +133,7 @@ export class FlowDiagramStateService {
       id: 'video-gen-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position
       type: VideoGenNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      category: 'process',
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -138,6 +147,7 @@ export class FlowDiagramStateService {
       id: 'agent-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position, can be made configurable
       type: AgentNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      category: 'input',
       data: { agentCard: card } as any,
     };
     this.nodes.set([...this.nodes(), newNode]);
@@ -148,6 +158,7 @@ export class FlowDiagramStateService {
       id: 'task-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position
       type: TaskNodeComponent as Type<any>, // Ensure Type<any> is appropriate
+      category: 'process',
       data: { agentTask: task } as any,
     };
     this.nodes.set([...this.nodes(), newNode]);
@@ -162,6 +173,7 @@ export class FlowDiagramStateService {
       id: 'asset-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position
       type: AssetsNodeComponent as Type<any>, // Ensure Type<any> is appropriate
+      category: 'input',
       data: { agentAsset: asset } as any,
     };
     this.nodes.set([...this.nodes(), newNode]);
@@ -178,14 +190,24 @@ export class FlowDiagramStateService {
   }
 
   public createEdge({ source, target }: Connection) {
-    const sourceNode = this.nodes().find(node => node.id === source);
-    const targetNode = this.nodes().find(node => node.id === target);
+    const inputNode = this.nodes().find(node => node.id === source);
+    const outputNode = this.nodes().find(node => node.id === target);
 
-    if ((sourceNode?.type as any)?.name === AgentNodeComponent.name) {
-      if ((targetNode?.type as any)?.name === TaskNodeComponent.name) {
+    if ((inputNode?.type as any)?.name === AgentNodeComponent.name) {
+      if ((outputNode?.type as any)?.name === TaskNodeComponent.name) {
         const outcomeJobEmpty: Partial<IAgentOutcomeJob> = {
-          agentCard: sourceNode?.data?.agentCard,
-          task: targetNode?.data?.agentTask,
+          agentCard: inputNode?.data?.agentCard,
+          task: outputNode?.data?.agentTask,
+        };
+        this.createOutcomeNode(outcomeJobEmpty as IAgentOutcomeJob);
+      }
+    }
+
+    if ((inputNode?.type as any)?.name === AssetsNodeComponent.name) {
+      if ((outputNode?.type as any)?.name === VideoGenNodeComponent.name) {
+        const outcomeJobEmpty: Partial<IAgentOutcomeJob> = {
+          agentCard: inputNode?.data?.agentCard,
+          task: outputNode?.data?.agentTask,
         };
         this.createOutcomeNode(outcomeJobEmpty as IAgentOutcomeJob);
       }
