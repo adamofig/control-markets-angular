@@ -1,7 +1,8 @@
 import { Injectable, signal, inject, NgZone } from '@angular/core';
-import { IFlowExecutionState, StatusJob, IJobExecutionState, ITaskExecutionState, IFlowExecutionStateV2 } from '../models/flows.model';
+import { IFlowExecutionState, StatusJob, IJobExecutionState, ITaskExecutionState, IFlowExecutionStateV2, NodeType } from '../models/flows.model';
 import { Firestore, doc, docData, DocumentReference, getDoc } from '@angular/fire/firestore';
 import { FlowDiagramStateService } from './flow-diagram-state.service';
+import { FlowNodeCreationService } from './flow-node-creation.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class FlowExecutionStateService {
   public flowExecutionState = signal<IFlowExecutionStateV2 | null>(null);
   private previousFlowExecutionState: IFlowExecutionStateV2 | null = null;
   private flowDiagramStateService = inject(FlowDiagramStateService);
+  private flowNodeCreationService = inject(FlowNodeCreationService);
 
   public getFlowExecutionState() {
     // Returns the current value
@@ -54,7 +56,11 @@ export class FlowExecutionStateService {
       console.log('justCompletedJobs', justCompletedJobs);
       // Here you can trigger your actions for each job in newlyCompleted
       justCompletedJobs.forEach(job => {
-        this.flowDiagramStateService.addOutcomeToFlow(job);
+        if (job.resultType === 'outcome') {
+          this.flowDiagramStateService.addOutcomeToFlow(job);
+        } else if (job.resultType === 'generatedAsset') {
+          this.flowNodeCreationService.addGeneratedAssetNodeToFlow(job);
+        }
       });
     }
   }

@@ -1,16 +1,16 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { HandleComponent } from 'ngx-vflow';
 import { ComponentDynamicNode } from 'ngx-vflow';
-import { IAssetNodeData } from 'src/app/pages/tasks/models/tasks-models';
 import { IFlowExecutionStateV2, StatusJob } from '../../models/flows.model';
 import { FlowExecutionStateService } from '../../services/flow-execution-state.service';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
 import { FlowOrchestrationService } from '../../services/flow-orchestration.service';
 import { BaseFlowNode } from '../base-flow-node';
+import { IAssetNodeData } from '../../models/nodes.model';
 
 export interface CustomAssetsNode extends ComponentDynamicNode {
-  agentAsset: IAssetNodeData;
+  nodeData: IAssetNodeData;
 }
 
 @Component({
@@ -20,15 +20,11 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
   standalone: true,
   imports: [HandleComponent, ProgressSpinner, ButtonModule],
 })
-export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implements OnInit {
+export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> {
   public flowExecutionStateService = inject(FlowExecutionStateService);
   public flowOrchestrationService = inject(FlowOrchestrationService);
 
   public statusJob = StatusJob;
-
-  override ngOnInit() {
-    // You can add initialization logic here if needed in the future.
-  }
 
   public taskExecutionState = computed(() => {
     const executionState: IFlowExecutionStateV2 | null = this.flowExecutionStateService.flowExecutionState();

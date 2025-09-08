@@ -1,6 +1,6 @@
 <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
 
 <div class="container">
-  <img width="150px" height="auto" class="image" [src]="node()?.data?.agentAsset?.storage?.url" />
+  <img width="150px" height="auto" class="image" [src]="node()?.data?.nodeData?.storage?.url" />
 </div>
 <handle type="source" position="right" id="right" />

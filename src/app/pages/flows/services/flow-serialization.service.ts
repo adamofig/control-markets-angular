@@ -2,8 +2,9 @@ import { Injectable, Type, signal } from '@angular/core';
 import { DynamicNode } from 'ngx-vflow';
 import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
 import { DynamicNodeWithData, FlowDiagramStateService } from './flow-diagram-state.service';
-import { AssetsNodeComponent } from '../nodes/assetsNode/assets-node.component';
+import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
 import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
+import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
 
 // Node Type Mapping
 function getNodeTypeMap(): { [key: string]: Type<any> | 'default' } {
@@ -15,6 +16,7 @@ function getNodeTypeMap(): { [key: string]: Type<any> | 'default' } {
     SourcesNodeComponent: SourcesNodeComponent,
     AssetsNodeComponent: AssetsNodeComponent,
     VideoGenNodeComponent: VideoGenNodeComponent,
+    AssetGeneratedNodeComponent: AssetGeneratedNodeComponent,
     default: 'default',
   };
 }

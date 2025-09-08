@@ -1,5 +1,5 @@
 <div class="custom-node" selectable [class.custom-node_selected]="selected()" (dblclick)="openModal()">
-  <img style="position: absolute; top: 0; left: 0" [src]="data()?.agentCard?.assets?.image?.url" alt="" />
+  <img style="position: absolute; top: 0; left: 0" [src]="data()?.nodeData?.assets?.image?.url" alt="" />
   <p class="text-node" style="font-size: 8px">
     <!-- {{ agentCard()?.conversationSettings?.model?.quality || 'No se sabe' }} -->
     ID Node: {{ node()?.id }}

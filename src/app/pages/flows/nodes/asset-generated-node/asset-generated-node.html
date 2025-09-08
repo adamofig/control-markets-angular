@@ -1,0 +1,17 @@
+<div class="custom-node" selectable [class.custom-node_selected]="selected()" (dblclick)="openModal()">
+  <div class="card-background" [style.background-image]="backgroundImageUrl"></div>
+  <div class="card-content">
+    <p class="main-text"></p>
+  </div>
+
+  <div style="position: absolute; top: 0; right: 0; display: flex">
+    <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
+    <p-button (click)="refreshNode()" class="hover-button" icon="pi pi-refresh" [rounded]="true" [text]="true" severity="info" />
+  </div>
+
+  <video controls [src]="videoUrl" width="100%" height="auto" autoplay loop></video>
+  <!-- <img style="position: absolute; top: 0; left: 0" [src]="data()?.image" alt="" /> -->
+
+  <handle type="target" position="left" id="b" />
+  <handle type="source" position="right" id="b" />
+</div>

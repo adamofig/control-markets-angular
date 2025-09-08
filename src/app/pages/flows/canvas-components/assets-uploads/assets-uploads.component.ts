@@ -3,7 +3,7 @@ import { CropperComponentModal, AspectType, ResolutionType, StorageImageSettings
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlowDiagramStateService } from '../../services/flow-diagram-state.service';
 import { nanoid } from 'nanoid';
-import { IAssetNodeData } from 'src/app/pages/tasks/models/tasks-models';
+import { IAssetNodeData } from '../../models/nodes.model';
 
 @Component({
   selector: 'app-assets-uploads',

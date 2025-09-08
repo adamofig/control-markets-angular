@@ -9,11 +9,12 @@ import { FlowDiagramStateService } from '../services/flow-diagram-state.service'
 import { TaskListComponent } from '../../tasks/task-list/task-list.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormGroup, FormsModule } from '@angular/forms';
-import { IAgentTask, IAssetNodeData } from '../../tasks/models/tasks-models';
+import { IAgentTask } from '../../tasks/models/tasks-models';
 import { FlowExecutionStateService } from '../services/flow-execution-state.service';
 import { FlowOrchestrationService } from '../services/flow-orchestration.service';
-import { AssetsUploadsComponent } from '../nodes/assets-uploads/assets-uploads.component';
+import { AssetsUploadsComponent } from '../canvas-components/assets-uploads/assets-uploads.component';
 import { FlowService } from '../flows.service';
+import { IAssetNodeData } from '../models/nodes.model';
 
 @Component({
   templateUrl: './flow-canva.html',

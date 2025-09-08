@@ -13,7 +13,7 @@ import { FlowExecutionUtilsService } from '../../services/flow-execution-utils';
 import { BaseFlowNode } from '../base-flow-node';
 
 export interface CustomAgentNode extends ComponentDynamicNode {
-  agentCard: IAgentCard;
+  nodeData: IAgentCard;
 }
 
 @Component({
@@ -27,7 +27,7 @@ export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements
   public dialogService = inject(DialogService);
   public flowExecutionStateService = inject(FlowExecutionStateService);
   public flowExecutionUtilsService = inject(FlowExecutionUtilsService);
-  public agentCard = computed(() => this.node()?.data?.agentCard);
+  public agentCard = computed(() => this.node()?.data?.nodeData);
 
   public statusJob = StatusJob;
 
@@ -39,7 +39,7 @@ export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements
   constructor() {
     super();
     effect(() => {
-      console.log('agent-node', this.data()?.agentCard.assets?.image?.url);
+      console.log('agent-node', this.data()?.nodeData.assets?.image?.url);
     });
     // Creo que necesito entrar al job
     computed(() => {

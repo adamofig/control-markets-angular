@@ -14,7 +14,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FlowOrchestrationService } from '../../services/flow-orchestration.service';
 
 export interface CustomTaskNode extends ComponentDynamicNode {
-  agentTask: IAgentTask;
+  nodeData: IAgentTask;
 }
 
 @Component({
@@ -32,7 +32,7 @@ export class TaskNodeComponent extends CustomNodeComponent<CustomTaskNode> imple
   public flowOrchestrationService = inject(FlowOrchestrationService);
 
   public statusJob = StatusJob;
-  public agentTask = computed(() => this.node()?.data?.agentTask);
+  public agentTask = computed(() => this.node()?.data?.nodeData);
 
   public override ngOnInit(): void {
     super.ngOnInit();

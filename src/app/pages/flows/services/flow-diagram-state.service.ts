@@ -2,15 +2,18 @@ import { computed, inject, Injectable, signal, Type } from '@angular/core';
 import { IAgentFlows, IJobExecutionState, NodeType } from '../models/flows.model';
 import { Connection, CustomNodeComponent, DynamicNode, Edge } from 'ngx-vflow';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
-import { IAgentTask, IAssetNodeData } from '../../tasks/models/tasks-models'; // Corrected path
+import { IAgentTask } from '../../tasks/models/tasks-models'; // Corrected path
 import { nanoid } from 'nanoid'; // Added
 import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
 import { JobService } from '../../jobs/jobs.service';
 import { IAgentOutcomeJob } from '../../jobs/models/jobs.model';
 import { FlowComponentRefStateService } from './flow-component-ref-state.service';
 import { IAgentSource } from '../../sources/models/sources.model';
-import { AssetsNodeComponent } from '../nodes/assetsNode/assets-node.component';
+import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
 import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
+import { IAssetNodeData } from '../models/nodes.model';
+import { GeneratedAsset } from '@dataclouder/ngx-vertex';
+import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
 
 export type DynamicNodeWithData = DynamicNode & { data?: any; category?: 'input' | 'output' | 'process' | 'other' };
 
@@ -79,7 +82,7 @@ export class FlowDiagramStateService {
     }
 
     if (!outcomeJobNode) {
-      this.createOutcomeNode(outcomeJob);
+      this.createConnectedOutcomeNode(outcomeJob);
     } else {
       this.flowComponentRefStateService.updateData(outcomeJobNode.id, { outcomeJob });
       this.updateNodeData(outcomeJobNode.id, { outcomeJob });
@@ -98,11 +101,15 @@ export class FlowDiagramStateService {
     return this.nodes().find(node => node?.data?.outcomeJob?.agentCard?._id === agentCardId);
   }
 
-  public createOutcomeNode(outcomeJob: IAgentOutcomeJob): void {
+  public createConnectedOutcomeNode(outcomeJob: IAgentOutcomeJob, inputNodeId?: string, processNodeId?: string): void {
+    // TODO: revisar que funcione esta tecnica.
     let inputNode;
 
-    if (outcomeJob.inputNodeId) {
-      inputNode = this.nodes().find(node => node?.id === outcomeJob.inputNodeId);
+    if (inputNodeId) {
+      inputNode = this.nodes().find(node => node?.id === inputNodeId);
+    }
+    if (processNodeId) {
+      inputNode = this.nodes().find(node => node?.id === processNodeId);
     }
     if (outcomeJob.agentCard) {
       inputNode = this.nodes().find(node => node?.data?.agentCard?._id === outcomeJob.agentCard?._id);
@@ -142,13 +149,13 @@ export class FlowDiagramStateService {
     this._createTaskNode(task);
   }
 
-  private _createAgentNode(card: IAgentCard): void {
+  private _createAgentNode(agentCard: IAgentCard): void {
     const newNode: DynamicNodeWithData = {
       id: 'agent-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position, can be made configurable
       type: AgentNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'input',
-      data: { agentCard: card } as any,
+      data: { nodeData: agentCard } as any,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -159,7 +166,7 @@ export class FlowDiagramStateService {
       point: signal({ x: 100, y: 100 }), // Default position
       type: TaskNodeComponent as Type<any>, // Ensure Type<any> is appropriate
       category: 'process',
-      data: { agentTask: task } as any,
+      data: { nodeData: task } as any,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -174,7 +181,7 @@ export class FlowDiagramStateService {
       point: signal({ x: 100, y: 100 }), // Default position
       type: AssetsNodeComponent as Type<any>, // Ensure Type<any> is appropriate
       category: 'input',
-      data: { agentAsset: asset } as any,
+      data: { nodeData: asset },
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -193,25 +200,25 @@ export class FlowDiagramStateService {
     const inputNode = this.nodes().find(node => node.id === source);
     const outputNode = this.nodes().find(node => node.id === target);
 
+    // Si esto ocurre signfica que Input y Output es de tipo Process por lo que generan un nodo typo Output Node
+    //_______ __________ ____________
     if ((inputNode?.type as any)?.name === AgentNodeComponent.name) {
       if ((outputNode?.type as any)?.name === TaskNodeComponent.name) {
         const outcomeJobEmpty: Partial<IAgentOutcomeJob> = {
           agentCard: inputNode?.data?.agentCard,
           task: outputNode?.data?.agentTask,
         };
-        this.createOutcomeNode(outcomeJobEmpty as IAgentOutcomeJob);
+        this.createConnectedOutcomeNode(outcomeJobEmpty as IAgentOutcomeJob);
       }
     }
 
     if ((inputNode?.type as any)?.name === AssetsNodeComponent.name) {
       if ((outputNode?.type as any)?.name === VideoGenNodeComponent.name) {
-        const outcomeJobEmpty: Partial<IAgentOutcomeJob> = {
-          agentCard: inputNode?.data?.agentCard,
-          task: outputNode?.data?.agentTask,
-        };
-        this.createOutcomeNode(outcomeJobEmpty as IAgentOutcomeJob);
+        const generatedAssetEmpty: Partial<GeneratedAsset> = {};
+        this.createConnectedAssetGeneratedNode(generatedAssetEmpty as GeneratedAsset, inputNode?.id!, outputNode?.id!);
       }
     }
+    //_______ __________ ____________
 
     this._createEdge({ source, target });
   }
@@ -260,5 +267,24 @@ export class FlowDiagramStateService {
       data: { agentSource: source }, // Pass initial data
     };
     this.nodes.set([...this.nodes(), newNode]);
+  }
+
+  public createConnectedAssetGeneratedNode(generatedAsset: GeneratedAsset, inputNodeId: string, processNodeId: string) {
+    const inputNode = this.nodes().find(node => node?.id === inputNodeId);
+    const processNode = this.nodes().find(node => node?.id === processNodeId);
+    const x = processNode?.point().x! + (processNode?.point().x! - inputNode?.point().x!);
+    const y = processNode?.point().y! + (processNode?.point().y! - inputNode?.point().y!);
+    console.log('x', x);
+    console.log('y', y);
+    const newNode: DynamicNodeWithData = {
+      id: 'asset-generated-node-' + nanoid(),
+      point: signal({ x: x, y: y }), // Default position
+      type: AssetGeneratedNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      category: 'output',
+      data: { nodeData: generatedAsset, inputNodeId, processNodeId },
+    };
+    this.nodes.set([...this.nodes(), newNode]);
+
+    this._createEdge({ source: processNode?.id!, target: newNode.id });
   }
 }

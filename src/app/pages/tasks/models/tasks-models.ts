@@ -69,11 +69,3 @@ export const AgentTaskOptions = [
 //   messages: any[];
 //   response: any;
 // }
-
-export interface IAssetNodeData {
-  _id?: string;
-  id: string;
-  name: string;
-  type: string;
-  storage: FileStorageData;
-}

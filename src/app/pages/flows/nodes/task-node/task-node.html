@@ -1,6 +1,6 @@
 <div class="custom-node" selectable [class.custom-node_selected]="selected()" (dblclick)="openModal()">
-  <img style="position: absolute; top: 0; left: 0; object-fit: cover; width: 100%; height: 100%" [src]="data()?.agentTask?.image?.url" alt="" />
-  <p class="text-node">{{ data()?.agentTask?.name }}</p>
+  <img style="position: absolute; top: 0; left: 0; object-fit: cover; width: 100%; height: 100%" [src]="data()?.nodeData?.image?.url" alt="" />
+  <p class="text-node">{{ data()?.nodeData?.name }}</p>
 
   <p-button (click)="removeNode()" class="remove-btn" icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" />
 
