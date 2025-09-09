@@ -5,7 +5,6 @@ import { AgentDetailsComponent } from './agent-details/agent-details';
 import { DynamicNodeWithData } from '../../services/flow-diagram-state.service';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ButtonModule } from 'primeng/button';
-import { FlowExecutionStateService } from '../../services/flow-execution-state.service';
 import { StatusJob } from '../../models/flows.model';
 import { TagModule } from 'primeng/tag';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -25,26 +24,19 @@ export interface CustomAgentNode extends ComponentDynamicNode {
 })
 export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements OnInit {
   public dialogService = inject(DialogService);
-  public flowExecutionStateService = inject(FlowExecutionStateService);
   public flowExecutionUtilsService = inject(FlowExecutionUtilsService);
   public agentCard = computed(() => this.node()?.data?.nodeData);
 
   public statusJob = StatusJob;
 
-  // Entender como obtener el agent card.y monitorear el state.
-  public agentExecutionState = computed(() => {
-    return this.flowExecutionUtilsService.getAgentExecutionState(this.node() as unknown as DynamicNodeWithData);
-  });
+  public override nodeCategory: 'process' | 'input' | 'output' = 'input';
 
   constructor() {
     super();
     effect(() => {
       console.log('agent-node', this.data()?.nodeData.assets?.image?.url);
     });
-    // Creo que necesito entrar al job
-    computed(() => {
-      return this.flowExecutionStateService.getFlowExecutionState()?.tasks.find(t => t.processNodeId === this.node().id);
-    });
+    // TODO: ver como usar el BaseFlowNode para suscribirme al estado.
   }
 
   override ngOnInit(): void {

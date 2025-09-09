@@ -1,10 +1,11 @@
-import { Injectable, Type, signal } from '@angular/core';
+import { Injectable, Type, inject, signal } from '@angular/core';
 import { DynamicNode } from 'ngx-vflow';
 import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
 import { DynamicNodeWithData, FlowDiagramStateService } from './flow-diagram-state.service';
 import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
 import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
+import { FlowComponentRefStateService } from './flow-component-ref-state.service';
 
 // Node Type Mapping
 function getNodeTypeMap(): { [key: string]: Type<any> | 'default' } {
@@ -50,6 +51,8 @@ function getNodeComponentFromString(typeString: string): Type<any> | 'default' {
   providedIn: 'root',
 })
 export class FlowSerializationService {
+  public flowComponentRefStateService = inject(FlowComponentRefStateService);
+
   public serializeFlow(flowDiagramStateService: FlowDiagramStateService): { nodes: any[]; edges: any[] } {
     const serializableNodes = flowDiagramStateService.nodes().map(node => {
       const plainPoint = node.point();
@@ -62,6 +65,12 @@ export class FlowSerializationService {
         if (nodeAsAny.text && typeof nodeAsAny.text === 'function') {
           serializableText = nodeAsAny.text();
         }
+      }
+      if ((node.type as any)?.name === VideoGenNodeComponent.name) {
+        const videoGenNode = this.flowComponentRefStateService.getNodeComponentRef(node.id);
+        const prompt = (videoGenNode as any).prompt;
+        console.log('videoGenNode', prompt);
+        serializableData = { ...nodeAsAny.data, nodeData: { ...nodeAsAny.data.nodeData, prompt } };
       } else {
         serializableData = { ...nodeAsAny.data };
       }

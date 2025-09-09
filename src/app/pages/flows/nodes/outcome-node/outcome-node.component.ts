@@ -36,7 +36,7 @@ export class OutcomeNodeComponent extends BaseFlowNode<CustomOutcomeNode> implem
       const inputNodeId = this.node().data?.inputNodeId || '';
       console.log('outcomeJob', inputNodeId);
       const inputNodeComponent = this.flowComponentRefStateService.getNodeComponentRef(inputNodeId);
-      const imageForInput = inputNodeComponent.data()?.nodeData?.assets?.image?.url;
+      const imageForInput = inputNodeComponent?.data()?.nodeData?.assets?.image?.url;
       console.log('imageForInput....', imageForInput);
       this.backgroundImageUrl.set(imageForInput);
       console.log('inputNodeComponent', this.backgroundImageUrl());

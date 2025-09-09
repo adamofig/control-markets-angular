@@ -4,6 +4,7 @@ import { ComponentDynamicNode } from 'ngx-vflow';
 import { BaseFlowNode } from '../base-flow-node';
 import { Button } from 'primeng/button';
 import { IAssetNodeData } from '../../models/nodes.model';
+import { Tag } from 'primeng/tag';
 
 export interface CustomAssetsNode extends ComponentDynamicNode {
   nodeData: IAssetNodeData;
@@ -14,7 +15,7 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
   templateUrl: './assets-node.component.html',
   styleUrls: ['./assets-node.component.scss'],
   standalone: true,
-  imports: [HandleComponent, Button],
+  imports: [HandleComponent, Button, Tag],
 })
 export class AssetsNodeComponent extends BaseFlowNode<CustomAssetsNode> {
   constructor() {

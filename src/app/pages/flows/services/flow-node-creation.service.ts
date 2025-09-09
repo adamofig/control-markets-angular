@@ -19,7 +19,7 @@ export class FlowNodeCreationService {
       if (jobExecutionState.outputNodeId) {
         alert('Debería conectar con el nodo que ya tengo');
       } else {
-        alert('Debería crear un nuevo nodo');
+        // alert('Debería crear un nuevo nodo');
       }
     }
     this.addAssetGeneratedNode(generatedAsset);

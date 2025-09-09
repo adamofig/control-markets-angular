@@ -28,6 +28,7 @@ export class FlowExecutionUtilsService {
         const state = this.flowExecutionStateService.getFlowExecutionState();
         const targetTask = state?.tasks.find((t: ITaskExecutionState) => t.processNodeId === taskNodeId);
         const job = targetTask?.jobs.find((j: IJobExecutionState) => j.inputNodeId === node.id);
+        console.log('encontró su job', job);
 
         return job;
       }

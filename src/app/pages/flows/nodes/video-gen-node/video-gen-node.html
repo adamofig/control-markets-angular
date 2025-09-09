@@ -1,8 +1,12 @@
 <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
 
-<div class="container" style="width: 150px; height: auto">
+<div class="container" style="width: 250px; height: auto">
   <!-- <img width="150px" height="auto" class="image" [src]="node()?.data?.agentAsset?.storage?.url" /> -->
-  Video Generation Task
+  <h4>Video Generation Node</h4>
+
+  <span>Prompt</span>
+  <textarea rows="2" style="width: 100%" pTextarea [(ngModel)]="prompt"></textarea>
+  <span>More options:</span>
 </div>
 
 <handle type="target" position="left" id="left" />
@@ -10,6 +14,8 @@
 <handle type="target" position="top" id="top" />
 
 <p-button (click)="runNode()" class="execute-btn" icon="pi pi-play" [rounded]="true" [text]="true" severity="info" />
+
+<p-tag severity="info" [value]="taskExecutionState()?.status" />
 
 @if(taskExecutionState()?.status === statusJob.IN_PROGRESS) {
 <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">

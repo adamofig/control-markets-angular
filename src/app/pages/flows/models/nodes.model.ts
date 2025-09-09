@@ -7,3 +7,9 @@ export interface IAssetNodeData {
   type: string;
   storage: FileStorageData;
 }
+
+export interface INodeVideoGenerationData {
+  _id?: string;
+  id: string;
+  prompt: string;
+}

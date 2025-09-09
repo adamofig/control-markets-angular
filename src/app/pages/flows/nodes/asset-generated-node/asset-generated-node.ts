@@ -39,7 +39,7 @@ export class AssetGeneratedNodeComponent extends BaseFlowNode<CustomAssetGenerat
     effect(() => {
       this.generatedAsset = this.data()?.nodeData || null;
       if (this.generatedAsset) {
-        this.videoUrl = this.generatedAsset?.result.url;
+        this.videoUrl = this.generatedAsset?.result?.url;
         // this.backgroundImageUrl = imageUrl ? `url('${imageUrl}')` : `url('assets/defaults/images/default_2_3.webp')`;
         // console.log('generatedAsset', this.generatedAsset.result);
       }
