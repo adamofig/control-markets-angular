@@ -1,16 +1,17 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef, effect, inject, signal } from '@angular/core';
 import { ComponentDynamicNode, Vflow } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { IAgentOutcomeJob, ResponseFormat } from 'src/app/pages/jobs/models/jobs.model';
 import { OutcomeJobDetailComponent } from 'src/app/pages/jobs/job-detail/job-detail.component';
 import { ButtonModule } from 'primeng/button';
-import { FlowComponentRefStateService } from '../../services/flow-component-ref-state.service';
 import { JsonPipe } from '@angular/common';
 import { BaseFlowNode } from '../base-flow-node';
 
 export interface CustomOutcomeNode extends ComponentDynamicNode {
-  outcomeJob: IAgentOutcomeJob | null;
+  nodeData: IAgentOutcomeJob | null;
+  inputNodeId: string;
+  processNodeId: string;
 }
 
 @Component({
@@ -21,35 +22,37 @@ export interface CustomOutcomeNode extends ComponentDynamicNode {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class OutcomeNodeComponent extends BaseFlowNode<CustomOutcomeNode> implements OnInit, OnDestroy {
+export class OutcomeNodeComponent extends BaseFlowNode<CustomOutcomeNode> implements OnInit {
   public dialogService = inject(DialogService);
-  public flowComponentRefStateService = inject(FlowComponentRefStateService);
-
   public outcomeJob: IAgentOutcomeJob | null = null;
   public responseFormat = ResponseFormat;
-  public backgroundImageUrl: string;
+  public backgroundImageUrl = signal<string>('');
 
   @ViewChild('dialog') dialog!: ViewContainerRef;
 
-  override ngOnInit() {
+  override ngOnInit(): void {
     super.ngOnInit();
-    this.flowComponentRefStateService.addNodeComponentRef(this.node().id, this);
-  }
-
-  ngOnDestroy() {
-    this.flowComponentRefStateService.removeNodeComponentRef(this.node().id);
+    setTimeout(() => {
+      const inputNodeId = this.node().data?.inputNodeId || '';
+      console.log('outcomeJob', inputNodeId);
+      const inputNodeComponent = this.flowComponentRefStateService.getNodeComponentRef(inputNodeId);
+      const imageForInput = inputNodeComponent.data()?.nodeData?.assets?.image?.url;
+      console.log('imageForInput....', imageForInput);
+      this.backgroundImageUrl.set(imageForInput);
+      console.log('inputNodeComponent', this.backgroundImageUrl());
+    }, 500);
   }
 
   constructor() {
     super();
-    this.backgroundImageUrl = `url('assets/defaults/images/default_2_3.webp')`;
+    this.backgroundImageUrl.set(`url('assets/defaults/images/default_2_3.webp')`);
     effect(() => {
-      this.outcomeJob = this.data()?.outcomeJob || null;
-      if (this.outcomeJob) {
-        const imageUrl = this.outcomeJob?.agentCard?.assets?.image?.url;
-        this.backgroundImageUrl = imageUrl ? `url('${imageUrl}')` : `url('assets/defaults/images/default_2_3.webp')`;
-        console.log('outcomeJob', this.outcomeJob.result);
-      }
+      this.outcomeJob = this.data()?.nodeData || null;
+      // if (this.outcomeJob) {
+      //   const imageUrl = this.outcomeJob?.agentCard?.assets?.image?.url;
+      //   this.backgroundImageUrl.set(imageUrl ? `url('${imageUrl}')` : `url('assets/defaults/images/default_2_3.webp')`);
+      //   console.log('outcomeJob', this.outcomeJob.result);
+      // }
     });
   }
 

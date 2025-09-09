@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { HandleComponent } from 'ngx-vflow';
 import { ComponentDynamicNode } from 'ngx-vflow';
-import { IFlowExecutionStateV2, StatusJob } from '../../models/flows.model';
+import { IFlowExecutionState, StatusJob } from '../../models/flows.model';
 import { FlowExecutionStateService } from '../../services/flow-execution-state.service';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
@@ -27,9 +27,9 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> {
   public statusJob = StatusJob;
 
   public taskExecutionState = computed(() => {
-    const executionState: IFlowExecutionStateV2 | null = this.flowExecutionStateService.flowExecutionState();
+    const executionState: IFlowExecutionState | null = this.flowExecutionStateService.flowExecutionState();
     if (executionState) {
-      const executionTask = executionState?.tasks.find(t => t.nodeId === this.node().id);
+      const executionTask = executionState?.tasks.find(t => t.processNodeId === this.node().id);
       if (executionTask) {
         console.log('-------state', executionState);
         return executionTask;

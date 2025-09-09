@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, computed, effect, inject } from '@angular/core';
-import { ComponentDynamicNode, DynamicNode, Vflow } from 'ngx-vflow';
+import { ComponentDynamicNode, Vflow } from 'ngx-vflow';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AgentDetailsComponent } from './agent-details/agent-details';
 import { DynamicNodeWithData } from '../../services/flow-diagram-state.service';
@@ -43,7 +43,7 @@ export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements
     });
     // Creo que necesito entrar al job
     computed(() => {
-      return this.flowExecutionStateService.getFlowExecutionState()?.tasks.find(t => t.nodeId === this.node().id);
+      return this.flowExecutionStateService.getFlowExecutionState()?.tasks.find(t => t.processNodeId === this.node().id);
     });
   }
 

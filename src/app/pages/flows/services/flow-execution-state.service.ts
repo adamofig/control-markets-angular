@@ -1,5 +1,5 @@
 import { Injectable, signal, inject, NgZone } from '@angular/core';
-import { IFlowExecutionState, StatusJob, IJobExecutionState, ITaskExecutionState, IFlowExecutionStateV2, NodeType } from '../models/flows.model';
+import { IFlowExecutionState, StatusJob, IJobExecutionState, ITaskExecutionState } from '../models/flows.model';
 import { Firestore, doc, docData, DocumentReference, getDoc } from '@angular/fire/firestore';
 import { FlowDiagramStateService } from './flow-diagram-state.service';
 import { FlowNodeCreationService } from './flow-node-creation.service';
@@ -10,8 +10,8 @@ import { FlowNodeCreationService } from './flow-node-creation.service';
 export class FlowExecutionStateService {
   private firestore = inject(Firestore);
   private ngZone = inject(NgZone);
-  public flowExecutionState = signal<IFlowExecutionStateV2 | null>(null);
-  private previousFlowExecutionState: IFlowExecutionStateV2 | null = null;
+  public flowExecutionState = signal<IFlowExecutionState | null>(null);
+  private previousFlowExecutionState: IFlowExecutionState | null = null;
   private flowDiagramStateService = inject(FlowDiagramStateService);
   private flowNodeCreationService = inject(FlowNodeCreationService);
 
@@ -25,7 +25,7 @@ export class FlowExecutionStateService {
     return this.flowExecutionState.asReadonly();
   }
 
-  public setFlowExecutionState(state: IFlowExecutionStateV2) {
+  public setFlowExecutionState(state: IFlowExecutionState) {
     if (state == undefined) {
       return;
     }
@@ -41,7 +41,7 @@ export class FlowExecutionStateService {
     const docRef = this.getDocReference(flowExecutionId);
 
     docData(docRef).subscribe(data => {
-      const newExecutionState = data as IFlowExecutionStateV2;
+      const newExecutionState = data as IFlowExecutionState;
       this.setFlowExecutionState(newExecutionState);
 
       // Now, get the newly completed jobs
@@ -67,8 +67,9 @@ export class FlowExecutionStateService {
 
   // Optional: Method to initialize with a default state if needed
   public initializeDefaultState(flowId: string, executionId: string) {
-    const defaultState: IFlowExecutionStateV2 = {
-      executionId: executionId,
+    const defaultState: IFlowExecutionState = {
+      id: executionId,
+      flowExecutionId: executionId,
       flowId: flowId,
       status: StatusJob.PENDING,
       tasks: [],
@@ -94,8 +95,8 @@ export class FlowExecutionStateService {
       for (const currentJob of currentTask.jobs) {
         if (currentJob.status === StatusJob.COMPLETED) {
           // Check against previous state
-          const previousTask = this.previousFlowExecutionState?.tasks?.find(t => t.nodeId === currentTask.nodeId);
-          const previousJob = previousTask?.jobs?.find(j => j.nodeId === currentJob.nodeId);
+          const previousTask = this.previousFlowExecutionState?.tasks?.find((t: ITaskExecutionState) => t.processNodeId === currentTask.processNodeId);
+          const previousJob = previousTask?.jobs?.find((j: IJobExecutionState) => j.inputNodeId === currentJob.inputNodeId);
 
           if (!previousJob || previousJob.status !== StatusJob.COMPLETED) {
             // Job is newly completed if:

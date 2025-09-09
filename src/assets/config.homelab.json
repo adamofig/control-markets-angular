@@ -1,11 +1,11 @@
 {
-    "projectName": "Dataclouder Template Homelab",
+    "projectName": "Control Markets",
     "version": "0.0.12",
     "envName": "DEV",
     "production": true,
     "authenticationRequired": true,
-    "backendNodeUrl": "http://home.lab:7991",
-    "backendPythonUrl": "http://home.lab:7992",
+    "backendNodeUrl": "http://home.lab:8121",
+    "backendPythonUrl": "http://home.lab:8122",
     "mobile": {
       "appleAppId": "com.dc-template.app.dev",
       "appleRedirectURI": "https://dataclouder-dev.firebaseapp.com/__/auth/handler",
@@ -13,11 +13,11 @@
       "iosClientId": "484991861457-o3j8n8fv21huerkd0pj8r719jssrtbnh.apps.googleusercontent.com"
     },
     "firebase": {
-      "apiKey": "AIzaSyBjUc3umM6iLMcdz6byw1BMfVoQWTO4p-0",
-      "authDomain": "dataclouder-dev.firebaseapp.com",
-      "projectId": "dataclouder-dev",
-      "storageBucket": "dataclouder-dev.firebasestorage.app",
-      "messagingSenderId": "514401908603",
-      "appId": "1:514401908603:web:48a12af2f8ce2879986fde"
+      "apiKey": "AIzaSyAecVnUj1-IjKGDvBarhufKAfO-Y-RyTXw",
+      "authDomain": "golden-ad-dev.firebaseapp.com",
+      "projectId": "golden-ad-dev",
+      "storageBucket": "golden-ad-dev.firebasestorage.app",
+      "messagingSenderId": "164740776065",
+      "appId": "1:164740776065:web:e2c59fd82d71fe6817cd80"
     }
 }

@@ -1,15 +1,16 @@
 <div class="custom-node" selectable [class.custom-node_selected]="selected()" (dblclick)="openModal()">
-  <div class="card-background" [style.background-image]="backgroundImageUrl"></div>
+  <img class="card-background" [src]="backgroundImageUrl()" alt="Node background" />
+
   <div class="card-content">
     <p class="main-text">
-      @if (this.data()?.outcomeJob?.responseFormat === responseFormat.ARRAY) {
-      {{ this.data()?.outcomeJob?.result | json }}
-      } @else if (this.data()?.outcomeJob?.responseFormat === responseFormat.JSON) {
-      {{ this.data()?.outcomeJob?.result | json }}
-      } @else if (this.data()?.outcomeJob?.responseFormat === responseFormat.DEFAULT_CONTENT) {
-      {{ this.data()?.outcomeJob?.response || this.data()?.outcomeJob?.result?.description || 'No response in format DEFAULT_CONTENT' }}
+      @if (this.data()?.nodeData?.responseFormat === responseFormat.ARRAY) {
+      {{ this.data()?.nodeData?.result | json }}
+      } @else if (this.data()?.nodeData?.responseFormat === responseFormat.JSON) {
+      {{ this.data()?.nodeData?.result | json }}
+      } @else if (this.data()?.nodeData?.responseFormat === responseFormat.DEFAULT_CONTENT) {
+      {{ this.data()?.nodeData?.response || this.data()?.nodeData?.result?.description || 'No response in format DEFAULT_CONTENT' }}
       } @else {
-      {{ this.data()?.outcomeJob?.response?.content }}
+      {{ this.data()?.nodeData?.response?.content }}
       }
       <!-- {{ outcomeJob?.result?.content || 'No response' }} -->
     </p>

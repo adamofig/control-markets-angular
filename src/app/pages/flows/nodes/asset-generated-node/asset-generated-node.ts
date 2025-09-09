@@ -22,9 +22,8 @@ export interface CustomAssetGeneratedNode extends ComponentDynamicNode {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class AssetGeneratedNodeComponent extends BaseFlowNode<CustomAssetGeneratedNode> implements OnInit, OnDestroy {
+export class AssetGeneratedNodeComponent extends BaseFlowNode<CustomAssetGeneratedNode> {
   public dialogService = inject(DialogService);
-  public flowComponentRefStateService = inject(FlowComponentRefStateService);
   public generatedAssetsService = inject(GeneratedAssetsService);
 
   public generatedAsset: IGeneratedAsset | null = null;
@@ -33,15 +32,6 @@ export class AssetGeneratedNodeComponent extends BaseFlowNode<CustomAssetGenerat
   public videoUrl: string = '';
 
   @ViewChild('dialog') dialog!: ViewContainerRef;
-
-  override ngOnInit() {
-    super.ngOnInit();
-    this.flowComponentRefStateService.addNodeComponentRef(this.node().id, this);
-  }
-
-  ngOnDestroy() {
-    this.flowComponentRefStateService.removeNodeComponentRef(this.node().id);
-  }
 
   constructor() {
     super();

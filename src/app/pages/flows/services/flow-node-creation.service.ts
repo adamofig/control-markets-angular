@@ -1,5 +1,5 @@
 import { Injectable, signal, inject, NgZone, Type } from '@angular/core';
-import { IFlowExecutionState, StatusJob, IJobExecutionState, ITaskExecutionState, IFlowExecutionStateV2, ITaskExecutionStateV2 } from '../models/flows.model';
+import { IJobExecutionState } from '../models/flows.model';
 import { DynamicNodeWithData, FlowDiagramStateService } from './flow-diagram-state.service';
 import { GeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-vertex';
 import { nanoid } from 'nanoid';
@@ -15,6 +15,13 @@ export class FlowNodeCreationService {
   public async addGeneratedAssetNodeToFlow(jobExecutionState: IJobExecutionState) {
     const generatedAsset = await this.generatedAssetsService.findOne(jobExecutionState.outputEntityId);
     console.log('generatedAsset', generatedAsset);
+    if (jobExecutionState) {
+      if (jobExecutionState.outputNodeId) {
+        alert('Debería conectar con el nodo que ya tengo');
+      } else {
+        alert('Debería crear un nuevo nodo');
+      }
+    }
     this.addAssetGeneratedNode(generatedAsset);
   }
 

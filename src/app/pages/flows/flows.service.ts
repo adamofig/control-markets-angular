@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IAgentFlows } from './models/flows.model';
+import { IAgentFlows, IFlowExecutionState, ITaskExecutionState } from './models/flows.model';
 import { FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN, EntityCommunicationService } from '@dataclouder/ngx-core';
 
 const server = 'primary';
@@ -30,8 +30,8 @@ export class FlowService extends EntityCommunicationService<IAgentFlows> {
     return this.httpService.deleteHttp<IAgentFlows>({ service: `${Endpoints}/${id}` });
   }
 
-  public async runFlow(flowid: string) {
-    return this.httpService.postHttp<IAgentFlows>({ service: `api/${Endpoints}/run/${flowid}`, data: {} });
+  public async runFlow(flowid: string): Promise<IFlowExecutionState> {
+    return this.httpService.postHttp<IFlowExecutionState>({ service: `api/${Endpoints}/run/${flowid}`, data: {} });
   }
 
   public async runNode(flowId: string, nodeId: string) {

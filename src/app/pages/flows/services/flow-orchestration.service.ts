@@ -46,9 +46,9 @@ export class FlowOrchestrationService {
   public async runFlow(flowId: string, flowName: string): Promise<void> {
     try {
       await this.saveFlow(flowId, flowName);
-      const result: any = await this.flowService.runFlow(flowId);
-      if (result && result.executionId) {
-        this.flowExecutionStateService.initializeExecutionStateListener(result.executionId);
+      const result = await this.flowService.runFlow(flowId);
+      if (result && result.flowExecutionId) {
+        this.flowExecutionStateService.initializeExecutionStateListener(result.flowExecutionId);
         // Optionally navigate to the execution view
         // this.router.navigate(['../', flowId, 'executions', result.executionId], { relativeTo: this.route });
       } else {

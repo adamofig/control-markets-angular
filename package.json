@@ -4,7 +4,7 @@
     "appId": "ad.golden.dev ",
     "appIdDev": "ad.golden.dev .dev"
   },
-  "version": "0.0.22",
+  "version": "0.0.24",
   "author": "Dataclouder",
   "homepage": "dataclouder.dev",
   "scripts": {
