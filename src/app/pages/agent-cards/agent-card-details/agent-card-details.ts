@@ -20,7 +20,6 @@ export class AgentCardDetailsPage implements OnInit {
   conversationId: any;
 
   constructor() {
-    debugger;
     // First try to get from state
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras?.state as { conversation: any };
@@ -43,7 +42,6 @@ export class AgentCardDetailsPage implements OnInit {
   }
 
   public startConversation(card: IAgentCard) {
-    debugger;
     console.log('startConversation', card);
     this.router.navigate(['/page/stack/chat', card._id], {
       state: {

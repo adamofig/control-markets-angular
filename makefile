@@ -50,7 +50,7 @@ endif
 # These are set by the main deploy targets below
 TARGET_USER          ?= local
 TARGET_HOST          ?= localhost
-REMOTE_DEPLOY_PATH   ?= /tmp
+REMOTE_DEPLOY_PATH   ?= /tmp/$(PROJECT_NAME)
 PLATFORM             ?= linux/amd64 # Default platform
 
 REMOTE_TAR_FILEPATH  = $(REMOTE_DEPLOY_PATH)/$(IMAGE_FILENAME)
@@ -126,6 +126,7 @@ deploy-cloudflare:
 	@docker save $(DOCKER_IMAGE_NAME):latest -o $(IMAGE_FILENAME)
 	@echo "4) 🚚 Transferring files to [$(TARGET_USER)@$(TARGET_HOST)]..."
 	@echo "  -> Transferring Docker image [$(IMAGE_FILENAME)] to [$(REMOTE_TAR_FILEPATH)]"
+	@$(SSH_CMD) $(TARGET_USER)@$(TARGET_HOST) "mkdir -p $(REMOTE_DEPLOY_PATH)"
 	@$(SCP_CMD) $(IMAGE_FILENAME) $(TARGET_USER)@$(TARGET_HOST):$(REMOTE_TAR_FILEPATH)
 	@echo "  -> Transferring config file [$(LOCAL_CONFIG_PATH)] to [$(REMOTE_CONFIG_PATH)]"
 	@$(SCP_CMD) $(LOCAL_CONFIG_PATH) $(TARGET_USER)@$(TARGET_HOST):$(REMOTE_CONFIG_PATH)

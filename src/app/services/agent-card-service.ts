@@ -76,7 +76,7 @@ export class AgentCardService {
 
   public async getRandomAgentCard() {
     const response = await this.httpService.getDataFromService(`${Endpoints.AgentCard.Random}?size=1&onlyPublic=true`);
-    debugger;
+
     return response;
   }
 

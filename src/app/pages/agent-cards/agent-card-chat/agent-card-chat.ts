@@ -19,7 +19,6 @@ export class AgentCardChatComponent implements OnInit {
   private chatMonitorService = inject(ChatMonitorService);
 
   constructor() {
-    debugger;
     effect(() => {
       const message = this.chatMonitorService.messageAudioWillPlay$();
       if (message) {

@@ -18,7 +18,13 @@ import { providePrimeNG } from 'primeng/config';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // DC Libs
-import { DefaultAgentCardsService, provideAgentCardService, provideUserDataExchange } from '@dataclouder/ngx-agent-cards';
+import {
+  AGENT_CARDS_STATE_SERVICE,
+  DefaultAgentCardsService,
+  IAgentCard,
+  provideAgentCardService,
+  provideUserDataExchange,
+} from '@dataclouder/ngx-agent-cards';
 import { provideLessonsService, provideNotionService } from '@dataclouder/ngx-lessons';
 import { provideAuthConfig } from '@dataclouder/app-auth';
 import { HttpCoreService, HTTP_CORE_CONFIG, provideToastAlert } from '@dataclouder/ngx-core';
@@ -37,6 +43,7 @@ import { FormlyFieldTextArea } from './app/pages/generics/generic-form/formly-co
 import { provideServiceWorker } from '@angular/service-worker';
 import { APP_CONFIG, IAppConfig } from './app/services/app-config.service';
 import { provideMarkdown } from 'ngx-markdown';
+import { provideMasterState } from '@dataclouder/ngx-knowledge';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -48,6 +55,12 @@ fetch('/assets/config.json')
     bootstrapApplication(AppComponent, {
       providers: [
         { provide: APP_CONFIG, useValue: config },
+
+        provideMasterState<IAgentCard>(AGENT_CARDS_STATE_SERVICE, {
+          pathTable: 'agent-cards',
+          sourceCoreEndPoint: 'api/agent-cards/query',
+          userStateEndPoint: 'api/knowledge/learning-experience',
+        }),
 
         provideAppInitializer(() => {
           const httpCore = inject(HttpCoreService);
