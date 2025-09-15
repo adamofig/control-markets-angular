@@ -12,4 +12,5 @@ export interface INodeVideoGenerationData {
   _id?: string;
   id: string;
   prompt: string;
+  request?: any;
 }

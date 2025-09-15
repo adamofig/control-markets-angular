@@ -18,12 +18,16 @@
       width: 200px;
     " />
 
-  <p-button (click)="showDialog('isAgentVisible')" label="Add Agent" icon="pi pi-user" [rounded]="true" severity="success" [outlined]="true" />
-  <p-button (click)="showDialog('isAssetVisible')" label="Add Asset" icon="pi pi-user" [rounded]="true" severity="success" [outlined]="true" />
-  <p-button (click)="addVideoGenNode()" label="Add Video" icon="pi pi-user" [rounded]="true" severity="warn" [outlined]="true" />
+  <p-button (click)="showDialog('isAgentVisible')" label="Agent" icon="pi pi-user-plus" [rounded]="true" severity="success" [outlined]="true" />
+  <p-button (click)="showDialog('isAssetVisible')" label="Asset" icon="pi pi-plus-circle" [rounded]="true" severity="success" [outlined]="true" />
+  <!-- Process -->
+  <p-button (click)="addVideoGenNode()" label="Video" icon="pi pi-video" [rounded]="true" severity="warn" [outlined]="true" />
+  <p-button (click)="showDialog('isTaskVisible')" icon="pi pi-microchip-ai" label="Task" [rounded]="true" severity="warn" [outlined]="true" />
+  <!-- Other -->
 
-  <p-button (click)="showDialog('isTaskVisible')" icon="pi pi-plus" label="Add Task" [rounded]="true" severity="warn" [outlined]="true" />
-  <p-button icon="pi pi-heart" label="Add Distribution Channel" [rounded]="true" severity="help" [outlined]="true" (click)="addDistributionNode()" />
+  <p-button (click)="addAudioTTSGenNode()" icon="pi pi-megaphone" label="Audio" [rounded]="true" severity="warn" [outlined]="true" />
+
+  <p-button icon="pi pi-heart" label="Distribution Channel" [rounded]="true" severity="help" [outlined]="true" (click)="addDistributionNode()" />
   <p-button (click)="addSourceNode()" icon="pi pi-file-import" label="Add Source" [rounded]="true" severity="info" [outlined]="true" />
 
   <p-button (click)="saveFlow()" label="Save Flow" icon="pi pi-save" [rounded]="true" severity="secondary" [outlined]="true" [loading]="isSavingFlow()" />

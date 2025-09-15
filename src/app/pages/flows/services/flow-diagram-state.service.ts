@@ -15,7 +15,7 @@ import { IAssetNodeData } from '../models/nodes.model';
 import { GeneratedAsset } from '@dataclouder/ngx-vertex';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
 
-export type DynamicNodeWithData = DynamicNode & { data?: any; category?: 'input' | 'output' | 'process' | 'other' };
+export type DynamicNodeWithData = DynamicNode & { data?: any; category?: 'input' | 'output' | 'process' | 'other'; component?: string };
 
 @Injectable({
   providedIn: 'root',
@@ -105,6 +105,10 @@ export class FlowDiagramStateService {
 
   public createConnectionInputToProcessNode(inputNode: DynamicNodeWithData, processNode: DynamicNodeWithData): void {
     this.flowSignalNodeStateService.createConnectionInputToProcessNode(inputNode, processNode);
+  }
+
+  public addAudioTTSGenNode() {
+    this.flowSignalNodeStateService.addAudioTTSNode();
   }
 
   public addVideoGenNode() {

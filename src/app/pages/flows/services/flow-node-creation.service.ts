@@ -17,7 +17,7 @@ export class FlowNodeCreationService {
     console.log('generatedAsset', generatedAsset);
     if (jobExecutionState) {
       if (jobExecutionState.outputNodeId) {
-        alert('Debería conectar con el nodo que ya tengo');
+        // alert('Debería conectar con el nodo que ya tengo');
       } else {
         // alert('Debería crear un nuevo nodo');
       }
@@ -32,6 +32,7 @@ export class FlowNodeCreationService {
       type: AssetGeneratedNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'output',
       data: { nodeData: generatedAsset },
+      component: 'AssetGeneratedNodeComponent',
     };
     this.flowDiagramStateService.nodes.set([...this.flowDiagramStateService.nodes(), newNode]);
   }

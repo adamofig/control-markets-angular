@@ -54,32 +54,40 @@ export class FlowSerializationService {
   public flowComponentRefStateService = inject(FlowComponentRefStateService);
 
   public serializeFlow(flowDiagramStateService: FlowDiagramStateService): { nodes: any[]; edges: any[] } {
-    const serializableNodes = flowDiagramStateService.nodes().map(node => {
+    const serializableNodes = flowDiagramStateService.nodes().map((node: any) => {
       const plainPoint = node.point();
       let serializableText: string | undefined;
       let serializableData: any | undefined;
 
-      const nodeAsAny = node as any;
-
       if (node.type === 'default') {
-        if (nodeAsAny.text && typeof nodeAsAny.text === 'function') {
-          serializableText = nodeAsAny.text();
+        if (node.text && typeof node.text === 'function') {
+          serializableText = node.text();
         }
       }
-      if ((node.type as any)?.name === VideoGenNodeComponent.name) {
+      if (node.component === 'VideoGenNodeComponent') {
+        debugger;
+
         const videoGenNode = this.flowComponentRefStateService.getNodeComponentRef(node.id);
-        const prompt = (videoGenNode as any).prompt;
+        const prompt = (videoGenNode as any)?.prompt;
+
+        const request = (videoGenNode as any)?.form.value;
         console.log('videoGenNode', prompt);
-        serializableData = { ...nodeAsAny.data, nodeData: { ...nodeAsAny.data.nodeData, prompt } };
+        const nodeData = { ...(node?.data?.nodeData || {}), prompt, request };
+        serializableData = { ...node?.data, nodeData };
+        console.log('serializableData', serializableData);
       } else {
-        serializableData = { ...nodeAsAny.data };
+        serializableData = { ...node.data };
       }
+
+      // 🛑 Adding new attibutes must change loadFlow() and serializeFlow()
 
       const serializableNode: any = {
         id: node.id,
         point: plainPoint,
         type: getNodeTypeString(node.type as Type<any> | 'default'),
         category: node.category,
+        component: node.component,
+        data: {},
       };
 
       if (serializableText !== undefined) {
@@ -117,6 +125,7 @@ export class FlowSerializationService {
           type: 'default',
           text: signal(plainNode.text !== undefined ? plainNode.text : ''),
           category: 'other',
+          component: plainNode.component,
         };
       } else {
         dynamicNode = {
@@ -125,6 +134,7 @@ export class FlowSerializationService {
           type: nodeType as Type<any>,
           data: { ...plainNode.data },
           category: plainNode.category,
+          component: plainNode.component,
         };
       }
       return dynamicNode;

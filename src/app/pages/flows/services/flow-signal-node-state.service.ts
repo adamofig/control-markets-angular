@@ -12,6 +12,7 @@ import { GeneratedAsset } from '@dataclouder/ngx-vertex';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
 import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
 import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
+import { AudioTTsNodeComponent } from '../nodes/audio-tts-node/audio-tts-node';
 
 @Injectable({
   providedIn: 'root',
@@ -67,12 +68,24 @@ export class FlowSignalNodeStateService {
     console.log('creando nuevo nodo. ', inputNode, processNode);
   }
 
+  public addAudioTTSNode() {
+    const newNode: DynamicNodeWithData = {
+      id: 'audio-tts-gen-node-' + nanoid(),
+      point: signal({ x: 100, y: 100 }), // Default position
+      type: AudioTTsNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      category: 'process',
+      component: 'AudioTTsNodeComponent',
+    };
+    this.nodes.set([...this.nodes(), newNode]);
+  }
+
   public addVideoGenNode() {
     const newNode: DynamicNodeWithData = {
       id: 'video-gen-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position
       type: VideoGenNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'process',
+      component: 'VideoGenNodeComponent',
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -88,6 +101,7 @@ export class FlowSignalNodeStateService {
       type: AgentNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'input',
       data: { nodeData: agentCard } as any,
+      component: 'AgentNodeComponent',
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -99,6 +113,7 @@ export class FlowSignalNodeStateService {
       type: TaskNodeComponent as Type<any>, // Ensure Type<any> is appropriate
       category: 'process',
       data: { nodeData: task } as any,
+      component: 'TaskNodeComponent',
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -114,6 +129,7 @@ export class FlowSignalNodeStateService {
       type: AssetsNodeComponent as Type<any>, // Ensure Type<any> is appropriate
       category: 'input',
       data: { nodeData: asset },
+      component: 'AssetsNodeComponent',
     };
     this.nodes.set([...this.nodes(), newNode]);
   }

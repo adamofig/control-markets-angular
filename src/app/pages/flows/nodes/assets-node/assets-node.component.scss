@@ -11,7 +11,7 @@
   position: relative;
   border-radius: 14px;
   overflow: hidden;
-  padding: 4px;
+  padding: 7px;
 }
 
 .loading-border-container.in-progress::before {
@@ -21,7 +21,7 @@
   left: 50%;
   width: 300px; /* Larger gradient for a wider effect */
   height: 300px; /* Larger gradient for a wider effect */
-  background: conic-gradient(transparent, #a099d8, #dfa2da, #402fb5, #cf30aa, transparent 80%);
+  background: conic-gradient(transparent, #a099d8, #dfa2da, #402fb5, #cf30aa, transparent 70%);
   animation: rotate 2s linear infinite;
   transform: translate(-50%, -50%); /* Center the gradient */
   z-index: 1;
