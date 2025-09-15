@@ -1,4 +1,8 @@
-
-:host {
-  display: block;
+.tts-node-container {
+  background-color: rgb(240, 189, 189);
+  height: auto;
+  width: 350px;
+  border: 2px solid orange;
+  border-radius: 15px;
+  padding: 10px;
 }

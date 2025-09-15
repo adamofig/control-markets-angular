@@ -10,4 +10,10 @@ import { TTSPlayground } from '@dataclouder/ngx-vertex';
   styleUrl: './audio-tts-node.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AudioTTsNodeComponent extends BaseFlowNode<CustomOutcomeNode> {}
+export class AudioTTsNodeComponent extends BaseFlowNode<CustomOutcomeNode> {
+  onTtsGenerated(event: any) {
+    console.log('tts generated', event);
+
+    // A ver que hago con el audio?
+  }
+}
