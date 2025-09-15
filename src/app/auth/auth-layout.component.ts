@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { CardModule } from 'primeng/card';
-import { AppConfigService } from '../services/app-config.service';
+import { APP_CONFIG } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-auth-layout',
@@ -46,8 +46,8 @@ import { AppConfigService } from '../services/app-config.service';
   imports: [RouterOutlet, RouterLink, CardModule],
 })
 export class AuthLayoutComponent {
-  private appConfigService = inject(AppConfigService);
+  private appConfigService = inject(APP_CONFIG);
 
-  public envName = this.appConfigService.config.envName;
-  public version = this.appConfigService.config.version;
+  public envName = this.appConfigService.envName;
+  public version = this.appConfigService.version;
 }

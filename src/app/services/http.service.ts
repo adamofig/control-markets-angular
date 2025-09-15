@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Observable, throwError, lastValueFrom, map } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AppConfigService } from './app-config.service';
+import { APP_CONFIG } from '@dataclouder/ngx-core';
 
 function toPlainObject(objectClass: any) {
   return JSON.parse(JSON.stringify(objectClass));
@@ -13,13 +13,13 @@ function toPlainObject(objectClass: any) {
 })
 export class HttpService {
   private httpClient = inject(HttpClient);
-  private appConfigService = inject(AppConfigService);
+  private appConfigService = inject(APP_CONFIG);
 
   private getHostUrl(host: string = ''): string {
     if (host === 'python') {
-      return this.appConfigService.config.backendPythonUrl;
+      return this.appConfigService.backendPythonUrl;
     }
-    return this.appConfigService.config.backendNodeUrl;
+    return this.appConfigService.backendNodeUrl;
   }
 
   public postDataToService<T = any>(service: string, data: any, host = 'nodejs'): Promise<T> {

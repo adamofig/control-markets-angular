@@ -8,7 +8,7 @@ import { AlertController } from '@ionic/angular/standalone';
 
 import { RouteNames } from 'src/app/core/enums';
 import { AgentCardService } from 'src/app/services/agent-card-service';
-import { AppConfigService } from 'src/app/services/app-config.service';
+import { APP_CONFIG } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-agent-card-form',
@@ -19,7 +19,7 @@ import { AppConfigService } from 'src/app/services/app-config.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgentCardFormPage implements OnInit {
-  public appConfigService = inject(AppConfigService);
+  private appConfigService = inject(APP_CONFIG);
   private conversationCardsService = inject(AgentCardService);
   private router = inject(Router);
   private alertController = inject(AlertController);
@@ -27,18 +27,20 @@ export class AgentCardFormPage implements OnInit {
 
   public currentPath: string = ' ';
 
-  public projectName = this.appConfigService.config.projectName;
+  public projectName = 'Pending project';
 
   ngOnInit(): void {
     this.currentPath = this.router.url.split('/')[3];
   }
 
   public onSave() {
-    this.alertController.create({
-      header: 'Save',
-      message: 'Conversation saved',
-      buttons: ['OK'],
-    }).then((alert: HTMLIonAlertElement) => alert.present());
+    this.alertController
+      .create({
+        header: 'Save',
+        message: 'Conversation saved',
+        buttons: ['OK'],
+      })
+      .then((alert: HTMLIonAlertElement) => alert.present());
   }
 
   public async goToDetails(id: string) {

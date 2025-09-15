@@ -30,7 +30,7 @@ import {
 } from '@dataclouder/ngx-agent-cards';
 import { provideLessonsService, provideNotionService } from '@dataclouder/ngx-lessons';
 import { provideAuthConfig } from '@dataclouder/app-auth';
-import { HttpCoreService, HTTP_CORE_CONFIG, provideToastAlert } from '@dataclouder/ngx-core';
+import { HttpCoreService, HTTP_CORE_CONFIG, provideToastAlert, APP_CONFIG, IAppConfig } from '@dataclouder/ngx-core';
 // Local
 import { ToastAlertService } from './app/services/toast.service';
 import { LessonsService } from './app/pages/lessons/lessons.service';
@@ -42,7 +42,6 @@ import { AppComponent } from './app/app.component';
 import { NotionService } from './app/services/notion.service';
 import { FormlyModule } from '@ngx-formly/core';
 
-import { APP_CONFIG, IAppConfig } from './app/services/app-config.service';
 import { provideMasterState } from '@dataclouder/ngx-knowledge';
 
 import { FormlyFieldInput } from './app/api-balancer/api-balancer-form/formly-components/input';

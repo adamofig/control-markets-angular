@@ -4,7 +4,7 @@ import { IonContent, IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, Ion
 import { Router } from '@angular/router';
 import { RouteNames } from 'src/app/core/enums';
 import { environment } from 'src/environments/environment';
-import { AppConfigService } from 'src/app/services/app-config.service';
+import { APP_CONFIG } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-landing',
@@ -15,11 +15,11 @@ import { AppConfigService } from 'src/app/services/app-config.service';
 })
 export class LandingComponent {
   private router = inject(Router);
-  private appConfigService = inject(AppConfigService);
+  private appConfigService = inject(APP_CONFIG);
 
-  projectName = this.appConfigService.config.projectName;
-  version = this.appConfigService.config.version;
-  envName = this.appConfigService.config.envName;
+  projectName = (this.appConfigService.version = 'Pending project');
+  version = this.appConfigService.version;
+  envName = this.appConfigService.envName;
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);
