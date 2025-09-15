@@ -21,7 +21,13 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideMarkdown, MARKED_OPTIONS, MERMAID_OPTIONS } from 'ngx-markdown';
 import { SecurityContext } from '@angular/core';
 // DC Libs
-import { DefaultAgentCardsService, provideAgentCardService, provideUserDataExchange } from '@dataclouder/ngx-agent-cards';
+import {
+  AGENT_CARDS_STATE_SERVICE,
+  DefaultAgentCardsService,
+  IAgentCard,
+  provideAgentCardService,
+  provideUserDataExchange,
+} from '@dataclouder/ngx-agent-cards';
 import { provideLessonsService, provideNotionService } from '@dataclouder/ngx-lessons';
 import { provideAuthConfig } from '@dataclouder/app-auth';
 import { HttpCoreService, HTTP_CORE_CONFIG, provideToastAlert } from '@dataclouder/ngx-core';
@@ -37,6 +43,8 @@ import { NotionService } from './app/services/notion.service';
 import { FormlyModule } from '@ngx-formly/core';
 
 import { APP_CONFIG, IAppConfig } from './app/services/app-config.service';
+import { provideMasterState } from '@dataclouder/ngx-knowledge';
+
 import { FormlyFieldInput } from './app/api-balancer/api-balancer-form/formly-components/input';
 import { FormlyFieldTextArea } from './app/api-balancer/api-balancer-form/formly-components/textarea';
 
@@ -50,6 +58,12 @@ fetch('/assets/config.json')
     bootstrapApplication(AppComponent, {
       providers: [
         { provide: APP_CONFIG, useValue: config },
+
+        provideMasterState<IAgentCard>(AGENT_CARDS_STATE_SERVICE, {
+          pathTable: 'agent-cards',
+          sourceCoreEndPoint: 'api/agent-cards/query',
+          userStateEndPoint: 'api/knowledge/learning-experience',
+        }),
 
         provideAppInitializer(() => {
           const httpCore = inject(HttpCoreService);

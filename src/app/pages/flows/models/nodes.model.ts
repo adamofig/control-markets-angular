@@ -4,7 +4,7 @@ export interface IAssetNodeData {
   _id?: string;
   id: string;
   name: string;
-  type: string;
+  type: 'image' | 'audio' | 'video';
   storage: FileStorageData;
 }
 

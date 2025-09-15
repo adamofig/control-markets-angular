@@ -118,14 +118,28 @@ export class FlowSignalNodeStateService {
     this.nodes.set([...this.nodes(), newNode]);
   }
 
-  public addAssetNode(asset: IAssetNodeData): void {
-    this._createAssetNode(asset);
+  public addAssetNode(asset: IAssetNodeData, refNodeId?: string): void {
+    this._createAssetNode(asset, refNodeId);
   }
 
-  private _createAssetNode(asset: IAssetNodeData): void {
+  private _createAssetNode(asset: IAssetNodeData, refNodeId?: string): void {
+    let x = 100;
+    let y = 100;
+
+    const randomAdd = Math.floor(Math.random() * 150);
+
+    if (refNodeId) {
+      const refNode = this.nodes().find(n => n.id === refNodeId);
+      if (refNode) {
+        const refPoint = refNode.point();
+        x = refPoint.x + 350 + randomAdd; // Position to the right
+        y = refPoint.y + 100 + randomAdd;
+      }
+    }
+
     const newNode: DynamicNodeWithData = {
       id: 'asset-node-' + nanoid(),
-      point: signal({ x: 100, y: 100 }), // Default position
+      point: signal({ x, y }), // Default position
       type: AssetsNodeComponent as Type<any>, // Ensure Type<any> is appropriate
       category: 'input',
       data: { nodeData: asset },

@@ -6,6 +6,7 @@ import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component'
 import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
 import { FlowComponentRefStateService } from './flow-component-ref-state.service';
+import { AudioTTsNodeComponent } from '../nodes/audio-tts-node/audio-tts-node';
 
 // Node Type Mapping
 function getNodeTypeMap(): { [key: string]: Type<any> | 'default' } {
@@ -18,6 +19,7 @@ function getNodeTypeMap(): { [key: string]: Type<any> | 'default' } {
     AssetsNodeComponent: AssetsNodeComponent,
     VideoGenNodeComponent: VideoGenNodeComponent,
     AssetGeneratedNodeComponent: AssetGeneratedNodeComponent,
+    AudioTTsNodeComponent: AudioTTsNodeComponent,
     default: 'default',
   };
 }
