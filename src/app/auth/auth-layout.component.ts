@@ -8,14 +8,10 @@ import { CardModule } from 'primeng/card';
   template: `
     <div class="main-content">
       <div>
-        <h1 class="title">
-          <img routerLink="/" style="width: 200px" src="assets/app_icons/apiglota.svg" alt="Logo" />
-        </h1>
+        <h1 class="title"><img routerLink="/" style="width: 120px" src="assets/defaults/icons/logo.svg" alt="Logo" /></h1>
       </div>
 
-      <p-card>
-        <router-outlet></router-outlet>
-      </p-card>
+      <router-outlet></router-outlet>
 
       <p class="info-version">{{ envName }} {{ version }}</p>
     </div>

@@ -32,7 +32,7 @@ import { FirebaseAuthService } from '@dataclouder/app-auth';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
-import { UserService } from '../dc-user-module/user.service';
+import { AppUserService } from 'src/app/services/app-user.service';
 import { IUser } from '@dataclouder/ngx-users';
 import { PwaInstallComponent } from '../components/pwa-install/pwa-install.component';
 
@@ -77,12 +77,12 @@ export class IonicLayoutComponent implements OnInit {
   private router = inject(Router);
   private actionSheetController = inject(ActionSheetController);
   private menuController = inject(MenuController);
-  public userService = inject(UserService);
+  public userService = inject(AppUserService);
 
   public envName = environment.envName;
   public projectName = environment.projectName;
   public version = environment.version;
-  public user: IUser | null = this.userService.getUser();
+  public user = this.userService.user();
   public menuVisible: boolean = true;
 
   public appPages = [
