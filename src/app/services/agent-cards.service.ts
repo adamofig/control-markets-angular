@@ -1,9 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { AudioSpeed, ChatRole, ConversationMessagesDTO, IAgentCard, IConversationSettings } from '@dataclouder/ngx-agent-cards';
-import { UserService } from '../dc-user-module/user.service';
 import { Endpoints } from '../core/enums';
 import { ChatUserSettings, FiltersConfig, IFilterQueryResponse } from '@dataclouder/ngx-core';
-import { IUser } from '@dataclouder/ngx-users';
+import { IUser, UserService } from '@dataclouder/ngx-users';
 import { HttpCoreService } from '@dataclouder/ngx-core';
 
 export type AudioGenerated = { blobUrl: string; transcription: any };
@@ -79,15 +78,15 @@ export class AgentCardService {
   }
 
   async saveConversationUserChatSettings(conversation: ChatUserSettings): Promise<ChatUserSettings> {
-    console.log('saveConversationUserChatSettings', conversation);
-    const data = await this.userService.saveUser({ conversationSettings: conversation });
-    this.userService.user.set({ ...(this.userService.user() as IUser), conversationSettings: conversation });
+    // console.log('saveConversationUserChatSettings', conversation);
+    // const data = await this.userService.save({ conversationSettings: conversation });
+    // this.userService.user.set({ ...(this.userService.user() as IUser), conversationSettings: conversation });
     return Promise.resolve(conversation);
   }
 
   getConversationUserChatSettings(): Promise<ChatUserSettings> {
-    if (this.userService.user()?.conversationSettings) {
-      return Promise.resolve(this.userService.user()?.conversationSettings as ChatUserSettings);
+    if (this.userService.user()?.settings?.conversation) {
+      return Promise.resolve(this.userService.user()?.settings?.conversation as ChatUserSettings);
     } else {
       return Promise.resolve({
         realTime: false,

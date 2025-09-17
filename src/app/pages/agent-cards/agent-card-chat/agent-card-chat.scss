@@ -85,3 +85,7 @@
   align-items: center;
   color: white;
 }
+
+::ng-deep .p-slider {
+  width: 300px !important;
+}

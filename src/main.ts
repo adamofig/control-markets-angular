@@ -18,31 +18,26 @@ import { providePrimeNG } from 'primeng/config';
 // Third Party
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { provideMarkdown, MARKED_OPTIONS, MERMAID_OPTIONS } from 'ngx-markdown';
-import { SecurityContext } from '@angular/core';
 // DC Libs
-import {
-  AGENT_CARDS_STATE_SERVICE,
-  DefaultAgentCardsService,
-  IAgentCard,
-  provideAgentCardService,
-  provideUserDataExchange,
-} from '@dataclouder/ngx-agent-cards';
-import { provideLessonsService, provideNotionService } from '@dataclouder/ngx-lessons';
+import { AGENT_CARDS_STATE_SERVICE, DefaultAgentCardsService, IAgentCard, provideAgentCardService } from '@dataclouder/ngx-agent-cards';
+import { provideLessonsService, provideNotionService, DefaultLessonsService } from '@dataclouder/ngx-lessons';
 import { provideAuthConfig } from '@dataclouder/app-auth';
-import { HttpCoreService, HTTP_CORE_CONFIG, provideToastAlert, APP_CONFIG, IAppConfig } from '@dataclouder/ngx-core';
+import { HttpCoreService, provideToastAlert, APP_CONFIG, IAppConfig } from '@dataclouder/ngx-core';
 // Local
 import { ToastAlertService } from './app/services/toast.service';
-import { LessonsService } from './app/pages/lessons/lessons.service';
 import { authInterceptor } from './app/services/interception.service';
 import { MyPreset } from './mypreset';
-import { UserDataExchangeService } from './app/core/user-data-exchange.service';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { NotionService } from './app/services/notion.service';
 import { FormlyModule } from '@ngx-formly/core';
 
+
+import { provideServiceWorker } from '@angular/service-worker';
+import { provideMarkdown } from 'ngx-markdown';
 import { provideMasterState } from '@dataclouder/ngx-knowledge';
+import { AppUserService } from './app/services/app-user.service';
+import { UserService } from '@dataclouder/ngx-users';
 
 import { FormlyFieldInput } from './app/api-balancer/api-balancer-form/formly-components/input';
 import { FormlyFieldTextArea } from './app/api-balancer/api-balancer-form/formly-components/textarea';
@@ -58,6 +53,8 @@ fetch('/assets/config.json')
       providers: [
         { provide: APP_CONFIG, useValue: config },
 
+        { provide: UserService, useExisting: AppUserService },
+
         provideMasterState<IAgentCard>(AGENT_CARDS_STATE_SERVICE, {
           pathTable: 'agent-cards',
           sourceCoreEndPoint: 'api/agent-cards/query',
@@ -71,6 +68,8 @@ fetch('/assets/config.json')
             secondaryUrl: config.backendPythonUrl,
           });
         }),
+
+        provideLessonsService(DefaultLessonsService),
 
         provideAnimationsAsync(),
         providePrimeNG({
@@ -114,8 +113,6 @@ fetch('/assets/config.json')
           })
         ),
         provideToastAlert(ToastAlertService),
-        provideLessonsService(LessonsService),
-        provideUserDataExchange(UserDataExchangeService),
         provideNotionService(NotionService),
         provideAgentCardService(DefaultAgentCardsService),
         provideAuthConfig({

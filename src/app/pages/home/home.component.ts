@@ -9,11 +9,10 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { AudioTourService } from 'src/app/services/audio-tour.service';
 import { stepsIntro } from './steps-tour-home';
-import { LessonsService } from 'src/app/pages/lessons/lessons.service';
 import { AgentCardService } from 'src/app/services/agent-card-service';
 import { AgentCardUI, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ILesson } from '@dataclouder/ngx-lessons';
-import { DcLessonCardComponent } from '@dataclouder/ngx-lessons';
+import { DcLessonCardComponent, LESSONS_TOKEN } from '@dataclouder/ngx-lessons';
 
 // Define card interface for type safety
 interface CardItem {
@@ -36,7 +35,7 @@ register();
 export class HomeComponent implements OnInit {
   // Services
   private audioTourService = inject(AudioTourService);
-  private lessonsService = inject(LessonsService);
+  private lessonsService = inject(LESSONS_TOKEN);
   private agentCardService = inject(AgentCardService);
 
   // Input States

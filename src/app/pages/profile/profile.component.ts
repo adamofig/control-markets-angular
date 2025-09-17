@@ -1,12 +1,11 @@
-
 import { Component, OnInit, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PlanType, PermissionType, RolType } from '../../dc-user-module/user.class';
 
-import { UserService } from 'src/app/dc-user-module/user.service';
 import { IUser } from '@dataclouder/ngx-users';
 import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
+import { AppUserService } from 'src/app/services/app-user.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +16,7 @@ import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 })
 export class ProfileComponent implements OnInit {
   private fb = inject(FormBuilder);
-  public userService = inject(UserService);
+  public userService = inject(AppUserService);
   private toastService = inject(TOAST_ALERTS_TOKEN);
 
   profileForm: FormGroup;
@@ -38,7 +37,7 @@ export class ProfileComponent implements OnInit {
       }),
     });
 
-    const user = this.userService.getUser();
+    const user = this.userService.user();
     if (user) {
       this.profileForm.patchValue(user);
     }
@@ -50,7 +49,7 @@ export class ProfileComponent implements OnInit {
     if (this.profileForm.valid) {
       const userData: IUser = this.profileForm.value;
       console.log('Form submitted:', userData);
-      this.userService.saveUser(userData);
+      // this.userService.updateUser(userData);
       this.toastService.success({ title: 'Profile updated', subtitle: 'Your profile has been updated successfully' });
       // Handle form submission
     } else {

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { UserDataExchange, UserDataExchangeAbstractService } from '@dataclouder/ngx-agent-cards';
 import { Endpoints } from 'src/app/core/enums';
 import { IAgentTask } from '../models/tasks-models';
 import { FiltersConfig, IFilterQueryResponse } from '@dataclouder/ngx-core';

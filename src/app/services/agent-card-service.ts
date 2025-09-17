@@ -8,11 +8,9 @@ import {
   IConversationSettings,
   IAgentResponseDTO,
 } from '@dataclouder/ngx-agent-cards';
-import { HttpCoreService } from '@dataclouder/ngx-core';
-import { UserService } from '../dc-user-module/user.service';
 import { Endpoints } from '../core/enums';
-import { ChatUserSettings, FiltersConfig, IFilterQueryResponse } from '@dataclouder/ngx-core';
-import { IUser } from '@dataclouder/ngx-users';
+import { ChatUserSettings, FiltersConfig, HttpCoreService, IFilterQueryResponse } from '@dataclouder/ngx-core';
+import { AppUserService } from './app-user.service';
 
 export type AudioGenerated = { blobUrl: string; transcription: any };
 export type TTSRequest = { text: string; voice: string; generateTranscription: boolean; speedRate: number; speed?: string; ssml?: string };
@@ -38,7 +36,7 @@ export class AgentCardService {
   }
 
   private httpCoreService = inject(HttpCoreService);
-  private userService = inject(UserService);
+  private userService = inject(AppUserService);
 
   public async callInstruction(text: string): Promise<any> {
     if (!text) {
@@ -92,14 +90,14 @@ export class AgentCardService {
 
   async saveConversationUserChatSettings(conversation: ChatUserSettings): Promise<ChatUserSettings> {
     console.log('saveConversationUserChatSettings', conversation);
-    const data = await this.userService.saveUser({ conversationSettings: conversation });
-    this.userService.user.set({ ...(this.userService.user() as IUser), conversationSettings: conversation });
+    // const data = await this.userService.saveUser({ conversationSettings: conversation });
+    // this.userService.user.set({ ...(this.userService.user() as IUser), conversationSettings: conversation });
     return Promise.resolve(conversation);
   }
 
   getConversationUserChatSettings(): Promise<ChatUserSettings> {
-    if (this.userService.user()?.conversationSettings) {
-      return Promise.resolve(this.userService.user()?.conversationSettings as ChatUserSettings);
+    if (this.userService.user().settings.conversation) {
+      return Promise.resolve(this.userService.user()?.settings.conversation as ChatUserSettings);
     } else {
       return Promise.resolve({
         realTime: false,
