@@ -28,6 +28,7 @@ export const routes: Routes = [
       },
     ],
   },
+
   {
     path: 'auth',
     loadComponent: () => import('./auth/auth-layout.component').then(m => m.AuthLayoutComponent),
@@ -65,6 +66,20 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
       },
 
+      {
+        path: 'admin',
+        loadComponent: () => import('./pages/admin/admin').then(m => m.AdminComponent),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/admin/admin').then(m => m.AdminComponent),
+          },
+          {
+            path: 'users',
+            loadComponent: () => import('@dataclouder/ngx-users').then(m => m.AdminUserComponent),
+          },
+        ],
+      },
       {
         path: 'tasks',
         loadChildren: () => import('./pages/tasks/tasks.routes').then(m => m.TASKS_ROUTES),

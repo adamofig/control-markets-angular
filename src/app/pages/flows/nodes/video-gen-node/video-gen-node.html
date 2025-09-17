@@ -1,13 +1,17 @@
 <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
 
+<p-select [options]="providers" [formControl]="providerForm" optionLabel="label" optionValue="value" placeholder="Select a Provider" />
+
 <div class="container" style="width: 250px; height: auto">
   <!-- <img width="150px" height="auto" class="image" [src]="node()?.data?.agentAsset?.storage?.url" /> -->
   <h4>Video Generation Node</h4>
 
   <span>Prompt</span>
   <textarea rows="2" style="width: 100%" pTextarea [(ngModel)]="prompt"></textarea>
+  @if(providerForm.value !== 'veo') {
   <span>More options:</span>
   <dc-comfy-video-options-request [form]="form"></dc-comfy-video-options-request>
+  }
 </div>
 
 <handle type="target" position="left" id="left" />

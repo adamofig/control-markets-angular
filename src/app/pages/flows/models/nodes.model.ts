@@ -13,4 +13,5 @@ export interface INodeVideoGenerationData {
   id: string;
   prompt: string;
   request?: any;
+  provider: 'veo' | 'comfy';
 }

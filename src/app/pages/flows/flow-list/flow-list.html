@@ -2,7 +2,7 @@
 <p-button [icon]="viewType() === 'card' ? 'pi pi-table' : 'pi pi-list'" label="Change View" [link]="true" (click)="toggleView()" />
 }
 <div class="generic-list-container">
-  <dc-filter-bar [options]="filterBarOptions" (onNew)="onNew()" (onFilterAction)="doAction($event)"></dc-filter-bar>
+  <dc-filter-bar [isAdmin]="true" [options]="filterBarOptions" (onNew)="onNew()" (onFilterAction)="doAction($event)"></dc-filter-bar>
 
   @if (viewType() === 'card') {
   <div class="generic-list-content">

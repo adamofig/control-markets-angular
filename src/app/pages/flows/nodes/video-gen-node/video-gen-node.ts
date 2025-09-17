@@ -9,8 +9,9 @@ import { BaseFlowNode } from '../base-flow-node';
 import { INodeVideoGenerationData } from '../../models/nodes.model';
 import { TagModule, Tag } from 'primeng/tag';
 import { TextareaModule } from 'primeng/textarea';
-import { FormBuilder, FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComfyVideoOptionsRequestFormComponent } from '@dataclouder/ngx-vertex';
+import { SelectModule } from 'primeng/select';
 
 export interface CustomAssetsNode extends ComponentDynamicNode {
   nodeData: INodeVideoGenerationData;
@@ -21,7 +22,17 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
   templateUrl: './video-gen-node.html',
   styleUrls: ['./video-gen-node.scss'],
   standalone: true,
-  imports: [HandleComponent, ProgressSpinner, ButtonModule, TagModule, TextareaModule, FormsModule, ComfyVideoOptionsRequestFormComponent],
+  imports: [
+    HandleComponent,
+    ProgressSpinner,
+    ButtonModule,
+    TagModule,
+    TextareaModule,
+    FormsModule,
+    ComfyVideoOptionsRequestFormComponent,
+    SelectModule,
+    ReactiveFormsModule,
+  ],
 })
 export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implements OnInit {
   public flowOrchestrationService = inject(FlowOrchestrationService);
@@ -39,6 +50,13 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
     height: [576],
   });
 
+  public providerForm = this.fb.control('comfy');
+
+  public providers = [
+    { label: 'Comfy', value: 'comfy' },
+    { label: 'Veo', value: 'veo' },
+  ];
+
   // public prompt = this.node()?.data?.nodeData?.prompt || 'Describe your idea';
   public prompt = 'Describe your idea';
 
@@ -52,5 +70,6 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
     if (this.node()?.data?.nodeData?.request) {
       this.form.setValue(this.node()?.data?.nodeData?.request || {});
     }
+    this.providerForm.setValue(this.node()?.data?.nodeData?.provider || 'comfy');
   }
 }
