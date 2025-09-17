@@ -6,7 +6,7 @@
   "authenticationRequired": true,
   "backendNodeUrl": "http://localhost:8080",
   "backendPythonUrl": "http://localhost:8000",
-  "aiServicesUrl": "http://localhost:3001",
+  "aiServicesUrl": "",
   "mobile": {
     "appleAppId": "com.dc-template.app.dev",
     "appleRedirectURI": "https://dataclouder-dev.firebaseapp.com/__/auth/handler",

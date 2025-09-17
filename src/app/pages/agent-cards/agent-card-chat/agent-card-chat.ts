@@ -1,9 +1,20 @@
 import { ChangeDetectorRef, Component, Input, OnInit, inject, effect } from '@angular/core';
 
-import { DCChatComponent, IConversationSettings, ChatRole, AudioSpeed, IAgentCard, ChatMonitorService } from '@dataclouder/ngx-agent-cards';
+import {
+  DCChatComponent,
+  IConversationSettings,
+  ChatRole,
+  AudioSpeed,
+  IAgentCard,
+  ChatMonitorService,
+  AGENT_CARDS_STATE_SERVICE,
+} from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute } from '@angular/router';
 import { ChatUserSettings } from '@dataclouder/ngx-core';
 import { CONVERSATION_AI_TOKEN } from '@dataclouder/ngx-agent-cards';
+import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
+import { UserService } from '@dataclouder/ngx-users';
+import { ConceptStatus, ILearningUserState, KnowledgeLearningSystemService } from '@dataclouder/ngx-knowledge';
 
 @Component({
   selector: 'app-agent-card-chat',
@@ -17,6 +28,10 @@ export class AgentCardChatComponent implements OnInit {
   private conversationCardsService = inject(CONVERSATION_AI_TOKEN);
   private cdr = inject(ChangeDetectorRef);
   private chatMonitorService = inject(ChatMonitorService);
+  private toastrService = inject(TOAST_ALERTS_TOKEN);
+  private userService = inject(UserService);
+  private knowledgeLearningSystemService = inject(KnowledgeLearningSystemService);
+  private agentCardsMasterStateService = inject(AGENT_CARDS_STATE_SERVICE);
 
   constructor() {
     effect(() => {
@@ -57,6 +72,40 @@ export class AgentCardChatComponent implements OnInit {
         this.cdr.detectChanges();
       }
     });
+  }
+
+  public async onGoalCompleted(event: any) {
+    console.log('Hurray ', event);
+    this.toastrService.success({ subtitle: 'Muy bien anotaré tu esfuerzo', title: 'La conversación esta completada, puedes cerrar el dialogo cuando gustes' });
+
+    const path = `agentCards`;
+    debugger;
+
+    const progress: ILearningUserState = {
+      id: this.agentCard.id || '',
+      path: path,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      status: ConceptStatus.Learned,
+      learningType: 'learningExperience',
+      learningExperience: {
+        score: 100,
+        goalCompleted: true,
+      },
+      stats: {
+        progress: 100,
+        totalReviews: 1,
+        successCount: 1,
+        failedCount: 0,
+        totalTimeSpent: 0,
+      },
+    };
+
+    // TODO: estos 2 deberían ir juntos en la misma función. como en words service que hay metodo actualiza el estado y el backend.
+    const response = await this.knowledgeLearningSystemService.saveProgress(progress);
+    if (response) {
+      console.log(response);
+      this.agentCardsMasterStateService.updateUserState(progress);
+    }
   }
 
   // Add your component logic here

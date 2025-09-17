@@ -177,12 +177,12 @@ body.dark::before {
 
 .p-card{
     background: --var(--p-primary-color) !important;
-    backdrop-filter: blur(1px);
-    border: 1px solid #16012c;
+    backdrop-filter: blur(8px);
+    border: 2px solid #16012c;
     transition: all 0.3s ease;
     box-shadow:  0 8px 32px rgba(0, 0, 0, 0.3), 0 3px 2px var(--p-primary-900);
     margin: 4px;
-    border-radius: 1px;
+    border-radius: 0px !important;
 }
 
 .p-card:hover {
