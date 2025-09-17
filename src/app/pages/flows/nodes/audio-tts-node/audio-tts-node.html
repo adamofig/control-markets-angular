@@ -1,3 +1,11 @@
 <div class="tts-node-container">
+  @if(!agentSource()){
   <tts-playground [settings]="{ storagePath: storagePath }" (ttsGenerated)="onTtsGenerated($event)"></tts-playground>
+  } @else {
+  <p>Se encontro un node. de agente.</p>
+  <textarea rows="2" cols="30" pTextarea [(ngModel)]="value"></textarea>
+  <p-button (click)="generateTTS()" class="execute-btn" icon="pi pi-play" [rounded]="true" [text]="true" severity="info" />
+
+  }
 </div>
+<handle type="target" position="left" id="b" />
