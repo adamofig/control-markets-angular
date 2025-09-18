@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { HandleComponent } from 'ngx-vflow';
 import { ComponentDynamicNode } from 'ngx-vflow';
 import { BaseFlowNode } from '../base-flow-node';
@@ -6,6 +6,8 @@ import { Button } from 'primeng/button';
 import { IAssetNodeData } from '../../models/nodes.model';
 import { Tag } from 'primeng/tag';
 import { TagModule } from 'primeng/tag';
+import { StatusJob } from '../../models/flows.model';
+import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 
 export interface CustomAssetsNode extends ComponentDynamicNode {
   nodeData: IAssetNodeData;
@@ -19,8 +21,19 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
   imports: [HandleComponent, Button, Tag, TagModule],
 })
 export class AssetsNodeComponent extends BaseFlowNode<CustomAssetsNode> {
+  private toastService = inject(TOAST_ALERTS_TOKEN);
   constructor() {
     super();
+    effect(() => {
+      const job = this.jobExecutionState();
+      if (job) {
+        console.log('jobExecutionState changed', job);
+        if (job.status === StatusJob.FAILED) {
+          this.toastService.error({ title: 'Error', subtitle: job.statusDescription || 'Error al ejecutar el job' });
+        }
+        //
+      }
+    });
   }
 
   override ngOnInit(): void {

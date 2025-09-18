@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -60,7 +60,7 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
     this.form.patchValue(entity);
   }
 
-  public task: IAgentTask | null = null;
+  public task = signal<IAgentTask | null>(null);
   public sourceSuggestions: ISourceTask[] = [];
   public selectedSource: string = '';
   public selectedAssets: any = null;
@@ -124,11 +124,11 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
 
   private async getTaskIfIdParam() {
     if (this.id) {
-      this.task = await this.tasksService.getTaskById(this.id);
-      if (this.task?.output?.type === 'notion_database') {
-        this.dbOptions = [this.task.output];
+      this.task.set(await this.tasksService.getTaskById(this.id));
+      if (this.task()?.output?.type === 'notion_database') {
+        this.dbOptions = [this.task()?.output];
       }
-      this.taskForm.patchValue(this.task as any);
+      this.taskForm.patchValue(this.task() as any);
       this.cdr.detectChanges();
     }
   }
@@ -164,11 +164,13 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
 
   public async uploadImage(image: any) {
     const taskData: Partial<IAgentTask> = {
-      id: this.task?.id || '',
+      id: this.task()?.id || '',
       image: image,
     };
 
     await this.tasksService.saveTask(taskData);
+    const updatedTask = { ...this.task(), ...taskData } as IAgentTask;
+    this.task.set(updatedTask);
 
     this.toastService.success({ title: 'Tarea actualizada', subtitle: 'Tarea actualizada correctamente' });
   }

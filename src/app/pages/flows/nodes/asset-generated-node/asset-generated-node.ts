@@ -5,7 +5,6 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { AssetGeneratedDetailsComponent } from './asset-generated-details/asset-generated-details';
 import { ResponseFormat } from 'src/app/pages/jobs/models/jobs.model';
 import { ButtonModule } from 'primeng/button';
-import { FlowComponentRefStateService } from '../../services/flow-component-ref-state.service';
 import { JsonPipe } from '@angular/common';
 import { IGeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-vertex';
 import { BaseFlowNode } from '../base-flow-node';
@@ -50,15 +49,19 @@ export class AssetGeneratedNodeComponent extends BaseFlowNode<CustomAssetGenerat
 
   openModal(): void {
     this.isDialogVisible = true;
+
     this.dialogService.open(AssetGeneratedDetailsComponent, {
-      header: 'Outcome Node',
+      header: 'Detalles de Generación',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       draggable: true,
       closable: true,
       width: '650px',
       inputValues: {
-        jobInput: this.generatedAsset,
+        ...this.generatedAsset,
+      },
+      data: {
+        ...this.generatedAsset,
       },
     });
   }

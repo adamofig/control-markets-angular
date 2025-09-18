@@ -40,6 +40,7 @@ export interface IJobExecutionState {
   nodeType: NodeType; // El tipo de Nodo en Angular, la clase del componente.
   inputEntityId: string; // el id del objeto entity, es decir existe en mongo. y lo puedo consultar, se infiere por el tipo de nodo. que collection o table existe el dato.
   status: StatusJob; // El estado del job.
+  statusDescription: string;
   messages: MessageLog[]; // Los mensajes del job. solo para job que requiera LLM.
   outputEntityId: string; // el id del objeto entity, es decir existe en mongo. y lo puedo consultar.
   resultType: 'outcome' | 'generatedAsset' | ''; // Para saber en que base buscar. directo podría ser collection_output_name o table.

@@ -2,7 +2,10 @@
 
 @if(node()?.data?.nodeData?.type === 'image') {
 
-<div class="loading-border-container" [class.in-progress]="jobExecutionState()?.status === 'in_progress'">
+<div
+  class="loading-border-container"
+  [class.in-progress]="jobExecutionState()?.status === 'in_progress'"
+  [class.failed]="jobExecutionState()?.status === 'failed'">
   <div class="content-wrapper">
     <img width="150px" height="auto" class="image" [src]="node()?.data?.nodeData?.storage?.url" />
     <p-tag style="position: absolute; bottom: 10px; right: 10px" class="tag" [value]="jobExecutionState()?.status || '🦻'" severity="danger" />

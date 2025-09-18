@@ -1,4 +1,6 @@
 <div class="tts-node-container">
+  <p-button (click)="removeNode()" class="remove-btn" icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" />
+
   @if(!agentSource()){
   <tts-playground [settings]="{ storagePath: storagePath }" (ttsGenerated)="onTtsGenerated($event)"></tts-playground>
   } @else {

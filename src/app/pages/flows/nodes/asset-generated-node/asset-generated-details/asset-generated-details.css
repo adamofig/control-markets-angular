@@ -1,1 +1,39 @@
-/* Add your styles here */
+.asset-details-container {
+  font-family: sans-serif;
+}
+
+.video-container {
+  background-color: #f0f0f0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+  align-items: center;
+}
+
+.detail-item {
+  display: contents;
+}
+
+.status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  color: white;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background-color: #f59e0b;
+}
+
+.status-completed {
+  background-color: #10b981;
+}
+
+.status-failed {
+  background-color: #ef4444;
+}

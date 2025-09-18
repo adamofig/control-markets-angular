@@ -16,7 +16,7 @@
           direction="down-left"
           [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
       </div>
-      <p-card (click)="doAction({ item: flow, action: 'view' })" [header]="flow.name || 'Sin nombre'">
+      <p-card (click)="doAction({ item: flow, action: 'edit' })" [header]="flow.name || 'Sin nombre'">
         <!-- <p class="m-0">{{ flow.name | slice : 0 : 250 }}...</p> -->
         <span>{{ flow.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
       </p-card>

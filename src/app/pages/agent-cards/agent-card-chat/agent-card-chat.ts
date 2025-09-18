@@ -79,7 +79,6 @@ export class AgentCardChatComponent implements OnInit {
     this.toastrService.success({ subtitle: 'Muy bien anotaré tu esfuerzo', title: 'La conversación esta completada, puedes cerrar el dialogo cuando gustes' });
 
     const path = `agentCards`;
-    debugger;
 
     const progress: ILearningUserState = {
       id: this.agentCard.id || '',

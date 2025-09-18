@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { DialogModule } from 'primeng/dialog';
 import { Vflow } from 'ngx-vflow';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { JsonPipe } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-outcome-details',
-  imports: [Vflow, DialogModule, JsonPipe],
+  imports: [Vflow, DialogModule, JsonPipe, CommonModule],
   templateUrl: './asset-generated-details.html',
   styleUrl: './asset-generated-details.css',
   standalone: true,

@@ -72,7 +72,7 @@ deploy-local: ._build-docker ._deploy-local
 # Deploy to Homelab Server (ARM64)
 deploy-homelab: TARGET_USER = adamo
 deploy-homelab: TARGET_HOST = 192.168.2.5
-deploy-homelab: REMOTE_DEPLOY_PATH = /home/adamo/Documents
+deploy-homelab: REMOTE_DEPLOY_PATH = /home/adamo/Documents/$(PROJECT_NAME)
 deploy-homelab: PLATFORM = linux/arm64
 deploy-homelab: APP_ENV = homelab
 deploy-homelab: ._remote_deploy_flow
@@ -81,7 +81,7 @@ deploy-homelab: ._remote_deploy_flow
 # Deploy to AI Lab Server (AMD64)
 deploy-ailab: TARGET_USER = adamo
 deploy-ailab: TARGET_HOST = 192.168.2.2
-deploy-ailab: REMOTE_DEPLOY_PATH = /home/adamo/Documents
+deploy-ailab: REMOTE_DEPLOY_PATH = /home/adamo/Documents/$(PROJECT_NAME)
 deploy-ailab: PLATFORM = linux/amd64
 deploy-ailab: APP_ENV = ailab
 deploy-ailab: ._remote_deploy_flow

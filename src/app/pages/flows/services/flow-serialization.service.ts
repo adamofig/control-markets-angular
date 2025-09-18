@@ -67,8 +67,6 @@ export class FlowSerializationService {
         }
       }
       if (node.component === 'VideoGenNodeComponent') {
-        debugger;
-
         const videoGenNode = this.flowComponentRefStateService.getNodeComponentRef(node.id);
         const prompt = (videoGenNode as any)?.prompt;
 

@@ -43,7 +43,6 @@ export class TaskNodeComponent extends CustomNodeComponent<CustomTaskNode> imple
     if (executionState) {
       const executionTask = executionState?.tasks.find((t: ITaskExecutionState) => t.processNodeId === this.node().id);
       if (executionTask) {
-        console.log('-------state', executionState);
         return executionTask;
       }
     }

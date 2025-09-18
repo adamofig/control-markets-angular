@@ -1,7 +1,7 @@
 <div class="task-form-card">
   <p-card [header]="id ? 'Edit Task' : 'New Task'">
     <div style="display: flex; justify-content: center">
-      <img class="task-form-background-image" [src]="task?.image?.url || 'assets/defaults/background/default-background.webp'" />
+      <img class="task-form-background-image" [src]="task()?.image?.url || 'assets/defaults/background/default-background.webp'" />
       <div style="position: absolute; top: 10px; right: 10px">
         <dc-cropper-modal
           [buttonLabel]="'Subir imagen'"
@@ -16,6 +16,13 @@
         <br />
         <input style="width: 100%" id="name" type="text" pInputText formControlName="name" placeholder="Enter task title" />
       </div>
+
+      <div class="form-field">
+        <label for="description" class="block">Description</label>
+        <textarea class="textmin" rows="3" pInputTextarea id="description" formControlName="description" placeholder="Enter task description"></textarea>
+      </div>
+
+      <h6>Optional Fields</h6>
 
       <div class="field">
         <label for="agentCard">Agent Cards</label>
@@ -119,11 +126,6 @@
           </p-select>
         </div>
         <p-button (onClick)="getNotionDBs()" pTooltip="Buscar bases en Notion" tooltipPosition="left" severity="secondary" size="small" icon="pi pi-search" />
-      </div>
-
-      <div class="form-field">
-        <label for="description" class="block">Description</label>
-        <textarea class="textmin" rows="3" pInputTextarea id="description" formControlName="description" placeholder="Enter task description"></textarea>
       </div>
 
       <div class="form-field">

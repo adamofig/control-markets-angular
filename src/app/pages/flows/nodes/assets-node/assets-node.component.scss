@@ -36,6 +36,15 @@
   display: flex; /* Fix for image display */
 }
 
+.loading-border-container.failed {
+  box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.7);
+  border-radius: 14px;
+}
+
+.loading-border-container.failed .image {
+  border: 5px solid #ff0000;
+}
+
 @keyframes rotate {
   100% {
     transform: translate(-50%, -50%) rotate(1turn);
