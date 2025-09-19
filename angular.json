@@ -29,7 +29,7 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "src/assets",
+                "input": "public",
                 "output": "assets"
               },
               {
