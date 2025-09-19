@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
 import { BaseFlowNode } from '../base-flow-node';
 import { CustomOutcomeNode } from '../outcome-node/outcome-node.component';
 import { TTSPlayground } from '@dataclouder/ngx-vertex';
@@ -16,7 +16,7 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './audio-tts-node.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AudioTTsNodeComponent extends BaseFlowNode<CustomOutcomeNode> {
+export class AudioTTsNodeComponent extends BaseFlowNode<CustomOutcomeNode> implements OnInit {
   public flowSignalNodeStateService = inject(FlowSignalNodeStateService);
 
   public storagePath = 'flows/audios/' + this.flowSignalNodeStateService.flow()?.id;
@@ -55,5 +55,10 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomOutcomeNode> {
   public generateTTS() {
     // this.flowSignalNodeStateService.generateTTS(this.value);
     alert('generateTTS');
+  }
+
+  overridengOnInit(): void {
+    super.ngOnInit();
+    console.log('ngOnInit');
   }
 }

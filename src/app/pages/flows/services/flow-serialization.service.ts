@@ -76,6 +76,11 @@ export class FlowSerializationService {
         const nodeData = { ...(node?.data?.nodeData || {}), prompt, request, provider: providerForm };
         serializableData = { ...node?.data, nodeData };
         console.log('serializableData', serializableData);
+      } else if (node.component === 'AudioTTsNodeComponent') {
+        const audioTTsNode = this.flowComponentRefStateService.getNodeComponentRef(node.id);
+        const value = (audioTTsNode as any)?.value;
+        const nodeData = { ...(node?.data?.nodeData || {}), value };
+        serializableData = { ...node?.data, nodeData };
       } else {
         serializableData = { ...node.data };
       }

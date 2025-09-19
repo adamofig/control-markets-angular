@@ -6,3 +6,13 @@
   border-radius: 15px;
   padding: 10px;
 }
+
+::ng-deep .selector-item {
+  width: 100% !important;
+
+}
+
+::ng-deep .selectors-container {
+  flex: content !important;
+}
+  
