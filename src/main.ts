@@ -38,9 +38,8 @@ import { provideMasterState } from '@dataclouder/ngx-knowledge';
 import { AppUserService } from './app/services/app-user.service';
 import { UserService } from '@dataclouder/ngx-users';
 
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideTranslateService } from '@ngx-translate/core';
 
 fetch('/assets/config.json')
   .then(response => response.json())
@@ -56,6 +55,24 @@ fetch('/assets/config.json')
           sourceCoreEndPoint: 'api/agent-cards/query',
           userStateEndPoint: 'api/knowledge/learning-experience',
         }),
+
+        provideTranslateService({
+          loader: provideTranslateHttpLoader({
+            prefix: '/assets/i18n/',
+            suffix: '.json',
+          }),
+          fallbackLang: 'en',
+          lang: 'en',
+        }),
+
+        // provideTranslateService({
+        //   loader: provideTranslateHttpLoader({
+        //     prefix: '/assets/i18n/',
+        //     suffix: '.json',
+        //   }),
+
+        //   defaultLanguage: 'en',
+        // }),
 
         provideAppInitializer(() => {
           const httpCore = inject(HttpCoreService);
@@ -96,15 +113,7 @@ fetch('/assets/config.json')
           }
         }),
         DialogService,
-        importProvidersFrom(
-          TranslateModule.forRoot({
-            loader: {
-              provide: TranslateLoader,
-              useFactory: createTranslateLoader,
-              deps: [HttpClient],
-            },
-          })
-        ),
+
         provideToastAlert(ToastAlertService),
         provideNotionService(NotionService),
         provideAgentCardService(DefaultAgentCardsService),

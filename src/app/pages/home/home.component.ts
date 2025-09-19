@@ -13,6 +13,7 @@ import { AgentCardService } from 'src/app/services/agent-card-service';
 import { AgentCardUI, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ILesson } from '@dataclouder/ngx-lessons';
 import { DcLessonCardComponent, LESSONS_TOKEN } from '@dataclouder/ngx-lessons';
+import { TranslateDirective, TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 // Define card interface for type safety
 interface CardItem {
@@ -26,7 +27,7 @@ register();
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ButtonModule, InputTextModule, CardModule, DcLessonCardComponent, AgentCardUI],
+  imports: [ButtonModule, InputTextModule, CardModule, DcLessonCardComponent, AgentCardUI, TranslatePipe, TranslateDirective],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -37,6 +38,8 @@ export class HomeComponent implements OnInit {
   private audioTourService = inject(AudioTourService);
   private lessonsService = inject(LESSONS_TOKEN);
   private agentCardService = inject(AgentCardService);
+  // Translate
+  private translate = inject(TranslateService);
 
   // Input States
   agentCards = signal<IAgentCard[]>([]);
