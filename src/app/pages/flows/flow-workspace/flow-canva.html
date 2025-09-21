@@ -20,6 +20,8 @@
 
   <p-button (click)="showDialog('isAgentVisible')" label="Agent" icon="pi pi-user-plus" [rounded]="true" severity="success" [outlined]="true" />
   <p-button (click)="showDialog('isAssetVisible')" label="Asset" icon="pi pi-plus-circle" [rounded]="true" severity="success" [outlined]="true" />
+  <p-button (click)="showDialog('isSourceVisible')" icon="pi pi-file-import" label="Source" [rounded]="true" severity="success" [outlined]="true" />
+
   <!-- Process -->
   <p-button (click)="addVideoGenNode()" label="Video" icon="pi pi-video" [rounded]="true" severity="warn" [outlined]="true" />
   <p-button (click)="showDialog('isTaskVisible')" icon="pi pi-microchip-ai" label="Task" [rounded]="true" severity="warn" [outlined]="true" />
@@ -27,15 +29,11 @@
 
   <p-button (click)="addAudioTTSGenNode()" icon="pi pi-megaphone" label="Audio" [rounded]="true" severity="warn" [outlined]="true" />
 
-  <p-button icon="pi pi-heart" label="Distribution Channel" [rounded]="true" severity="help" [outlined]="true" (click)="addDistributionNode()" />
-  <p-button (click)="addSourceNode()" icon="pi pi-file-import" label="Add Source" [rounded]="true" severity="info" [outlined]="true" />
+  <!-- <p-button icon="pi pi-heart" label="Distribution Channel" [rounded]="true" severity="help" [outlined]="true" (click)="addDistributionNode()" /> -->
 
   <p-button (click)="saveFlow()" label="Save Flow" icon="pi pi-save" [rounded]="true" severity="secondary" [outlined]="true" [loading]="isSavingFlow()" />
   <p-button icon="pi pi-play" label="Run Flow" (click)="runFlow()" [rounded]="true" severity="primary" [outlined]="true" [loading]="isRunningFlow()" />
 </div>
-
-<!-- Hidden file input for adding sources -->
-<input type="file" #sourceFileInput (change)="onSourceFileSelected($event)" accept=".md" style="display: none" />
 
 <vflow view="auto" [nodes]="flowDiagramStateService.nodes()" [edges]="flowDiagramStateService.edges()" [background]="backDots" (onConnect)="createEdge($event)">
   <ng-template let-ctx nodeHtml>
@@ -63,5 +61,7 @@
   <app-task-list viewMode="table" (onSelect)="addTaskToFlow($event)" />
   } @if(dialogs.isAssetVisible) {
   <app-assets-uploads (imageUploaded)="addAssetToFlow($event)"></app-assets-uploads>
+  } @if(dialogs.isSourceVisible) {
+  <app-sources-uploads (sourceUploaded)="addSourceToFlow($event)"></app-sources-uploads>
   }
 </p-dialog>

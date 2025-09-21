@@ -2,7 +2,7 @@
   <div class="card-background" [style.background-image]="source?.thumbnail?.url ? 'url(' + source?.thumbnail?.url + ')' : null"></div>
   <div class="card-content">
     <p class="main-text">
-      {{ this.data()?.agentSource?.content || 'No source name' }}
+      {{ this.data()?.nodeData?.content || 'No source name' }}
     </p>
   </div>
 

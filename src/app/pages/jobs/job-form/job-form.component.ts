@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject }
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IAgentOutcomeJob } from '../models/jobs.model';
-import { JobService } from '../jobs.service';
+import { JobService } from '../outcome-jobs.service';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
@@ -100,7 +100,7 @@ export class JobFormComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     if (this.jobId) {
-      this.job = await this.jobService.getJob(this.jobId);
+      this.job = await this.jobService.getOutcomeJob(this.jobId);
       if (this.job) {
       }
     }

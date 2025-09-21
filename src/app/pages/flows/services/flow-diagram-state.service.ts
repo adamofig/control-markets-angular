@@ -6,7 +6,7 @@ import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
 import { IAgentTask } from '../../tasks/models/tasks-models'; // Corrected path
 import { nanoid } from 'nanoid'; // Added
 import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
-import { JobService } from '../../jobs/jobs.service';
+import { JobService } from '../../jobs/outcome-jobs.service';
 import { FlowComponentRefStateService } from './flow-component-ref-state.service';
 import { IAgentSource } from '../../sources/models/sources.model';
 import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
@@ -15,7 +15,14 @@ import { IAssetNodeData } from '../models/nodes.model';
 import { GeneratedAsset } from '@dataclouder/ngx-vertex';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
 
-export type DynamicNodeWithData = DynamicNode & { data?: any; category?: 'input' | 'output' | 'process' | 'other'; component?: string };
+// NOt able to set a type for data yet.
+export interface NodeData {
+  nodeData?: any;
+  inputNodeId?: string;
+  processNodeId?: string;
+}
+
+export type DynamicNodeWithData = DynamicNode & { data?: any; category: 'input' | 'output' | 'process' | 'other'; component: string };
 
 @Injectable({
   providedIn: 'root',
@@ -78,8 +85,8 @@ export class FlowDiagramStateService {
 
   public async addOutcomeToFlow(jobExecution: IJobExecutionState) {
     // output id es jobOutcome en database, el cual ya se que puede tener agentCard
-    const outcomeJob = await this.jobService.getJob(jobExecution.outputEntityId);
-    // Intenta buscar si ya existe un node para poblarlo con el job
+    const outcomeJob = await this.jobService.getOutcomeJob(jobExecution.outputEntityId);
+    // jobExecution.outputNodeId es el nuevo job Intenta buscar si ya existe un node para poblarlo con el job
     if (jobExecution.outputNodeId) {
       const node = this.flowSignalNodeStateService.nodes().find(node => node.id === jobExecution.outputNodeId);
       if (node) {
@@ -88,6 +95,7 @@ export class FlowDiagramStateService {
         this.flowSignalNodeStateService.updateNodeData(jobExecution.outputNodeId, node.data);
       }
     } else {
+      this.flowSignalNodeStateService.addOutcomeToFlowConnected(outcomeJob, jobExecution.inputNodeId, jobExecution.processNodeId);
       alert('El nodo output no exite, tengo que buscarlo... ');
     }
     let outcomeJobNode;

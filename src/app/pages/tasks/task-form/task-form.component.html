@@ -99,14 +99,19 @@
       </div>
 
       <div class="form-field">
-        <label for="taskType" class="block">Task Type</label>
+        <label
+          pTooltip="Create JSON response, except for text. this helps to organize data, for JSON Requirest a minimum of inteligence. Flash Lite can fail sometimes."
+          for="taskType"
+          class="block"
+          >Task Type</label
+        >
         <br />
         <p-select id="taskType" [options]="taskTypes" formControlName="taskType" placeholder="Select Task Type" class="w-full"> </p-select>
       </div>
 
       @if (taskForm.controls.taskType.value === 'review_task') {
       <div class="form-field">
-        <label for="taskAttached" class="block">Tarea a revisar</label>
+        <label for="taskAttached" class="block">Tarea a revisar </label>
         <br />
         <p-select
           id="taskAttached"

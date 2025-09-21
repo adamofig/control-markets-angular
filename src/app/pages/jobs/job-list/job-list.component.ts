@@ -11,7 +11,7 @@ import {
   TOAST_ALERTS_TOKEN,
   ToastAlertsAbstractService,
 } from '@dataclouder/ngx-core';
-import { JobService } from '../jobs.service';
+import { JobService } from '../outcome-jobs.service';
 import { IAgentOutcomeJob } from '../models/jobs.model';
 import { RouterModule } from '@angular/router';
 import { SpeedDialModule } from 'primeng/speeddial';

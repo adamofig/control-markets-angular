@@ -47,6 +47,7 @@ import { EntityBaseFormComponent, EntityCommunicationService } from '@datacloude
     TooltipModule,
     ModelSelectorComponent,
     CropperComponentModal,
+    TooltipModule,
   ],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.css',

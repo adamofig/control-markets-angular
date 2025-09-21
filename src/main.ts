@@ -32,7 +32,6 @@ import { AppComponent } from './app/app.component';
 import { NotionService } from './app/services/notion.service';
 import { FormlyModule } from '@ngx-formly/core';
 
-
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideMarkdown } from 'ngx-markdown';
 import { provideMasterState } from '@dataclouder/ngx-knowledge';
@@ -42,9 +41,8 @@ import { UserService } from '@dataclouder/ngx-users';
 import { FormlyFieldInput } from './app/api-balancer/api-balancer-form/formly-components/input';
 import { FormlyFieldTextArea } from './app/api-balancer/api-balancer-form/formly-components/textarea';
 
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideTranslateService } from '@ngx-translate/core';
 
 fetch('/assets/config.json')
   .then(response => response.json())
@@ -52,13 +50,21 @@ fetch('/assets/config.json')
     bootstrapApplication(AppComponent, {
       providers: [
         { provide: APP_CONFIG, useValue: config },
-
         { provide: UserService, useExisting: AppUserService },
 
         provideMasterState<IAgentCard>(AGENT_CARDS_STATE_SERVICE, {
           pathTable: 'agent-cards',
           sourceCoreEndPoint: 'api/agent-cards/query',
           userStateEndPoint: 'api/knowledge/learning-experience',
+        }),
+
+        provideTranslateService({
+          loader: provideTranslateHttpLoader({
+            prefix: '/assets/i18n/',
+            suffix: '.json',
+          }),
+          fallbackLang: 'en',
+          lang: 'en',
         }),
 
         provideAppInitializer(() => {
@@ -103,15 +109,7 @@ fetch('/assets/config.json')
         provideFirestore(() => getFirestore()),
 
         DialogService,
-        importProvidersFrom(
-          TranslateModule.forRoot({
-            loader: {
-              provide: TranslateLoader,
-              useFactory: createTranslateLoader,
-              deps: [HttpClient],
-            },
-          })
-        ),
+
         provideToastAlert(ToastAlertService),
         provideNotionService(NotionService),
         provideAgentCardService(DefaultAgentCardsService),

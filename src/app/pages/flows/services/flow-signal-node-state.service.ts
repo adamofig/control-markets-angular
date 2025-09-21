@@ -1,5 +1,5 @@
 import { Injectable, signal, Type } from '@angular/core';
-import { IAgentFlows } from '../models/flows.model';
+import { IAgentFlows, NodeType } from '../models/flows.model';
 import { DynamicNodeWithData } from './flow-diagram-state.service';
 import { Connection, Edge } from 'ngx-vflow';
 import { nanoid } from 'nanoid';
@@ -13,6 +13,7 @@ import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset
 import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
 import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
 import { AudioTTsNodeComponent } from '../nodes/audio-tts-node/audio-tts-node';
+import { IAgentOutcomeJob } from '../../jobs/models/jobs.model';
 
 @Injectable({
   providedIn: 'root',
@@ -46,7 +47,7 @@ export class FlowSignalNodeStateService {
   }
 
   public createConnectionInputToProcessNode(inputNode: DynamicNodeWithData, processNode: DynamicNodeWithData): void {
-    if ((processNode.type as any)?.name === TaskNodeComponent.name) {
+    if ((processNode.type as any)?.name === NodeType.TaskNodeComponent) {
       // 'Como es de tipo TaskNodeComponent, su salida tiene que ser outcome'
       const x = processNode?.point().x! + (processNode?.point().x! - inputNode?.point().x!);
       const y = inputNode?.point().y! - 30;
@@ -59,6 +60,7 @@ export class FlowSignalNodeStateService {
         type: OutcomeNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
         data: { nodeData: {}, inputNodeId: inputNode.id, processNodeId: processNode.id }, // not writable for now, but if i change i need to change serializer.
         category: 'output',
+        component: NodeType.OutcomeNodeComponent,
       };
 
       this.nodes.set([...this.nodes(), newNode]);
@@ -74,7 +76,7 @@ export class FlowSignalNodeStateService {
       point: signal({ x: 100, y: 100 }), // Default position
       type: AudioTTsNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'process',
-      component: 'AudioTTsNodeComponent',
+      component: NodeType.AudioTTsNodeComponent,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -85,7 +87,40 @@ export class FlowSignalNodeStateService {
       point: signal({ x: 100, y: 100 }), // Default position
       type: VideoGenNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'process',
-      component: 'VideoGenNodeComponent',
+      component: NodeType.VideoGenNodeComponent,
+    };
+    this.nodes.set([...this.nodes(), newNode]);
+  }
+
+  public addOutcomeToFlowConnected(outcomeJob: IAgentOutcomeJob, inputNodeId: string, processNodeId: string) {
+    const inputNode = this.nodes().find(node => node?.id === inputNodeId);
+    const processNode = this.nodes().find(node => node?.id === processNodeId);
+    const x = processNode?.point().x! + (processNode?.point().x! - inputNode?.point().x!);
+    const y = processNode?.point().y! + (processNode?.point().y! - inputNode?.point().y!);
+    console.log('x', x);
+    console.log('y', y);
+    const newNode: DynamicNodeWithData = {
+      id: 'asset-generated-node-' + nanoid(),
+      point: signal({ x: x, y: y }), // Default position
+      type: OutcomeNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      category: 'output',
+      component: NodeType.OutcomeNodeComponent,
+      data: { nodeData: outcomeJob, inputNodeId, processNodeId },
+    };
+    this.nodes.set([...this.nodes(), newNode]);
+
+    this._createEdge({ source: processNode?.id!, target: newNode.id });
+  }
+
+  public addOutcomeToFlow(outcomeJob: IAgentOutcomeJob) {
+    // El output usalmente debe estar conectado con su task y su input, aqui no crea ni conection ni agrega los datos para que los encuentre.
+    const newNode: DynamicNodeWithData = {
+      id: 'outcome-node-' + nanoid(),
+      point: signal({ x: 100, y: 100 }), // Default position, can be made configurable
+      type: OutcomeNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      data: { nodeData: outcomeJob }, // not writable for now, but if i change i need to change serializer.
+      category: 'output',
+      component: NodeType.OutcomeNodeComponent,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -101,7 +136,7 @@ export class FlowSignalNodeStateService {
       type: AgentNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'input',
       data: { nodeData: agentCard } as any,
-      component: 'AgentNodeComponent',
+      component: NodeType.AgentNodeComponent,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -113,7 +148,7 @@ export class FlowSignalNodeStateService {
       type: TaskNodeComponent as Type<any>, // Ensure Type<any> is appropriate
       category: 'process',
       data: { nodeData: task } as any,
-      component: 'TaskNodeComponent',
+      component: NodeType.TaskNodeComponent,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -143,7 +178,7 @@ export class FlowSignalNodeStateService {
       type: AssetsNodeComponent as Type<any>, // Ensure Type<any> is appropriate
       category: 'input',
       data: { nodeData: asset },
-      component: 'AssetsNodeComponent',
+      component: NodeType.AssetsNodeComponent,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -164,8 +199,8 @@ export class FlowSignalNodeStateService {
 
     // Si esto ocurre signfica que Input y Output es de tipo Process por lo que generan un nodo typo Output Node
     //_______ __________ ____________
-    if ((inputNode?.type as any)?.name === AgentNodeComponent.name) {
-      if ((outputNode?.type as any)?.name === TaskNodeComponent.name) {
+    if ((inputNode?.type as any)?.name === NodeType.AgentNodeComponent) {
+      if ((outputNode?.type as any)?.name === NodeType.TaskNodeComponent) {
         this.createConnectionInputToProcessNode(inputNode!, outputNode!);
         // const outcomeJobEmpty: Partial<IAgentOutcomeJob> = {
         //   agentCard: inputNode?.data?.nodeData,
@@ -175,8 +210,8 @@ export class FlowSignalNodeStateService {
       }
     }
 
-    if ((inputNode?.type as any)?.name === AssetsNodeComponent.name) {
-      if ((outputNode?.type as any)?.name === VideoGenNodeComponent.name) {
+    if ((inputNode?.type as any)?.name === NodeType.AssetsNodeComponent) {
+      if ((outputNode?.type as any)?.name === NodeType.VideoGenNodeComponent) {
         const generatedAssetEmpty: Partial<GeneratedAsset> = {};
         this.createConnectedAssetGeneratedNode(generatedAssetEmpty as GeneratedAsset, inputNode?.id!, outputNode?.id!);
       }
@@ -215,6 +250,8 @@ export class FlowSignalNodeStateService {
       id: 'agent-node-' + nanoid(),
       point: signal({ x: 300, y: 100 }), // Default position, can be made configurable
       type: DistributionChanelNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      category: 'output',
+      component: NodeType.DistributionChanelNodeComponent,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -227,7 +264,9 @@ export class FlowSignalNodeStateService {
       id: 'source-node-' + nanoid(), // Changed prefix for clarity
       point: signal({ x: 500, y: 100 }), // Default position, can be made configurable
       type: SourcesNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
-      data: { agentSource: source }, // Pass initial data
+      data: { nodeData: source }, // Pass initial data
+      category: 'input',
+      component: NodeType.SourcesNodeComponent,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -244,6 +283,7 @@ export class FlowSignalNodeStateService {
       point: signal({ x: x, y: y }), // Default position
       type: AssetGeneratedNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'output',
+      component: NodeType.AssetGeneratedNodeComponent,
       data: { nodeData: generatedAsset, inputNodeId, processNodeId },
     };
     this.nodes.set([...this.nodes(), newNode]);

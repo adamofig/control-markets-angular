@@ -13,6 +13,7 @@ import { IAgentTask } from '../../tasks/models/tasks-models';
 import { FlowExecutionStateService } from '../services/flow-execution-state.service';
 import { FlowOrchestrationService } from '../services/flow-orchestration.service';
 import { AssetsUploadsComponent } from '../canvas-components/assets-uploads/assets-uploads.component';
+import { SourcesUploadsComponent } from '../canvas-components/sources-uploads/sources-uploads.component';
 import { FlowService } from '../flows.service';
 import { IAssetNodeData } from '../models/nodes.model';
 
@@ -21,7 +22,17 @@ import { IAssetNodeData } from '../models/nodes.model';
   styleUrl: './flow-canva.css',
   changeDetection: ChangeDetectionStrategy.Default,
   standalone: true,
-  imports: [Vflow, DialogModule, AgentCardListComponent, ButtonModule, TaskListComponent, InputTextModule, FormsModule, AssetsUploadsComponent],
+  imports: [
+    Vflow,
+    DialogModule,
+    AgentCardListComponent,
+    ButtonModule,
+    TaskListComponent,
+    InputTextModule,
+    FormsModule,
+    AssetsUploadsComponent,
+    SourcesUploadsComponent,
+  ],
 })
 export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> implements OnInit {
   override form: FormGroup<any> = new FormGroup({});
@@ -44,7 +55,7 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
 
   public isDialogVisible = false;
 
-  public dialogs = { isAgentVisible: false, isTaskVisible: false, isAssetVisible: false };
+  public dialogs = { isAgentVisible: false, isTaskVisible: false, isAssetVisible: false, isSourceVisible: false };
 
   public backDots = {
     backgroundColor: 'transparent',
@@ -96,6 +107,13 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
     this.isDialogVisible = false;
   }
 
+  addSourceToFlow(event: any) {
+    // TODO: implement logic to add source from event
+    console.log('addSourceToFlow', event);
+    this.flowDiagramStateService.addSourceNode(event);
+    this.isDialogVisible = false;
+  }
+
   public async saveFlow(): Promise<void> {
     this.isSavingFlow.set(true);
     try {
@@ -127,48 +145,6 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
 
   public addDistributionNode() {
     this.flowDiagramStateService.addDistributionNode();
-  }
-
-  public addSourceNode(): void {
-    // Trigger the hidden file input
-    this.sourceFileInput.nativeElement.click();
-  }
-
-  public onSourceFileSelected(event: Event): void {
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-
-    if (fileList && fileList.length > 0) {
-      const file = fileList[0];
-      if (file.name.endsWith('.md')) {
-        const reader = new FileReader();
-        reader.onload = (e: ProgressEvent<FileReader>) => {
-          const markdownContent = e.target?.result as string;
-
-          this.flowDiagramStateService.addSourceNode(markdownContent);
-          console.log('New source node added with markdown content from file:', file.name);
-          // Reset file input to allow selecting the same file again if needed
-          if (this.sourceFileInput) {
-            this.sourceFileInput.nativeElement.value = '';
-          }
-        };
-        reader.onerror = e => {
-          console.error('Error reading file:', e);
-          // Reset file input
-          if (this.sourceFileInput) {
-            this.sourceFileInput.nativeElement.value = '';
-          }
-        };
-        reader.readAsText(file);
-      } else {
-        console.warn('Please select a Markdown (.md) file.');
-        this.toastService.info({ title: 'Invalid File', subtitle: 'Please select a Markdown (.md) file.' }); // Changed to info
-        // Reset file input
-        if (this.sourceFileInput) {
-          this.sourceFileInput.nativeElement.value = '';
-        }
-      }
-    }
   }
 
   public addVideoGenNode() {

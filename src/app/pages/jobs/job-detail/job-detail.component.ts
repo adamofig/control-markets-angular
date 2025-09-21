@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, inject, signal, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject, signal, computed } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JsonPipe } from '@angular/common';
-import { JobService } from '../jobs.service';
+import { JobService } from '../outcome-jobs.service';
 import { IAgentOutcomeJob, ResponseFormat } from '../models/jobs.model';
 import { AccordionModule } from 'primeng/accordion';
 import { CardModule } from 'primeng/card';
@@ -40,15 +40,15 @@ export class OutcomeJobDetailComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.loadJob();
+    this.loadOutcomeJob();
   }
 
-  private async loadJob() {
+  private async loadOutcomeJob() {
     if (this.jobInput) {
       this.job.set(this.jobInput);
       return;
     }
-    const job = await this.genericService.getJob(this.jobId);
+    const job = await this.genericService.getOutcomeJob(this.jobId);
     this.job.set(job);
   }
 
@@ -56,7 +56,7 @@ export class OutcomeJobDetailComponent implements OnInit {
     await this.n8nService.startGithubFlow(this.jobId);
     // await this.genericService.distributeJob(this.jobId, channel);
 
-    this.loadJob();
+    this.loadOutcomeJob();
   }
 
   public getWordCount(text: string | undefined | null): number {

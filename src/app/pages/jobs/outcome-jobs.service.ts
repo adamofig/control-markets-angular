@@ -36,7 +36,7 @@ export class JobService {
     return this.httpService.post<IFilterQueryResponse<IAgentOutcomeJob>>(Endpoints.Jobs.JobsFiltered, filter, server);
   }
 
-  public async getJob(id: string): Promise<IAgentOutcomeJob> {
+  public async getOutcomeJob(id: string): Promise<IAgentOutcomeJob> {
     return this.httpService.get<IAgentOutcomeJob>(`${Endpoints.Jobs.Jobs}/${id}`);
   }
 

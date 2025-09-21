@@ -8,7 +8,12 @@
       } @else if (this.data()?.nodeData?.responseFormat === responseFormat.JSON) {
       {{ this.data()?.nodeData?.result | json }}
       } @else if (this.data()?.nodeData?.responseFormat === responseFormat.DEFAULT_CONTENT) {
-      {{ this.data()?.nodeData?.response || this.data()?.nodeData?.result?.description || 'No response in format DEFAULT_CONTENT' }}
+      {{
+        this.data()?.nodeData?.response?.content ||
+          this.data()?.nodeData?.result?.response ||
+          this.data()?.nodeData?.result?.description ||
+          'No response in format DEFAULT_CONTENT'
+      }}
       } @else {
       {{ this.data()?.nodeData?.response?.content }}
       }

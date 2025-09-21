@@ -30,6 +30,11 @@ export enum NodeType {
   TaskNodeComponent = 'TaskNodeComponent',
   SourcesNodeComponent = 'SourcesNodeComponent',
   OutcomeNodeComponent = 'OutcomeNodeComponent',
+  DistributionChanelNodeComponent = 'DistributionChanelNodeComponent',
+  AssetGeneratedNodeComponent = 'AssetGeneratedNodeComponent',
+  AssetsNodeComponent = 'AssetsNodeComponent',
+  VideoGenNodeComponent = 'VideoGenNodeComponent',
+  AudioTTsNodeComponent = 'AudioTTsNodeComponent',
   default = 'default',
 }
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef, effect, inject, signal } from '@angular/core';
 import { ComponentDynamicNode, Vflow } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -41,6 +41,9 @@ export class OutcomeNodeComponent extends BaseFlowNode<CustomOutcomeNode> implem
       this.backgroundImageUrl.set(imageForInput);
       console.log('inputNodeComponent', this.backgroundImageUrl());
     }, 500);
+
+    console.log('outcomeJob', this.outcomeJob);
+    console.log('nodeData', this.data()?.nodeData);
   }
 
   constructor() {

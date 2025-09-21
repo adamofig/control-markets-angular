@@ -10,7 +10,7 @@ import { FlowComponentRefStateService } from '../../services/flow-component-ref-
 
 export interface CustomSourceNode extends ComponentDynamicNode {
   // Renamed interface
-  agentSource: IAgentSource | null; // Updated property name
+  nodeData: IAgentSource | null; // Updated property name
 }
 
 @Component({
@@ -44,8 +44,8 @@ export class SourcesNodeComponent extends CustomNodeComponent<CustomSourceNode> 
   constructor() {
     super();
     effect(() => {
-      console.log('sources-node source:', this.data()?.agentSource); // Updated log and property
-      this.source = this.data()?.agentSource || null; // Updated property
+      console.log('sources-node source:', this.data()?.nodeData); // Updated log and property
+      this.source = this.data()?.nodeData || null; // Updated property
     });
   }
 

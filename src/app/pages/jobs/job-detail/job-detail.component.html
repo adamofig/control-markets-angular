@@ -38,12 +38,12 @@
   } @else if (jobData.responseFormat === responseFormat.DEFAULT_CONTENT) {
   <div class="section">
     <h4>Response DEFAULT FORMAT</h4>
-    <pre>{{ jobData.response }}</pre>
+    <pre>{{ jobData.response?.content }}</pre>
   </div>
   } @else {
   <div class="section">
     <h4>Response TEXT FORMAT</h4>
-    <pre>{{ jobData.response.content }}</pre>
+    <pre>{{ jobData.response?.content }}</pre>
   </div>
   } @if (jobData.result) {
 

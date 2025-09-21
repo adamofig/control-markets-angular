@@ -54,11 +54,13 @@ export const AgentTaskStatusOptions = [
 export enum AgentTaskType {
   REVIEW_TASK = 'review_task',
   CREATE_CONTENT = 'create_content',
+  TEXT_RESPONSE = 'text_response',
 }
 
 export const AgentTaskOptions = [
   { label: 'Revisar tarea', value: AgentTaskType.REVIEW_TASK },
   { label: 'Crear contenido', value: AgentTaskType.CREATE_CONTENT },
+  { label: 'Respuesta en Texto', value: AgentTaskType.TEXT_RESPONSE },
 ];
 
 // export interface IAgentOutcomeJob {
