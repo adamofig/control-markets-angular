@@ -8,6 +8,7 @@ import { AlertController } from '@ionic/angular/standalone';
 
 import { environment } from 'src/environments/environment';
 import { RouteNames } from 'src/app/core/enums';
+import { APP_CONFIG } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-agent-card-form',
@@ -21,10 +22,11 @@ export class AgentCardFormPage implements OnInit {
   private router = inject(Router);
   private AlertController = inject(AlertController);
   private toastController = inject(ToastController);
+  private config = inject(APP_CONFIG);
 
   public currentPath: string = ' ';
 
-  public projectName = environment.projectName;
+  public projectName = this.config.projectName;
 
   ngOnInit(): void {
     this.currentPath = this.router.url.split('/')[3];

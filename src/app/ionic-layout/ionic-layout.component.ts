@@ -35,6 +35,7 @@ import { addIcons } from 'ionicons';
 import { AppUserService } from 'src/app/services/app-user.service';
 import { IUser } from '@dataclouder/ngx-users';
 import { PwaInstallComponent } from '../components/pwa-install/pwa-install.component';
+import { APP_CONFIG } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-ionic-layout',
@@ -78,10 +79,11 @@ export class IonicLayoutComponent implements OnInit {
   private actionSheetController = inject(ActionSheetController);
   private menuController = inject(MenuController);
   public userService = inject(AppUserService);
+  private config = inject(APP_CONFIG);
 
-  public envName = environment.envName;
-  public projectName = environment.projectName;
-  public version = environment.version;
+  public envName = this.config.envName;
+  public projectName = this.config.projectName;
+  public version = this.config.version;
   public user = this.userService.user();
   public menuVisible: boolean = true;
 

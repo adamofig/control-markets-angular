@@ -52,7 +52,7 @@ export const routes: Routes = [
   },
   {
     path: 'page',
-    canActivate: environment.authenticationRequired ? [authAndUserGuard] : [],
+    canActivate: [authAndUserGuard],
 
     loadComponent: () => import('./ionic-layout/ionic-layout.component').then(m => m.IonicLayoutComponent),
     children: [
