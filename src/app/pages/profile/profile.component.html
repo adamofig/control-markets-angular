@@ -1,3 +1,16 @@
 <div class="form-container">
   <app-profile-form [user]="userService.user()" [userForm]="userForm" (saveData)="saveData($event)"></app-profile-form>
+
+  <p-card>
+    <dc-profile-settings-form
+      [settingsForm]="settingsForm"
+      [baseLanguagesOptions]="baseLanguagesOptions"
+      [targetLanguagesOptions]="[]"
+      [audioSpeedOptions]="audioSpeedOptions"
+      [hiddenFields]="hiddenFields"></dc-profile-settings-form>
+  </p-card>
+
+  <p-card>
+    <dc-chat-settings-dialog></dc-chat-settings-dialog>
+  </p-card>
 </div>
