@@ -1,13 +1,16 @@
 <div class="tts-node-container">
   <p-button (click)="removeNode()" class="remove-btn" icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" />
 
-  @if(!agentSource()){
-  <tts-playground [settings]="{ storagePath: storagePath }" (ttsGenerated)="onTtsGenerated($event)"></tts-playground>
-  } @else {
+  <hr />
+  @if(!agentSource() && settings()){
+  <dc-tts-playground #ttsPlayground [settings]="settings()" (ttsGenerated)="onTtsGenerated($event)"></dc-tts-playground>
+  } @else if (agentSource()) {
   <p>Se encontro un node. de agente.</p>
   <textarea rows="2" cols="30" pTextarea [(ngModel)]="value"></textarea>
   <p-button (click)="generateTTS()" class="execute-btn" icon="pi pi-play" [rounded]="true" [text]="true" severity="info" />
 
+  } @else {
+  <p>Se requieren settings para el nodo de audio.</p>
   }
 </div>
 <handle type="target" position="left" id="b" />

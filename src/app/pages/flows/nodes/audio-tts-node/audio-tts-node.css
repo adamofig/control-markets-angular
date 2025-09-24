@@ -13,6 +13,6 @@
 }
 
 ::ng-deep .selectors-container {
-  flex: content !important;
+  display: block !important;
 }
   

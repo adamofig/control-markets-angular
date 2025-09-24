@@ -1,29 +1,40 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { BaseFlowNode } from '../base-flow-node';
 import { CustomOutcomeNode } from '../outcome-node/outcome-node.component';
-import { TTSPlayground } from '@dataclouder/ngx-vertex';
+import { TtsPlaygroundComponent, TTSPlaygroundSettings } from '@dataclouder/ngx-vertex';
 import { FlowSignalNodeStateService } from '../../services/flow-signal-node-state.service';
 import { IAssetNodeData } from '../../models/nodes.model';
-import { Vflow } from 'ngx-vflow';
+import { ComponentDynamicNode, Vflow } from 'ngx-vflow';
 import { TextareaModule } from 'primeng/textarea';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 
+export interface CustomAudioTTsNode extends ComponentDynamicNode {
+  nodeData: { value: string; settings: any };
+  inputNodeId: string;
+  processNodeId: string;
+}
+
 @Component({
   selector: 'app-audio-tts-node-component',
-  imports: [Vflow, TTSPlayground, TextareaModule, FormsModule, ButtonModule],
+  imports: [Vflow, TtsPlaygroundComponent, TextareaModule, FormsModule, ButtonModule],
   templateUrl: './audio-tts-node.html',
   styleUrl: './audio-tts-node.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AudioTTsNodeComponent extends BaseFlowNode<CustomOutcomeNode> implements OnInit {
+export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> implements OnInit {
   public flowSignalNodeStateService = inject(FlowSignalNodeStateService);
+  @ViewChild('ttsPlayground') public ttsPlayground: TtsPlaygroundComponent | undefined;
 
   public storagePath = 'flows/audios/' + this.flowSignalNodeStateService.flow()?.id;
 
   public agentSource = signal<any>(null);
 
   public value = '';
+
+  public settings = signal<TTSPlaygroundSettings>({
+    storagePath: this.storagePath,
+  });
 
   constructor() {
     super();
@@ -32,6 +43,9 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomOutcomeNode> imple
       if (agentSource) {
         console.log('Se encontro un node. de agente. ', agentSource);
         this.agentSource.set(agentSource);
+      }
+      if (this.node()?.data?.nodeData?.settings) {
+        this.settings.set(this.node()?.data?.nodeData?.settings);
       }
     });
   }
@@ -57,8 +71,7 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomOutcomeNode> imple
     alert('generateTTS');
   }
 
-  overridengOnInit(): void {
+  override ngOnInit(): void {
     super.ngOnInit();
-    console.log('ngOnInit');
   }
 }

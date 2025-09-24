@@ -54,22 +54,22 @@ export class HomeComponent implements OnInit {
   cards = signal<CardItem[]>([
     {
       imageUrl: 'assets/defaults/images/default-feature-1.jpg',
-      title: 'Advanced Card',
-      subtitle: 'Card subtitle',
+      title: 'Creación de contenido',
+      subtitle: 'Con modelos de IA',
       content:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
     },
     {
       imageUrl: 'assets/defaults/images/default-feature-2.jpg',
-      title: 'Advanced Card',
-      subtitle: 'Card subtitle',
+      title: 'Marketing',
+      subtitle: 'Ideas y estrategias',
       content:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
     },
     {
       imageUrl: 'assets/defaults/images/default-feature-3.jpg',
-      title: 'Advanced Card',
-      subtitle: 'Card subtitle',
+      title: 'Análisis de datos',
+      subtitle: 'Tendencias en marcados',
       content:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
     },

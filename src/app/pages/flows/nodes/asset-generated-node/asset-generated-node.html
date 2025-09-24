@@ -10,7 +10,7 @@
     <p-button (click)="openModal()" class="hover-button" icon="pi pi-eye" [rounded]="true" [text]="true" severity="info" />
   </div>
 
-  <video controls [src]="videoUrl" width="100%" height="auto" autoplay loop muted></video>
+  <video controls [src]="videoUrl" width="100%" height="auto" autoplay loop [muted]="'muted'"></video>
   <!-- <img style="position: absolute; top: 0; left: 0" [src]="data()?.image" alt="" /> -->
 
   <handle type="target" position="left" id="b" />

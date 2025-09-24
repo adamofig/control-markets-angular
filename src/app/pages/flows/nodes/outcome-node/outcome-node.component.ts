@@ -9,7 +9,7 @@ import { JsonPipe } from '@angular/common';
 import { BaseFlowNode } from '../base-flow-node';
 
 export interface CustomOutcomeNode extends ComponentDynamicNode {
-  nodeData: IAgentOutcomeJob | null;
+  nodeData: IAgentOutcomeJob;
   inputNodeId: string;
   processNodeId: string;
 }
