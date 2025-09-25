@@ -57,7 +57,7 @@ REMOTE_TAR_FILEPATH  = $(REMOTE_DEPLOY_PATH)/$(IMAGE_FILENAME)
 
 REMOTE_CONFIG_FILENAME = config.json
 REMOTE_CONFIG_PATH   = $(REMOTE_DEPLOY_PATH)/$(REMOTE_CONFIG_FILENAME)
-LOCAL_CONFIG_PATH    = src/assets/config.$(APP_ENV).json
+LOCAL_CONFIG_PATH    = public/config.$(APP_ENV).json
 
 
 # ==============================================================================
