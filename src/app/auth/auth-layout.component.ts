@@ -42,8 +42,7 @@ import { APP_CONFIG } from '@dataclouder/ngx-core';
   imports: [RouterOutlet, RouterLink, CardModule],
 })
 export class AuthLayoutComponent {
-  private appConfigService = inject(APP_CONFIG);
-
-  public envName = this.appConfigService.envName;
-  public version = this.appConfigService.version;
+  private config = inject(APP_CONFIG);
+  public envName = this.config.envName;
+  public version = this.config.version;
 }

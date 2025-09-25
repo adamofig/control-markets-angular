@@ -13,13 +13,14 @@ function toPlainObject(objectClass: any) {
 })
 export class HttpService {
   private httpClient = inject(HttpClient);
-  private appConfigService = inject(APP_CONFIG);
+
+  private config = inject(APP_CONFIG);
 
   private getHostUrl(host: string = ''): string {
     if (host === 'python') {
-      return this.appConfigService.backendPythonUrl;
+      return this.config.backendPythonUrl;
     }
-    return this.appConfigService.backendNodeUrl;
+    return this.config.backendNodeUrl;
   }
 
   public postDataToService<T = any>(service: string, data: any, host = 'nodejs'): Promise<T> {

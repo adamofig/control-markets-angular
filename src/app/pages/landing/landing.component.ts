@@ -3,7 +3,6 @@ import { Component, inject } from '@angular/core';
 import { IonContent, IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, IonIcon, IonText, IonImg } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { RouteNames } from 'src/app/core/enums';
-import { environment } from 'src/environments/environment';
 import { APP_CONFIG } from '@dataclouder/ngx-core';
 
 @Component({
@@ -15,11 +14,11 @@ import { APP_CONFIG } from '@dataclouder/ngx-core';
 })
 export class LandingComponent {
   private router = inject(Router);
-  private appConfigService = inject(APP_CONFIG);
+  private config = inject(APP_CONFIG);
 
-  projectName = (this.appConfigService.version = 'Pending project');
-  version = this.appConfigService.version;
-  envName = this.appConfigService.envName;
+  projectName = this.config.projectName;
+  version = this.config.version;
+  envName = this.config.envName;
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);

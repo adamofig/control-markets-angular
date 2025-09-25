@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/cor
 import { Router, RouterOutlet } from '@angular/router';
 import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonFooter, IonApp } from '@ionic/angular/standalone';
 import { APP_CONFIG } from '@dataclouder/ngx-core';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-stack-ionic',
@@ -13,12 +12,12 @@ import { environment } from 'src/environments/environment';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StackIonicComponent implements OnInit {
+  private config = inject(APP_CONFIG);
   private router = inject(Router);
-  private appConfigService = inject(APP_CONFIG);
 
   public currentPath: string = ' ';
 
-  public projectName = 'Pending project';
+  public projectName = this.config.projectName;
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);

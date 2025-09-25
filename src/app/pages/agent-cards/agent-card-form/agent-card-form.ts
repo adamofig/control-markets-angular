@@ -24,10 +24,11 @@ export class AgentCardFormPage implements OnInit {
   private router = inject(Router);
   private alertController = inject(AlertController);
   private toastController = inject(ToastController);
+  private config = inject(APP_CONFIG);
 
   public currentPath: string = ' ';
 
-  public projectName = 'Pending project';
+  public projectName = this.config.projectName;
 
   ngOnInit(): void {
     this.currentPath = this.router.url.split('/')[3];
