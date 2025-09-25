@@ -16,6 +16,7 @@ import { AssetsUploadsComponent } from '../canvas-components/assets-uploads/asse
 import { SourcesUploadsComponent } from '../canvas-components/sources-uploads/sources-uploads.component';
 import { FlowService } from '../flows.service';
 import { IAssetNodeData } from '../models/nodes.model';
+import { ComfyStatusComponent } from '../canvas-components/comfy-status/comfy-status';
 
 @Component({
   templateUrl: './flow-canva.html',
@@ -32,6 +33,7 @@ import { IAssetNodeData } from '../models/nodes.model';
     FormsModule,
     AssetsUploadsComponent,
     SourcesUploadsComponent,
+    ComfyStatusComponent,
   ],
 })
 export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> implements OnInit {

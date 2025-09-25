@@ -1,0 +1,11 @@
+@if(status()){
+<div>
+  <p-tag severity="success" [value]="`${status()?.status} (${status()?.numAvailable} available)`" />
+
+  @for(server of status()?.servers; track server.device){
+  <div class="server-status">
+    <p-tag severity="info" [value]="`${server.device} (${server.so})  Memory: ${server.memory.used.toFixed(1)}GB / ${server.memory.total.toFixed(1)}GB`" />
+  </div>
+  }
+</div>
+}

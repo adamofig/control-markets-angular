@@ -1,7 +1,7 @@
 import { Injectable, signal, inject, NgZone, Type } from '@angular/core';
 import { IJobExecutionState } from '../models/flows.model';
 import { DynamicNodeWithData, FlowDiagramStateService } from './flow-diagram-state.service';
-import { GeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-vertex';
+import { IGeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-vertex';
 import { nanoid } from 'nanoid';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
 
@@ -25,7 +25,7 @@ export class FlowNodeCreationService {
     this.addAssetGeneratedNode(generatedAsset);
   }
 
-  public addAssetGeneratedNode(generatedAsset: GeneratedAsset) {
+  public addAssetGeneratedNode(generatedAsset: IGeneratedAsset) {
     const newNode: DynamicNodeWithData = {
       id: 'asset-generated-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position

@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { HandleComponent } from 'ngx-vflow';
 import { ComponentDynamicNode } from 'ngx-vflow';
 import { StatusJob } from '../../models/flows.model';
@@ -10,8 +10,12 @@ import { INodeVideoGenerationData } from '../../models/nodes.model';
 import { TagModule, Tag } from 'primeng/tag';
 import { TextareaModule } from 'primeng/textarea';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ComfyVideoOptionsRequestFormComponent } from '@dataclouder/ngx-vertex';
+import { ComfyVideoOptionsRequestFormComponent, IAssetsGeneration, IGeneratedAsset } from '@dataclouder/ngx-vertex';
 import { SelectModule } from 'primeng/select';
+import { GeneratedAssetsService } from '@dataclouder/ngx-vertex';
+import { NodeSearchesService } from '../../services/node-searches.service';
+import { FlowSignalNodeStateService } from '../../services/flow-signal-node-state.service';
+import { CounterComponent } from '../../../../components/counter/counter.component';
 
 export interface CustomAssetsNode extends ComponentDynamicNode {
   nodeData: INodeVideoGenerationData;
@@ -32,10 +36,14 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
     ComfyVideoOptionsRequestFormComponent,
     SelectModule,
     ReactiveFormsModule,
+    CounterComponent,
   ],
 })
-export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implements OnInit {
+export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implements OnInit, OnDestroy {
   public flowOrchestrationService = inject(FlowOrchestrationService);
+  private generatedAssetsService = inject(GeneratedAssetsService);
+  private nodeSearchesService = inject(NodeSearchesService);
+  private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
 
   public fb = inject(FormBuilder);
 
@@ -43,6 +51,7 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
   public override nodeCategory: 'process' | 'input' | 'output' = 'process';
 
   public formValue = 'Éste es el valor';
+  public status = signal<'loading' | 'error' | 'success' | 'idle'>('idle');
 
   public form = this.fb.group({
     seconds: [2],
@@ -62,6 +71,41 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
 
   runNode(): void {
     this.flowOrchestrationService.runNode(this.flowDiagramStateService.getFlow()?.id!, this.node().id);
+  }
+
+  async directEndPoint(): Promise<void> {
+    this.status.set('loading');
+
+    try {
+      // this.flowExecutionStateService.getExecutionState()?.jobId
+      // this.flowOrchestrationService.runNode(this.flowDiagramStateService.getFlow()?.id!, this.node().id);
+
+      const inputNodes = this.nodeSearchesService.getInputNodes(this.node().id);
+      let assets = { firstFrame: null };
+      for (const inputNode of inputNodes) {
+        if (inputNode.component === 'AssetsNodeComponent') {
+          assets.firstFrame = inputNode.data.nodeData.storage;
+          break;
+        }
+      }
+
+      const genAssetObj: Partial<IGeneratedAsset> = {
+        prompt: this.prompt,
+        request: this.form.value,
+        assets: assets as unknown as IAssetsGeneration,
+        provider: 'comfy',
+      };
+
+      const asset = await this.generatedAssetsService.createOrUpdate(genAssetObj);
+      // Revisar que este conectado al 3001.
+      const assetGenerated: any = await this.generatedAssetsService.generateVideoFromAsset(asset.id);
+
+      this.flowSignalNodeStateService.createConnectedAssetGeneratedNode(assetGenerated, inputNodes[0].id, this.node().id);
+      this.status.set('success');
+    } catch (error) {
+      this.status.set('error');
+      console.error(error);
+    }
   }
 
   override ngOnInit(): void {

@@ -2,16 +2,20 @@
 
 <p-select [options]="providers" [formControl]="providerForm" optionLabel="label" optionValue="value" placeholder="Select a Provider" />
 
-<div class="container" style="width: 250px; height: auto">
-  <!-- <img width="150px" height="auto" class="image" [src]="node()?.data?.agentAsset?.storage?.url" /> -->
-  <h4>Video Generation Node</h4>
+<div class="loading-border-container" [class.in-progress]="status() === 'loading'" [class.failed]="status() === 'error'">
+  <div class="content-wrapper">
+    <div class="container" style="width: 250px; height: auto">
+      <!-- <img width="150px" height="auto" class="image" [src]="node()?.data?.agentAsset?.storage?.url" /> -->
+      <h4>Video Generation Node</h4>
 
-  <span>Prompt</span>
-  <textarea rows="2" style="width: 100%" pTextarea [(ngModel)]="prompt"></textarea>
-  @if(providerForm.value !== 'veo') {
-  <span>More options:</span>
-  <dc-comfy-video-options-request [form]="form"></dc-comfy-video-options-request>
-  }
+      <span>Prompt</span>
+      <textarea rows="2" style="width: 100%" pTextarea [(ngModel)]="prompt"></textarea>
+      @if(providerForm.value !== 'veo') {
+      <span>More options:</span>
+      <dc-comfy-video-options-request [form]="form"></dc-comfy-video-options-request>
+      }
+    </div>
+  </div>
 </div>
 
 <handle type="target" position="left" id="left" />
@@ -19,8 +23,9 @@
 <handle type="target" position="top" id="top" />
 
 <p-button (click)="runNode()" class="execute-btn" icon="pi pi-play" [rounded]="true" [text]="true" severity="info" />
-
-<p-tag severity="info" [value]="taskExecutionState()?.status" />
+<p-button (click)="directEndPoint()" class="execute-btn" icon="pi pi-circle" [rounded]="true" [text]="true" severity="info" />
+<p-tag severity="info" [value]="status()" />
+<app-counter [status]="status()" />
 
 @if(taskExecutionState()?.status === statusJob.IN_PROGRESS) {
 <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">

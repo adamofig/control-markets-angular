@@ -1,0 +1,8 @@
+<span
+  [ngClass]="{
+    loading: status === 'loading',
+    success: status === 'success',
+    error: status === 'error'
+  }">
+  {{ elapsedSeconds() }}s
+</span>

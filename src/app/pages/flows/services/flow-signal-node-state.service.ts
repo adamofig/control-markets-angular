@@ -8,7 +8,7 @@ import { IAgentTask } from '../../tasks/models/tasks-models';
 import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
 import { IAssetNodeData } from '../models/nodes.model';
 import { IAgentSource } from '../../sources/models/sources.model';
-import { GeneratedAsset } from '@dataclouder/ngx-vertex';
+import { IGeneratedAsset } from '@dataclouder/ngx-vertex';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
 import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
 import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
@@ -212,8 +212,8 @@ export class FlowSignalNodeStateService {
 
     if ((inputNode?.type as any)?.name === NodeType.AssetsNodeComponent) {
       if ((outputNode?.type as any)?.name === NodeType.VideoGenNodeComponent) {
-        const generatedAssetEmpty: Partial<GeneratedAsset> = {};
-        this.createConnectedAssetGeneratedNode(generatedAssetEmpty as GeneratedAsset, inputNode?.id!, outputNode?.id!);
+        const generatedAssetEmpty: Partial<IGeneratedAsset> = {};
+        this.createConnectedAssetGeneratedNode(generatedAssetEmpty as IGeneratedAsset, inputNode?.id!, outputNode?.id!);
       }
     }
     //_______ __________ ____________
@@ -271,7 +271,7 @@ export class FlowSignalNodeStateService {
     this.nodes.set([...this.nodes(), newNode]);
   }
 
-  public createConnectedAssetGeneratedNode(generatedAsset: GeneratedAsset, inputNodeId: string, processNodeId: string) {
+  public createConnectedAssetGeneratedNode(generatedAsset: IGeneratedAsset, inputNodeId: string, processNodeId: string) {
     const inputNode = this.nodes().find(node => node?.id === inputNodeId);
     const processNode = this.nodes().find(node => node?.id === processNodeId);
     const x = processNode?.point().x! + (processNode?.point().x! - inputNode?.point().x!);

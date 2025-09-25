@@ -33,6 +33,8 @@
   <p-button icon="pi pi-play" label="Run Flow" (click)="runFlow()" [rounded]="true" severity="primary" [outlined]="true" [loading]="isRunningFlow()" />
 </div>
 
+<app-comfy-status style="position: absolute; bottom: 10px; left: 10px" />
+
 <vflow view="auto" [nodes]="flowDiagramStateService.nodes()" [edges]="flowDiagramStateService.edges()" [background]="backDots" (onConnect)="createEdge($event)">
   <ng-template let-ctx nodeHtml>
     <div class="custom-node" selectable [class.custom-node_selected]="ctx.selected()">

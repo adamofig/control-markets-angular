@@ -4,16 +4,11 @@ import { Connection, DynamicNode, Edge } from 'ngx-vflow';
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
 import { IAgentTask } from '../../tasks/models/tasks-models'; // Corrected path
-import { nanoid } from 'nanoid'; // Added
-import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
 import { JobService } from '../../jobs/outcome-jobs.service';
 import { FlowComponentRefStateService } from './flow-component-ref-state.service';
-import { IAgentSource } from '../../sources/models/sources.model';
-import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
-import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
 import { IAssetNodeData } from '../models/nodes.model';
-import { GeneratedAsset } from '@dataclouder/ngx-vertex';
-import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
+import { IGeneratedAsset } from '@dataclouder/ngx-vertex';
+import { NodeSearchesService } from './node-searches.service';
 
 // NOt able to set a type for data yet.
 export interface NodeData {
@@ -31,6 +26,7 @@ export class FlowDiagramStateService {
   private jobService = inject(JobService);
   private flowComponentRefStateService = inject(FlowComponentRefStateService);
   private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
+  private nodeSearchesService = inject(NodeSearchesService);
 
   public get nodes() {
     return this.flowSignalNodeStateService.nodes;
@@ -45,12 +41,7 @@ export class FlowDiagramStateService {
   }
 
   public getInputs(nodeId: string): string[] {
-    console.log('getTargetNodes', this.flowSignalNodeStateService.edges());
-
-    const edgesWhereTargetIsNode = this.flowSignalNodeStateService.edges().filter(edge => edge.target === nodeId);
-    const sourceIds = edgesWhereTargetIsNode.map(edge => edge.source);
-    console.log('edgesWhereTargetIsNode', edgesWhereTargetIsNode);
-    return sourceIds;
+    return this.nodeSearchesService.getInputs(nodeId);
   }
 
   public addNodeToCanvas(node: DynamicNodeWithData) {
@@ -58,16 +49,11 @@ export class FlowDiagramStateService {
   }
 
   public getInputNodes(nodeId: string): DynamicNodeWithData[] {
-    const inputsIds = this.getInputs(nodeId);
-    const allNodes = this.flowSignalNodeStateService.nodes();
-    return allNodes.filter(node => inputsIds.includes(node.id));
+    return this.nodeSearchesService.getInputNodes(nodeId);
   }
 
   public getOutputNodes(nodeId: string): DynamicNodeWithData[] {
-    const edgesWhereSourceIsNode = this.flowSignalNodeStateService.edges().filter(edge => edge.source === nodeId);
-    const targetIds = edgesWhereSourceIsNode.map(edge => edge.target);
-    const allNodes = this.flowSignalNodeStateService.nodes();
-    return allNodes.filter(node => targetIds.includes(node.id));
+    return this.nodeSearchesService.getOutputNodes(nodeId);
   }
 
   public setFlow(flow: IAgentFlows) {
@@ -147,7 +133,7 @@ export class FlowDiagramStateService {
     this.flowSignalNodeStateService.addSourceNode(content);
   }
 
-  public createConnectedAssetGeneratedNode(generatedAsset: GeneratedAsset, inputNodeId: string, processNodeId: string) {
+  public createConnectedAssetGeneratedNode(generatedAsset: IGeneratedAsset, inputNodeId: string, processNodeId: string) {
     this.flowSignalNodeStateService.createConnectedAssetGeneratedNode(generatedAsset, inputNodeId, processNodeId);
   }
 }
