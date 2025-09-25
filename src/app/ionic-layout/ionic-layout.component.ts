@@ -36,6 +36,7 @@ import { AppUserService } from 'src/app/services/app-user.service';
 import { IUser } from '@dataclouder/ngx-users';
 import { PwaInstallComponent } from '../components/pwa-install/pwa-install.component';
 import { APP_CONFIG } from '@dataclouder/ngx-core';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'app-ionic-layout',
@@ -71,6 +72,7 @@ import { APP_CONFIG } from '@dataclouder/ngx-core';
     ToggleButtonModule,
     FormsModule,
     PwaInstallComponent,
+    ToggleSwitchModule,
   ],
 })
 export class IonicLayoutComponent implements OnInit {

@@ -8,6 +8,7 @@ import { AudioSpeed, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { AppUserService } from 'src/app/services/app-user.service';
 import { CardModule } from 'primeng/card';
 import { DCConversationUserChatSettingsComponent } from '@dataclouder/ngx-agent-cards';
+import { TranslateModule } from '@ngx-translate/core';
 
 export const BaseLanguagesOptions = [
   { name: 'Español 🇪🇦 🇲🇽 ', code: 'es' },
@@ -26,7 +27,15 @@ export const AudioSpeedOptions = [
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
   standalone: true,
-  imports: [IonicModule, ReactiveFormsModule, ProfileFormComponent, ProfileSettingsFormComponent, CardModule, DCConversationUserChatSettingsComponent],
+  imports: [
+    IonicModule,
+    ReactiveFormsModule,
+    ProfileFormComponent,
+    ProfileSettingsFormComponent,
+    CardModule,
+    DCConversationUserChatSettingsComponent,
+    TranslateModule,
+  ],
 })
 export class ProfileComponent implements OnInit {
   private fb = inject(FormBuilder);

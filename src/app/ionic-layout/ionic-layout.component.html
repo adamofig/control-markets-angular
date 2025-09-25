@@ -49,13 +49,12 @@
 
           <ion-buttons slot="end">
             <app-pwa-install />
-            <p-togglebutton [(ngModel)]="isDarkMode" onLabel="" offLabel="" styleClass="w-36" ariaLabel="Do you confirm" (onChange)="toggleDarkMode()">
-              <ng-template pTemplate="onicon" let-checked="checked">
-                <ion-icon [name]="checked ? 'sunny' : 'moon'"></ion-icon>
-              </ng-template>
-            </p-togglebutton>
 
-            <!-- <ion-toggle [checked]="isDarkMode" aria-label="Dark mode"> Dark Mode </ion-toggle> -->
+            <p-toggleswitch [(ngModel)]="isDarkMode" (onChange)="toggleDarkMode()">
+              <ng-template #handle let-checked="checked">
+                <i [class]="['!text-xs', 'pi', checked ? 'pi-moon' : 'pi-sun']"></i>
+              </ng-template>
+            </p-toggleswitch>
 
             <ion-button (click)="openActionSheet()">
               <span>
