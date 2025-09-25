@@ -53,6 +53,29 @@
   </ng-template>
 </vflow>
 
+<div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px">
+  <!-- Show options to add agents Assets and Source -->
+  <p-speeddial [model]="resourceItems" direction="up" [tooltipOptions]="{ tooltipPosition: 'left' }">
+    <ng-template #button let-toggleCallback="toggleCallback">
+      <p-button severity="success" [outlined]="true" [rounded]="true" (click)="toggleCallback($event)" pTooltip="Add Resource" tooltipPosition="top">
+        <i class="pi pi-paperclip"></i>
+      </p-button>
+    </ng-template>
+  </p-speeddial>
+
+  <p-speeddial
+    [model]="processItems"
+    direction="up"
+    [style]="{ position: 'absolute', right: 'calc(50% - 5rem)'}"
+    [tooltipOptions]="{ tooltipPosition: 'right' }">
+    <ng-template #button let-toggleCallback="toggleCallback">
+      <p-button severity="warn" [outlined]="true" [rounded]="true" (click)="toggleCallback($event)" pTooltip="Add Process">
+        <i class="pi pi-microchip"></i>
+      </p-button>
+    </ng-template>
+  </p-speeddial>
+</div>
+
 <p-dialog header="Agregar Recursos Multimedia" [draggable]="false" [(visible)]="isDialogVisible" [modal]="true" [style]="{ width: '85%', height: '85%' }">
   @if(dialogs.isAgentVisible) {
   <dc-agent-card-lists (onAction)="addAgentToFlow($event)" />

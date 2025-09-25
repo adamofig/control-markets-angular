@@ -4,7 +4,7 @@
     "envName": "DEV",
     "production": true,
     "authenticationRequired": true,
-    "backendNodeUrl": "https://back-control.polito.casa",
+    "backendNodeUrl": "http://home.lab:8121",
     "backendPythonUrl": "http://home.lab:8122",
     "mobile": {
       "appleAppId": "com.dc-template.app.dev",

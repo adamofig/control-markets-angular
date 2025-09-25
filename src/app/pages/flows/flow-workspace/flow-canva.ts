@@ -17,6 +17,7 @@ import { SourcesUploadsComponent } from '../canvas-components/sources-uploads/so
 import { FlowService } from '../flows.service';
 import { IAssetNodeData } from '../models/nodes.model';
 import { ComfyStatusComponent } from '../canvas-components/comfy-status/comfy-status';
+import { SpeedDialModule } from 'primeng/speeddial';
 
 @Component({
   templateUrl: './flow-canva.html',
@@ -34,6 +35,7 @@ import { ComfyStatusComponent } from '../canvas-components/comfy-status/comfy-st
     AssetsUploadsComponent,
     SourcesUploadsComponent,
     ComfyStatusComponent,
+    SpeedDialModule,
   ],
 })
 export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> implements OnInit {
@@ -42,6 +44,10 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
   protected override patchForm(entity: IAgentFlows): void {
     this.form.patchValue(entity);
   }
+
+  items: any[] = [];
+  resourceItems: any[] = [];
+  processItems: any[] = [];
 
   private flowOrchestrationService = inject(FlowOrchestrationService);
 
@@ -79,6 +85,42 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
       this.flow = await this.flowOrchestrationService.loadInitialFlow(this.flowId, this.executionId);
       this.flowName = this.flow?.name || '';
     }
+
+    this.resourceItems = [
+      {
+        icon: 'pi pi-user-plus',
+        label: 'Agent',
+        command: () => this.showDialog('isAgentVisible'),
+      },
+      {
+        icon: 'pi pi-plus-circle',
+        label: 'Asset',
+        command: () => this.showDialog('isAssetVisible'),
+      },
+      {
+        icon: 'pi pi-file-import',
+        label: 'Source',
+        command: () => this.showDialog('isSourceVisible'),
+      },
+    ];
+
+    this.processItems = [
+      {
+        icon: 'pi pi-video',
+        label: 'Video',
+        command: () => this.addVideoGenNode(),
+      },
+      {
+        icon: 'pi pi-microchip-ai',
+        label: 'Task',
+        command: () => this.showDialog('isTaskVisible'),
+      },
+      {
+        icon: 'pi pi-megaphone',
+        label: 'Audio',
+        command: () => this.addAudioTTSGenNode(),
+      },
+    ];
   }
 
   public showAgents() {
