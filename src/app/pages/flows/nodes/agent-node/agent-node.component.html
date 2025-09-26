@@ -1,3 +1,16 @@
+<div class="node-container" (dblclick)="openModal()">
+  <div class="node-card">
+    <!-- SOLO SI EL nodo es imagen. -->
+    <div class="image-background" [style.background-image]="'url(' + node()?.data?.nodeData?.assets?.image?.url + ')'">
+      <p-tag class="tag" [value]="jobExecutionState()?.status || '🦻'" severity="danger" />
+      <h4>{{ node()?.data?.nodeData?.name }}</h4>
+    </div>
+
+    <handle type="source" position="right" id="right" />
+  </div>
+</div>
+
+<!-- 
 <div
   class="custom-node"
   selectable
@@ -16,7 +29,6 @@
 
   <div class="footer">
     <p class="text-node" style="font-size: 8px">
-      <!-- {{ agentCard()?.conversationSettings?.model?.quality || 'No se sabe' }} -->
       ID Node: {{ node()?.id }}
       <br />
       ID Agent: {{ agentCard()?._id }}
@@ -26,4 +38,4 @@
 
   <handle type="source" position="right" />
   <handle type="target" position="left" />
-</div>
+</div> -->

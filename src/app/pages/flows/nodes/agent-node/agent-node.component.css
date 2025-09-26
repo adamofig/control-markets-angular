@@ -1,58 +1,32 @@
-:host {
-  display: block;
+
+.node-container {
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+.node-card{
+  border-radius: 15px;
+  border: 5px solid #f8d406;
+  box-shadow: 7px 7px 21px #90e924, -7px -7px 21px #ffffff;
+  animation: vanishAndAppear 3s infinite;
+  overflow: hidden;
 }
 
 
-.custom-node {
-  width: 120px;
-  height: 160px;
-  background: linear-gradient(to right, #00d2ff, #3a7bd5);
-  border: 2px solid rgb(255, 225, 0);
-  border-radius: 10%;
-  overflow: hidden;
+.image-background {
   background-size: cover;
   background-position: center;
+  height: 200px;
+  width: 120px;
+}
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 5px;
 
-  &_selected {
-    border: 2px solid gray;
+@keyframes vanishAndAppear {
+  0%, 100% {
+    box-shadow: 7px 7px 21px #24e92d, -7px -7px 21px #ffffff;
   }
-}
-
-.text-node {
-  color: white;
-  font-size: 12px;
-  text-align: center;
-  font-weight: bold;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-}
-.custom-node .hover-button {
-  display: none;
-  /* Add any other styling for the button here */
-}
-
-.custom-node:hover .hover-button {
-  display: block;
-}
-
-.header {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.spinner-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  50% {
+    box-shadow: 7px 7px 21px #a0c8d6, -7px -7px 21px #ffffff;
+  }
 }

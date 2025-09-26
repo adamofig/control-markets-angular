@@ -40,4 +40,8 @@ export class AssetsNodeComponent extends BaseFlowNode<CustomAssetsNode> {
     super.ngOnInit();
     console.log('assets-node', this.node()?.data?.nodeData);
   }
+
+  public openModal() {
+    alert('No hay detalles');
+  }
 }

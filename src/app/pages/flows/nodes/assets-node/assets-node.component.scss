@@ -1,55 +1,32 @@
 
-.image {
+.node-container {
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+.node-card{
+  border-radius: 15px;
+  border: 5px solid #20f503;
+  box-shadow: 7px 7px 21px #24e92d, -7px -7px 21px #ffffff;
+  animation: vanishAndAppear 3s infinite;
+  overflow: hidden;
+}
+
+
+.image-background {
   background-size: cover;
   background-position: center;
-  border: 5px solid #fff;
-  box-shadow: 7px 7px 21px #bdbdbd, -7px -7px 21px #ffffff;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  padding: 10px;
   height: 200px;
+  width: 120px;
 }
 
-.loading-border-container {
-  border-radius: 14px;
-  overflow: hidden;
-  padding: 7px;
-}
 
-.loading-border-container.in-progress::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300px; /* Larger gradient for a wider effect */
-  height: 300px; /* Larger gradient for a wider effect */
-  background: conic-gradient(transparent, #a099d8, #dfa2da, #402fb5, #cf30aa, transparent 70%);
-  animation: rotate 2s linear infinite;
-  transform: translate(-50%, -50%); /* Center the gradient */
-  z-index: 1;
-}
-
-.loading-border-container .content-wrapper {
-  border-radius: 10px;
-  overflow: hidden;
-  display: flex; /* Fix for image display */
-  width: 150px;
-  height: 200px;
-}
-
-.loading-border-container.failed {
-  box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.7);
-  border-radius: 14px;
-}
-
-.loading-border-container.failed .image {
-  border: 5px solid #ff0000;
-}
-
-@keyframes rotate {
-  100% {
-    transform: translate(-50%, -50%) rotate(1turn);
+@keyframes vanishAndAppear {
+  0%, 100% {
+    box-shadow: 7px 7px 21px #24e92d, -7px -7px 21px #ffffff;
+  }
+  50% {
+    box-shadow: 7px 7px 21px #a0c8d6, -7px -7px 21px #ffffff;
   }
 }

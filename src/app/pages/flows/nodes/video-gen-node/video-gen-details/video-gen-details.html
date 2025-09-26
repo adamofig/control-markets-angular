@@ -1,0 +1,10 @@
+<div>Detalles de video Gen</div>
+
+ <h4>Video Generation Node</h4>
+
+      <span>Prompt</span>
+      <textarea rows="2" style="width: 100%" pTextarea [(ngModel)]="prompt"></textarea>
+      @if(providerForm.value !== 'veo') {
+      <span>More options:</span>
+      <dc-comfy-video-options-request [form]="form"></dc-comfy-video-options-request>
+      }

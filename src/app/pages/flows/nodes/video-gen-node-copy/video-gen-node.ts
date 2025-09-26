@@ -16,8 +16,6 @@ import { GeneratedAssetsService } from '@dataclouder/ngx-vertex';
 import { NodeSearchesService } from '../../services/node-searches.service';
 import { FlowSignalNodeStateService } from '../../services/flow-signal-node-state.service';
 import { CounterComponent } from '../../../../components/counter/counter.component';
-import { DialogService } from 'primeng/dynamicdialog';
-import { VideoGenDetailsComponent } from './video-gen-details/video-gen-details';
 
 export interface CustomAssetsNode extends ComponentDynamicNode {
   nodeData: INodeVideoGenerationData;
@@ -46,7 +44,6 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
   private generatedAssetsService = inject(GeneratedAssetsService);
   private nodeSearchesService = inject(NodeSearchesService);
   private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
-  private dialogService = inject(DialogService);
 
   public fb = inject(FormBuilder);
 
@@ -118,17 +115,5 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
       this.form.setValue(this.node()?.data?.nodeData?.request || {});
     }
     this.providerForm.setValue(this.node()?.data?.nodeData?.provider || 'comfy');
-  }
-
-  openModal(): void {
-    this.dialogService.open(VideoGenDetailsComponent, {
-      header: 'Video Gen Node Details',
-      contentStyle: { overflow: 'auto' },
-      baseZIndex: 10000,
-      draggable: true,
-      closable: true,
-      data: this.node(),
-      width: '450px',
-    });
   }
 }

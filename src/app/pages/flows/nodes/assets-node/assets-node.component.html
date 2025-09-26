@@ -1,20 +1,23 @@
-<p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
+<div style="margin-bottom: 10px; display: flex; justify-content: space-between">
+  <button style="background-color: red; color: white" (click)="removeNode()"><span class="pi pi-user"></span></button>
+  <button style="background-color: red; color: white" (click)="removeNode()"><span class="pi pi-user"></span></button>
+  <button style="background-color: red; color: white" (click)="removeNode()"><span class="pi pi-user"></span></button>
+  <button style="background-color: red; color: white" (click)="removeNode()"><span class="pi pi-user"></span></button>
+</div>
 
-@if(node()?.data?.nodeData?.type === 'image') {
+<div class="node-container" (dblclick)="openModal()">
+  <div class="node-card">
+    <!-- SOLO SI EL nodo es imagen. -->
+    @if(node()?.data?.nodeData?.type === 'image') {
+    <div class="image-background" [style.background-image]="'url(' + node()?.data?.nodeData?.storage?.url + ')'">
+      <p-tag class="tag" [value]="jobExecutionState()?.status || '🦻'" severity="danger" />
+      <h4>{{ node()?.data?.nodeData?.name }}</h4>
+    </div>
+    } @if(node()?.data?.nodeData?.type === 'audio') {
+    <p-tag [value]="node()?.data?.nodeData?.name" />
+    <audio controls [src]="node()?.data?.nodeData?.storage?.url" width="150px" height="auto"></audio>
+    }
 
-<div
-  class="loading-border-container"
-  [class.in-progress]="jobExecutionState()?.status === 'in_progress'"
-  [class.failed]="jobExecutionState()?.status === 'failed'">
-  <div class="content-wrapper image" [style.background-image]="'url(' + node()?.data?.nodeData?.storage?.url + ')'">
-    <p-tag class="tag" [value]="jobExecutionState()?.status || '🦻'" severity="danger" />
+    <handle type="source" position="right" id="right" />
   </div>
 </div>
-} @if(node()?.data?.nodeData?.type === 'audio') {
-
-<p-tag [value]="node()?.data?.nodeData?.name" />
-
-<audio controls [src]="node()?.data?.nodeData?.storage?.url" width="150px" height="auto"></audio>
-}
-
-<handle type="source" position="right" id="right" />

@@ -1,27 +1,26 @@
-<div class="custom-node" selectable [class.custom-node_selected]="selected()" (dblclick)="openModal()">
-  <img class="card-background" [src]="backgroundImageUrl()" alt="Node background" />
-
-  <div class="card-content">
-    <p class="main-text">
-      @if (this.data()?.nodeData?.responseFormat === responseFormat.ARRAY) {
-      {{ this.data()?.nodeData?.result | json }}
-      } @else if (this.data()?.nodeData?.responseFormat === responseFormat.JSON) {
-      {{ this.data()?.nodeData?.result | json }}
-      } @else if (this.data()?.nodeData?.responseFormat === responseFormat.DEFAULT_CONTENT) {
-      {{
-        this.data()?.nodeData?.response?.content ||
-          this.data()?.nodeData?.result?.response ||
-          this.data()?.nodeData?.result?.description ||
-          'No response in format DEFAULT_CONTENT'
-      }}
-      } @else {
-      {{ this.data()?.nodeData?.response?.content }}
-      }
-      <!-- {{ outcomeJob?.result?.content || 'No response' }} -->
-    </p>
+<div class="node-container" (dblclick)="openModal()">
+  <div class="node-card">
+    <div class="image-background" [style.background-image]="'url(' + backgroundImageUrl() + ')'">
+      <p style="background: rgba(106, 101, 101, 0.883); height: 100%; width: 100%">
+        @if (this.data()?.nodeData?.responseFormat === responseFormat.ARRAY) {
+        {{ this.data()?.nodeData?.result | json }}
+        } @else if (this.data()?.nodeData?.responseFormat === responseFormat.JSON) {
+        {{ this.data()?.nodeData?.result | json }}
+        } @else if (this.data()?.nodeData?.responseFormat === responseFormat.DEFAULT_CONTENT) {
+        {{
+          this.data()?.nodeData?.response?.content ||
+            this.data()?.nodeData?.result?.response ||
+            this.data()?.nodeData?.result?.description ||
+            'No response in format DEFAULT_CONTENT'
+        }}
+        } @else {
+        {{ this.data()?.nodeData?.response?.content }}
+        }
+      </p>
+    </div>
   </div>
 
-  <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
+  <!-- <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" /> -->
 
   <!-- <img style="position: absolute; top: 0; left: 0" [src]="data()?.image" alt="" /> -->
 
