@@ -5,10 +5,14 @@
   border: 5px solid #fff;
   box-shadow: 7px 7px 21px #bdbdbd, -7px -7px 21px #ffffff;
   box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 10px;
+  height: 200px;
 }
 
 .loading-border-container {
-  position: relative;
   border-radius: 14px;
   overflow: hidden;
   padding: 7px;
@@ -28,12 +32,11 @@
 }
 
 .loading-border-container .content-wrapper {
-  position: relative;
-  z-index: 2;
-  background: #1e1e1e;
   border-radius: 10px;
   overflow: hidden;
   display: flex; /* Fix for image display */
+  width: 150px;
+  height: 200px;
 }
 
 .loading-border-container.failed {

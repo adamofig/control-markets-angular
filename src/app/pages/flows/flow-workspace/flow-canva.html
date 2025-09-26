@@ -5,16 +5,7 @@
     pInputText
     [(ngModel)]="flowName"
     pSize="small"
-    style="
-      background-color: transparent !important;
-
-      border-radius: 40px;
-      border: none;
-      outline: none;
-      font-size: 12px;
-      font-weight: bold;
-      width: 200px;
-    " />
+    style="background-color: transparent !important; border-radius: 40px; border: none; outline: none; font-size: 12px; font-weight: bold; width: 200px" />
 
   <p-button (click)="showDialog('isAgentVisible')" label="Agent" icon="pi pi-user-plus" [rounded]="true" severity="success" [outlined]="true" />
   <p-button (click)="showDialog('isAssetVisible')" label="Asset" icon="pi pi-plus-circle" [rounded]="true" severity="success" [outlined]="true" />
@@ -35,23 +26,12 @@
 
 <app-comfy-status style="position: absolute; bottom: 10px; left: 10px" />
 
-<vflow view="auto" [nodes]="flowDiagramStateService.nodes()" [edges]="flowDiagramStateService.edges()" [background]="backDots" (onConnect)="createEdge($event)">
-  <ng-template let-ctx nodeHtml>
-    <div class="custom-node" selectable [class.custom-node_selected]="ctx.selected()">
-      <img style="position: absolute; top: 0; left: 0" [src]="ctx.node.data().image" alt="" />
-      <p class="text-node">{{ ctx.node.data().text }}</p>
-
-      <handle type="source" position="top" id="a" />
-      <handle type="source" position="right" id="b" />
-      <handle type="source" position="bottom" id="c" />
-      <handle type="source" position="left" id="d" />
-    </div>
-  </ng-template>
-
-  <ng-template let-ctx edgeLabelHtml>
-    <p-button icon="pi pi-times" (click)="flowDiagramStateService.deleteEdge(ctx.edge)" [rounded]="true" [text]="true" severity="danger" />
-  </ng-template>
-</vflow>
+<vflow
+  view="auto"
+  [nodes]="flowDiagramStateService.nodes()"
+  [edges]="flowDiagramStateService.edges()"
+  [background]="backDots"
+  (onConnect)="createEdge($event)" />
 
 <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px">
   <!-- Show options to add agents Assets and Source -->

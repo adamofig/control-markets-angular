@@ -1,0 +1,21 @@
+.red-square {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-image: url('/assets/defaults/images/default_2_3.webp');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .red-square span {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+  }

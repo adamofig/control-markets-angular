@@ -18,6 +18,7 @@ import { FlowService } from '../flows.service';
 import { IAssetNodeData } from '../models/nodes.model';
 import { ComfyStatusComponent } from '../canvas-components/comfy-status/comfy-status';
 import { SpeedDialModule } from 'primeng/speeddial';
+import { RedSquareData, RedSquareNodeComponent } from '../nodes/test-node/test-node';
 
 @Component({
   templateUrl: './flow-canva.html',
@@ -85,6 +86,17 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
       this.flow = await this.flowOrchestrationService.loadInitialFlow(this.flowId, this.executionId);
       this.flowName = this.flow?.name || '';
     }
+
+    // this.flow?.nodes?.push({
+    //   id: '1',
+    //   point: { x: 100, y: 100 },
+    //   type: RedSquareNodeComponent,
+    //   data: {
+    //     redSquareText: 'Red',
+    //   } satisfies RedSquareData,
+    // });
+
+    // this.flowDiagramStateService.nodes.set(this.flow?.nodes || []);
 
     this.resourceItems = [
       {
