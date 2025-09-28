@@ -36,12 +36,15 @@ export class ComfyStatusComponent implements OnInit {
   }
 
   public async getStatus() {
-    this.status.set(
-      await this.httpCoreService.getHttp({
+    try {
+      const status = await this.httpCoreService.getHttp({
         host: 'http://localhost:3001',
         service: 'api/comfy-sdk/status',
-      })
-    );
+      });
+      this.status.set(status);
+    } catch (error) {
+      console.error('Not able to get status');
+    }
   }
 
   public httpCoreService = inject(HttpCoreService);

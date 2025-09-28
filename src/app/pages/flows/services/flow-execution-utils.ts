@@ -3,6 +3,7 @@ import { IFlowExecutionState, IJobExecutionState, ITaskExecutionState } from '..
 // import { Firestore, doc, docData, DocumentReference, getDoc } from '@angular/fire/firestore';
 import { DynamicNodeWithData, FlowDiagramStateService } from './flow-diagram-state.service';
 import { FlowExecutionStateService } from './flow-execution-state.service';
+import { NodeSearchesService } from './node-searches.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,7 @@ import { FlowExecutionStateService } from './flow-execution-state.service';
 export class FlowExecutionUtilsService {
   private flowDiagramStateService = inject(FlowDiagramStateService);
   private flowExecutionStateService = inject(FlowExecutionStateService);
+  private nodeSearchesService = inject(NodeSearchesService);
 
   public getAgentExecutionState(node: DynamicNodeWithData) {
     const agentCard = node.data?.agentCard;
@@ -19,7 +21,7 @@ export class FlowExecutionUtilsService {
     if (executionState) {
       const taskId: string = agentId;
 
-      const targetNodes = this.flowDiagramStateService.getOutputNodes(node.id);
+      const targetNodes = this.nodeSearchesService.getOutputNodes(node.id);
       const targetNodeIds = targetNodes.map(node => node.id);
 
       if (targetNodeIds.length > 0) {

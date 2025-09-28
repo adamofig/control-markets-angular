@@ -1,10 +1,11 @@
-import { inject, Directive, OnInit, OnDestroy, computed } from '@angular/core';
+import { inject, Directive, OnInit, OnDestroy, computed, signal } from '@angular/core';
 import { CustomNodeComponent } from 'ngx-vflow';
 import { FlowDiagramStateService } from '../services/flow-diagram-state.service';
 import { ComponentDynamicNode } from 'ngx-vflow';
 import { FlowComponentRefStateService } from '../services/flow-component-ref-state.service';
 import { FlowExecutionStateService } from '../services/flow-execution-state.service';
-import { IFlowExecutionState, IJobExecutionState, ITaskExecutionState } from '../models/flows.model';
+import { IFlowExecutionState, IJobExecutionState, ITaskExecutionState, StatusJob } from '../models/flows.model';
+import { NodeSearchesService } from '../services/node-searches.service';
 
 // Intrucciones del base Node
 // 1. El nodo prove la capaicidad de injectar la referencia a un estado global para encontrar rapidamente el estado y modificar sus propiedades
@@ -29,8 +30,11 @@ export abstract class BaseFlowNode<T extends ComponentDynamicNode> extends Custo
   public flowDiagramStateService = inject(FlowDiagramStateService);
   public flowComponentRefStateService = inject(FlowComponentRefStateService);
   public flowExecutionStateService = inject(FlowExecutionStateService);
+  public nodeSearchesService = inject(NodeSearchesService);
 
   public nodeCategory: 'process' | 'input' | 'output' = 'input';
+
+  public statusJob = signal<StatusJob>(StatusJob.COMPLETED);
 
   public taskExecutionState = computed(() => {
     const executionState: IFlowExecutionState | null = this.flowExecutionStateService.flowExecutionState();
@@ -52,7 +56,7 @@ export abstract class BaseFlowNode<T extends ComponentDynamicNode> extends Custo
         return null;
       }
 
-      const targetNodes = this.flowDiagramStateService.getOutputNodes(this.node().id);
+      const targetNodes = this.nodeSearchesService.getOutputNodes(this.node().id);
       if (targetNodes.length === 0) {
         return null;
       }
@@ -85,5 +89,19 @@ export abstract class BaseFlowNode<T extends ComponentDynamicNode> extends Custo
 
   removeNode(): void {
     this.flowDiagramStateService.removeNode(this.node().id);
+  }
+
+  handleToolbarEvents(event: string) {
+    switch (event) {
+      case 'delete':
+        this.removeNode();
+        break;
+      case 'details':
+        // this.openModal();
+        break;
+      case 'none':
+        // Do nothing
+        break;
+    }
   }
 }

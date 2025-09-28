@@ -1,16 +1,36 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal, Signal } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
-import { DynamicNode, Vflow } from 'ngx-vflow';
+import { Vflow } from 'ngx-vflow';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { JsonPipe } from '@angular/common';
 import { IAgentTask } from 'src/app/pages/tasks/models/tasks-models';
 import { TaskDetailsComponent } from 'src/app/pages/tasks/task-details/task-details.component';
 import { DynamicNodeWithData, FlowDiagramStateService } from 'src/app/pages/flows/services/flow-diagram-state.service';
-import { ComfyVideoOptionsRequestFormComponent } from "@dataclouder/ngx-vertex";
+import { ComfyVideoOptionsRequestFormComponent } from '@dataclouder/ngx-vertex';
+import { SelectModule } from 'primeng/select';
+import { StatusJob } from '../../../models/flows.model';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { TagModule } from 'primeng/tag';
+import { TextareaModule } from 'primeng/textarea';
+import { NodeSearchesService } from '../../../services/node-searches.service';
+import { FlowSignalNodeStateService } from '../../../services/flow-signal-node-state.service';
 
 @Component({
   selector: 'app-video-gen-details',
-  imports: [Vflow, DialogModule, JsonPipe, TaskDetailsComponent, ComfyVideoOptionsRequestFormComponent],
+  imports: [
+    Vflow,
+    DialogModule,
+    JsonPipe,
+    TaskDetailsComponent,
+    ComfyVideoOptionsRequestFormComponent,
+    SelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    TagModule,
+    TextareaModule,
+  ],
   templateUrl: './video-gen-details.html',
   styleUrl: './video-gen-details.css',
   standalone: true,
@@ -19,11 +39,36 @@ import { ComfyVideoOptionsRequestFormComponent } from "@dataclouder/ngx-vertex";
 export class VideoGenDetailsComponent implements OnInit {
   public dynamicDialogConfig = inject(DynamicDialogConfig);
   public flowDiagramStateService = inject(FlowDiagramStateService);
+  private nodeSearchesService = inject(NodeSearchesService);
+  private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
   public node!: any;
   public agentTask!: IAgentTask;
+  public prompt = 'Describe your idea';
+
+  public fb = inject(FormBuilder);
 
   public task: any | null = null;
   public connectedNodes!: DynamicNodeWithData[];
+
+  public statusJob = StatusJob;
+
+  public nodeCategory: 'process' | 'input' | 'output' = 'process';
+
+  public formValue = 'Éste es el valor';
+  public status = signal<'loading' | 'error' | 'success' | 'idle'>('idle');
+
+  public form = this.fb.group({
+    seconds: [2],
+    width: [300],
+    height: [576],
+  });
+
+  public providerForm = this.fb.control('comfy');
+
+  public providers = [
+    { label: 'Comfy', value: 'comfy' },
+    { label: 'Veo', value: 'veo' },
+  ];
 
   constructor() {
     this.node = this.dynamicDialogConfig.data;
@@ -31,8 +76,29 @@ export class VideoGenDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.connectedNodes = this.flowDiagramStateService.getInputNodes(this.node.id);
+    this.connectedNodes = this.nodeSearchesService.getInputNodes(this.node.id);
 
     console.log('inputs', this.connectedNodes);
+  }
+
+  public save(): void {
+    const prompt = this.prompt;
+    const provider = this.providerForm.value;
+    const request = this.form.value;
+
+    this.node.data.nodeData = {
+      prompt,
+      provider,
+      request,
+    };
+    console.log(this.node);
+
+    this.flowSignalNodeStateService.updateNodeData(this.node.id, this.node.data);
+    console.log(this.flowSignalNodeStateService.nodes());
+    // this.dynamicDialogConfig.close(this.node);
+  }
+
+  public runNode(): void {
+    // this.dynamicDialogConfig.close(this.node);
   }
 }

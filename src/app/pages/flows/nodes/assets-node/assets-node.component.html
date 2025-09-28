@@ -1,9 +1,4 @@
-<div style="margin-bottom: 10px; display: flex; justify-content: space-between">
-  <button style="background-color: red; color: white" (click)="removeNode()"><span class="pi pi-user"></span></button>
-  <button style="background-color: red; color: white" (click)="removeNode()"><span class="pi pi-user"></span></button>
-  <button style="background-color: red; color: white" (click)="removeNode()"><span class="pi pi-user"></span></button>
-  <button style="background-color: red; color: white" (click)="removeNode()"><span class="pi pi-user"></span></button>
-</div>
+<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"> </app-node-toolbar>
 
 <div class="node-container" (dblclick)="openModal()">
   <div class="node-card">

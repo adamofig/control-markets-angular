@@ -8,6 +8,7 @@ import { Tag } from 'primeng/tag';
 import { TagModule } from 'primeng/tag';
 import { StatusJob } from '../../models/flows.model';
 import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
+import { NodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 
 export interface CustomAssetsNode extends ComponentDynamicNode {
   nodeData: IAssetNodeData;
@@ -18,7 +19,7 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
   templateUrl: './assets-node.component.html',
   styleUrls: ['./assets-node.component.scss'],
   standalone: true,
-  imports: [HandleComponent, Button, Tag, TagModule],
+  imports: [HandleComponent, Button, Tag, TagModule, NodeToolbarComponent],
 })
 export class AssetsNodeComponent extends BaseFlowNode<CustomAssetsNode> {
   private toastService = inject(TOAST_ALERTS_TOKEN);

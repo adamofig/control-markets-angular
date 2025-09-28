@@ -5,10 +5,8 @@ import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
 import { IAgentTask } from '../../tasks/models/tasks-models'; // Corrected path
 import { JobService } from '../../jobs/outcome-jobs.service';
-import { FlowComponentRefStateService } from './flow-component-ref-state.service';
 import { IAssetNodeData } from '../models/nodes.model';
 import { IGeneratedAsset } from '@dataclouder/ngx-vertex';
-import { NodeSearchesService } from './node-searches.service';
 
 // NOt able to set a type for data yet.
 export interface NodeData {
@@ -24,9 +22,7 @@ export type DynamicNodeWithData = DynamicNode & { data?: any; category: 'input' 
 })
 export class FlowDiagramStateService {
   private jobService = inject(JobService);
-  private flowComponentRefStateService = inject(FlowComponentRefStateService);
   private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
-  private nodeSearchesService = inject(NodeSearchesService);
 
   public get nodes() {
     return this.flowSignalNodeStateService.nodes;
@@ -40,20 +36,8 @@ export class FlowDiagramStateService {
     return this.flowSignalNodeStateService.flow();
   }
 
-  public getInputs(nodeId: string): string[] {
-    return this.nodeSearchesService.getInputs(nodeId);
-  }
-
   public addNodeToCanvas(node: DynamicNodeWithData) {
     this.flowSignalNodeStateService.addNodeToCanvas(node);
-  }
-
-  public getInputNodes(nodeId: string): DynamicNodeWithData[] {
-    return this.nodeSearchesService.getInputNodes(nodeId);
-  }
-
-  public getOutputNodes(nodeId: string): DynamicNodeWithData[] {
-    return this.nodeSearchesService.getOutputNodes(nodeId);
   }
 
   public setFlow(flow: IAgentFlows) {

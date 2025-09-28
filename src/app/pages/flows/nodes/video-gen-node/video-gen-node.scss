@@ -5,14 +5,13 @@
   padding: 5px;
 }
 
-.node-card{
+.node-card {
   border-radius: 15px;
   border: 5px solid #f57403;
-  box-shadow: 7px 7px 21px #f05117, -7px -7px 21px #ffffff;
-  animation: vanishAndAppear 3s infinite;
   overflow: hidden;
-}
+  box-shadow: 7px 7px 21px #f05117, -7px -7px 21px #ffffff;
 
+}
 
 .image-background {
   background-size: cover;
@@ -21,12 +20,36 @@
   width: 150px;
 }
 
+@mixin status-animation($color) {
+  animation: status-animation-#{$color} 3s infinite;
 
-@keyframes vanishAndAppear {
-  0%, 100% {
-    box-shadow: 7px 7px 21px #249ae9, -7px -7px 21px #ffffff;
+  @keyframes status-animation-#{$color} {
+    0%,
+    100% {
+      box-shadow: 7px 7px 21px #{$color}, -7px -7px 21px #ffffff;
+    }
+    50% {
+      box-shadow: 7px 7px 21px lighten($color, 20%), -7px -7px 21px #ffffff;
+    }
   }
-  50% {
-    box-shadow: 7px 7px 21px #a0c8d6, -7px -7px 21px #ffffff;
-  }
+}
+
+.status-default {
+  @include status-animation(#f57403); // Default orange
+}
+
+.status-pending {
+  @include status-animation(yellow);
+}
+
+.status-in_progress {
+  @include status-animation(blue);
+}
+
+.status-completed {
+  @include status-animation(green);
+}
+
+.status-failed {
+  @include status-animation(red);
 }

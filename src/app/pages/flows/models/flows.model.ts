@@ -19,6 +19,7 @@ export interface MessageLog {
 }
 
 export enum StatusJob {
+  DEFAULT = 'default',
   PENDING = 'pending',
   IN_PROGRESS = 'in_progress',
   COMPLETED = 'completed',

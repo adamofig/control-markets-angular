@@ -1,23 +1,24 @@
-import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { HandleComponent } from 'ngx-vflow';
 import { ComponentDynamicNode } from 'ngx-vflow';
 import { StatusJob } from '../../models/flows.model';
-import { ProgressSpinner } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
 import { FlowOrchestrationService } from '../../services/flow-orchestration.service';
 import { BaseFlowNode } from '../base-flow-node';
 import { INodeVideoGenerationData } from '../../models/nodes.model';
-import { TagModule, Tag } from 'primeng/tag';
+import { TagModule } from 'primeng/tag';
 import { TextareaModule } from 'primeng/textarea';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ComfyVideoOptionsRequestFormComponent, IAssetsGeneration, IGeneratedAsset } from '@dataclouder/ngx-vertex';
+import { IAssetsGeneration, IGeneratedAsset } from '@dataclouder/ngx-vertex';
 import { SelectModule } from 'primeng/select';
 import { GeneratedAssetsService } from '@dataclouder/ngx-vertex';
-import { NodeSearchesService } from '../../services/node-searches.service';
 import { FlowSignalNodeStateService } from '../../services/flow-signal-node-state.service';
 import { CounterComponent } from '../../../../components/counter/counter.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { VideoGenDetailsComponent } from './video-gen-details/video-gen-details';
+import { NodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
+import { ActionsToolbarComponent } from '../actions-toolbar/actions-toolbar.component';
 
 export interface CustomAssetsNode extends ComponentDynamicNode {
   nodeData: INodeVideoGenerationData;
@@ -29,38 +30,32 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
   styleUrls: ['./video-gen-node.scss'],
   standalone: true,
   imports: [
+    CommonModule,
     HandleComponent,
-    ProgressSpinner,
     ButtonModule,
     TagModule,
     TextareaModule,
     FormsModule,
-    ComfyVideoOptionsRequestFormComponent,
     SelectModule,
     ReactiveFormsModule,
     CounterComponent,
+    NodeToolbarComponent,
+    ActionsToolbarComponent,
   ],
 })
 export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implements OnInit, OnDestroy {
   public flowOrchestrationService = inject(FlowOrchestrationService);
   private generatedAssetsService = inject(GeneratedAssetsService);
-  private nodeSearchesService = inject(NodeSearchesService);
   private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
   private dialogService = inject(DialogService);
 
   public fb = inject(FormBuilder);
 
-  public statusJob = StatusJob;
   public override nodeCategory: 'process' | 'input' | 'output' = 'process';
 
   public formValue = 'Éste es el valor';
-  public status = signal<'loading' | 'error' | 'success' | 'idle'>('idle');
 
-  public form = this.fb.group({
-    seconds: [2],
-    width: [300],
-    height: [576],
-  });
+  public form = this.fb.group({ seconds: [2], width: [300], height: [576] });
 
   public providerForm = this.fb.control('comfy');
 
@@ -77,7 +72,7 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
   }
 
   async directEndPoint(): Promise<void> {
-    this.status.set('loading');
+    this.statusJob.set(StatusJob.IN_PROGRESS);
 
     try {
       // this.flowExecutionStateService.getExecutionState()?.jobId
@@ -104,9 +99,9 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
       const assetGenerated: any = await this.generatedAssetsService.generateVideoFromAsset(asset.id);
 
       this.flowSignalNodeStateService.createConnectedAssetGeneratedNode(assetGenerated, inputNodes[0].id, this.node().id);
-      this.status.set('success');
+      this.statusJob.set(StatusJob.COMPLETED);
     } catch (error) {
-      this.status.set('error');
+      this.statusJob.set(StatusJob.FAILED);
       console.error(error);
     }
   }
@@ -118,6 +113,8 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
       this.form.setValue(this.node()?.data?.nodeData?.request || {});
     }
     this.providerForm.setValue(this.node()?.data?.nodeData?.provider || 'comfy');
+
+    this.statusJob.set(StatusJob.IN_PROGRESS);
   }
 
   openModal(): void {
@@ -130,5 +127,15 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
       data: this.node(),
       width: '450px',
     });
+  }
+  handleActionsToolbarEvents(event: 'runNode' | 'runEndPoint'): void {
+    switch (event) {
+      case 'runNode':
+        this.runNode();
+        break;
+      case 'runEndPoint':
+        this.directEndPoint();
+        break;
+    }
   }
 }

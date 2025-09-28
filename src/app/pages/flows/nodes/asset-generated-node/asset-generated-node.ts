@@ -27,23 +27,21 @@ export class AssetGeneratedNodeComponent extends BaseFlowNode<CustomAssetGenerat
 
   public generatedAsset: IGeneratedAsset | null = null;
   public responseFormat = ResponseFormat;
-  public backgroundImageUrl: string;
+  public backgroundImageUrl: string = '';
   public videoUrl: string = '';
 
-  @ViewChild('dialog') dialog!: ViewContainerRef;
+  // @ViewChild('dialog') dialog!: ViewContainerRef;
 
-  constructor() {
-    super();
-    this.backgroundImageUrl = `url('assets/defaults/images/default_2_3.webp')`;
-    effect(() => {
-      this.generatedAsset = this.data()?.nodeData || null;
-      if (this.generatedAsset) {
-        this.videoUrl = this.generatedAsset?.result?.url;
-        // this.backgroundImageUrl = imageUrl ? `url('${imageUrl}')` : `url('assets/defaults/images/default_2_3.webp')`;
-        // console.log('generatedAsset', this.generatedAsset.result);
-      }
-    });
-  }
+  // constructor() {
+  //   super();
+  //   this.backgroundImageUrl = `url('assets/defaults/images/default_2_3.webp')`;
+  //   effect(() => {
+  //     this.generatedAsset = this.data()?.nodeData || null;
+  //     if (this.generatedAsset) {
+  //       this.videoUrl = this.generatedAsset?.result?.url;
+  //     }
+  //   });
+  // }
 
   public isDialogVisible = false;
 

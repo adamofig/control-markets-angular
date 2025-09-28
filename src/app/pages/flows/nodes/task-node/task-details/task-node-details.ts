@@ -6,6 +6,7 @@ import { JsonPipe } from '@angular/common';
 import { IAgentTask } from 'src/app/pages/tasks/models/tasks-models';
 import { TaskDetailsComponent } from 'src/app/pages/tasks/task-details/task-details.component';
 import { DynamicNodeWithData, FlowDiagramStateService } from 'src/app/pages/flows/services/flow-diagram-state.service';
+import { NodeSearchesService } from '../../../services/node-searches.service';
 
 @Component({
   selector: 'app-task-node-details',
@@ -18,6 +19,7 @@ import { DynamicNodeWithData, FlowDiagramStateService } from 'src/app/pages/flow
 export class TaskNodeDetailsComponent implements OnInit {
   public dynamicDialogConfig = inject(DynamicDialogConfig);
   public flowDiagramStateService = inject(FlowDiagramStateService);
+  public nodeSearchesService = inject(NodeSearchesService);
   public node!: any;
   public agentTask!: IAgentTask;
 
@@ -30,7 +32,7 @@ export class TaskNodeDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.connectedNodes = this.flowDiagramStateService.getInputNodes(this.node.id);
+    this.connectedNodes = this.nodeSearchesService.getInputNodes(this.node.id);
 
     console.log('inputs', this.connectedNodes);
   }

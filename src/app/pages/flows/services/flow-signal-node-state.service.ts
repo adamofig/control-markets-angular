@@ -199,19 +199,21 @@ export class FlowSignalNodeStateService {
 
     // Si esto ocurre signfica que Input y Output es de tipo Process por lo que generan un nodo typo Output Node
     //_______ __________ ____________
-    if ((inputNode?.type as any)?.name === NodeType.AgentNodeComponent) {
-      if ((outputNode?.type as any)?.name === NodeType.TaskNodeComponent) {
+    if (inputNode?.component === NodeType.AgentNodeComponent) {
+      if (outputNode?.component === NodeType.TaskNodeComponent) {
         this.createConnectionInputToProcessNode(inputNode!, outputNode!);
+
         // const outcomeJobEmpty: Partial<IAgentOutcomeJob> = {
         //   agentCard: inputNode?.data?.nodeData,
         //   task: outputNode?.data?.nodeData,
         // };
+
         // this.createConnectedOutcomeNode(outcomeJobEmpty as IAgentOutcomeJob);
       }
     }
 
-    if ((inputNode?.type as any)?.name === NodeType.AssetsNodeComponent) {
-      if ((outputNode?.type as any)?.name === NodeType.VideoGenNodeComponent) {
+    if (inputNode?.component === NodeType.AssetsNodeComponent) {
+      if (outputNode?.component === NodeType.VideoGenNodeComponent) {
         const generatedAssetEmpty: Partial<IGeneratedAsset> = {};
         this.createConnectedAssetGeneratedNode(generatedAssetEmpty as IGeneratedAsset, inputNode?.id!, outputNode?.id!);
       }

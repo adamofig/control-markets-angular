@@ -1,5 +1,4 @@
 import { Injectable, Type, inject, signal } from '@angular/core';
-import { DynamicNode } from 'ngx-vflow';
 import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
 import { DynamicNodeWithData, FlowDiagramStateService } from './flow-diagram-state.service';
 import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';

@@ -1,3 +1,5 @@
+<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"> </app-node-toolbar>
+
 <div class="node-container" (dblclick)="openModal()">
   <div class="node-card">
     <!-- SOLO SI EL nodo es imagen. -->
@@ -9,33 +11,3 @@
     <handle type="source" position="right" id="right" />
   </div>
 </div>
-
-<!-- 
-<div
-  class="custom-node"
-  selectable
-  [class.custom-node_selected]="selected()"
-  (dblclick)="openModal()"
-  [style.background-image]="'url(' + data()?.nodeData?.assets?.image?.url + ')'">
-  <div class="header">
-    <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
-  </div>
-
-  @if(jobExecutionState()?.status === statusJob.IN_PROGRESS) {
-  <span class="spinner-container">
-    <p-progress-spinner strokeWidth="10" fill="transparent" animationDuration=".6s" [style]="{ width: '50px', height: '50px' }" />
-  </span>
-  }
-
-  <div class="footer">
-    <p class="text-node" style="font-size: 8px">
-      ID Node: {{ node()?.id }}
-      <br />
-      ID Agent: {{ agentCard()?._id }}
-    </p>
-    <p-tag class="tag" [value]="jobExecutionState()?.status || '🦻'" severity="danger" />
-  </div>
-
-  <handle type="source" position="right" />
-  <handle type="target" position="left" />
-</div> -->
