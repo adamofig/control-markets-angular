@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnDestroy, SimpleChanges, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { StatusJob } from 'src/app/pages/flows/models/flows.model';
 
 @Component({
   selector: 'app-counter',
@@ -9,15 +10,16 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
 })
 export class CounterComponent implements OnChanges, OnDestroy {
-  @Input() status: 'loading' | 'error' | 'success' | 'idle' = 'idle';
+  @Input() status: StatusJob = StatusJob.DEFAULT;
 
   public elapsedSeconds = signal(0);
+  public StatusJob = StatusJob;
   private timer: any;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['status']) {
       const newStatus = changes['status'].currentValue;
-      if (newStatus === 'loading') {
+      if (newStatus === StatusJob.IN_PROGRESS) {
         this.startTimer();
       } else {
         this.stopTimer();

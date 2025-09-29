@@ -237,7 +237,7 @@ export class FlowSignalNodeStateService {
         },
         edgeLabels: {
           start: {
-            type: 'html-template',
+            text: 'Center Only',
             data: { color: '#122c26' },
           },
         },

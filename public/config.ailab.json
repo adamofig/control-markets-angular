@@ -1,13 +1,12 @@
 {
   "projectName": "Control Markets",
-  "version": "0.0.13",
+  "version": "0.0.39",
   "envName": "DEV",
   "production": false,
   "authenticationRequired": true,
   "backendNodeUrl": "http://ai.lab:8121",
   "backendPythonUrl": "http://ai.lab:8122",
-  "mobile": {
-  },
+  "mobile": {},
   "firebase": {
     "apiKey": "AIzaSyAecVnUj1-IjKGDvBarhufKAfO-Y-RyTXw",
     "authDomain": "golden-ad-dev.firebaseapp.com",

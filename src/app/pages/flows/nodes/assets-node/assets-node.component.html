@@ -1,6 +1,8 @@
+@if (selected()) {
 <app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"> </app-node-toolbar>
+}
 
-<div class="node-container" (dblclick)="openModal()">
+<div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
   <div class="node-card" [ngClass]="'status-' + (statusJob() || 'default')">
     <!-- SOLO SI EL nodo es imagen. -->
     @if(node()?.data?.nodeData?.type === 'image') {

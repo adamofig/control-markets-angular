@@ -1,4 +1,9 @@
 <div class="toolbar-container">
-  <p-button (click)="onRunNode()" icon="pi pi-play" [rounded]="true" [text]="true" severity="info" pTooltip="Run Node" />
-  <p-button (click)="onRunEndPoint()" icon="pi pi-circle" [rounded]="true" [text]="true" severity="info" pTooltip="Direct Endpoint" />
+  <button class="btn-round" (click)="onRunNode()">
+    <span class="pi pi-play"></span>
+  </button>
+  <button class="btn-round" (click)="onRunEndPoint()">
+    <span class="pi pi-circle"></span>
+  </button>
+  <app-counter [status]="taskExecutionState?.status || statusJob" />
 </div>

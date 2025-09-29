@@ -1,11 +1,21 @@
+span {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+}
+
 .loading {
-  color: rgb(52, 7, 199);
+  background-color: rgba(52, 7, 199, 0.5);
 }
 
 .success {
-  color: green;
+  background-color: rgba(0, 128, 0, 0.5);
 }
 
 .error {
-  color: red;
+  background-color: rgba(255, 0, 0, 0.5);
 }

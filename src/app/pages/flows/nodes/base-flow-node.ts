@@ -91,6 +91,10 @@ export abstract class BaseFlowNode<T extends ComponentDynamicNode> extends Custo
     this.flowDiagramStateService.removeNode(this.node().id);
   }
 
+  selectNode(): void {
+    this.selected.set(true);
+  }
+
   handleToolbarEvents(event: string) {
     switch (event) {
       case 'delete':

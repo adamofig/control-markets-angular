@@ -1,8 +1,8 @@
 <span
   [ngClass]="{
-    loading: status === 'loading',
-    success: status === 'success',
-    error: status === 'error'
+    loading: status === StatusJob.IN_PROGRESS,
+    success: status === StatusJob.COMPLETED,
+    error: status === StatusJob.FAILED
   }">
   {{ elapsedSeconds() }}s
 </span>

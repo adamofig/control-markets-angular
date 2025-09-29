@@ -55,20 +55,6 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
 
   public override nodeCategory: 'process' | 'input' | 'output' = 'process';
 
-  public formValue = 'Éste es el valor';
-
-  public form = this.fb.group({ seconds: [2], width: [300], height: [576] });
-
-  public providerForm = this.fb.control('comfy');
-
-  public providers = [
-    { label: 'Comfy', value: 'comfy' },
-    { label: 'Veo', value: 'veo' },
-  ];
-
-  // public prompt = this.node()?.data?.nodeData?.prompt || 'Describe your idea';
-  public prompt = 'Describe your idea';
-
   runNode(): void {
     this.flowOrchestrationService.runNode(this.flowDiagramStateService.getFlow()?.id!, this.node().id);
   }
@@ -94,10 +80,10 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
       }
 
       const genAssetObj: Partial<IGeneratedAsset> = {
-        prompt: this.prompt,
-        request: this.form.value,
+        prompt: this.node()?.data?.nodeData?.prompt,
+        request: this.node()?.data?.nodeData?.request,
         assets: assets as unknown as IAssetsGeneration,
-        provider: 'comfy',
+        provider: this.node()?.data?.nodeData?.provider as 'comfy' | 'vertex',
       };
 
       const asset = await this.generatedAssetsService.createOrUpdate(genAssetObj);
@@ -114,16 +100,11 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
 
   override ngOnInit(): void {
     super.ngOnInit();
-    this.prompt = this.node()?.data?.nodeData?.prompt || 'Describe your idea';
-    if (this.node()?.data?.nodeData?.request) {
-      this.form.setValue(this.node()?.data?.nodeData?.request || {});
-    }
-    this.providerForm.setValue(this.node()?.data?.nodeData?.provider || 'comfy');
-
-    this.statusJob.set(StatusJob.IN_PROGRESS);
   }
 
   openModal(): void {
+    console.log(this.selected());
+    debugger;
     this.dialogService.open(VideoGenDetailsComponent, {
       header: 'Video Gen Node Details',
       contentStyle: { overflow: 'auto' },

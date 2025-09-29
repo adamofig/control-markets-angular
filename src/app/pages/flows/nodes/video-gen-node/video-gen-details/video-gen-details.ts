@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal, Signal } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { Vflow } from 'ngx-vflow';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { JsonPipe } from '@angular/common';
 import { IAgentTask } from 'src/app/pages/tasks/models/tasks-models';
 import { TaskDetailsComponent } from 'src/app/pages/tasks/task-details/task-details.component';
@@ -38,6 +38,7 @@ import { FlowSignalNodeStateService } from '../../../services/flow-signal-node-s
 })
 export class VideoGenDetailsComponent implements OnInit {
   public dynamicDialogConfig = inject(DynamicDialogConfig);
+  public dynamicDialogRef = inject(DynamicDialogRef);
   public flowDiagramStateService = inject(FlowDiagramStateService);
   private nodeSearchesService = inject(NodeSearchesService);
   private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
@@ -55,7 +56,6 @@ export class VideoGenDetailsComponent implements OnInit {
   public nodeCategory: 'process' | 'input' | 'output' = 'process';
 
   public formValue = 'Éste es el valor';
-  public status = signal<'loading' | 'error' | 'success' | 'idle'>('idle');
 
   public form = this.fb.group({
     seconds: [2],
@@ -77,8 +77,11 @@ export class VideoGenDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.connectedNodes = this.nodeSearchesService.getInputNodes(this.node.id);
-
-    console.log('inputs', this.connectedNodes);
+    if (this.node.data.nodeData) {
+      this.prompt = this.node.data.nodeData.prompt;
+      this.providerForm.setValue(this.node.data.nodeData.provider);
+      this.form.setValue(this.node.data.nodeData.request);
+    }
   }
 
   public save(): void {
@@ -95,10 +98,6 @@ export class VideoGenDetailsComponent implements OnInit {
 
     this.flowSignalNodeStateService.updateNodeData(this.node.id, this.node.data);
     console.log(this.flowSignalNodeStateService.nodes());
-    // this.dynamicDialogConfig.close(this.node);
-  }
-
-  public runNode(): void {
-    // this.dynamicDialogConfig.close(this.node);
+    this.dynamicDialogRef.close();
   }
 }

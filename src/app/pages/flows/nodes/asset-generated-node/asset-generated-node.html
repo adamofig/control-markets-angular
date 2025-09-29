@@ -1,23 +1,8 @@
-<!-- <div class="custom-node" (dblclick)="openModal()">
-  <div class="card-content">
-    <p class="main-text"></p>
-  </div>
-
-  <div style="position: absolute; top: 0; right: 0; display: flex">
-    <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
-    <p-button (click)="refreshNode()" class="hover-button" icon="pi pi-refresh" [rounded]="true" [text]="true" severity="secondary" />
-    <p-button (click)="openModal()" class="hover-button" icon="pi pi-eye" [rounded]="true" [text]="true" severity="info" />
-  </div>
-
-  <video controls [src]="videoUrl()" width="100%" height="auto" autoplay loop [muted]="'muted'"></video>
-
-  <handle type="target" position="left" id="b" />
-  <handle type="source" position="right" id="b" />
-</div> -->
-
+@if (selected()) {
 <app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"> </app-node-toolbar>
+}
 
-<div class="node-container" (dblclick)="openModal()">
+<div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
   <div class="node-card" [ngClass]="'status-' + (statusJob() || 'default')">
     <div class="image-background" alt="">
       <video controls [src]="videoUrl()" width="100%" height="auto" autoplay loop [muted]="'muted'"></video>
