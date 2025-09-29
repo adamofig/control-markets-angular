@@ -1,13 +1,16 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef, effect, inject, signal } from '@angular/core';
 import { ComponentDynamicNode, Vflow } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AssetGeneratedDetailsComponent } from './asset-generated-details/asset-generated-details';
 import { ResponseFormat } from 'src/app/pages/jobs/models/jobs.model';
 import { ButtonModule } from 'primeng/button';
-import { JsonPipe } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { IGeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-vertex';
 import { BaseFlowNode } from '../base-flow-node';
+import { ActionsToolbarComponent } from '../actions-toolbar/actions-toolbar.component';
+import { NodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
+import { TagModule } from 'primeng/tag';
 
 export interface CustomAssetGeneratedNode extends ComponentDynamicNode {
   nodeData: IGeneratedAsset | null;
@@ -15,9 +18,9 @@ export interface CustomAssetGeneratedNode extends ComponentDynamicNode {
 
 @Component({
   selector: 'app-outcome-node',
-  imports: [Vflow, DialogModule, ButtonModule, JsonPipe],
+  imports: [Vflow, DialogModule, ButtonModule, JsonPipe, NodeToolbarComponent, ActionsToolbarComponent, CommonModule, TagModule],
   templateUrl: './asset-generated-node.html',
-  styleUrl: './asset-generated-node.css',
+  styleUrl: './asset-generated-node.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
@@ -28,20 +31,20 @@ export class AssetGeneratedNodeComponent extends BaseFlowNode<CustomAssetGenerat
   public generatedAsset: IGeneratedAsset | null = null;
   public responseFormat = ResponseFormat;
   public backgroundImageUrl: string = '';
-  public videoUrl: string = '';
+  public videoUrl = signal('');
 
   // @ViewChild('dialog') dialog!: ViewContainerRef;
 
-  // constructor() {
-  //   super();
-  //   this.backgroundImageUrl = `url('assets/defaults/images/default_2_3.webp')`;
-  //   effect(() => {
-  //     this.generatedAsset = this.data()?.nodeData || null;
-  //     if (this.generatedAsset) {
-  //       this.videoUrl = this.generatedAsset?.result?.url;
-  //     }
-  //   });
-  // }
+  constructor() {
+    super();
+    this.backgroundImageUrl = `url('assets/defaults/images/default_2_3.webp')`;
+    effect(() => {
+      this.generatedAsset = this.data()?.nodeData || null;
+      if (this.generatedAsset) {
+        this.videoUrl.set(this.generatedAsset?.result?.url);
+      }
+    });
+  }
 
   public isDialogVisible = false;
 

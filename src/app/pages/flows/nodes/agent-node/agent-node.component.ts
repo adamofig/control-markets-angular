@@ -11,6 +11,7 @@ import { TagModule } from 'primeng/tag';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FlowExecutionUtilsService } from '../../services/flow-execution-utils';
 import { BaseFlowNode } from '../base-flow-node';
+import { CommonModule } from '@angular/common';
 
 export interface CustomAgentNode extends ComponentDynamicNode {
   nodeData: IAgentCard;
@@ -18,9 +19,9 @@ export interface CustomAgentNode extends ComponentDynamicNode {
 
 @Component({
   selector: 'app-agent-node',
-  imports: [Vflow, ButtonModule, TagModule, ProgressSpinnerModule, NodeToolbarComponent],
+  imports: [Vflow, ButtonModule, TagModule, ProgressSpinnerModule, NodeToolbarComponent, CommonModule],
   templateUrl: './agent-node.component.html',
-  styleUrl: './agent-node.component.css',
+  styleUrl: './agent-node.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements OnInit {
@@ -40,6 +41,7 @@ export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements
 
   override ngOnInit(): void {
     super.ngOnInit();
+    this.statusJob.set(StatusJob.IN_PROGRESS);
   }
 
   openModal(): void {

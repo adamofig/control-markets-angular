@@ -19,6 +19,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { VideoGenDetailsComponent } from './video-gen-details/video-gen-details';
 import { NodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 import { ActionsToolbarComponent } from '../actions-toolbar/actions-toolbar.component';
+import { ToastAlertService } from 'src/app/services/toast.service';
 
 export interface CustomAssetsNode extends ComponentDynamicNode {
   nodeData: INodeVideoGenerationData;
@@ -48,6 +49,7 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
   private generatedAssetsService = inject(GeneratedAssetsService);
   private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
   private dialogService = inject(DialogService);
+  private toastAlertService = inject(ToastAlertService);
 
   public fb = inject(FormBuilder);
 
@@ -85,6 +87,10 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
           assets.firstFrame = inputNode.data.nodeData.storage;
           break;
         }
+      }
+      if (assets.firstFrame === null) {
+        this.toastAlertService.warn({ title: 'Se requiere connectar una imagen', subtitle: 'Intenta cargar una imagen primero. ' });
+        return;
       }
 
       const genAssetObj: Partial<IGeneratedAsset> = {
