@@ -87,17 +87,6 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
       this.flowName = this.flow?.name || '';
     }
 
-    // this.flow?.nodes?.push({
-    //   id: '1',
-    //   point: { x: 100, y: 100 },
-    //   type: RedSquareNodeComponent,
-    //   data: {
-    //     redSquareText: 'Red',
-    //   } satisfies RedSquareData,
-    // });
-
-    // this.flowDiagramStateService.nodes.set(this.flow?.nodes || []);
-
     this.resourceItems = [
       {
         icon: 'pi pi-user-plus',

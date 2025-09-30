@@ -3,12 +3,44 @@ export interface AuditDate {
   updatedAt?: string;
 }
 
+export enum NodeCategory {
+  INPUT = 'input',
+  PROCESS = 'process',
+  OUTPUT = 'output',
+}
+
+export interface IAgentFlowsMetadata {
+  totalNodes?: number;
+  totalEdges?: number;
+  inputNodes?: number;
+  outputNodes?: number;
+  processNodes?: number;
+  urlImages?: string[];
+}
+
+export interface IEdgesData {
+  id: string;
+  source: string;
+  target: string;
+  markets?: string[];
+  edgeLabels?: string[];
+}
+
+export interface INodeData {
+  id: string;
+  point: { x: number; y: number };
+  type: string; // not string but is the serialization of the class, use component to rely on the component.
+  category: NodeCategory;
+  component: NodeType;
+  data: any;
+}
 export interface IAgentFlows extends AuditDate {
   _id?: string;
   id: string;
   name?: string;
-  nodes?: any[];
-  edges?: any[];
+  nodes?: INodeData[];
+  edges?: IEdgesData[];
+  metadata?: IAgentFlowsMetadata;
 }
 
 export interface MessageLog {

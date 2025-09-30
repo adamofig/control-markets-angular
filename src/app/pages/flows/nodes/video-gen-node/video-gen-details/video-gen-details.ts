@@ -8,7 +8,7 @@ import { TaskDetailsComponent } from 'src/app/pages/tasks/task-details/task-deta
 import { DynamicNodeWithData, FlowDiagramStateService } from 'src/app/pages/flows/services/flow-diagram-state.service';
 import { ComfyVideoOptionsRequestFormComponent } from '@dataclouder/ngx-vertex';
 import { SelectModule } from 'primeng/select';
-import { StatusJob } from '../../../models/flows.model';
+import { NodeCategory, StatusJob } from '../../../models/flows.model';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
@@ -53,7 +53,7 @@ export class VideoGenDetailsComponent implements OnInit {
 
   public statusJob = StatusJob;
 
-  public nodeCategory: 'process' | 'input' | 'output' = 'process';
+  public nodeCategory: NodeCategory = NodeCategory.PROCESS;
 
   public formValue = 'Éste es el valor';
 
@@ -72,12 +72,12 @@ export class VideoGenDetailsComponent implements OnInit {
 
   constructor() {
     this.node = this.dynamicDialogConfig.data;
-    this.agentTask = this.node.data.agentTask;
+    this.agentTask = this.node?.data?.agentTask;
   }
 
   ngOnInit(): void {
-    this.connectedNodes = this.nodeSearchesService.getInputNodes(this.node.id);
-    if (this.node.data.nodeData) {
+    this.connectedNodes = this.nodeSearchesService.getInputNodes(this.node?.id);
+    if (this.node?.data?.nodeData) {
       this.prompt = this.node.data.nodeData.prompt;
       this.providerForm.setValue(this.node.data.nodeData.provider);
       this.form.setValue(this.node.data.nodeData.request);
@@ -89,11 +89,21 @@ export class VideoGenDetailsComponent implements OnInit {
     const provider = this.providerForm.value;
     const request = this.form.value;
 
-    this.node.data.nodeData = {
-      prompt,
-      provider,
-      request,
-    };
+    if (this.node?.data?.nodeData) {
+      this.node.data.nodeData = {
+        prompt,
+        provider,
+        request,
+      };
+    } else {
+      this.node.data = {
+        nodeData: {
+          prompt,
+          provider,
+          request,
+        },
+      };
+    }
     console.log(this.node);
 
     this.flowSignalNodeStateService.updateNodeData(this.node.id, this.node.data);

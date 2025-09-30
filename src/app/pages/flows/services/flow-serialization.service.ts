@@ -64,17 +64,6 @@ export class FlowSerializationService {
         if (node.text && typeof node.text === 'function') {
           serializableText = node.text();
         }
-      }
-      if (node.component === 'VideoGenNodeComponent') {
-        const videoGenNode = this.flowComponentRefStateService.getNodeComponentRef(node.id);
-        const prompt = (videoGenNode as any)?.prompt;
-
-        const request = (videoGenNode as any)?.form.value;
-        const providerForm = (videoGenNode as any)?.providerForm?.value;
-        console.log('videoGenNode', prompt, providerForm);
-        const nodeData = { ...(node?.data?.nodeData || {}), prompt, request, provider: providerForm };
-        serializableData = { ...node?.data, nodeData };
-        console.log('serializableData', serializableData);
       } else if (node.component === 'AudioTTsNodeComponent') {
         const audioTTsNode = this.flowComponentRefStateService.getNodeComponentRef(node.id);
         const value = (audioTTsNode as any)?.value;

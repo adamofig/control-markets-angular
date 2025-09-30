@@ -26,12 +26,11 @@
 
 <app-comfy-status style="position: absolute; bottom: 10px; left: 10px" />
 
-<vflow
-  view="auto"
-  [nodes]="flowDiagramStateService.nodes()"
-  [edges]="flowDiagramStateService.edges()"
-  [background]="backDots"
-  (onConnect)="createEdge($event)" />
+<vflow view="auto" [nodes]="flowDiagramStateService.nodes()" [edges]="flowDiagramStateService.edges()" [background]="backDots" (onConnect)="createEdge($event)">
+  <ng-template let-ctx edgeLabelHtml>
+    <p-button icon="pi pi-times" (click)="flowDiagramStateService.deleteEdge(ctx.edge)" [rounded]="true" [text]="true" severity="danger" />
+  </ng-template>
+</vflow>
 
 <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px">
   <!-- Show options to add agents Assets and Source -->

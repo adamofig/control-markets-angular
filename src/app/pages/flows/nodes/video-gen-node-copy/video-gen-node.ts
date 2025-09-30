@@ -1,13 +1,13 @@
 import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { HandleComponent } from 'ngx-vflow';
 import { ComponentDynamicNode } from 'ngx-vflow';
-import { StatusJob } from '../../models/flows.model';
+import { NodeCategory, StatusJob } from '../../models/flows.model';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
 import { FlowOrchestrationService } from '../../services/flow-orchestration.service';
 import { BaseFlowNode } from '../base-flow-node';
 import { INodeVideoGenerationData } from '../../models/nodes.model';
-import { TagModule, Tag } from 'primeng/tag';
+import { TagModule } from 'primeng/tag';
 import { TextareaModule } from 'primeng/textarea';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComfyVideoOptionsRequestFormComponent, IAssetsGeneration, IGeneratedAsset } from '@dataclouder/ngx-vertex';
@@ -42,13 +42,11 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
 export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implements OnInit, OnDestroy {
   public flowOrchestrationService = inject(FlowOrchestrationService);
   private generatedAssetsService = inject(GeneratedAssetsService);
-  private nodeSearchesService = inject(NodeSearchesService);
   private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
 
   public fb = inject(FormBuilder);
 
-  public statusJob = StatusJob;
-  public override nodeCategory: 'process' | 'input' | 'output' = 'process';
+  public override nodeCategory: NodeCategory = NodeCategory.PROCESS;
 
   public formValue = 'Éste es el valor';
   public status = signal<'loading' | 'error' | 'success' | 'idle'>('idle');

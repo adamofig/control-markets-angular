@@ -18,7 +18,26 @@
       </div>
       <p-card (click)="doAction({ item: flow, action: 'edit' })" [header]="flow.name || 'Sin nombre'">
         <!-- <p class="m-0">{{ flow.name | slice : 0 : 250 }}...</p> -->
-        <span>{{ flow.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
+        <div class="flex gap-2">
+          <p-tag>Actualizado {{ flow.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</p-tag>
+
+          @if(flow?.metadata){
+
+          <p-tag>{{ flow?.metadata?.totalNodes }} Nodos</p-tag>
+          <p-tag>{{ flow?.metadata?.totalEdges }} Conexiones</p-tag>
+          <p-tag>{{ flow?.metadata?.inputNodes }} Entradas</p-tag>
+          <p-tag>{{ flow?.metadata?.outputNodes }} Salidas</p-tag>
+          <p-tag>{{ flow?.metadata?.processNodes }} Procesos</p-tag>
+          }
+        </div>
+
+        @if(flow?.metadata?.urlImages?.length){
+        <div style="display: flex; flex-wrap: wrap; gap: 10px">
+          @for (urlImage of flow?.metadata?.urlImages; track urlImage) {
+          <img loading="lazy" style="border-radius: 10px" [src]="urlImage" width="100" />
+          }
+        </div>
+        }
       </p-card>
     </div>
     } @if (items().length === 0) {

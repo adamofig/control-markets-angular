@@ -4,11 +4,16 @@
 <div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
   <div class="node-card" [ngClass]="'status-' + (statusJob() || 'default')">
     <div class="image-background" alt="">
-      {{ selected() }}
+      <p-tag class="tag" [value]="node()?.data?.nodeData?.provider" severity="contrast" />
+
       <p class="text-node">{{ node()?.data?.nodeData?.prompt }}</p>
       <p-tag class="tag" [value]="taskExecutionState()?.status || '🦻'" severity="danger" />
-      <p class="text-node">{{ node()?.data?.nodeData?.provider }}</p>
-      <p class="text-node">{{ node()?.data?.nodeData?.request.seconds }}</p>
+      <div style="display: flex; gap: 10px">
+        <p class="text-node">{{ node()?.data?.nodeData?.request.seconds }}s</p>
+        <p class="text-node">{{ node()?.data?.nodeData?.request.width }} x {{ node()?.data?.nodeData?.request.height }}</p>
+      </div>
+
+      <app-counter [status]="statusJob()" />
 
       <handle type="target" position="left" id="left" />
       <handle type="source" position="right" id="right" />

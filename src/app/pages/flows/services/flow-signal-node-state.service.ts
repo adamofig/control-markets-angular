@@ -214,8 +214,11 @@ export class FlowSignalNodeStateService {
 
     if (inputNode?.component === NodeType.AssetsNodeComponent) {
       if (outputNode?.component === NodeType.VideoGenNodeComponent) {
-        const generatedAssetEmpty: Partial<IGeneratedAsset> = {};
-        this.createConnectedAssetGeneratedNode(generatedAssetEmpty as IGeneratedAsset, inputNode?.id!, outputNode?.id!);
+        //
+        // CONECTION: ASSET -> VIDEO
+        // NOTE: for now i'm not creating new node when asset and video node are connected.
+        // const generatedAssetEmpty: Partial<IGeneratedAsset> = {};
+        // this.createConnectedAssetGeneratedNode(generatedAssetEmpty as IGeneratedAsset, inputNode?.id!, outputNode?.id!);
       }
     }
     //_______ __________ ____________
@@ -237,7 +240,7 @@ export class FlowSignalNodeStateService {
         },
         edgeLabels: {
           start: {
-            text: 'Center Only',
+            type: 'html-template',
             data: { color: '#122c26' },
           },
         },

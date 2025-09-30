@@ -6,6 +6,7 @@ import { FlowDiagramStateService } from './flow-diagram-state.service';
 import { FlowExecutionStateService } from './flow-execution-state.service';
 import { FlowSerializationService } from './flow-serialization.service';
 import { FlowService } from '../flows.service';
+import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,19 +16,40 @@ export class FlowOrchestrationService {
   private flowDiagramStateService = inject(FlowDiagramStateService);
   private flowSerializationService = inject(FlowSerializationService);
   private flowExecutionStateService = inject(FlowExecutionStateService);
+  private flowState = inject(FlowSignalNodeStateService);
   private toastService = inject(TOAST_ALERTS_TOKEN);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  public async saveFlow(flowId: string, flowName: string): Promise<void> {
+  public async saveFlow(flowId: string | null = null, flowName: string | null = null): Promise<void> {
+    const currentFlow = this.flowState.flow()?.id || '';
+    const currentFlowName = this.flowState.flow()?.name || '';
+
     try {
       const flowData = this.flowSerializationService.serializeFlow(this.flowDiagramStateService);
+
+      const urlImages: string[] = [];
+      for (const node of flowData.nodes) {
+        if (node.data?.nodeData?.storage?.url) {
+          urlImages.push(node.data.nodeData.storage.url);
+        }
+      }
+
       const flow: IAgentFlows = {
-        id: flowId,
-        name: flowName,
+        id: flowId || currentFlow,
+        name: flowName || currentFlowName,
         nodes: flowData.nodes,
         edges: flowData.edges,
+        metadata: {
+          totalNodes: flowData.nodes.length,
+          totalEdges: flowData.edges.length,
+          inputNodes: flowData.nodes.filter(n => n.category === 'input').length,
+          outputNodes: flowData.nodes.filter(n => n.category === 'output').length,
+          processNodes: flowData.nodes.filter(n => n.category === 'process').length,
+          urlImages: urlImages,
+        },
       };
+
       await this.flowService.saveFlow(flow);
       this.toastService.success({
         title: 'Flow saved successfully',

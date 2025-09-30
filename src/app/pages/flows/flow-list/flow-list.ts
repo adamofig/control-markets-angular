@@ -12,6 +12,7 @@ import { DatePipe, SlicePipe } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { EntityBaseListComponent } from '@dataclouder/ngx-core';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-generic-list',
@@ -26,6 +27,7 @@ import { EntityBaseListComponent } from '@dataclouder/ngx-core';
     RouterModule,
     TableModule,
     QuickTableComponent,
+    TagModule,
   ],
   templateUrl: './flow-list.html',
   styleUrl: './flow-list.css',
@@ -33,6 +35,19 @@ import { EntityBaseListComponent } from '@dataclouder/ngx-core';
 })
 export class FlowListComponent extends EntityBaseListComponent<IAgentFlows> implements OnInit {
   protected override entityCommunicationService = inject(FlowService);
+
+  constructor() {
+    super();
+    this.filterConfig.returnProps = {
+      _id: 1,
+      id: 1,
+      name: 1,
+      description: 1,
+      createdAt: 1,
+      updatedAt: 1,
+      metadata: 1,
+    };
+  }
 
   getCustomButtons(item: any): MenuItem[] {
     return [

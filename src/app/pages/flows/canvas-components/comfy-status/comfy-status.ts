@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { TagModule } from 'primeng/tag';
-import { HttpCoreService } from '@dataclouder/ngx-core';
+import { APP_CONFIG, HttpCoreService } from '@dataclouder/ngx-core';
 
 interface ServerStatus {
   device: string;
@@ -29,6 +29,8 @@ interface StatusResponse {
 })
 export class ComfyStatusComponent implements OnInit {
   public status = signal<StatusResponse | null>(null);
+  private appConfig = inject(APP_CONFIG);
+
   async ngOnInit(): Promise<void> {
     setInterval(async () => {
       await this.getStatus();
@@ -38,7 +40,7 @@ export class ComfyStatusComponent implements OnInit {
   public async getStatus() {
     try {
       const status = await this.httpCoreService.getHttp({
-        host: 'http://localhost:3001',
+        host: this.appConfig.aiServicesUrl || this.appConfig.backendNodeUrl,
         service: 'api/comfy-sdk/status',
       });
       this.status.set(status);

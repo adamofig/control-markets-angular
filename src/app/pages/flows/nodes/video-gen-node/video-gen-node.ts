@@ -63,9 +63,6 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
     this.statusJob.set(StatusJob.IN_PROGRESS);
 
     try {
-      // this.flowExecutionStateService.getExecutionState()?.jobId
-      // this.flowOrchestrationService.runNode(this.flowDiagramStateService.getFlow()?.id!, this.node().id);
-
       const inputNodes = this.nodeSearchesService.getInputNodes(this.node().id);
       let assets = { firstFrame: null };
       for (const inputNode of inputNodes) {
@@ -92,6 +89,7 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
 
       this.flowSignalNodeStateService.createConnectedAssetGeneratedNode(assetGenerated, inputNodes[0].id, this.node().id);
       this.statusJob.set(StatusJob.COMPLETED);
+      this.flowOrchestrationService.saveFlow();
     } catch (error) {
       this.statusJob.set(StatusJob.FAILED);
       console.error(error);
@@ -104,7 +102,6 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
 
   openModal(): void {
     console.log(this.selected());
-    debugger;
     this.dialogService.open(VideoGenDetailsComponent, {
       header: 'Video Gen Node Details',
       contentStyle: { overflow: 'auto' },

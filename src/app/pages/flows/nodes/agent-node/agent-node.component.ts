@@ -6,7 +6,7 @@ import { AgentDetailsComponent } from './agent-details/agent-details';
 import { DynamicNodeWithData } from '../../services/flow-diagram-state.service';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ButtonModule } from 'primeng/button';
-import { StatusJob } from '../../models/flows.model';
+import { NodeCategory, StatusJob } from '../../models/flows.model';
 import { TagModule } from 'primeng/tag';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FlowExecutionUtilsService } from '../../services/flow-execution-utils';
@@ -29,7 +29,7 @@ export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements
   public flowExecutionUtilsService = inject(FlowExecutionUtilsService);
   public agentCard = computed(() => this.node()?.data?.nodeData);
 
-  public override nodeCategory: 'process' | 'input' | 'output' = 'input';
+  public override nodeCategory: NodeCategory = NodeCategory.INPUT;
 
   constructor() {
     super();
