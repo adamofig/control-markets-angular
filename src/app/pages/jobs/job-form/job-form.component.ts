@@ -12,7 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
-import { AspectType, CropperComponentModal, ResolutionType, CloudStorageData } from '@dataclouder/ngx-cloud-storage';
+import { AspectType, CropperComponentModal, ResolutionType, FileStorageData, CloudStorage } from '@dataclouder/ngx-cloud-storage';
 
 import { EntityBaseFormComponent } from '@dataclouder/ngx-core';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
@@ -48,7 +48,7 @@ export class JobFormComponent implements OnInit {
   public form = this.fb.group({
     name: ['', Validators.required],
     description: [''],
-    image: [{} as CloudStorageData],
+    image: [{} as FileStorageData],
     type: [''],
     relation: [{ id: '', name: '', description: '' }],
     extension: new FormGroup({}),
@@ -69,7 +69,7 @@ export class JobFormComponent implements OnInit {
   public jobForm = this.fb.group({
     name: ['', Validators.required],
     description: [''],
-    image: [{} as CloudStorageData],
+    image: [{} as CloudStorage],
     type: [''],
     relation: [{ id: '', name: '', description: '' }],
     extension: new FormGroup({}),

@@ -1,4 +1,4 @@
-import { CloudStorageData } from '@dataclouder/ngx-cloud-storage';
+import { CloudStorage } from '@dataclouder/ngx-cloud-storage';
 import { IAgentSource } from '../../sources/models/sources.model';
 import { IAgentTask } from '../../tasks/models/tasks-models';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
@@ -13,14 +13,14 @@ export interface SourceWithReference {
   name: string;
   description: string;
   reference?: IAgentSource;
-  thumbnail?: CloudStorageData;
+  thumbnail?: CloudStorage;
 }
 
 export interface AgentCardWithReference {
   id: string;
   title: string;
   reference?: IAgentCard;
-  assets?: Record<string, CloudStorageData>;
+  assets?: Record<string, CloudStorage>;
 }
 
 export interface ICompositionPlan {
@@ -29,7 +29,7 @@ export interface ICompositionPlan {
 
 export interface IDialog {
   content: string;
-  audio: CloudStorageData;
+  audio: CloudStorage;
   voice: string;
   transcription: any; // TODO: Define transcription type whisper
   captions: any; // TODO: Define captions type whisper

@@ -1,4 +1,3 @@
-import { CloudStorageData } from '@dataclouder/ngx-cloud-storage';
 import { IAgentCardMinimal, IAgentTask, ISourceTask } from '../../tasks/models/tasks-models';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 

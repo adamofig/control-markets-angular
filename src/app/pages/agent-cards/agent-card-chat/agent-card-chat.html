@@ -15,7 +15,7 @@
 
   <div class="content">
     <div class="chat-container">
-      <dc-chat (goalCompleted)="onGoalCompleted($event)" style="height: 100%" [agentCard]="agentCard" />
+      <dc-chat (goalCompleted)="onGoalCompleted($event)" style="height: 100%" [agentCard]="agentCard" [conversationFlow]="DefaultConversationFlow" />
     </div>
     <!-- <div class="sticker-container">
       <h5>Here is reserve for my Stiker</h5>

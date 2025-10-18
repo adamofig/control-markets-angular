@@ -1,4 +1,3 @@
-import { CloudStorageData } from '@dataclouder/ngx-cloud-storage';
 import { IAuditable } from '@dataclouder/ngx-core';
 
 export enum ApiBalancerType {
