@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PlanType, PermissionType, RolType } from '../../dc-user-module/user.class';
 
 import { IUser, ProfileFormComponent, ProfileSettingsFormComponent } from '@dataclouder/ngx-users';
 import { AudioSpeed, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
@@ -37,7 +36,7 @@ export const AudioSpeedOptions = [
     TranslateModule,
   ],
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
   private fb = inject(FormBuilder);
   public userService = inject(AppUserService);
   private toastService = inject(TOAST_ALERTS_TOKEN);
@@ -80,24 +79,6 @@ export class ProfileComponent implements OnInit {
 
   constructor() {
     const user = this.userService.user();
-    if (user) {
-      // this.profileForm.patchValue(user);
-    }
-  }
-
-  ngOnInit() {}
-
-  onSubmit() {
-    // if (this.profileForm.valid) {
-    //   const userData: IUser = this.profileForm.value;
-    //   console.log('Form submitted:', userData);
-    //   // this.userService.updateUser(userData);
-    //   this.toastService.success({ title: 'Profile updated', subtitle: 'Your profile has been updated successfully' });
-    //   // Handle form submission
-    // } else {
-    //   console.log('Form is invalid');
-    //   this.toastService.error({ title: 'Form is invalid', subtitle: 'Please fill in all the fields' });
-    // }
   }
 
   get nickname() {

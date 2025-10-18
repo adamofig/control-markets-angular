@@ -30,8 +30,7 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { NotionService } from './app/services/notion.service';
 import { FormlyModule } from '@ngx-formly/core';
-import { FormlyFieldInput } from './app/pages/generics/generic-form/formly-components/input';
-import { FormlyFieldTextArea } from './app/pages/generics/generic-form/formly-components/textarea';
+
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideMarkdown } from 'ngx-markdown';
 import { provideMasterState } from '@dataclouder/ngx-knowledge';
@@ -130,15 +129,7 @@ fetch('/assets/config.json')
             appleRedirectURI: config.mobile.appleRedirectURI,
           },
         }),
-        importProvidersFrom(
-          FormlyModule.forRoot({
-            types: [
-              { name: 'input', component: FormlyFieldInput },
-              { name: 'textarea', component: FormlyFieldTextArea },
-            ],
-            validationMessages: [{ name: 'required', message: 'This field is required' }],
-          })
-        ),
+
         provideServiceWorker('ngsw-worker.js', {
           enabled: !isDevMode(),
           registrationStrategy: 'registerWhenStable:30000',
