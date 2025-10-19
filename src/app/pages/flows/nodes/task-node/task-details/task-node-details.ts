@@ -28,10 +28,11 @@ export class TaskNodeDetailsComponent implements OnInit {
 
   constructor() {
     this.node = this.dynamicDialogConfig.data;
-    this.agentTask = this.node.data.agentTask;
+    this.agentTask = this.node.data.nodeData;
   }
 
   ngOnInit(): void {
+    debugger;
     this.connectedNodes = this.nodeSearchesService.getInputNodes(this.node.id);
 
     console.log('inputs', this.connectedNodes);

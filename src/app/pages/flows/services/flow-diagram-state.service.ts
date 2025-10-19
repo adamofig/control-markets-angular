@@ -7,7 +7,7 @@ import { IAgentTask } from '../../tasks/models/tasks-models'; // Corrected path
 import { JobService } from '../../jobs/outcome-jobs.service';
 import { IAssetNodeData } from '../models/nodes.model';
 import { IGeneratedAsset } from '@dataclouder/ngx-vertex';
-
+import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 // NOt able to set a type for data yet.
 export interface NodeData {
   nodeData?: any;
@@ -23,6 +23,7 @@ export type DynamicNodeWithData = DynamicNode & { data?: any; category: 'input' 
 export class FlowDiagramStateService {
   private jobService = inject(JobService);
   private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
+  private toastService = inject(TOAST_ALERTS_TOKEN);
 
   public get nodes() {
     return this.flowSignalNodeStateService.nodes;
@@ -65,8 +66,9 @@ export class FlowDiagramStateService {
         this.flowSignalNodeStateService.updateNodeData(jobExecution.outputNodeId, node.data);
       }
     } else {
+      this.toastService.success({ title: 'Terminó una tarea', subtitle: 'Se creará un nuevo nodo de salida' });
+
       this.flowSignalNodeStateService.addOutcomeToFlowConnected(outcomeJob, jobExecution.inputNodeId, jobExecution.processNodeId);
-      alert('El nodo output no exite, tengo que buscarlo... ');
     }
     let outcomeJobNode;
 

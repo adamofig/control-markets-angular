@@ -49,6 +49,22 @@ export abstract class BaseFlowNode<T extends ComponentDynamicNode> extends Custo
     return null;
   });
 
+  public statusSeverity = computed(() => {
+    const status = this.taskExecutionState()?.status;
+    switch (status) {
+      case StatusJob.COMPLETED:
+        return 'success';
+      case StatusJob.IN_PROGRESS:
+        return 'info';
+      case StatusJob.FAILED:
+        return 'danger';
+      case StatusJob.PENDING:
+        return 'warn';
+      default:
+        return 'contrast';
+    }
+  });
+
   public jobExecutionState = computed(
     () => {
       const executionState = this.flowExecutionStateService.flowExecutionState();

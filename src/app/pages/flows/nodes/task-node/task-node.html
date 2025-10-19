@@ -1,8 +1,11 @@
-<div class="node-container" (dblclick)="openModal()">
-  <div class="node-card">
+@if (selected()) {
+<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="openModal()"> </app-node-toolbar>
+}
+<div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
+  <div class="node-card" [ngClass]="'status-' + (taskExecutionState()?.status || 'default')">
     <div class="image-background" [style.background-image]="'url(' + node()?.data?.nodeData?.image?.url + ')'" alt="">
       <p class="text-node">{{ node()?.data?.nodeData?.name }}</p>
-      <p-tag class="tag" [value]="taskExecutionState()?.status || '🦻'" severity="danger" />
+      <p-tag class="tag" [value]="taskExecutionState()?.status || '🦻'" [severity]="statusSeverity()" />
 
       <!-- @if(taskExecutionState()?.status === statusJob.IN_PROGRESS) {
       <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">
@@ -17,9 +20,12 @@
   </div>
 </div>
 
-<p-tag class="tag" [value]="taskExecutionState()?.status || '🦻'" severity="danger" />
+@if (selected()) {
 <p-button (click)="runNode()" class="execute-btn" icon="pi pi-play" [rounded]="true" [text]="true" severity="info" />
-
-<!-- <p-button (click)="removeNode()" class="remove-btn" icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" />
-
-  <p-button (click)="runNode()" class="execute-btn" icon="pi pi-play" [rounded]="true" [text]="true" severity="info" /> -->
+<p-button (click)="getExecutionUrl()" class="remove-btn" icon="pi pi-link" [rounded]="true" [text]="true" severity="danger" />
+<app-actions-toolbar
+  [statusJob]="taskExecutionState()?.status || statusJobEnum.PENDING"
+  [taskExecutionState]="taskExecutionState()"
+  (runNode)="handleActionsToolbarEvents('runNode')"
+  (runEndPoint)="handleActionsToolbarEvents('runEndPoint')"></app-actions-toolbar>
+}

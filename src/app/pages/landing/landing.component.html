@@ -1,21 +1,10 @@
 <div class="ion-page" id="main-content">
   <ion-header [translucent]="true">
     <ion-toolbar>
-      <ion-title>
-        <div style="display: flex; align-items: center; gap: 10px">
-          <ion-img src="assets/icon/logo.png" class="header-logo"></ion-img>
-          <span>Control Markets</span>
-        </div>
-      </ion-title>
-
-      <ion-buttons slot="end">
-        <ion-button shape="round" (click)="goToSignin()">
-          <ion-text>Sign In</ion-text>
-        </ion-button>
-
-        <ion-button shape="round" (click)="goToSignup()">
-          <ion-text>Sign Up</ion-text>
-        </ion-button>
+      <ion-title>Control Markets</ion-title>
+      <ion-buttons slot="primary">
+        <ion-button (click)="goToSignin()"> Sign In </ion-button>
+        <ion-button (click)="goToSignup()" color="primary" fill="solid"> Sign Up </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -24,26 +13,65 @@
     <div class="landing-container">
       <!-- Hero Section -->
 
-      <div class="text-center">
-        <h2 class="text-3xl font-extrabold text-gray-900">Crear una cuenta</h2>
-        <p class="mt-2 text-sm text-gray-600">Comienza tu aventura con nosotros</p>
-      </div>
-
       <section class="hero-section">
-        <h2>DOMAIN AND CONTROL THE MARKET</h2>
-        <h1>IN YOUR NICHE!</h1>
-        <p class="subtitle">
-          Control Markets is a comprehensive web and mobile platform with powerful tools to monitor markets, analyze trends, and leverage AI agents to dominate
-          your industry. Our system analyzes social networks, creates engaging content, and posts everything directly to Notion, giving you complete visibility
-          into every analysis, post, and redaction from each AI agent. Plus, our platform automatically generates viral videos for TikTok and similar platforms,
-          maximizing your reach and impact.
+        <h2>LET THE <span>PERSONA </span>BASED <span> AGENTS</span></h2>
+        <h1>CONTROL THE MARKET</h1>
+        <h2>FOR YOUR BUSINESS NICHE!</h2>
+        <img src="assets/images/notion-ai-integration.jpg" alt="Control Markets Integration" class="hero-image" />
+        <ion-button class="cta-button" (click)="goToSignup()">Get Started Now</ion-button>
+      </section>
+
+      <!-- Key Features Section -->
+      <section class="key-features-section">
+        <p>
+          Control Markets is a New Web/Mobile that uses new AI Agents Generation, Overpowered by Highly Specialized Tools To help your business in multiples
+          ways.
         </p>
-        <img src="assets/images/notion-ai-integration.jpg" alt="Control Markets Integration" />
+
+        <div class="feature-point">
+          <ion-icon name="planet-outline"></ion-icon>
+          <h3>AI Agent Tasks</h3>
+          <p>Automate content generation and workflows with powerful AI agents.</p>
+        </div>
+        <div class="feature-point">
+          <ion-icon name="analytics-outline"></ion-icon>
+          <h3>Market Monitoring</h3>
+          <p>Analyze trends and social networks to dominate your industry.</p>
+        </div>
+        <div class="feature-point">
+          <ion-icon name="videocam-outline"></ion-icon>
+          <h3>Viral Video Generation</h3>
+          <p>Automatically create engaging videos for TikTok and similar platforms.</p>
+        </div>
+      </section>
+
+      <!-- Steps Section -->
+      <section class="steps-section">
+        <div class="step">
+          <ion-icon name="add-circle-outline"></ion-icon>
+          <h3>Create Your Agents</h3>
+          <p>Define their personality and tasks.</p>
+        </div>
+        <div class="step">
+          <ion-icon name="construct-outline"></ion-icon>
+          <h3>Give Instructions</h3>
+          <p>Provide clear goals for your agents.</p>
+        </div>
+        <div class="step">
+          <ion-icon name="rocket-outline"></ion-icon>
+          <h3>Let Them Work</h3>
+          <p>Agents execute tasks automatically.</p>
+        </div>
+        <div class="step">
+          <ion-icon name="analytics-outline"></ion-icon>
+          <h3>See Results</h3>
+          <p>Track performance and market impact.</p>
+        </div>
       </section>
 
       <!-- Problem Section -->
       <section class="problem-section">
-        <h2>READY FOR THE AI REVOLUTION?</h2>
+        <h2>Ready for the AI Revolution?</h2>
         <div class="problem-content">
           <p>Is your valuable information trapped in scattered Notion pages? Struggling to make your data AI-friendly?</p>
           <ul class="challenges-list">
@@ -79,6 +107,35 @@
             <p>Automatically generate engaging videos for social platforms</p>
           </div>
         </div>
+      </section>
+
+      <!-- Character Section -->
+      <section class="character-section">
+        <h2>EL INICIO DE UNA NUEVA ERA</h2>
+        <p>
+          Un Character personificado es la forma en que un agente va a actuar como una persona. Características humanas o una identidad distintiva para
+          interactuar de manera más natural.
+        </p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <ion-icon name="person-circle-outline"></ion-icon>
+            <h3>Nombre, Personalidad y Voz Única</h3>
+            <p>Define un nombre, una personalidad distintiva, y una voz con acento único para cada agente.</p>
+          </div>
+          <div class="feature-card">
+            <ion-icon name="chatbubbles-outline"></ion-icon>
+            <h3>Estilo de Comunicación</h3>
+            <p>Establece un estilo de comunicación marcado, incluyendo frases comunes y muletillas.</p>
+          </div>
+          <div class="feature-card">
+            <ion-icon name="analytics-outline"></ion-icon>
+            <h3>Comunicación en Primera Persona</h3>
+            <p>Se expresa en primera persona, como "yo pienso" o "puedo ayudarte", y adapta sus respuestas según la relación con el usuario.</p>
+          </div>
+        </div>
+        <p class="ai-awareness">
+          Son conscientes de que son IA con personalidad y no tratan de fingir ser una persona real, manteniendo la transparencia en su naturaleza.
+        </p>
       </section>
 
       <!-- Benefits Section -->
@@ -120,11 +177,11 @@
         <h2>CHOOSE YOUR PLAN</h2>
         <div class="pricing-grid">
           <div class="pricing-card">
-            <h3>Developer</h3>
+            <h3>For Curious</h3>
             <ul>
-              <li>Basic Notion integration</li>
-              <li>Single database processing</li>
-              <li>Basic AI optimization</li>
+              <li>Basic Flows</li>
+              <li>Basic Agents</li>
+              <li>Basic Tools</li>
             </ul>
             <ion-button class="select-plan-button">Start Free</ion-button>
           </div>

@@ -34,8 +34,8 @@ export class FlowService extends EntityCommunicationService<IAgentFlows> {
     return this.httpService.postHttp<IFlowExecutionState>({ service: `api/${Endpoints}/run/${flowid}`, data: {} });
   }
 
-  public async runNode(flowId: string, nodeId: string) {
+  public async runNode(flowId: string, nodeId: string): Promise<ITaskExecutionState> {
     // assummong node is a task
-    return this.httpService.postHttp<IAgentFlows>({ service: `api/${Endpoints}/run-node`, data: { flowId, nodeId } });
+    return this.httpService.postHttp<ITaskExecutionState>({ service: `api/${Endpoints}/run-node`, data: { flowId, nodeId } });
   }
 }

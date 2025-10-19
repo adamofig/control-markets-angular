@@ -1,0 +1,53 @@
+.node-container {
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+.node-card {
+  border-radius: 15px;
+  border: 5px solid #f57403;
+  overflow: hidden;
+  box-shadow: 7px 7px 21px #f05117, -7px -7px 21px #ffffff;
+}
+
+.image-background {
+  background-size: cover;
+  background-position: center;
+  height: 150px;
+  width: 150px;
+}
+
+@mixin status-animation($color) {
+  animation: status-animation-#{$color} 3s infinite;
+
+  @keyframes status-animation-#{$color} {
+    0%,
+    100% {
+      box-shadow: 7px 7px 21px #{$color}, -7px -7px 21px #ffffff;
+    }
+    50% {
+      box-shadow: 7px 7px 21px lighten($color, 20%), -7px -7px 21px #ffffff;
+    }
+  }
+}
+
+.status-default {
+  @include status-animation(#f57403); // Default orange
+}
+
+.status-pending {
+  @include status-animation(yellow);
+}
+
+.status-in_progress {
+  @include status-animation(blue);
+}
+
+.status-completed {
+  @include status-animation(green);
+}
+
+.status-failed {
+  @include status-animation(red);
+}

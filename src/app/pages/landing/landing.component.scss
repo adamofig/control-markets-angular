@@ -1,3 +1,29 @@
+:root {
+  --ion-color-primary: #6a11cb;
+  --ion-color-primary-rgb: 106, 17, 203;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #5d0fae;
+  --ion-color-primary-tint: #7929cb;
+
+  --ion-color-secondary: #2575fc;
+  --ion-color-secondary-rgb: 37, 117, 252;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #2168de;
+  --ion-color-secondary-tint: #3b84fc;
+
+  --ion-color-tertiary: #f9ce34;
+  --ion-color-tertiary-rgb: 249, 206, 52;
+  --ion-color-tertiary-contrast: #000000;
+  --ion-color-tertiary-contrast-rgb: 0, 0, 0;
+  --ion-color-tertiary-shade: #d9b52e;
+  --ion-color-tertiary-tint: #f7d348;
+
+  --ion-background-color: #f4f5f8;
+  --ion-text-color: #1e2023;
+}
+
 .header-logo {
   width: 40px;
   height: 40px;
@@ -7,23 +33,32 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  font-family: 'Poppins', sans-serif;
 
   section {
-    margin-bottom: 80px;
+    margin-bottom: 100px;
     scroll-margin-top: 80px;
   }
 
-  h1 {
-    font-size: 3rem;
+  h1,
+  h2,
+  h3 {
     font-weight: 700;
+    color: var(--ion-text-color);
+  }
+
+  h1 {
+    font-size: 3.5rem;
     margin-bottom: 1.5rem;
-    color: var(--ion-color-primary);
+    line-height: 1.2;
+    background: -webkit-linear-gradient(45deg, var(--ion-color-primary), var(--ion-color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   h2 {
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin-bottom: 2rem;
+    font-size: 2.8rem;
+    margin-bottom: 2.5rem;
     text-align: center;
   }
 }
@@ -31,29 +66,116 @@
 // Hero Section
 .hero-section {
   text-align: center;
-  padding: 60px 0;
+  padding: 80px 0;
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 400;
+    margin: 0;
+    color: var(--ion-color-medium);
+    span {
+      color: var(--ion-color-primary);
+      font-weight: 600;
+    }
+  }
 
   .subtitle {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
     color: var(--ion-color-medium);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .hero-image {
     max-width: 100%;
     margin: 2rem 0;
-    
-    img {
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    &:hover {
+      transform: scale(1.05);
     }
   }
 
   .cta-button {
-    --padding-start: 2rem;
-    --padding-end: 2rem;
-    height: 54px;
+    --padding-start: 2.5rem;
+    --padding-end: 2.5rem;
+    height: 58px;
     font-size: 1.2rem;
+    font-weight: 600;
+    --background: linear-gradient(45deg, var(--ion-color-primary), var(--ion-color-secondary));
+    --background-hover: linear-gradient(45deg, var(--ion-color-secondary), var(--ion-color-primary));
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    --border-radius: 30px;
+    text-transform: uppercase;
+  }
+}
+
+// Steps Section
+.steps-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  text-align: center;
+
+  .step {
+    padding: 2rem;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+// Key Features Section
+.key-features-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  text-align: center;
+  margin-top: -60px;
+  margin-bottom: 100px;
+
+  .feature-point {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    ion-icon {
+      font-size: 3rem;
+      color: var(--ion-color-primary);
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: var(--ion-color-medium);
+    }
+  }
+}
+    }
+
+    ion-icon {
+      font-size: 3.5rem;
+      color: var(--ion-color-primary);
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: var(--ion-color-medium);
+    }
   }
 }
 
@@ -66,17 +188,19 @@
 
   .feature-card {
     padding: 2rem;
-    border-radius: 10px;
-    background: var(--ion-color-light);
+    border-radius: 15px;
+    background: #fff;
     text-align: center;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 
     &:hover {
-      transform: translateY(-5px);
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
     }
 
     ion-icon {
-      font-size: 3rem;
+      font-size: 3.5rem;
       color: var(--ion-color-primary);
       margin-bottom: 1rem;
     }
@@ -93,12 +217,13 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 1rem;
-    background: var(--ion-color-light);
-    border-radius: 8px;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 
     ion-icon {
-      font-size: 2rem;
+      font-size: 2.5rem;
       color: var(--ion-color-primary);
     }
   }
@@ -112,15 +237,17 @@
 
   .testimonial-card {
     padding: 2rem;
-    background: var(--ion-color-light);
-    border-radius: 10px;
+    background: #fff;
+    border-radius: 15px;
     text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 
     img {
       width: 100px;
       height: 100px;
       border-radius: 50%;
       margin-bottom: 1rem;
+      border: 4px solid var(--ion-color-primary);
     }
   }
 }
@@ -130,12 +257,25 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
+  align-items: center;
 
   .pricing-card {
-    padding: 2rem;
-    background: var(--ion-color-light);
-    border-radius: 10px;
+    padding: 2.5rem 2rem;
+    background: #fff;
+    border-radius: 15px;
     text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &.premium {
+      transform: scale(1.05);
+      border: 2px solid var(--ion-color-primary);
+    }
+
+    &:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
 
     ul {
       list-style: none;
@@ -145,27 +285,33 @@
 
     .select-plan-button {
       width: 100%;
+      --border-radius: 30px;
+    }
+
+    .premium-button {
+      --background: linear-gradient(45deg, var(--ion-color-primary), var(--ion-color-secondary));
     }
   }
 }
 
 // Footer
 .landing-footer {
-  background: var(--ion-color-light);
-  padding: 3rem 0;
+  background: #fff;
+  padding: 4rem 0;
   margin-top: 4rem;
+  text-align: center;
 
   .footer-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: 1fr;
     gap: 2rem;
-    text-align: center;
   }
 
   .legal-links {
     display: flex;
     justify-content: center;
     gap: 2rem;
+    margin-top: 1rem;
   }
 }
 
@@ -173,16 +319,16 @@
 @media (max-width: 768px) {
   .landing-container {
     h1 {
-      font-size: 2rem;
+      font-size: 2.5rem;
     }
 
     h2 {
-      font-size: 1.8rem;
+      font-size: 2rem;
     }
   }
 
   .hero-section .subtitle {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 }
 
@@ -199,11 +345,7 @@
   margin: 3rem 0;
   border-radius: 1rem;
   overflow: hidden;
-  
-  // Modern glass morphism effect
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    0 3px 2px var(--ion-color-primary);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 
   &:hover .feature-image {
     transform: scale(1.03);
@@ -215,19 +357,28 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease-in-out;
-  
-  // Modern image rendering
-  image-rendering: high-quality;
-  will-change: transform;
 }
 
 .feature-image-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    45deg,
-    rgba(0, 0, 0, 0.2) 2%,
-    rgba(255, 255, 255, 0.2) 100%
-  );
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
   mix-blend-mode: overlay;
+}
+
+// Character Section
+.character-section {
+  text-align: center;
+  padding: 60px 0;
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: var(--ion-color-medium);
+  }
+
+  .ai-awareness {
+    margin-top: 3rem;
+    font-style: italic;
+  }
 }

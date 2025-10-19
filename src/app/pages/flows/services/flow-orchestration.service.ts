@@ -92,8 +92,8 @@ export class FlowOrchestrationService {
   public async runNode(flowId: string, nodeId: string): Promise<void> {
     try {
       const result: any = await this.flowService.runNode(flowId, nodeId);
-      if (result && result.executionId) {
-        this.flowExecutionStateService.initializeExecutionStateListener(result.executionId);
+      if (result && result.flowExecutionId) {
+        this.flowExecutionStateService.initializeExecutionStateListener(result.flowExecutionId);
       } else {
         this.toastService.warn({
           title: 'Run Node Warning',
