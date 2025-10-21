@@ -1,6 +1,8 @@
 <div>Detalles de task</div>
 
-<app-task-details [id]="this.agentTask.id"></app-task-details>
+<app-task-details [id]="agentTask.id"></app-task-details>
+
+<app-task-form [id]="agentTask.id"></app-task-form>
 
 <details>
   <summary>Node ID {{ this.node.id }}</summary>

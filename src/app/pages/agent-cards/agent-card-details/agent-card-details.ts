@@ -36,6 +36,7 @@ export class AgentCardDetailsPage implements OnInit {
   }
 
   ngOnInit() {
+    debugger;
     if (!this.conversationId) {
       this.router.navigate(['/page/agents']);
     }

@@ -7,10 +7,11 @@ import { IAgentTask } from 'src/app/pages/tasks/models/tasks-models';
 import { TaskDetailsComponent } from 'src/app/pages/tasks/task-details/task-details.component';
 import { DynamicNodeWithData, FlowDiagramStateService } from 'src/app/pages/flows/services/flow-diagram-state.service';
 import { NodeSearchesService } from '../../../services/node-searches.service';
+import { TaskFormComponent } from 'src/app/pages/tasks/task-form/task-form.component';
 
 @Component({
   selector: 'app-task-node-details',
-  imports: [Vflow, DialogModule, JsonPipe, TaskDetailsComponent],
+  imports: [Vflow, DialogModule, JsonPipe, TaskDetailsComponent, TaskFormComponent],
   templateUrl: './task-node-details.html',
   styleUrl: './task-node-details.css',
   standalone: true,

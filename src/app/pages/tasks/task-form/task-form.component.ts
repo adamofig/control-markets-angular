@@ -32,7 +32,7 @@ import { AspectType, ResolutionType, CropperComponentModal } from '@dataclouder/
 import { EntityBaseFormComponent, EntityCommunicationService } from '@dataclouder/ngx-core';
 
 @Component({
-  selector: 'app-task-edit',
+  selector: 'app-task-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -65,7 +65,6 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
   public sourceSuggestions: ISourceTask[] = [];
   public selectedSource: string = '';
   public selectedAssets: any = null;
-  public id = this.route.snapshot.params['id'];
 
   public storageImgSettings = {
     path: `jobs`,
@@ -80,6 +79,7 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
     notionOutput: this.fb.control<any>({}),
     name: ['', Validators.required],
     description: [''],
+    userPrompt: [''],
     status: [AgentTaskStatus.ACTIVE],
     taskType: [AgentTaskType.CREATE_CONTENT],
     sources: this.fb.control<any[]>([]),
@@ -124,8 +124,8 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
   }
 
   private async getTaskIfIdParam() {
-    if (this.id) {
-      this.task.set(await this.tasksService.getTaskById(this.id));
+    if (this.entityId()) {
+      this.task.set(await this.tasksService.getTaskById(this.entityId()));
       if (this.task()?.output?.type === 'notion_database') {
         this.dbOptions = [this.task()?.output];
       }

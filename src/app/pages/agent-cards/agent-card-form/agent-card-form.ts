@@ -35,13 +35,13 @@ export class AgentCardFormPage implements OnInit {
   }
 
   public onSave() {
-    this.alertController
-      .create({
-        header: 'Save',
-        message: 'Conversation saved',
-        buttons: ['OK'],
-      })
-      .then((alert: HTMLIonAlertElement) => alert.present());
+    // this.alertController
+    //   .create({
+    //     header: 'Save',
+    //     message: 'Conversation saved',
+    //     buttons: ['OK'],
+    //   })
+    //   .then((alert: HTMLIonAlertElement) => alert.present());
   }
 
   public async goToDetails(id: string) {
