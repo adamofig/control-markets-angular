@@ -52,6 +52,7 @@ export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements
       draggable: true,
       closable: true,
       data: {
+        agentCard: this.node().data?.nodeData,
         node: this.node(),
       },
     });

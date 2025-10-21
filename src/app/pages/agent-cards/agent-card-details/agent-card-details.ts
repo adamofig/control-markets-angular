@@ -2,7 +2,7 @@ import { Component, OnInit, effect, inject } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { DcAgentCardDetailsComponent, IAgentCard, ChatMonitorService } from '@dataclouder/ngx-agent-cards';
+import { DcAgentCardDetailsComponent, IAgentCard, ChatMonitorService, ConversationPromptBuilderService } from '@dataclouder/ngx-agent-cards';
 
 @Component({
   selector: 'app-agent-card-details',
@@ -14,6 +14,8 @@ import { DcAgentCardDetailsComponent, IAgentCard, ChatMonitorService } from '@da
 export class AgentCardDetailsPage implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+
+  // messages = this.promptBuilder.buildConversationMessages(this.form.value as any);
 
   private chatMonitorService = inject(ChatMonitorService);
 

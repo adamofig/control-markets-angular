@@ -33,7 +33,6 @@ export class TaskNodeDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger;
     this.connectedNodes = this.nodeSearchesService.getInputNodes(this.node.id);
 
     console.log('inputs', this.connectedNodes);

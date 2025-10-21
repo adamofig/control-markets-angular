@@ -2,7 +2,12 @@
   <label for="source-file-input">Upload Markdown File</label>
   <input id="source-file-input" type="file" (change)="onFileSelected($event)" accept=".md" />
 </div>
+<br />
+<p-select [options]="tags" [(ngModel)]="selectedTag" placeholder="Select a Tag" />
+<br />
+<span>Or</span>
+<textarea [autoResize]="true" rows="2" fluid pTextarea [(ngModel)]="contentSource" placeholder="Add the source as markdown text"></textarea>
 
-<textarea rows="5" pTextarea [(ngModel)]="value"></textarea>
+<br />
 
-<button pButton label="Upload" (click)="sourceUploaded.emit(value)"></button>
+<button pButton label="Guardar" (click)="onSourceSave()"></button>

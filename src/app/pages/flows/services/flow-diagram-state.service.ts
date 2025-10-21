@@ -8,6 +8,7 @@ import { JobService } from '../../jobs/outcome-jobs.service';
 import { IAssetNodeData } from '../models/nodes.model';
 import { IGeneratedAsset } from '@dataclouder/ngx-vertex';
 import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
+import { IAgentSource } from '../../sources/models/sources.model';
 // NOt able to set a type for data yet.
 export interface NodeData {
   nodeData?: any;
@@ -115,8 +116,8 @@ export class FlowDiagramStateService {
     this.flowSignalNodeStateService.addDistributionNode();
   }
 
-  public addSourceNode(content?: string) {
-    this.flowSignalNodeStateService.addSourceNode(content);
+  public addSourceNode(source?: Partial<IAgentSource>) {
+    this.flowSignalNodeStateService.addSourceNode(source);
   }
 
   public createConnectedAssetGeneratedNode(generatedAsset: IGeneratedAsset, inputNodeId: string, processNodeId: string) {

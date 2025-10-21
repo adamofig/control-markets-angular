@@ -1,6 +1,6 @@
 @if (job(); as jobData) {
 <div>
-  <h2>Job Details</h2>
+  <h2>Outcome Job Details</h2>
 
   @if (jobData.agentCard) {
   <div class="section">
@@ -23,6 +23,7 @@
 
   <div class="section">
     <p><strong>Task Name:</strong> {{ jobData.task.name }}</p>
+    <p><strong>Outcome id:</strong> {{ jobData._id }}</p>
   </div>
 
   @if (jobData.responseFormat === responseFormat.ARRAY) {

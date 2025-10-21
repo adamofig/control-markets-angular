@@ -23,7 +23,7 @@ export class SourcesDetailsComponent implements OnInit {
     console.log(this.dynamicDialogConfig.data);
     // Assign source data from dialog config
     if (this.dynamicDialogConfig.data) {
-      this.source = this.dynamicDialogConfig.data;
+      this.source = this.dynamicDialogConfig.data.nodeData;
     }
   }
 

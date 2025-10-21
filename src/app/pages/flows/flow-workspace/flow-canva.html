@@ -7,13 +7,13 @@
     pSize="small"
     style="background-color: transparent !important; border-radius: 40px; border: none; outline: none; font-size: 12px; font-weight: bold; width: 200px" />
 
-  <p-button (click)="showDialog('isAgentVisible')" label="Agent" icon="pi pi-user-plus" [rounded]="true" severity="success" [outlined]="true" />
-  <p-button (click)="showDialog('isAssetVisible')" label="Asset" icon="pi pi-plus-circle" [rounded]="true" severity="success" [outlined]="true" />
-  <p-button (click)="showDialog('isSourceVisible')" icon="pi pi-file-import" label="Source" [rounded]="true" severity="success" [outlined]="true" />
+  <p-button (click)="showDialog('agent')" label="Agent" icon="pi pi-user-plus" [rounded]="true" severity="success" [outlined]="true" />
+  <p-button (click)="showDialog('asset')" label="Asset" icon="pi pi-plus-circle" [rounded]="true" severity="success" [outlined]="true" />
+  <p-button (click)="showDialog('source')" icon="pi pi-file-import" label="Source" [rounded]="true" severity="success" [outlined]="true" />
 
   <!-- Process -->
   <p-button (click)="addVideoGenNode()" label="Video" icon="pi pi-video" [rounded]="true" severity="warn" [outlined]="true" />
-  <p-button (click)="showDialog('isTaskVisible')" icon="pi pi-microchip-ai" label="Task" [rounded]="true" severity="warn" [outlined]="true" />
+  <p-button (click)="showDialog('task')" icon="pi pi-microchip-ai" label="Task" [rounded]="true" severity="warn" [outlined]="true" />
   <!-- Other -->
 
   <p-button (click)="addAudioTTSGenNode()" icon="pi pi-megaphone" label="Audio" [rounded]="true" severity="warn" [outlined]="true" />
@@ -55,15 +55,22 @@
   </p-speeddial>
 </div>
 
-<p-dialog header="Agregar Recursos Multimedia" [draggable]="false" [(visible)]="isDialogVisible" [modal]="true" [style]="{ width: '85%', height: '85%' }">
-  @if(dialogs.isAgentVisible) {
+<p-dialog
+  header="Agregar Recursos Multimedia"
+  [draggable]="false"
+  [(visible)]="isDialogVisible"
+  (onHide)="closeDialog()"
+  [modal]="true"
+  [style]="{ width: '85%', height: '85%' }">
+  @switch (activeDialog) { @case ('agent') {
   <dc-agent-card-lists (onAction)="addAgentToFlow($event)" />
-  } @if(dialogs.isTaskVisible) {
+  } @case ('task') {
   <p>Entidad.</p>
   <app-task-list viewMode="table" (onSelect)="addTaskToFlow($event)" />
-  } @if(dialogs.isAssetVisible) {
+  } @case ('asset') {
   <app-assets-uploads (imageUploaded)="addAssetToFlow($event)"></app-assets-uploads>
-  } @if(dialogs.isSourceVisible) {
+  } @case ('source') {
+  <h4>Agregar Fuentes de información</h4>
   <app-sources-uploads (sourceUploaded)="addSourceToFlow($event)"></app-sources-uploads>
-  }
+  } }
 </p-dialog>

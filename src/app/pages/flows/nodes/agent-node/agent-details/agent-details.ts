@@ -4,10 +4,12 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { JsonPipe } from '@angular/common';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { DynamicNode } from 'ngx-vflow';
+import { ConversationPromptBuilderService } from '@dataclouder/ngx-agent-cards';
+import { PromptPreviewComponent, DefaultAgentCardsService } from '@dataclouder/ngx-agent-cards';
 
 @Component({
   selector: 'app-distribution-chanel-details',
-  imports: [ButtonModule, JsonPipe],
+  imports: [ButtonModule, JsonPipe, PromptPreviewComponent],
   templateUrl: './agent-details.html',
   styleUrl: './agent-details.css',
   standalone: true,
@@ -16,11 +18,16 @@ import { DynamicNode } from 'ngx-vflow';
 export class AgentDetailsComponent {
   public dynamicDialogConfig = inject(DynamicDialogConfig);
 
-  public data!: IAgentCard;
+  public agentCard!: IAgentCard;
   public node!: DynamicNode;
+
+  public messages!: any[];
+
+  private promptBuilder = inject(ConversationPromptBuilderService);
 
   // Creo que necesito el método defaultAgen service para obtern los datos
   // private agentService = inject(AgentService);
+  private defaultAgentCardsService = inject(DefaultAgentCardsService);
 
   constructor() {
     console.log('agent-details', this.dynamicDialogConfig.data);
@@ -28,10 +35,22 @@ export class AgentDetailsComponent {
 
   ngOnInit(): void {
     console.log('agent-details', this.dynamicDialogConfig.data);
-    this.data = this.dynamicDialogConfig.data.data;
+    this.agentCard = this.dynamicDialogConfig.data.agentCard;
     this.node = this.dynamicDialogConfig.data.node;
 
-    console.log('agent-details', this.data, this.node);
+    this.getAgentCardFromDB();
+
+    console.log('agent-details', this.agentCard);
+    console.log('messages', this.messages);
+  }
+
+  public async getAgentCardFromDB(): Promise<IAgentCard> {
+    const id = this.agentCard._id || this.agentCard.id;
+
+    const agentCard = await this.defaultAgentCardsService.findOneByQuery({ id: id }, { characterCard: 1, conversationFlow: 1 });
+    this.messages = this.promptBuilder.buildConversationMessages(agentCard);
+
+    return agentCard;
   }
 
   public startFlow(): void {}

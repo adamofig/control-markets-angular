@@ -16,7 +16,7 @@
           direction="down-left"
           [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
       </div>
-      <p-card (click)="doAction({ item: flow, action: 'edit' })" [header]="flow.name || 'Sin nombre'">
+      <p-card (click)="doAction({ item: flow, action: 'edit' })" [header]="flow.name || 'Sin nombre'" class="cursor-pointer">
         <!-- <p class="m-0">{{ flow.name | slice : 0 : 250 }}...</p> -->
         <div class="flex gap-2">
           <p-tag>Actualizado {{ flow.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</p-tag>

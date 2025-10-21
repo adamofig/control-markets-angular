@@ -261,10 +261,7 @@ export class FlowSignalNodeStateService {
     this.nodes.set([...this.nodes(), newNode]);
   }
 
-  public addSourceNode(content?: string) {
-    const source: Partial<IAgentSource> = {
-      content: content || '',
-    };
+  public addSourceNode(source?: Partial<IAgentSource>) {
     const newNode: DynamicNodeWithData = {
       id: 'source-node-' + nanoid(), // Changed prefix for clarity
       point: signal({ x: 500, y: 100 }), // Default position, can be made configurable

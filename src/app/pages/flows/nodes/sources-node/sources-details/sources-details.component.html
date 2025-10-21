@@ -1,9 +1,15 @@
 <div>
   <p>Source Details</p>
 
+  @if (source?.content) {
   <markdown>
-    {{ source | json }}
+    {{ source?.content }}
   </markdown>
+  } @else {
+  <pre>{{ source | json }}</pre>
+  } @if (source?.tag) {
+  <p>Tag: {{ source?.tag }}</p>
+  }
 
   <!-- Optional: Add a button or other elements to interact with sourceData -->
   <button pButton label="Show Source Info in Console" (click)="displaySourceInfo()"></button>

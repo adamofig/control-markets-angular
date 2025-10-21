@@ -6,6 +6,8 @@
     </p>
   </div>
 
+  <div class="source-tag">{{ this.data()?.nodeData?.tag || 'Information' }}</div>
+
   <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
 
   <!-- <handle type="target" position="top" id="b" /> -->

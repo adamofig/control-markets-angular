@@ -19,6 +19,7 @@ import { IAssetNodeData } from '../models/nodes.model';
 import { ComfyStatusComponent } from '../canvas-components/comfy-status/comfy-status';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { RedSquareData, RedSquareNodeComponent } from '../nodes/test-node/test-node';
+import { IAgentSource } from '../../sources/models/sources.model';
 
 @Component({
   templateUrl: './flow-canva.html',
@@ -64,7 +65,7 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
 
   public isDialogVisible = false;
 
-  public dialogs = { isAgentVisible: false, isTaskVisible: false, isAssetVisible: false, isSourceVisible: false };
+  public activeDialog: 'agent' | 'task' | 'asset' | 'source' | null = null;
 
   public backDots = {
     backgroundColor: 'transparent',
@@ -91,17 +92,17 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
       {
         icon: 'pi pi-user-plus',
         label: 'Agent',
-        command: () => this.showDialog('isAgentVisible'),
+        command: () => this.showDialog('agent'),
       },
       {
         icon: 'pi pi-plus-circle',
         label: 'Asset',
-        command: () => this.showDialog('isAssetVisible'),
+        command: () => this.showDialog('asset'),
       },
       {
         icon: 'pi pi-file-import',
         label: 'Source',
-        command: () => this.showDialog('isSourceVisible'),
+        command: () => this.showDialog('source'),
       },
     ];
 
@@ -114,7 +115,7 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
       {
         icon: 'pi pi-microchip-ai',
         label: 'Task',
-        command: () => this.showDialog('isTaskVisible'),
+        command: () => this.showDialog('task'),
       },
       {
         icon: 'pi pi-megaphone',
@@ -135,7 +136,7 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
   addAgentToFlow(event: OnActionEvent): void {
     const card: IAgentCard = event.item;
     this.flowDiagramStateService.addAgentToFlow(card);
-    this.isDialogVisible = false;
+    this.closeDialog();
   }
 
   addTaskToFlow(event: OnActionEvent) {
@@ -143,20 +144,20 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
     const task: IAgentTask = event.item;
     this.flowDiagramStateService.addTaskToFlow(task);
 
-    this.isDialogVisible = false;
+    this.closeDialog();
   }
 
   addAssetToFlow(event: IAssetNodeData) {
     console.log('addAssetToFlow', event);
     this.flowDiagramStateService.addAssetNode(event);
-    this.isDialogVisible = false;
+    this.closeDialog();
   }
 
-  addSourceToFlow(event: any) {
+  addSourceToFlow(event: Partial<IAgentSource>) {
     // TODO: implement logic to add source from event
     console.log('addSourceToFlow', event);
     this.flowDiagramStateService.addSourceNode(event);
-    this.isDialogVisible = false;
+    this.closeDialog();
   }
 
   public async saveFlow(): Promise<void> {
@@ -168,15 +169,14 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
     }
   }
 
-  public showDialog(key: string) {
-    // this.isDialogVisible = true;
-    this.dialogs.isAgentVisible = false;
-    this.dialogs.isTaskVisible = false;
-
-    (this.dialogs as any)[key] = true;
-
-    console.log(this.dialogs);
+  public showDialog(dialogType: 'agent' | 'task' | 'asset' | 'source') {
+    this.activeDialog = dialogType;
     this.isDialogVisible = true;
+  }
+
+  public closeDialog() {
+    this.isDialogVisible = false;
+    this.activeDialog = null;
   }
 
   public async runFlow(): Promise<void> {

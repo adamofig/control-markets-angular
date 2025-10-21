@@ -2,5 +2,6 @@
   <p>AGENTE son los detalles del nodo</p>
 
   <pre style="max-width: 300px; overflow: auto">{{ this.node| json }}</pre>
+  <dc-prompt-preview [messages]="messages"></dc-prompt-preview>
   <button pButton label="Iniciar" (click)="startFlow()"></button>
 </div>

@@ -70,6 +70,7 @@ export interface IAgentSource extends AuditDate {
   status: string;
   statusDescription: string;
   relationId?: string;
+  tag: string;
 }
 
 export const SourceTypeOptions = [
