@@ -38,9 +38,6 @@ import { provideMasterState } from '@dataclouder/ngx-knowledge';
 import { AppUserService } from './app/services/app-user.service';
 import { UserService } from '@dataclouder/ngx-users';
 
-import { FormlyFieldInput } from './app/api-balancer/api-balancer-form/formly-components/input';
-import { FormlyFieldTextArea } from './app/api-balancer/api-balancer-form/formly-components/textarea';
-
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideTranslateService } from '@ngx-translate/core';
 
@@ -127,15 +124,6 @@ fetch('/assets/config.json')
           },
         }),
         provideMarkdown(),
-        importProvidersFrom(
-          FormlyModule.forRoot({
-            types: [
-              { name: 'input', component: FormlyFieldInput },
-              { name: 'textarea', component: FormlyFieldTextArea },
-            ],
-            validationMessages: [{ name: 'required', message: 'This field is required' }],
-          })
-        ),
         // provideServiceWorker('ngsw-worker.js', {
         //   enabled: !isDevMode(),
         //   registrationStrategy: 'registerWhenStable:30000',

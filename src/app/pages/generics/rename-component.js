@@ -9,8 +9,8 @@ const readline = require('readline');
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
 const directory = './';
-const oldName = 'ApiBalancer';
-const newName = 'ApiBalancer'; // Replace this with your desired name use a format AllCapName
+const oldName = 'generic';
+const newName = ''; // Replace this with your desired name use a format AllCapName
 
 function toKebabCase(str) {
   return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
@@ -76,7 +76,7 @@ function renameFiles(dir) {
 }
 
 if (!newName) {
-  console.error(' ⚠️ Not Yet: Please set the newName variable before running the script. Line 12 🤔 should be SINGULAR name not plural');
+  console.error(' ⚠️ Not Yet: Please set the newName variable before running the script. Line 12 🤔 should be SINGULAR name not plural and camelCase');
   process.exit(1);
 }
 

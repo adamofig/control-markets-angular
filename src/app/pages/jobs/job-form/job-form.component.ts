@@ -51,7 +51,6 @@ export class JobFormComponent implements OnInit {
     image: [{} as FileStorageData],
     type: [''],
     relation: [{ id: '', name: '', description: '' }],
-    extension: new FormGroup({}),
   });
 
   private cdr = inject(ChangeDetectorRef);

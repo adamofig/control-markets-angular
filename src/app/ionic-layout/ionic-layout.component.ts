@@ -91,9 +91,13 @@ export class IonicLayoutComponent implements OnInit {
 
   public appPages = [
     { title: 'Home', url: '/page/home', icon: 'home' },
-    { title: 'Lessons', url: '/page/lessons', icon: 'eye' },
     { title: 'Agents Conversation', url: '/page/agents', icon: 'chatbubble-ellipses' },
-    { title: 'Generics', url: '/page/generics', icon: 'code-working' },
+    { title: 'Flows', url: '/page/flows', icon: 'code-working' },
+    { title: 'Tasks', url: '/page/tasks', icon: 'barbell' },
+    { title: 'Jobs', url: '/page/jobs', icon: 'document-text' },
+    { title: 'Sources', url: '/page/sources', icon: 'document-attach' },
+    { title: 'Video Analizer', url: '/page/video-analizer', icon: 'analytics' },
+    { title: 'Video Generator', url: '/page/video-generator', icon: 'videocam' },
     { title: 'Test', url: '/page/test', icon: 'code-working' },
     { title: 'Profile', url: '/page/stack/profile', icon: 'person' },
   ];
@@ -101,6 +105,7 @@ export class IonicLayoutComponent implements OnInit {
   public adminPages = [
     { title: 'Admin Users', url: '/page/admin/users', icon: 'people' },
     { title: 'Admin Other', url: '/page/admin', icon: 'settings' },
+    { title: 'Agent Rules', url: '/page/admin/agent-rules', icon: 'settings' },
   ];
 
   public testingPages = [{ title: 'Test', url: '/page/test', icon: 'code-working' }];

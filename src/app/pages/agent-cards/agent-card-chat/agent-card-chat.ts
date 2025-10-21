@@ -2,8 +2,6 @@ import { ChangeDetectorRef, Component, Input, OnInit, inject, effect } from '@an
 
 import {
   DCChatComponent,
-  IConversationSettings,
-  ChatRole,
   AudioSpeed,
   IAgentCard,
   ChatMonitorService,
