@@ -48,11 +48,11 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
     image: [{} as FileStorageData],
     type: [''],
     relation: [{ id: '', name: '', description: '' }],
-    extension: new FormGroup({}),
   });
 
   protected override patchForm(entity: IGeneric): void {
-    throw new Error('Method not implemented.');
+    // NOTE: you may need to custom patchForm if contains arrays or custom logic.
+    this.form.patchValue(entity);
   }
 
   public storageImgSettings = {

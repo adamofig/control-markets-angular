@@ -11,6 +11,7 @@ import { MenuItem } from 'primeng/api';
 import { DatePipe, SlicePipe } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
+import { UserService } from '@dataclouder/ngx-users';
 
 @Component({
   selector: 'app-generic-list',
@@ -32,6 +33,7 @@ import { TableModule } from 'primeng/table';
 })
 export class GenericListComponent extends EntityBaseListComponent<IGeneric> implements OnInit {
   protected override entityCommunicationService = inject(GenericService);
+  public userService = inject(UserService);
 
   getCustomButtons(item: any): MenuItem[] {
     return [
