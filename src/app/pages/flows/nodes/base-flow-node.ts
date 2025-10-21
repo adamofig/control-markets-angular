@@ -34,6 +34,7 @@ export abstract class BaseFlowNode<T extends ComponentDynamicNode> extends Custo
 
   public nodeCategory: 'process' | 'input' | 'output' = 'input';
 
+  // Tengo que estandarizar como tengo el estatus del job, porque este lo uso en video, para assets, pero en agentes uso jobExecutionState hjkh
   public statusJob = signal<StatusJob>(StatusJob.COMPLETED);
 
   public taskExecutionState = computed(() => {
@@ -50,7 +51,8 @@ export abstract class BaseFlowNode<T extends ComponentDynamicNode> extends Custo
   });
 
   public statusSeverity = computed(() => {
-    const status = this.taskExecutionState()?.status;
+    // Supongo que uno de los 2 debe reaccionar, espero refactorizar para solo tener un nodo de estado.
+    const status = this.taskExecutionState()?.status || this.jobExecutionState()?.status;
     switch (status) {
       case StatusJob.COMPLETED:
         return 'success';

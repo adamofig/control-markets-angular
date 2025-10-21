@@ -1,11 +1,11 @@
 <app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"> </app-node-toolbar>
 
 <div class="node-container" (dblclick)="openModal()">
-  <div class="node-card" [ngClass]="'status-' + (statusJob() || 'default')">
+  <div class="node-card" [ngClass]="'status-' + (jobExecutionState()?.status || 'default')">
     <!-- SOLO SI EL nodo es imagen. -->
     <div class="image-background" [style.background-image]="'url(' + node()?.data?.nodeData?.assets?.image?.url + ')'">
-      <p-tag class="tag" [value]="jobExecutionState()?.status || '🦻'" severity="danger" />
       <h4>{{ node()?.data?.nodeData?.name }}</h4>
+      <p-tag [value]="jobExecutionState()?.status" [severity]="statusSeverity()" />
     </div>
 
     <handle type="source" position="right" id="right" />

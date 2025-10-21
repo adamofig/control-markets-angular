@@ -1,7 +1,9 @@
-<div>
-  <p>AGENTE son los detalles del nodo</p>
+<div class="agent-details-container" [style.background-image]="backgroundImage ? 'url(' + backgroundImage + ')' : null">
+  <div class="content-wrapper">
+    <p>AGENTE son los detalles del nodo</p>
 
-  <pre style="max-width: 300px; overflow: auto">{{ this.node| json }}</pre>
-  <dc-prompt-preview [messages]="messages"></dc-prompt-preview>
-  <button pButton label="Iniciar" (click)="startFlow()"></button>
+    <pre style="max-width: 300px; overflow: auto">{{ this.node| json }}</pre>
+    <dc-prompt-preview [messages]="messages" view="markdown"></dc-prompt-preview>
+    <button pButton label="Iniciar" (click)="startFlow()"></button>
+  </div>
 </div>

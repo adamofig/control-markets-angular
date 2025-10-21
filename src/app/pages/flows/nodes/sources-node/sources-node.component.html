@@ -1,15 +1,13 @@
-<div class="custom-node" selectable [class.custom-node_selected]="selected()" (dblclick)="openModal()">
-  <div class="card-background" [style.background-image]="source?.thumbnail?.url ? 'url(' + source?.thumbnail?.url + ')' : null"></div>
-  <div class="card-content">
-    <p class="main-text">
-      {{ this.data()?.nodeData?.content || 'No source name' }}
-    </p>
+<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"> </app-node-toolbar>
+
+<div class="node-container" (dblclick)="openModal()">
+  <div class="node-card">
+    <!-- SOLO SI EL nodo es imagen. -->
+    <div class="image-background" [style.background-image]="source?.thumbnail?.url ? 'url(' + source?.thumbnail?.url + ')' : null">
+      <p>{{ (this.data()?.nodeData?.content | slice : 0 : 130) || 'No source name' }}</p>
+      <p-tag [value]="this.data()?.nodeData?.tag || 'Information'" />
+    </div>
+
+    <handle type="source" position="bottom" id="b" />
   </div>
-
-  <div class="source-tag">{{ this.data()?.nodeData?.tag || 'Information' }}</div>
-
-  <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
-
-  <!-- <handle type="target" position="top" id="b" /> -->
-  <handle type="source" position="bottom" id="b" />
 </div>

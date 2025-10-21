@@ -1,9 +1,14 @@
 <div class="toolbar-container">
-  <!-- <button class="btn-round" (click)="onRunNode()">
-    <span class="pi pi-play"></span>
-  </button> -->
-  <button class="btn-round" (click)="onRunEndPoint()">
+  <button class="execute-btn" (click)="onRunNode()" [disabled]="isJobInProgress()">
+    <i class="pi pi-play"></i>
+  </button>
+  <button class="remove-btn" (click)="onGetExecutionUrl()" [disabled]="isJobInProgress()">
+    <i class="pi pi-link"></i>
+  </button>
+  <button class="btn-round" (click)="onRunEndPoint()" [disabled]="isJobInProgress()">
     <span class="pi pi-circle"></span>
   </button>
-  <app-counter [status]="taskExecutionState?.status || statusJob" />
+  <app-counter [status]="taskExecutionState()?.status || statusJob()" />
+
+  <!-- {{ statusJob() }} -->
 </div>

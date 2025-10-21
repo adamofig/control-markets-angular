@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef, effect, inject } from '@angular/core';
+import { SlicePipe } from '@angular/common';
 import { ComponentDynamicNode, CustomNodeComponent, Vflow } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -7,6 +8,8 @@ import { IAgentSource } from 'src/app/pages/sources/models/sources.model'; // Co
 import { ButtonModule } from 'primeng/button';
 import { FlowDiagramStateService } from '../../services/flow-diagram-state.service';
 import { FlowComponentRefStateService } from '../../services/flow-component-ref-state.service';
+import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
+import { TagModule } from 'primeng/tag';
 
 export interface CustomSourceNode extends ComponentDynamicNode {
   // Renamed interface
@@ -15,9 +18,9 @@ export interface CustomSourceNode extends ComponentDynamicNode {
 
 @Component({
   selector: 'app-sources-node', // Updated selector
-  imports: [Vflow, DialogModule, ButtonModule],
+  imports: [Vflow, DialogModule, ButtonModule, BaseNodeToolbarComponent, TagModule, SlicePipe],
   templateUrl: './sources-node.component.html', // Updated template URL
-  styleUrl: './sources-node.component.css', // Updated style URL
+  styleUrl: './sources-node.component.scss', // Updated style URL
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
@@ -72,5 +75,18 @@ export class SourcesNodeComponent extends CustomNodeComponent<CustomSourceNode> 
 
   removeNode() {
     this.flowDiagramStateService.removeNode(this.node().id);
+  }
+
+  handleToolbarEvents(event: string) {
+    switch (event) {
+      case 'delete':
+        this.removeNode();
+        break;
+      case 'none':
+        break;
+      case 'details':
+        this.openModal();
+        break;
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, computed, effect, inject } from '@angular/core';
-import { NodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
+import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 import { ComponentDynamicNode, Vflow } from 'ngx-vflow';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AgentDetailsComponent } from './agent-details/agent-details';
@@ -19,7 +19,7 @@ export interface CustomAgentNode extends ComponentDynamicNode {
 
 @Component({
   selector: 'app-agent-node',
-  imports: [Vflow, ButtonModule, TagModule, ProgressSpinnerModule, NodeToolbarComponent, CommonModule],
+  imports: [Vflow, ButtonModule, TagModule, ProgressSpinnerModule, BaseNodeToolbarComponent, CommonModule],
   templateUrl: './agent-node.component.html',
   styleUrl: './agent-node.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -41,20 +41,21 @@ export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements
 
   override ngOnInit(): void {
     super.ngOnInit();
-    this.statusJob.set(StatusJob.IN_PROGRESS);
   }
 
   openModal(): void {
     this.dialogService.open(AgentDetailsComponent, {
       header: 'Agent Node',
-      contentStyle: { overflow: 'auto' },
+      contentStyle: { 'max-height': '90vh', padding: '0px' },
       baseZIndex: 10000,
       draggable: true,
       closable: true,
+      width: '500px',
       data: {
         agentCard: this.node().data?.nodeData,
         node: this.node(),
       },
+      maximizable: true,
     });
   }
 

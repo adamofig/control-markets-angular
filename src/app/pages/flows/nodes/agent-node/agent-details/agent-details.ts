@@ -33,15 +33,17 @@ export class AgentDetailsComponent {
     console.log('agent-details', this.dynamicDialogConfig.data);
   }
 
+  public backgroundImage: string | null = null;
+
   ngOnInit(): void {
     console.log('agent-details', this.dynamicDialogConfig.data);
     this.agentCard = this.dynamicDialogConfig.data.agentCard;
     this.node = this.dynamicDialogConfig.data.node;
+    if (this.agentCard.assets?.image?.url) {
+      this.backgroundImage = this.agentCard.assets.image.url;
+    }
 
     this.getAgentCardFromDB();
-
-    console.log('agent-details', this.agentCard);
-    console.log('messages', this.messages);
   }
 
   public async getAgentCardFromDB(): Promise<IAgentCard> {

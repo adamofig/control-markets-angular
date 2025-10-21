@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, computed, input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { ITaskExecutionState, StatusJob } from 'src/app/pages/flows/models/flows.model';
@@ -13,13 +13,20 @@ import { CounterComponent } from 'src/app/components/counter/counter.component';
 })
 export class ActionsToolbarComponent {
   @Output() runNode = new EventEmitter<void>();
+  @Output() getExecutionUrl = new EventEmitter<void>();
   @Output() runEndPoint = new EventEmitter<void>();
 
-  @Input() statusJob!: StatusJob;
-  @Input() taskExecutionState: ITaskExecutionState | null = null;
+  statusJob = input<StatusJob>(StatusJob.PENDING);
+  taskExecutionState = input<ITaskExecutionState | null>(null);
+
+  isJobInProgress = computed(() => this.statusJob() === StatusJob.IN_PROGRESS);
 
   onRunNode() {
     this.runNode.emit();
+  }
+
+  onGetExecutionUrl() {
+    this.getExecutionUrl.emit();
   }
 
   onRunEndPoint() {

@@ -110,6 +110,27 @@ export class FlowOrchestrationService {
     }
   }
 
+  public async runEndPoint(flowId: string, nodeId: string): Promise<void> {
+    try {
+      const result: any = await this.flowService.runEndPoint(flowId, nodeId);
+      if (result && result.flowExecutionId) {
+        this.flowExecutionStateService.initializeExecutionStateListener(result.flowExecutionId);
+      } else {
+        this.toastService.warn({
+          title: 'Run EndPoint Warning',
+          subtitle: 'Could not initialize execution listener, execution ID missing.',
+        });
+      }
+    } catch (error) {
+      console.error('Error running node:', error);
+      this.toastService.error({
+        title: 'Error Running EndPoint',
+        subtitle: 'An error occurred while trying to run the node.',
+      });
+      throw error; // Re-throw
+    }
+  }
+
   public async loadInitialFlow(flowId: string, executionId?: string): Promise<IAgentFlows> {
     const flow = await this.flowService.getFlow(flowId);
     if (flow) {

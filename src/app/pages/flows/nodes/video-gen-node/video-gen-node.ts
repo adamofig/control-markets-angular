@@ -17,7 +17,7 @@ import { FlowSignalNodeStateService } from '../../services/flow-signal-node-stat
 import { CounterComponent } from '../../../../components/counter/counter.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { VideoGenDetailsComponent } from './video-gen-details/video-gen-details';
-import { NodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
+import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 import { ActionsToolbarComponent } from '../actions-toolbar/actions-toolbar.component';
 import { ToastAlertService } from 'src/app/services/toast.service';
 
@@ -40,7 +40,7 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
     SelectModule,
     ReactiveFormsModule,
     CounterComponent,
-    NodeToolbarComponent,
+    BaseNodeToolbarComponent,
     ActionsToolbarComponent,
   ],
 })

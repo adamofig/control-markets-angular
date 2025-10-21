@@ -9,7 +9,7 @@ import { CommonModule, JsonPipe } from '@angular/common';
 import { IGeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-vertex';
 import { BaseFlowNode } from '../base-flow-node';
 import { ActionsToolbarComponent } from '../actions-toolbar/actions-toolbar.component';
-import { NodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
+import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 import { TagModule } from 'primeng/tag';
 
 export interface CustomAssetGeneratedNode extends ComponentDynamicNode {
@@ -18,7 +18,7 @@ export interface CustomAssetGeneratedNode extends ComponentDynamicNode {
 
 @Component({
   selector: 'app-outcome-node',
-  imports: [Vflow, DialogModule, ButtonModule, JsonPipe, NodeToolbarComponent, ActionsToolbarComponent, CommonModule, TagModule],
+  imports: [Vflow, DialogModule, ButtonModule, JsonPipe, BaseNodeToolbarComponent, ActionsToolbarComponent, CommonModule, TagModule],
   templateUrl: './asset-generated-node.html',
   styleUrl: './asset-generated-node.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

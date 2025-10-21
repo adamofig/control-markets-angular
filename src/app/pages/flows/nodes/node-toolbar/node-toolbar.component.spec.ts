@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { NodeToolbarComponent } from './node-toolbar.component';
+import { BaseNodeToolbarComponent } from './node-toolbar.component';
 
-describe('NodeToolbarComponent', () => {
-  let component: NodeToolbarComponent;
-  let fixture: ComponentFixture<NodeToolbarComponent>;
+describe('BaseNodeToolbarComponent', () => {
+  let component: BaseNodeToolbarComponent;
+  let fixture: ComponentFixture<BaseNodeToolbarComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NodeToolbarComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [BaseNodeToolbarComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NodeToolbarComponent);
+    fixture = TestBed.createComponent(BaseNodeToolbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

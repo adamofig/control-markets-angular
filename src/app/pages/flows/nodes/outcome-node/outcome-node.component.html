@@ -1,4 +1,8 @@
-<div class="node-container" (dblclick)="openModal()">
+@if (selected()) {
+<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="openModal()"> </app-node-toolbar>
+}
+
+<div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
   <div class="node-card">
     <div class="image-background" [style.background-image]="'url(' + backgroundImageUrl() + ')'">
       <p style="background: rgba(106, 101, 101, 0.883); height: 100%; width: 100%">

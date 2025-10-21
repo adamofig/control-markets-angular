@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, ButtonModule],
 })
-export class NodeToolbarComponent {
+export class BaseNodeToolbarComponent {
   @Output() delete = new EventEmitter<void>();
   @Output() none = new EventEmitter<void>();
   @Output() details = new EventEmitter<void>();

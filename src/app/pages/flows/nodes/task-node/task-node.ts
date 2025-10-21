@@ -12,7 +12,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FlowOrchestrationService } from '../../services/flow-orchestration.service';
 import { APP_CONFIG } from '@dataclouder/ngx-core';
 import { BaseFlowNode } from '../base-flow-node';
-import { NodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
+import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 import { ActionsToolbarComponent } from '../actions-toolbar/actions-toolbar.component';
 
 export interface CustomTaskNode extends ComponentDynamicNode {
@@ -30,7 +30,7 @@ export interface CustomTaskNode extends ComponentDynamicNode {
     TagModule,
     ProgressSpinnerModule,
     HandleComponent,
-    NodeToolbarComponent,
+    BaseNodeToolbarComponent,
     ActionsToolbarComponent,
   ],
   templateUrl: './task-node.html',
@@ -45,6 +45,7 @@ export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements O
 
   public agentTask = computed(() => this.node()?.data?.nodeData);
   public statusJobEnum = StatusJob;
+  public status = computed(() => this.taskExecutionState()?.status || this.statusJobEnum.PENDING);
 
   public override nodeCategory: 'process' | 'input' | 'output' = 'process';
 
@@ -62,12 +63,12 @@ export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements O
     this.isDialogVisible = true;
     this.dialogService.open(TaskNodeDetailsComponent, {
       header: 'Task Node Details',
-      contentStyle: { overflow: 'auto' },
+      contentStyle: { 'max-height': '90vh', padding: '0px' },
       baseZIndex: 10000,
       draggable: true,
       closable: true,
       data: this.node(),
-      width: '450px',
+      width: '550px',
     });
   }
 
@@ -82,13 +83,16 @@ export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements O
     return exeUrl;
   }
 
-  handleActionsToolbarEvents(event: 'runNode' | 'runEndPoint'): void {
+  handleActionsToolbarEvents(event: 'runNode' | 'getExecutionUrl' | 'runEndPoint'): void {
     switch (event) {
       case 'runNode':
         this.runNode();
         break;
-      case 'runEndPoint':
+      case 'getExecutionUrl':
         this.getExecutionUrl();
+        break;
+      case 'runEndPoint':
+        this.flowOrchestrationService.runEndPoint(this.flowDiagramStateService.getFlow()?.id!, this.node().id);
         break;
     }
   }

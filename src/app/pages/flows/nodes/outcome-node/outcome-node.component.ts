@@ -7,6 +7,7 @@ import { OutcomeJobDetailComponent } from 'src/app/pages/jobs/job-detail/job-det
 import { ButtonModule } from 'primeng/button';
 import { JsonPipe } from '@angular/common';
 import { BaseFlowNode } from '../base-flow-node';
+import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 
 export interface CustomOutcomeNode extends ComponentDynamicNode {
   nodeData: IAgentOutcomeJob;
@@ -16,7 +17,7 @@ export interface CustomOutcomeNode extends ComponentDynamicNode {
 
 @Component({
   selector: 'app-outcome-node',
-  imports: [Vflow, DialogModule, ButtonModule, JsonPipe],
+  imports: [Vflow, DialogModule, ButtonModule, JsonPipe, BaseNodeToolbarComponent],
   templateUrl: './outcome-node.component.html',
   styleUrl: './outcome-node.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -74,5 +75,18 @@ export class OutcomeNodeComponent extends BaseFlowNode<CustomOutcomeNode> implem
         jobInput: this.outcomeJob,
       },
     });
+  }
+
+  override handleToolbarEvents(event: 'delete' | 'none' | 'details'): void {
+    switch (event) {
+      case 'delete':
+        this.removeNode();
+        break;
+      case 'none':
+        break;
+      case 'details':
+        this.openModal();
+        break;
+    }
   }
 }

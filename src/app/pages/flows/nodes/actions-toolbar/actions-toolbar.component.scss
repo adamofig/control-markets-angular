@@ -1,7 +1,44 @@
+.execute-btn,
+.remove-btn {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+// Este código no funciona en safari
+.execute-btn:disabled,
+.remove-btn:disabled,
+.btn-round:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.execute-btn {
+  background-color: #17a2b8; /* info */
+  color: white;
+}
+
+.remove-btn {
+  background-color: #dc3545; /* danger */
+  color: white;
+}
 .btn-round {
-    background-color: rgba(11, 151, 226, 0.642);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
+  background-color: rgba(11, 151, 226, 0.642);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.toolbar-container {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
 }
