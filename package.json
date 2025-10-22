@@ -82,6 +82,7 @@
     "angular-shepherd": "^20.0.0",
     "date-fns": "^4.1.0",
     "dexie": "^4.2.0",
+    "es-toolkit": "^1.40.0",
     "firebase": "^12.1.0",
     "force": "^0.0.3",
     "ionicons": "^8.0.13",

@@ -6,9 +6,9 @@
 
 .node-card {
   border-radius: 15px;
-  border: 5px solid #f57403;
+  border: 5px solid #ff6f00;
   overflow: hidden;
-  box-shadow: 7px 7px 21px #f05117, -7px -7px 21px #ffffff;
+  box-shadow: 7px 7px 21px #b21301, -7px -7px 21px #ffffff; // no veo este color creo que no sirve. 
 }
 
 .image-background {
@@ -24,16 +24,16 @@
   @keyframes status-animation-#{$color} {
     0%,
     100% {
-      box-shadow: 7px 7px 21px #{$color}, -7px -7px 21px #ffffff;
+      box-shadow: 7px 7px 21px #{$color}, -7px -7px 21px lighten($color, 35%);
     }
     50% {
-      box-shadow: 7px 7px 21px lighten($color, 20%), -7px -7px 21px #ffffff;
+      box-shadow: 7px 7px 21px lighten($color, 35%), -7px -7px 21px #{$color};
     }
   }
 }
 
 .status-default {
-  @include status-animation(#f57403); // Default orange
+  @include status-animation(lavender); // Default orange
 }
 
 .status-pending {
