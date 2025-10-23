@@ -1,3 +1,6 @@
+# I need to refactor to pass params  the  only use for this is becouse it runs RUN pnpm run build:internal-server and set config.json
+
+
 # Stage 1: Build the Angular application
 FROM node:22-alpine AS builder
 LABEL stage="builder"
@@ -7,14 +10,14 @@ WORKDIR /app
 # Copy package files and install dependencies
 # Using --legacy-peer-deps as your project might have peer dependency conflicts
 COPY package.json package-lock.json* ./
-RUN npm ci --legacy-peer-deps
+RUN npm install -g pnpm && pnpm i
 
 # Copy the rest of the application source code
 COPY . .
 
 # Build the application for production
 # Assumes output is in /app/dist/polilan (check angular.json if different)
-RUN npm run build:prod
+RUN pnpm run build:internal-server
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:1.27-alpine AS runner

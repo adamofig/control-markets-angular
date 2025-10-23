@@ -35,6 +35,7 @@ import { AppUserService } from 'src/app/services/app-user.service';
 import { PwaInstallComponent } from '../components/pwa-install/pwa-install.component';
 import { APP_CONFIG } from '@dataclouder/ngx-core';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { PlanIconPipe } from '@dataclouder/app-auth';
 
 @Component({
   selector: 'app-ionic-layout',
@@ -71,6 +72,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
     FormsModule,
     PwaInstallComponent,
     ToggleSwitchModule,
+    PlanIconPipe,
   ],
 })
 export class IonicLayoutComponent implements OnInit {
@@ -103,7 +105,7 @@ export class IonicLayoutComponent implements OnInit {
   public adminPages = [
     { title: 'Admin Users', url: '/page/admin/users', icon: 'people' },
     { title: 'Admin Other', url: '/page/admin', icon: 'settings' },
-    { title: 'Agent Rules', url: '/page/admin/agent-rules', icon: 'settings' },
+    { title: 'Agent Rules', url: '/page/admin/agent-rules', icon: 'receipt' },
   ];
 
   public testingPages = [{ title: 'Test', url: '/page/test', icon: 'code-working' }];

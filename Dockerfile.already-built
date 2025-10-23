@@ -1,0 +1,30 @@
+# NOTE: this docker assumes you already build your app just copy to the nginx server. 
+
+# Stage 1: Serve the application with Nginx (using pre-built assets)
+FROM nginx:1.27-alpine
+
+# Set a label for clarity
+LABEL stage="nginx-server"
+
+# Declare build argument for environment with a default value
+ARG APP_ENV=qa
+
+# Copy the pre-built application (from Cloud Build's workspace) to Nginx's webroot
+# The 'dist/browser' directory is expected to exist in the build context
+# because the 'build-angular-for-env' step in cloudbuild.yaml creates it.
+COPY dist/browser /usr/share/nginx/html
+
+# Overwrite the default config with the environment-specific one.
+# This relies on the build context having access to the 'src/assets' directory.
+COPY src/assets/config.${APP_ENV}.json /usr/share/nginx/html/assets/config.json
+
+# Copy the custom Nginx configuration
+# Ensure nginx.conf is in the root of your project or adjust path.
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+
+# Expose port 80 (Nginx default port)
+EXPOSE 80
+
+# Start Nginx when the container launches. This is now the command passed to the entrypoint.
+CMD ["nginx", "-g", "daemon off;"]
