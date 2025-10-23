@@ -22,7 +22,7 @@ LABEL stage="runner"
 
 # Copy the built application from the builder stage to Nginx's webroot
 # Adjust '/app/dist/polilan' if your angular.json outputPath is different
-COPY --from=builder /app/www /usr/share/nginx/html
+COPY --from=builder /app/www/browser /usr/share/nginx/html
 
 # Copy the custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
