@@ -4,7 +4,7 @@
   "envName": "DEV",
   "production": true,
   "authenticationRequired": true,
-  "backendNodeUrl": "https://192.168.2.6:8121",
+  "backendNodeUrl": "http://192.168.2.6:8121",
   "backendPythonUrl": "http://192.168.2.6:8122",
   "aiServicesUrl": "http://192.168.2.6:8123",
   "mobile": {
