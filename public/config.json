@@ -4,9 +4,9 @@
   "envName": "DEV",
   "production": true,
   "authenticationRequired": true,
-  "backendNodeUrl": "http://192.168.2.6:8121",
-  "backendPythonUrl": "http://192.168.2.6:8122",
-  "aiServicesUrl": "http://192.168.2.6:8123",
+  "backendNodeUrl": "https://local-back.control.markets",
+  "backendPythonUrl": "https://python-back.control.markets",
+  "aiServicesUrl": "https://ai-services.control.markets",
   "mobile": {
     "appleAppId": "com.dc-template.app.dev",
     "appleRedirectURI": "https://dataclouder-dev.firebaseapp.com/__/auth/handler",

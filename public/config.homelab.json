@@ -5,7 +5,8 @@
   "production": true,
   "authenticationRequired": true,
   "backendNodeUrl": "https://local-back.control.markets",
-  "backendPythonUrl": "http://home.lab:8122",
+  "backendPythonUrl": "https://python-back.control.markets",
+  "aiServicesUrl": "https://ai-services.control.markets",
   "mobile": {
     "appleAppId": "com.dc-template.app.dev",
     "appleRedirectURI": "https://dataclouder-dev.firebaseapp.com/__/auth/handler",

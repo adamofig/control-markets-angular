@@ -10,6 +10,8 @@
   "scripts": {
     "ng": "ng",
     "config:internalnet": "cp public/config.internalnet.json public/config.json",
+    "config:homelab": "cp public/config.homelab.json public/config.json",
+    "config:homeserver": "cp public/config.homeserver.json public/config.json",
     "start": "ng serve --host 0.0.0.0 --port 4202",
     "start:qa": "ng serve -c qa --host 0.0.0.0 --port 4202",
     "start:prod": "ng serve -c production --host 0.0.0.0 --port 4202",
@@ -17,6 +19,8 @@
     "build": "ng build",
     "build:dev": "ng build",
     "build:internalnet": "npm run config:internalnet && ng build",
+    "build:homelab": "npm run config:homelab && ng build",
+    "build:homeserver": "npm run config:homeserver && ng build",
     "build:prod": "ng build -c production",
     "build:internal-server": "ng build -c internal-server",
     "sync-version": "node scripts/sync-version.js",
