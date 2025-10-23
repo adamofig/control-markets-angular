@@ -38,12 +38,8 @@
                 "output": "/"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss", "node_modules/prismjs/themes/prism-okaidia.css", "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css"],
+            "styles": ["src/global.scss", "src/theme/variables.scss"],
             "scripts": [
-              "./node_modules/prismjs/prism.js",
-              "./node_modules/prismjs/components/prism-csharp.min.js",
-              "./node_modules/prismjs/components/prism-css.min.js",
-              "./node_modules/prismjs/plugins/line-numbers/prism-line-numbers.js",
               "./node_modules/mermaid/dist/mermaid.min.js"
             ]
           },

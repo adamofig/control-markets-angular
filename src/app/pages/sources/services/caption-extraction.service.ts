@@ -7,7 +7,7 @@ import { SourceService } from '../sources.service';
 import { AgentCardService } from 'src/app/services/agent-cards.service';
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 // import { DCProgressToastComponent } from '@dataclouder/ngx-core';
-import { chunk } from 'lodash';
+import { chunk } from 'es-toolkit/compat';
 
 // import { extractJsonFromString } from '@dataclouder/ngx-core';
 
