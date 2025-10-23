@@ -2,12 +2,17 @@
   "projectName": "Control Markets",
   "version": "0.0.45",
   "envName": "DEV",
-  "production": false,
+  "production": true,
   "authenticationRequired": true,
-  "backendNodeUrl": "http://192.168.2.3:8080",
-  "backendPythonUrl": "http://192.168.2.3:8000",
-  "aiServicesUrl": "http://192.168.2.3:8082",
-  "mobile": {},
+  "backendNodeUrl": "https://192.168.2.6:8121",
+  "backendPythonUrl": "http://192.168.2.6:8122",
+  "aiServicesUrl": "http://192.168.2.6:8123",
+  "mobile": {
+    "appleAppId": "com.dc-template.app.dev",
+    "appleRedirectURI": "https://dataclouder-dev.firebaseapp.com/__/auth/handler",
+    "androidClientId": "484991861457-chhvmiqtjq22je1nr9m13ouljrdeuhpi.apps.googleusercontent.com",
+    "iosClientId": "484991861457-o3j8n8fv21huerkd0pj8r719jssrtbnh.apps.googleusercontent.com"
+  },
   "firebase": {
     "apiKey": "AIzaSyAecVnUj1-IjKGDvBarhufKAfO-Y-RyTXw",
     "authDomain": "golden-ad-dev.firebaseapp.com",
