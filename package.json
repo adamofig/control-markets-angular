@@ -9,6 +9,7 @@
   "homepage": "dataclouder.dev",
   "scripts": {
     "ng": "ng",
+    "config:internalnet": "cp public/config.internalnet.json public/config.json",
     "start": "ng serve --host 0.0.0.0",
     "start:qa": "ng serve -c qa --host 0.0.0.0",
     "start:prod": "ng serve -c production --host 0.0.0.0",
@@ -16,6 +17,7 @@
     "build": "ng build",
     "build:dev": "ng build",
     "build:prod": "ng build -c production",
+    "build:internalnet": "npm run config:internalnet && ng build",
     "sync-version": "node scripts/sync-version.js",
     "deploy-prod-local": "ng build -c production & npx serve -s www/browser",
     "watch": "ng build --watch --configuration development",

@@ -103,7 +103,7 @@ export class IonicLayoutComponent implements OnInit {
   public adminPages = [
     { title: 'Admin Users', url: '/page/admin/users', icon: 'people' },
     { title: 'Admin Other', url: '/page/admin', icon: 'settings' },
-    { title: 'Agent Rules', url: '/page/admin/agent-rules', icon: 'settings' },
+    { title: 'Agent Rules', url: '/page/admin/agent-rules', icon: 'receipt' },
   ];
 
   public testingPages = [{ title: 'Test', url: '/page/test', icon: 'code-working' }];
