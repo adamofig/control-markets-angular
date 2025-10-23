@@ -14,7 +14,7 @@ export interface IJobRelation {
 
 export interface MessageAI {
   role: string;
-  content: string;
+  content?: string;
 }
 
 export interface IAgentOutcomeJob extends AuditDate {

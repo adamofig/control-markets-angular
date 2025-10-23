@@ -14,10 +14,8 @@ import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
 import { AspectType, CropperComponentModal, ResolutionType, FileStorageData, CloudStorage } from '@dataclouder/ngx-cloud-storage';
 
-import { EntityBaseFormComponent } from '@dataclouder/ngx-core';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { DialogModule } from 'primeng/dialog';
-import { JobListComponent } from '../job-list/job-list.component';
 
 @Component({
   selector: 'app-source-form',
@@ -33,7 +31,6 @@ import { JobListComponent } from '../job-list/job-list.component';
     CropperComponentModal,
     FormlyModule,
     DialogModule,
-    JobListComponent,
   ],
   templateUrl: './job-form.component.html',
   styleUrl: './job-form.component.css',

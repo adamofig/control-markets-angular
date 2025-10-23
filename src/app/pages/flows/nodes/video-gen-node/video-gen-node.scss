@@ -1,4 +1,6 @@
 
+@use "sass:color";
+
 .node-container {
   border-radius: 20px;
   overflow: hidden;
@@ -29,7 +31,7 @@
       box-shadow: 7px 7px 21px #{$color}, -7px -7px 21px #ffffff;
     }
     50% {
-      box-shadow: 7px 7px 21px lighten($color, 20%), -7px -7px 21px #ffffff;
+      box-shadow: 7px 7px 21px color.adjust($color, $lightness: 20%), -7px -7px 21px #ffffff;
     }
   }
 }

@@ -12,7 +12,7 @@ import { stepsIntro } from './steps-tour-home';
 import { AgentCardService } from 'src/app/services/agent-card-service';
 import { AgentCardUI, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ILesson } from '@dataclouder/ngx-lessons';
-import { DcLessonCardComponent, LESSONS_TOKEN } from '@dataclouder/ngx-lessons';
+import { LESSONS_TOKEN } from '@dataclouder/ngx-lessons';
 
 // Define card interface for type safety
 interface CardItem {
@@ -26,7 +26,7 @@ register();
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ButtonModule, InputTextModule, CardModule, DcLessonCardComponent, AgentCardUI],
+  imports: [ButtonModule, InputTextModule, CardModule, AgentCardUI],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
