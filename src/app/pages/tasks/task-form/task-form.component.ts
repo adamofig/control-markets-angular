@@ -8,7 +8,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
-import { SelectModule } from 'primeng/select';
+import { SelectChangeEvent, SelectModule } from 'primeng/select';
 
 import { TextareaModule } from 'primeng/textarea';
 
@@ -134,7 +134,7 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
     }
   }
 
-  public addSourceToTask(event: { originalEvent: any; value: ISourceTask }) {
+  public addSourceToTask(event: SelectChangeEvent) {
     this.taskForm.patchValue({
       sources: [...(this.taskForm.controls.sources.value || []), event.value],
     });

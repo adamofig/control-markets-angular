@@ -1,4 +1,6 @@
 
+@use "../mixins" as *;
+
 .node-container {
   border-radius: 20px;
   overflow: hidden;
@@ -20,36 +22,23 @@
   width: 120px;
 }
 
-@mixin status-animation($color) {
-  animation: status-animation-#{$color} 3s infinite;
-
-  @keyframes status-animation-#{$color} {
-    0%,
-    100% {
-      box-shadow: 7px 7px 21px #{$color}, -7px -7px 21px #ffffff;
-    }
-    50% {
-      box-shadow: 7px 7px 21px lighten($color, 20%), -7px -7px 21px #ffffff;
-    }
-  }
-}
 
 .status-default {
-  @include status-animation(#f57403); // Default orange
+  @include status-animation("default", #f57403); // Default orange
 }
 
 .status-pending {
-  @include status-animation(yellow);
+  @include status-animation("yellow", yellow);
 }
 
 .status-in_progress {
-  @include status-animation(blue);
+  @include status-animation("blue", blue);
 }
 
 .status-completed {
-  @include status-animation(green);
+  @include status-animation("green", green);
 }
 
 .status-failed {
-  @include status-animation(red);
+  @include status-animation("red", red);
 }

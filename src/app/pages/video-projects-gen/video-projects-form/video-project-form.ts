@@ -51,7 +51,6 @@ import { VideoFormDefinitionService } from './video-project-form-definition.serv
     DialogModule,
     AgentCardListComponent,
     DialogsComponent,
-    ArrayFormHandlerComponent,
   ],
   templateUrl: './video-project-form.html',
   styleUrl: './video-project-form.css',

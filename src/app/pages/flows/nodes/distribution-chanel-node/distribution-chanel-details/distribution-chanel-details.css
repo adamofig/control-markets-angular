@@ -18,7 +18,7 @@
   padding-left: 5px;
   padding-right: 5px;
 
-  &_selected {
+  &._selected {
     border: 2px solid gray;
   }
 }

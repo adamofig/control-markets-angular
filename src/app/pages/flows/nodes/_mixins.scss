@@ -1,0 +1,15 @@
+@use "sass:color";
+
+@mixin status-animation($color-name, $color-value) {
+  animation: status-animation-#{$color-name} 3s infinite;
+
+  @keyframes status-animation-#{$color-name} {
+    0%,
+    100% {
+      box-shadow: 7px 7px 21px #{$color-value}, -7px -7px 21px #ffffff;
+    }
+    50% {
+      box-shadow: 7px 7px 21px color.adjust($color-value, $lightness: 20%), -7px -7px 21px #ffffff;
+    }
+  }
+}
