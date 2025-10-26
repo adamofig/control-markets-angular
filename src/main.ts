@@ -29,7 +29,6 @@ import { MyPreset } from './mypreset';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { NotionService } from './app/services/notion.service';
-import { FormlyModule } from '@ngx-formly/core';
 
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideMarkdown } from 'ngx-markdown';
