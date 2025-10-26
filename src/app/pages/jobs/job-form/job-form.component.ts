@@ -14,7 +14,7 @@ import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
 import { AspectType, CropperComponentModal, ResolutionType, FileStorageData, CloudStorage } from '@dataclouder/ngx-cloud-storage';
 
-import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
+import { EntityBaseFormComponent } from '@dataclouder/ngx-core';
 import { DialogModule } from 'primeng/dialog';
 
 @Component({
@@ -29,7 +29,6 @@ import { DialogModule } from 'primeng/dialog';
     ChipModule,
     TooltipModule,
     CropperComponentModal,
-    FormlyModule,
     DialogModule,
   ],
   templateUrl: './job-form.component.html',
@@ -57,7 +56,7 @@ export class JobFormComponent implements OnInit {
     cropSettings: { aspectRatio: AspectType.Square, resolutions: [ResolutionType.MediumLarge], resizeToWidth: 700 },
   };
 
-  extraFields: FormlyFieldConfig[] = [
+  extraFields: any[] = [
     { key: 'title', type: 'input', props: { label: 'Title', placeholder: 'Title', required: false } },
     { key: 'content', type: 'textarea', props: { label: 'Content', placeholder: 'Content', required: false } },
   ];

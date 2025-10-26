@@ -75,8 +75,6 @@
     "@dataclouder/ngx-vertex": "^0.0.31",
     "@ionic/angular": "^8.7.3",
     "@jcesarmobile/ssl-skip": "0.4.0",
-    "@ngx-formly/core": "^7.0.0",
-    "@ngx-formly/primeng": "^7.0.0",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
     "@primeng/themes": "^20.2.0",
