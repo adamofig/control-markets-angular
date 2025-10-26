@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TaskNodeDetailsComponent } from './task-details/task-node-details';
+import { TaskConversationComponent } from './task-conversation/task-conversation';
 import { IAgentTask } from '../../../tasks/models/tasks-models';
 import { IFlowExecutionState, ITaskExecutionState, StatusJob } from '../../models/flows.model';
 import { TagModule } from 'primeng/tag';
@@ -95,5 +96,18 @@ export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements O
         this.flowOrchestrationService.runEndPoint(this.flowDiagramStateService.getFlow()?.id!, this.node().id);
         break;
     }
+  }
+
+  startConversation(): void {
+    this.dialogService.open(TaskConversationComponent, {
+      header: 'Conversation',
+      width: '550px',
+      height: '750px',
+      contentStyle: { 'max-height': '90vh', overflow: 'auto', height: '100%' },
+      baseZIndex: 10000,
+      draggable: true,
+      closable: true,
+      data: this.node(),
+    });
   }
 }
