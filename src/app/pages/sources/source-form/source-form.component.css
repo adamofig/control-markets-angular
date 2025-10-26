@@ -1,84 +1,18 @@
-:host {
-  display: block;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
-.source-form-card {
-  background: var(--surface-card);
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
 }
 
 .form-field {
-  position: relative;
-  margin-bottom: 1.5rem;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.form-field label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-color-secondary);
-  margin-bottom: 0.75rem;
-  display: block;
-  transition: color 0.2s ease;
-}
-
-/* Input styling */
-:host ::ng-deep .p-inputtext {
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  border: 1px solid var(--surface-border);
-  transition: all 0.2s ease;
-  width: 100%;
-  background: var(--surface-ground);
-}
-
-:host ::ng-deep .p-inputtext:hover {
-  border-color: var(--primary-color);
-}
-
-:host ::ng-deep .p-inputtext:focus {
-  box-shadow: 0 0 0 2px var(--surface-ground), 0 0 0 4px var(--primary-color-transparent);
-  border-color: var(--primary-color);
-}
-
-/* Dropdown styling */
-:host ::ng-deep .p-dropdown {
-  border-radius: 8px;
-  background: var(--surface-ground);
-}
-
-:host ::ng-deep .p-dropdown:not(.p-disabled).p-focus {
-  box-shadow: 0 0 0 2px var(--surface-ground), 0 0 0 4px var(--primary-color-transparent);
-  border-color: var(--primary-color);
-}
-
-/* Button styling */
-:host ::ng-deep .p-button {
-  border-radius: 8px;
-  padding: 0.75rem 1.5rem;
-  transition: all 0.2s ease;
-}
-
-:host ::ng-deep .p-button:not(:disabled):hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Textarea styling */
-:host ::ng-deep .p-inputtextarea {
-  border-radius: 8px;
-  background: var(--surface-ground);
-}
-
-/* Error state */
-:host ::ng-deep .ng-invalid.ng-touched {
-  border-color: var(--red-500);
-}
-
-:host ::ng-deep .ng-invalid.ng-touched:focus {
-  box-shadow: 0 0 0 2px var(--surface-ground), 0 0 0 4px rgba(255, 72, 66, 0.2);
+.form-field-col-2 {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }

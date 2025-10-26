@@ -4,7 +4,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DistributionChanelDetailsComponent } from './distribution-chanel-details/distribution-chanel-details';
 
-export type NodeData = {
+export type NodeDistributionChanelData = {
   text: string;
   image: string;
 };
@@ -17,7 +17,7 @@ export type NodeData = {
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DistributionChanelNodeComponent extends CustomNodeComponent<NodeData> implements OnInit {
+export class DistributionChanelNodeComponent extends CustomNodeComponent<NodeDistributionChanelData> implements OnInit {
   public dialogService = inject(DialogService);
 
   constructor() {

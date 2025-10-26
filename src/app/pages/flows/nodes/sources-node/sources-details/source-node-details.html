@@ -1,0 +1,27 @@
+<div>
+  <div class="flex justify-end">
+    <p-button
+      [label]="isEditing ? 'Cancel' : 'Edit'"
+      [icon]="isEditing ? 'pi pi-times' : 'pi pi-pencil'"
+      [text]="true"
+      (onClick)="isEditing = !isEditing"></p-button>
+  </div>
+  <p>Source Details</p>
+
+  @if (!isEditing) {
+  <div>
+    @if (source?.content) {
+    <markdown> {{ source?.content }} </markdown>
+    } @else {
+    <pre>{{ source | json }}</pre>
+    } @if (source?.tag) {
+    <p>Tag: {{ source?.tag }}</p>
+    }
+  </div>
+  } @else {
+  <app-source-form [entity]="source!" [useFakeSave]="true" (fakeSaved)="fakeSaved($event)"></app-source-form>
+  }
+
+  <!-- Optional: Add a button or other elements to interact with sourceData -->
+  <button pButton label="Show Source Info in Console" (click)="displaySourceInfo()"></button>
+</div>

@@ -89,18 +89,6 @@ export const Endpoints = {
     QueryLessons: 'api/lesson/query',
   },
 
-  Sources: {
-    Source: 'api/agent-sources',
-    QuerySources: 'api/agent-sources/query',
-    YoutubeTranscript: 'api/agent-sources/youtube-transcript',
-    Notion: {
-      ListDBs: 'api/notion/list-dbs',
-      ListPages: 'api/notion/list-pages',
-      CreatePage: 'api/notion/create-page',
-      PageInSpecificFormat: 'api/notion/page-in-specific-format', // Get /{pageId}
-    },
-  },
-
   VideoAnalysis: {
     TiktokData: 'api/video-analizer/tiktok/data',
   },

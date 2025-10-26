@@ -1,6 +1,6 @@
 import { Injectable, signal, Type } from '@angular/core';
 import { IAgentFlows, NodeType } from '../models/flows.model';
-import { DynamicNodeWithData } from './flow-diagram-state.service';
+import { DynamicNodeWithData, NodeData } from './flow-diagram-state.service';
 import { Connection, Edge } from 'ngx-vflow';
 import { nanoid } from 'nanoid';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
@@ -36,7 +36,7 @@ export class FlowSignalNodeStateService {
     this._createAgentNode(agentCard);
   }
 
-  public updateNodeData(nodeId: string, data: any) {
+  public updateNodeData(nodeId: string, data: NodeData) {
     this.nodes.update(nodes => nodes.map(node => (node.id === nodeId ? { ...node, data } : node)));
     //
     console.log('updateNodeData', this.nodes());

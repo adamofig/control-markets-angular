@@ -1,3 +1,7 @@
-@if (conversationSettings(); as settings) {
-<dc-chat [conversationSettings]="settings"></dc-chat>
+<!-- @if (conversationSettings(); as settings) {
+<dc-chat [agentCard]="agentCard()" ></dc-chat>
+} -->
+
+@if (agentCard()) {
+<dc-chat [conversationSettings]="conversationSettings()!"></dc-chat>
 }

@@ -1,33 +1,53 @@
 <div class="source-form-card">
   <p-card [header]="entityId() ? 'Edit Source' : 'New Source'">
-    <form [formGroup]="sourceForm" class="flex flex-column gap-4">
-      <div class="form-field">
-        <label for="name">Name</label>
-        <input id="name" type="text" pInputText formControlName="name" placeholder="Enter source name" />
-      </div>
+    <form [formGroup]="form">
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="name">Name</label>
+          <input id="name" type="text" pInputText formControlName="name" placeholder="Enter source name" />
+        </div>
 
-      <div class="form-field">
-        <label for="type" class="block">Type</label>
-        <p-select id="type" [options]="sourcesTypes" formControlName="type" placeholder="Select Type" optionLabel="label" optionValue="value" class="w-full">
-        </p-select>
-      </div>
+        <div class="form-field">
+          <label for="type" class="block">Type</label>
+          <p-select id="type" [options]="sourcesTypes" formControlName="type" placeholder="Select Type" optionLabel="label" optionValue="value" class="w-full">
+          </p-select>
+        </div>
 
-      <div class="form-field">
-        <label class="block">Source URL</label>
-        <input type="text" pInputText formControlName="sourceUrl" placeholder="Enter source URL" class="w-full" />
-      </div>
+        <div class="form-field">
+          <label class="block">Source URL</label>
+          <input type="text" pInputText formControlName="sourceUrl" placeholder="Enter source URL" class="w-full" />
+        </div>
 
-      <div class="form-field">
-        <label for="description" class="block">Description</label>
-        <textarea
-          [autoResize]="true"
-          style="width: 100%; max-height: 500px; overflow-y: auto"
-          id="description"
-          rows="2"
-          pInputTextarea
-          formControlName="description"
-          placeholder="Enter brief description of the source">
-        </textarea>
+        <div class="form-field">
+          <label for="tag">Tag</label>
+          <input id="tag" type="text" pInputText formControlName="tag" placeholder="Enter a tag" />
+        </div>
+
+        <div class="form-field-col-2">
+          <label for="description" class="block">Description</label>
+          <textarea
+            [autoResize]="true"
+            style="width: 100%"
+            id="description"
+            rows="2"
+            pInputTextarea
+            formControlName="description"
+            placeholder="Enter brief description of the source">
+          </textarea>
+        </div>
+
+        <div class="form-field-col-2">
+          <label for="content" class="block">Content</label>
+          <textarea
+            [autoResize]="true"
+            style="width: 100%; max-height: 500px; overflow-y: auto"
+            id="content"
+            rows="5"
+            pInputTextarea
+            formControlName="content"
+            placeholder="Enter content of the source">
+          </textarea>
+        </div>
       </div>
     </form>
 
@@ -36,9 +56,8 @@
       <p-button (click)="goToSourceDetail(entityId())" type="submit" label="Ver detalles" icon="pi pi-check" iconPos="right"> </p-button>
       }
 
-      <p-button (click)="saveSource()" type="submit" label="Save Source" [disabled]="!sourceForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
-
-      <p-button (click)="updateSource()" label="Actualizar Fuente" [disabled]="!sourceForm.valid" icon="pi pi-refresh" iconPos="right"> </p-button>
+      <p-button (click)="save()" type="submit" label="Save Source" [disabled]="!form.valid" icon="pi pi-check" iconPos="right"> </p-button>
+      <!-- <p-button (click)="updateSource()" label="Actualizar Fuente" [disabled]="!sourceForm.valid" icon="pi pi-refresh" iconPos="right"> </p-button> -->
     </div>
   </p-card>
 </div>

@@ -55,7 +55,7 @@ export class SourceDetailComponent {
   }
 
   public async getSource() {
-    const source = await this.sourceService.getSource(this.sourceId);
+    const source = await this.sourceService.findOne(this.sourceId);
     if (this.source?.statusDescription !== source.statusDescription) {
       this.statusHistory.push(source.statusDescription);
     }

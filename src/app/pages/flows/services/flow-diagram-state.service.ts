@@ -14,6 +14,7 @@ export interface NodeData {
   nodeData?: any;
   inputNodeId?: string;
   processNodeId?: string;
+  [key: string]: any;
 }
 
 export type DynamicNodeWithData = DynamicNode & { data?: any; category: 'input' | 'output' | 'process' | 'other'; component: string };
@@ -76,7 +77,7 @@ export class FlowDiagramStateService {
     console.log('outcomeJobNode', outcomeJobNode);
   }
 
-  public updateNodeData(nodeId: string, data: any) {
+  public updateNodeData(nodeId: string, data: NodeData) {
     this.flowSignalNodeStateService.updateNodeData(nodeId, data);
   }
 

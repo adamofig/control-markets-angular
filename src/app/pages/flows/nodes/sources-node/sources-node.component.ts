@@ -3,7 +3,7 @@ import { SlicePipe } from '@angular/common';
 import { ComponentDynamicNode, CustomNodeComponent, Vflow } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
-import { SourcesDetailsComponent } from './sources-details/sources-details.component'; // Updated import
+import { SourceNodeDetailsComponent } from './sources-details/source-node-details'; // Updated import
 import { IAgentSource } from 'src/app/pages/sources/models/sources.model'; // Corrected import
 import { ButtonModule } from 'primeng/button';
 import { FlowDiagramStateService } from '../../services/flow-diagram-state.service';
@@ -61,7 +61,7 @@ export class SourcesNodeComponent extends CustomNodeComponent<CustomSourceNode> 
   openModal(): void {
     this.isDialogVisible = true;
 
-    this.dialogService.open(SourcesDetailsComponent, {
+    this.dialogService.open(SourceNodeDetailsComponent, {
       // Updated component
       header: 'Source Node', // Updated header
       contentStyle: { overflow: 'auto' },
@@ -69,7 +69,7 @@ export class SourcesNodeComponent extends CustomNodeComponent<CustomSourceNode> 
       draggable: true,
       closable: true,
       width: '650px',
-      data: this.data(),
+      data: this.node(),
     });
   }
 

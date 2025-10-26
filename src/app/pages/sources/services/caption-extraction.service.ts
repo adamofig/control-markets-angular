@@ -40,7 +40,7 @@ export class CaptionExtractionService {
     } else {
       update.video.captions.remotion = captions.captions;
     }
-    await this.sourceService.updateSource(source.id, update);
+    await this.sourceService.partialUpdate(source.id, update);
 
     return captions.captions;
   }
@@ -52,7 +52,7 @@ export class CaptionExtractionService {
     // Here i need to update instead of save and check if nested properties update only one work.
     const update: any = { video: { captions: { tiktokStyle: tiktokCaptions.pages } } };
 
-    const response = await this.sourceService.updateSource(source.id, update);
+    const response = await this.sourceService.partialUpdate(source.id, update);
 
     console.log('Tiktok style captions extracted', response);
     return response;
@@ -88,7 +88,7 @@ export class CaptionExtractionService {
 
     console.log('Translated pages', translatedPages);
     const update: any = { video: { captions: { tiktokStyleSpanish: translatedPages } } };
-    await this.sourceService.updateSource(source.id, update);
+    await this.sourceService.partialUpdate(source.id, update);
 
     return {};
   }

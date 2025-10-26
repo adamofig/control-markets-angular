@@ -1,42 +1,47 @@
-<dc-filter-bar (onNew)="onNew()"></dc-filter-bar>
-<br />
-
-@for (source of sources; track source.id) {
-<div class="card-source">
-  <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
-    <p-speeddial
-      [model]="getCustomButtons(source)"
-      [radius]="70"
-      type="semi-circle"
-      direction="left"
-      [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
-  </div>
-  <p-card [header]="source.name" (click)="doAction('view', source)" class="clickable">
-    <div>
-      @if(source?.thumbnail?.url) {
-      <img style="width: 200px; border-radius: 20px" [src]="source?.thumbnail?.url" alt="Thumbnail" />
-      } @else {
-      <img style="width: 200px; border-radius: 20px" src="assets/images/default-feature1.png" alt="Thumbnail" />
-      }
-    </div>
-    <p class="m-0">{{ source.description | slice : 0 : 350 }}...</p>
-
-    <p-chip [label]="source.type" icon="pi pi-{{ source.type }}" />
-
-    <span style="margin-left: 10px">
-      <p-tag icon="pi pi-key" severity="secondary" [value]="source.id" />
-    </span>
-
-    @if(source.createdAt){
-    <span style="margin-left: 10px">
-      <p-tag icon="pi pi-database" severity="secondary" value="{{ source.createdAt | date : 'dd/MM/yyyy HH:mm' }}" />
-    </span>
-    } @if(source.updatedAt){
-    <span style="margin-left: 10px">
-      <p-tag icon="pi pi-refresh" severity="secondary" value="{{ source.updatedAt | date : 'dd/MM/yyyy HH:mm' }}" />
-    </span>
-    }
-  </p-card>
-</div>
-
+@if (!onlyView()) {
+<p-button [icon]="viewType() === 'card' ? 'pi pi-table' : 'pi pi-list'" label="Change View" [link]="true" (click)="toggleView()" />
 }
+<div class="generic-list-container">
+  <dc-filter-bar [isAdmin]="userService.isAdmin()" [options]="filterBarOptions" (onNew)="onNew()" (onFilterAction)="doAction($event)"></dc-filter-bar>
+
+  @if (viewType() === 'card') {
+  <div class="generic-list-content">
+    @for (generic of items(); track generic.id) {
+    <div class="card-source">
+      <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
+        <p-speeddial
+          [model]="getCustomButtons(generic)"
+          [radius]="70"
+          type="quarter-circle"
+          direction="down-left"
+          [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
+      </div>
+      <p-card [header]="generic.name">
+        <p class="m-0">{{ generic.description | slice : 0 : 250 }}...</p>
+        <!-- <span>{{ generic?.auditable?.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span> -->
+      </p-card>
+    </div>
+    } @if (items().length === 0) {
+    <p-card>
+      <p>No generics found</p>
+    </p-card>
+    }
+  </div>
+  } @else if ( viewType() === 'table'){
+
+  <app-quick-table [tableData]="items()"></app-quick-table>
+
+  }
+
+  <div class="paginator-container">
+    <p-paginator
+      currentPageReportTemplate="{{ totalRecords }} conversations"
+      [showCurrentPageReport]="true"
+      (onPageChange)="onPageChange($event)"
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="[10, 20, 30]">
+    </p-paginator>
+  </div>
+</div>
