@@ -6,6 +6,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TaskNodeDetailsComponent } from './task-details/task-node-details';
 import { TaskConversationComponent } from './task-conversation/task-conversation';
+import { TaskWebhookDetailsComponent } from './task-webhook-details/task-webhook-details';
 import { IAgentTask } from '../../../tasks/models/tasks-models';
 import { IFlowExecutionState, ITaskExecutionState, StatusJob } from '../../models/flows.model';
 import { TagModule } from 'primeng/tag';
@@ -77,11 +78,21 @@ export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements O
     this.flowOrchestrationService.runNode(this.flowDiagramStateService.getFlow()?.id!, this.node().id);
   }
 
-  public getExecutionUrl(): string {
+  public getExecutionUrl(): void {
     // /api/agent-flows/run-node?flowId=sdfsdf&nodeId=sdfsdf
     const exeUrl = `${this.appConfig.backendNodeUrl}/api/agent-flows/run-node?flowId=${this.flowDiagramStateService.getFlow()?.id}&nodeId=${this.node().id}`;
-    alert(exeUrl);
-    return exeUrl;
+    this.dialogService.open(TaskWebhookDetailsComponent, {
+      header: 'Webhook URL',
+      width: '550px',
+      height: '250px',
+      contentStyle: { 'max-height': '90vh', overflow: 'auto' },
+      baseZIndex: 10000,
+      draggable: true,
+      closable: true,
+      data: {
+        exeUrl: exeUrl,
+      },
+    });
   }
 
   handleActionsToolbarEvents(event: 'runNode' | 'getExecutionUrl' | 'runEndPoint'): void {

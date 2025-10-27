@@ -1,5 +1,5 @@
 import { inject, Injectable, signal, Type } from '@angular/core';
-import { IAgentFlows, IJobExecutionState } from '../models/flows.model';
+import { IAgentFlows, IJobExecutionState, NodeData } from '../models/flows.model';
 import { Connection, DynamicNode, Edge } from 'ngx-vflow';
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
@@ -10,12 +10,6 @@ import { IGeneratedAsset } from '@dataclouder/ngx-vertex';
 import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { IAgentSource } from '../../sources/models/sources.model';
 // NOt able to set a type for data yet.
-export interface NodeData {
-  nodeData?: any;
-  inputNodeId?: string;
-  processNodeId?: string;
-  [key: string]: any;
-}
 
 export type DynamicNodeWithData = DynamicNode & { data?: any; category: 'input' | 'output' | 'process' | 'other'; component: string };
 

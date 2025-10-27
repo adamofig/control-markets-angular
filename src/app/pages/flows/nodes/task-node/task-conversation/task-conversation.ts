@@ -5,6 +5,7 @@ import { CustomTaskNode } from '../task-node';
 import { NodeSearchesService } from '../../../services/node-searches.service';
 import { NodeType } from '../../../models/flows.model';
 import { groupBy } from 'es-toolkit/array';
+import { NodePromptBuilderService } from '../../../services/node-prompt-builder.services';
 
 @Component({
   selector: 'app-task-conversation',
@@ -22,6 +23,7 @@ export class TaskConversationComponent implements OnInit {
   public nodeSearchesService = inject(NodeSearchesService);
   public agentService = inject(DefaultAgentCardsService);
   public agentCard = signal<IAgentCard | null>(null);
+  private nodePromptBuilder = inject(NodePromptBuilderService);
 
   ngOnInit(): void {
     this.node = this.config.data;
@@ -29,27 +31,15 @@ export class TaskConversationComponent implements OnInit {
     const agentTask: IAgentCard = this.config?.data?.data?.nodeData;
 
     const inputNodes = this.nodeSearchesService.getInputNodes(this.node?.id!);
+    const contextPrompts = this.nodePromptBuilder.getContextPrompts(inputNodes);
     const groupedInputNodes = groupBy(inputNodes, item => item.component);
-    const sourceNode = groupedInputNodes[NodeType.SourcesNodeComponent] || [];
     const agents = groupedInputNodes[NodeType.AgentNodeComponent];
-
-    let context = '';
-    if (sourceNode.length >= 1) {
-      for (const source of sourceNode) {
-        if (source.data.nodeData.tag === 'rule') {
-          context += source.data.nodeData.content + '\n';
-        } else {
-          context += source.data.nodeData.content + '\n';
-        }
-      }
-    }
-
     const agentData = agents[0].data.nodeData;
 
-    this.buildInitialConversation(agentData?._id || agentData?.id, context, agentTask);
+    this.buildInitialConversation(agentData?._id || agentData?.id, contextPrompts, agentTask);
   }
 
-  public async buildInitialConversation(id: string, context: string, agentTask: IAgentCard) {
+  public async buildInitialConversation(id: string, contextPrompts: ChatMessage[], agentTask: IAgentCard) {
     // Probably i would like to project, but may be i can play with flow conversations so, and i may need some more data.
     const agent = await this.agentService.findOneByQuery({ _id: id });
     this.agentCard.set(agent);
@@ -57,12 +47,8 @@ export class TaskConversationComponent implements OnInit {
 
     const description = agent.characterCard?.data.description;
     const prompt = 'You are ai agent here is your description: ' + description;
-    const contextPrompt = 'Here is the context you need to know: ' + context;
 
-    const systemMessages: ChatMessage[] = [
-      { role: ChatRole.System, content: prompt, messageId: 'Description' },
-      { role: ChatRole.System, content: contextPrompt, messageId: 'Context' },
-    ];
+    const systemMessages: ChatMessage[] = [{ role: ChatRole.System, content: prompt, messageId: 'Description' }, ...contextPrompts];
 
     // throw new Error('Method not implemented.');
     if (agentTask.description) {

@@ -26,19 +26,26 @@ export interface IEdgesData {
   edgeLabels?: string[];
 }
 
-export interface INodeData {
+export interface NodeData {
+  nodeData?: any;
+  inputNodeId?: string;
+  processNodeId?: string;
+  [key: string]: any;
+}
+
+export interface IFlowNode {
   id: string;
   point: { x: number; y: number };
   type: string; // not string but is the serialization of the class, use component to rely on the component.
   category: NodeCategory;
   component: NodeType;
-  data: any;
+  data: NodeData;
 }
 export interface IAgentFlows extends AuditDate {
   _id?: string;
   id: string;
   name?: string;
-  nodes?: INodeData[];
+  nodes?: IFlowNode[];
   edges?: IEdgesData[];
   metadata?: IAgentFlowsMetadata;
 }
