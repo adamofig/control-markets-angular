@@ -1,4 +1,25 @@
 <div>
-  <p>Execution URL:</p>
-  <textarea rows="5" cols="50" readonly>{{ exeUrl }}</textarea>
+  <p><strong>Method:</strong> {{ postRequest.method }}</p>
+  <p><strong>URL:</strong> {{ postRequest.host }}/{{ postRequest.service }}</p>
+  <div>
+    <p><strong>Body:</strong></p>
+    <pre>{{ postRequest.body | json }}</pre>
+  </div>
 </div>
+
+<div>
+  <h3>Add Attribute</h3>
+  <div class="attribute-row">
+    <div class="p-field">
+      <label for="key">Key</label>
+      <input id="key" type="text" pInputText [(ngModel)]="newAttributeKey" />
+    </div>
+    <div class="p-field">
+      <label for="value">Value</label>
+      <input id="value" type="text" pInputText [(ngModel)]="newAttributeValue" />
+    </div>
+    <p-button (click)="addAttribute()">Add Attribute</p-button>
+  </div>
+</div>
+
+<p-button (click)="callWebhook()">Call Webhook</p-button>

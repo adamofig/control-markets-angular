@@ -1,9 +1,9 @@
 @use "../mixins" as *;
 
-.node-container {
-  border-radius: 20px;
-  overflow: hidden;
-  padding: 5px;
+::ng-deep {
+  .p-dialog {
+    overflow: hidden;
+  }
 }
 
 .node-card {

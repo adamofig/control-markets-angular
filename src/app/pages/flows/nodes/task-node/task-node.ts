@@ -80,17 +80,28 @@ export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements O
 
   public getExecutionUrl(): void {
     // /api/agent-flows/run-node?flowId=sdfsdf&nodeId=sdfsdf
-    const exeUrl = `${this.appConfig.backendNodeUrl}/api/agent-flows/run-node?flowId=${this.flowDiagramStateService.getFlow()?.id}&nodeId=${this.node().id}`;
+    // const exeUrl = `${this.appConfig.backendNodeUrl}/api/agent-flows/run-node?flowId=${this.flowDiagramStateService.getFlow()?.id}&nodeId=${this.node().id}`;
+
+    const postRequest = {
+      method: 'POST',
+      host: this.appConfig.backendNodeUrl,
+      service: 'api/agent-flows/webhook/node',
+      body: {
+        flowId: this.flowDiagramStateService.getFlow()?.id,
+        nodeId: this.node().id,
+      },
+    };
+
     this.dialogService.open(TaskWebhookDetailsComponent, {
       header: 'Webhook URL',
       width: '550px',
-      height: '250px',
+      height: '650px',
       contentStyle: { 'max-height': '90vh', overflow: 'auto' },
       baseZIndex: 10000,
       draggable: true,
       closable: true,
       data: {
-        exeUrl: exeUrl,
+        postRequest: postRequest,
       },
     });
   }
@@ -113,12 +124,13 @@ export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements O
     this.dialogService.open(TaskConversationComponent, {
       header: 'Conversation',
       width: '550px',
-      height: '750px',
+      height: '800px',
       contentStyle: { 'max-height': '90vh', overflow: 'auto', height: '100%' },
       baseZIndex: 10000,
       draggable: true,
       closable: true,
       data: this.node(),
+      maximizable: true,
     });
   }
 }

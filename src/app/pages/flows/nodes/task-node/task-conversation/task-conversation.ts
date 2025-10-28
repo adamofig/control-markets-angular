@@ -25,6 +25,8 @@ export class TaskConversationComponent implements OnInit {
   public agentCard = signal<IAgentCard | null>(null);
   private nodePromptBuilder = inject(NodePromptBuilderService);
 
+  public imgBackground = signal<string | null>(null);
+
   ngOnInit(): void {
     this.node = this.config.data;
 
@@ -35,6 +37,9 @@ export class TaskConversationComponent implements OnInit {
     const groupedInputNodes = groupBy(inputNodes, item => item.component);
     const agents = groupedInputNodes[NodeType.AgentNodeComponent];
     const agentData = agents[0].data.nodeData;
+
+    this.imgBackground.set(agentData?.assets?.image?.url || '');
+    console.log('imgBackground', this.imgBackground());
 
     this.buildInitialConversation(agentData?._id || agentData?.id, contextPrompts, agentTask);
   }

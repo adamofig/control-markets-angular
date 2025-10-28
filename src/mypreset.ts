@@ -21,14 +21,6 @@ export const MyPreset = definePreset(Aura, {
           900: '{amber.950}',
           950: '{amber.950}',
         },
-
-        card: {
-          root: {
-            background: '#0b0319',
-            color: '{content.color}',
-            shadow: '0 1px 4px 0 rgba(0, 0, 0, 0.1)',
-          },
-        },
       },
     },
     primary: {
@@ -43,6 +35,19 @@ export const MyPreset = definePreset(Aura, {
       800: '{amber.900}',
       900: '{amber.950}',
       950: '{amber.950}',
+    },
+  },
+  components: {
+    dialog: {
+      colorScheme: {
+        dark: {
+          root: {
+            background: '{stone.800}',
+            borderColor: '{surface.700}',
+            color: '{text.color}',
+          },
+        },
+      },
     },
   },
 });

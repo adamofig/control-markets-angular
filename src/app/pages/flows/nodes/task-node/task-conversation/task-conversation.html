@@ -1,7 +1,5 @@
-<!-- @if (conversationSettings(); as settings) {
-<dc-chat [agentCard]="agentCard()" ></dc-chat>
-} -->
-
-@if (agentCard()) {
-<dc-chat [conversationSettings]="conversationSettings()!"></dc-chat>
-}
+<div class="conversation-container" [style.background-image]="'url(' + imgBackground() + ')'">
+  @if (conversationSettings(); as settings) { @if (agentCard(); as agent) {
+  <dc-chat [agentCard]="agent"></dc-chat>
+  } }
+</div>
