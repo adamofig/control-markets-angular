@@ -49,5 +49,30 @@ export const MyPreset = definePreset(Aura, {
         },
       },
     },
+    tabs: {
+      colorScheme: {
+        dark: {
+          tablist: {
+            background: '{surface.800}',
+            borderColor: '{surface.700}',
+          },
+          tab: {
+            background: 'transparent',
+            hoverBackground: '{surface.700}',
+            activeBackground: '{surface.900}',
+            color: '{text.color.secondary}',
+            hoverColor: '{text.color}',
+            activeColor: '{primary.color}',
+          },
+          activeBar: {
+            background: '{primary.color}',
+          },
+          tabpanel: {
+            background: '{stone.800}',
+            color: '{text.color}',
+          },
+        },
+      },
+    },
   },
 });

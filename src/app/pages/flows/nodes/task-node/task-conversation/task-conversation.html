@@ -1,5 +1,5 @@
 <div class="conversation-container" [style.background-image]="'url(' + imgBackground() + ')'">
-  @if (conversationSettings(); as settings) { @if (agentCard(); as agent) {
-  <dc-chat [agentCard]="agent"></dc-chat>
-  } }
+  @if (conversationSettings(); as settings) {
+  <dc-chat [conversationSettings]="settings"></dc-chat>
+  }
 </div>

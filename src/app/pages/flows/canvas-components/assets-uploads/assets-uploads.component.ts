@@ -27,7 +27,7 @@ export class AssetsUploadsComponent implements OnInit {
     this.imageStorageSettings = {
       path: 'flows/assets/' + this.entityId,
       fileName: undefined,
-      cropSettings: { aspectRatio: AspectType.Vertical_9_16, resolutions: [ResolutionType.Medium], resizeToWidth: 512 },
+      cropSettings: { aspectRatio: AspectType.vertical_9_16, resolutions: [ResolutionType.Medium], resizeToWidth: 512 },
     };
   }
 

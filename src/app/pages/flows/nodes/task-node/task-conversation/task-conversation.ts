@@ -6,6 +6,7 @@ import { NodeSearchesService } from '../../../services/node-searches.service';
 import { NodeType } from '../../../models/flows.model';
 import { groupBy } from 'es-toolkit/array';
 import { NodePromptBuilderService } from '../../../services/node-prompt-builder.services';
+import { EModelQuality } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-task-conversation',
@@ -61,6 +62,8 @@ export class TaskConversationComponent implements OnInit {
     }
     this.conversationSettings.set({
       messages: systemMessages,
+      userMustStart: true,
+      model: { quality: EModelQuality.BALANCED },
     });
     return agent;
   }

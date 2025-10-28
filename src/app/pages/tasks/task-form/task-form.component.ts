@@ -68,7 +68,7 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
 
   public storageImgSettings = {
     path: `jobs`,
-    cropSettings: { aspectRatio: AspectType.Banner, resolutions: [ResolutionType.MediumLarge], resizeToWidth: 700 },
+    cropSettings: { aspectRatio: AspectType.horizontal_3_2, resolutions: [ResolutionType.MediumLarge], resizeToWidth: 700 },
   };
 
   public dbOptions: any[] = [];

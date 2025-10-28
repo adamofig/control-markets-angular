@@ -6,6 +6,7 @@
   "authenticationRequired": true,
   "backendNodeUrl": "http://localhost:8121",
   "backendPythonUrl": "http://localhost:8122",
+  "aiServicesUrl": "http://localhost:8085",
   "mobile": {},
   "firebase": {
     "apiKey": "AIzaSyAecVnUj1-IjKGDvBarhufKAfO-Y-RyTXw",
