@@ -67,6 +67,7 @@ export class SourcesNodeComponent extends CustomNodeComponent<CustomSourceNode> 
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       draggable: true,
+      styleClass: 'draggable-dialog',
       closable: true,
       width: '650px',
       data: this.node(),

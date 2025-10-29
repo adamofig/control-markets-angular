@@ -69,6 +69,7 @@ export class OutcomeNodeComponent extends BaseFlowNode<CustomOutcomeNode> implem
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       draggable: true,
+      styleClass: 'draggable-dialog',
       closable: true,
       width: '650px',
       inputValues: {

@@ -49,6 +49,7 @@ export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements
       contentStyle: { 'max-height': '90vh', padding: '0px' },
       baseZIndex: 10000,
       draggable: true,
+      styleClass: 'draggable-dialog',
       closable: true,
       width: '500px',
       data: {

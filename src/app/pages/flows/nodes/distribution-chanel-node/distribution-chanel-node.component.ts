@@ -33,6 +33,7 @@ export class DistributionChanelNodeComponent extends CustomNodeComponent<NodeDis
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       draggable: true,
+      styleClass: 'draggable-dialog',
       closable: true,
     });
   }

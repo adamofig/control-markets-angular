@@ -20,11 +20,3 @@ dc-chat {
   backdrop-filter: blur(10px);
 }
 
-::ng-deep .p-dialog-header {
-  /* background: red; */
-  cursor: grab;
-}
-
-::ng-deep .p-dialog-header:active {
-  cursor: grabbing;
-}

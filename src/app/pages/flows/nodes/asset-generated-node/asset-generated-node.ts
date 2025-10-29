@@ -56,6 +56,7 @@ export class AssetGeneratedNodeComponent extends BaseFlowNode<CustomAssetGenerat
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       draggable: true,
+      styleClass: 'draggable-dialog',
       closable: true,
       width: '650px',
       inputValues: {

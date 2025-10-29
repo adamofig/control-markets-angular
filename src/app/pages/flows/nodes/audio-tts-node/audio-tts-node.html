@@ -1,16 +1,14 @@
-<div class="tts-node-container">
-  <p-button (click)="removeNode()" class="remove-btn" icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" />
+@if (selected()) {
+<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"> </app-node-toolbar>
+}
 
-  <hr />
-  @if(!agentSource() && settings()){
-  <dc-tts-playground #ttsPlayground [settings]="settings()" (ttsGenerated)="onTtsGenerated($event)"></dc-tts-playground>
-  } @else if (agentSource()) {
-  <p>Se encontro un node. de agente.</p>
-  <textarea rows="2" cols="30" pTextarea [(ngModel)]="value"></textarea>
-  <p-button (click)="generateTTS()" class="execute-btn" icon="pi pi-play" [rounded]="true" [text]="true" severity="info" />
+<div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
+  <div class="node-card" [ngClass]="'status-' + (statusJob() || 'default')">
+    <p>Text to Speech</p>
+    <i class="pi pi-volume-up" style="font-size: 2.5rem"></i>
 
-  } @else {
-  <p>Se requieren settings para el nodo de audio.</p>
-  }
+    <handle type="target" position="left" id="left" />
+    <handle type="source" position="right" id="right" />
+    <handle type="target" position="top" id="top" />
+  </div>
 </div>
-<handle type="target" position="left" id="b" />

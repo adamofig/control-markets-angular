@@ -74,5 +74,27 @@ export const MyPreset = definePreset(Aura, {
         },
       },
     },
+    select: {
+      colorScheme: {
+        dark: {
+          overlay: {
+            background: '{surface.800}',
+            borderColor: '{surface.700}',
+          },
+          root: {
+            color: '{text.color}',
+          },
+          option: {
+            color: '{text.color}',
+            focusBackground: '{surface.700}',
+            selectedBackground: '{primary.400}',
+            selectedFocusBackground: '{primary.500}',
+            selectedColor: '{primary.950}',
+            focusColor: '{text.color}',
+            selectedFocusColor: '{primary.950}',
+          },
+        },
+      },
+    },
   },
 });

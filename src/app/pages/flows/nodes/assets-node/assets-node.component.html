@@ -11,8 +11,10 @@
       <h4>{{ node()?.data?.nodeData?.name }}</h4>
     </div>
     } @if(node()?.data?.nodeData?.type === 'audio') {
-    <p-tag [value]="node()?.data?.nodeData?.name" />
-    <audio controls [src]="node()?.data?.nodeData?.storage?.url" width="150px" height="auto"></audio>
+    <div class="audio-container">
+      <p-tag [value]="node()?.data?.nodeData?.name" />
+      <audio controls [src]="node()?.data?.nodeData?.storage?.url"></audio>
+    </div>
     }
 
     <handle type="source" position="right" id="right" />

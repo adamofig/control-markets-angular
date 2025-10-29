@@ -107,6 +107,7 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       draggable: true,
+      styleClass: 'draggable-dialog',
       closable: true,
       data: this.node(),
       width: '450px',

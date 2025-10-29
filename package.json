@@ -89,7 +89,6 @@
     "dexie": "^4.2.0",
     "es-toolkit": "^1.40.0",
     "firebase": "^12.1.0",
-    "force": "^0.0.3",
     "ionicons": "^8.0.13",
     "marked": "^15.0.8",
     "mermaid": "^11.4.1",

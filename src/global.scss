@@ -110,6 +110,13 @@
 
   }
   
+.draggable-dialog .p-dialog-header {
+  cursor: grab;
+}
+
+.draggable-dialog .p-dialog-header:active {
+  cursor: grabbing;
+}
   
 // 3) Global styles and Overrides
 

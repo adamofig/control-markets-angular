@@ -68,6 +68,7 @@ export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements O
       contentStyle: { 'max-height': '90vh', padding: '0px' },
       baseZIndex: 10000,
       draggable: true,
+      styleClass: 'draggable-dialog',
       closable: true,
       data: this.node(),
       width: '550px',
@@ -99,6 +100,7 @@ export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements O
       contentStyle: { 'max-height': '90vh', overflow: 'auto' },
       baseZIndex: 10000,
       draggable: true,
+      styleClass: 'draggable-dialog',
       closable: true,
       data: {
         postRequest: postRequest,
@@ -128,6 +130,7 @@ export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements O
       contentStyle: { 'max-height': '90vh', overflow: 'auto', height: '100%' },
       baseZIndex: 10000,
       draggable: true,
+      styleClass: 'draggable-dialog',
       closable: true,
       data: this.node(),
       maximizable: true,
