@@ -13,7 +13,6 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IAssetsGeneration, IGeneratedAsset } from '@dataclouder/ngx-vertex';
 import { SelectModule } from 'primeng/select';
 import { GeneratedAssetsService } from '@dataclouder/ngx-vertex';
-import { FlowSignalNodeStateService } from '../../services/flow-signal-node-state.service';
 import { CounterComponent } from '../../../../components/counter/counter.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { VideoGenDetailsComponent } from './video-gen-details/video-gen-details';
@@ -47,7 +46,6 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
 export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implements OnInit, OnDestroy {
   public flowOrchestrationService = inject(FlowOrchestrationService);
   private generatedAssetsService = inject(GeneratedAssetsService);
-  private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
   private dialogService = inject(DialogService);
   private toastAlertService = inject(ToastAlertService);
 

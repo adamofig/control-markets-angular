@@ -11,6 +11,8 @@ import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 import { CommonModule } from '@angular/common';
+import { TtsPlaygroundWrapperComponent } from './tts-playground-wrapper/tts-playground-wrapper.component';
+import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 
 export interface CustomAudioTTsNode extends ComponentDynamicNode {
   nodeData: { value: string; settings: any };
@@ -26,10 +28,8 @@ export interface CustomAudioTTsNode extends ComponentDynamicNode {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> implements OnInit {
-  public flowSignalNodeStateService = inject(FlowSignalNodeStateService);
   @ViewChild('ttsPlayground') public ttsPlayground: TtsPlaygroundComponent | undefined;
   public dialogService = inject(DialogService);
-
   public storagePath = 'flows/audios/' + this.flowSignalNodeStateService.flow()?.id;
 
   public agentSource = signal<any>(null);
@@ -39,6 +39,8 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> impl
   public settings = signal<TTSPlaygroundSettings>({
     storagePath: this.storagePath,
   });
+
+  private toastService = inject(TOAST_ALERTS_TOKEN);
 
   constructor() {
     super();
@@ -54,7 +56,7 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> impl
     });
   }
 
-  onTtsGenerated(event: any) {
+  async onTtsGenerated(event: any) {
     console.log('tts generated', event);
 
     const optionalID = event._id || new Date().toISOString();
@@ -66,15 +68,28 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> impl
       type: 'audio',
       storage: event.storage,
     };
+
     this.flowSignalNodeStateService.addAssetNode(assetNodeData, this.node()?.id);
     // A ver que hago con el audio?
   }
 
+  public updateAudioNodeSettings(event: any) {
+    this.settings.set(event);
+    this.toastService.success({
+      title: 'Settings Updated',
+      subtitle: 'The audio node settings have been successfully updated.',
+    });
+  }
+
   public openModal() {
-    const ref = this.dialogService.open(TtsPlaygroundComponent, {
+    const ref = this.dialogService.open(TtsPlaygroundWrapperComponent, {
       header: 'TTS Playground',
       width: '650px',
       data: {
+        onTtsGenerated: (event: any) => this.onTtsGenerated(event),
+        onFormValues: (event: any) => this.updateAudioNodeSettings(event),
+      },
+      inputValues: {
         settings: this.settings(),
       },
       closable: true,
@@ -84,6 +99,9 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> impl
 
     if (ref) {
       ref.onClose.subscribe((result: any) => {
+        // TODO:  Check settings are saved.
+        this.settings.set(result.settings);
+        console.log('result', result);
         if (result) {
           this.onTtsGenerated(result);
         }

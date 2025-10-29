@@ -70,17 +70,6 @@ export class FlowSignalNodeStateService {
     console.log('creando nuevo nodo. ', inputNode, processNode);
   }
 
-  public addAudioTTSNode() {
-    const newNode: DynamicNodeWithData = {
-      id: 'audio-tts-gen-node-' + nanoid(),
-      point: signal({ x: 100, y: 100 }), // Default position
-      type: AudioTTsNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
-      category: 'process',
-      component: NodeType.AudioTTsNodeComponent,
-    };
-    this.nodes.set([...this.nodes(), newNode]);
-  }
-
   public addVideoGenNode() {
     const newNode: DynamicNodeWithData = {
       id: 'video-gen-node-' + nanoid(),

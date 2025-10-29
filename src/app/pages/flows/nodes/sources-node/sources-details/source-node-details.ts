@@ -8,6 +8,7 @@ import { IAgentSource } from 'src/app/pages/sources/models/sources.model'; // Im
 import { MarkdownModule } from 'ngx-markdown';
 import { SourceFormComponent } from 'src/app/pages/sources/source-form/source-form.component';
 import { FlowDiagramStateService } from '../../../services/flow-diagram-state.service';
+import { FlowSignalNodeStateService } from '../../../services/flow-signal-node-state.service';
 
 @Component({
   selector: 'app-source-node-details', // Updated selector
@@ -23,6 +24,7 @@ export class SourceNodeDetailsComponent implements OnInit {
   public source: IAgentSource | null = null; // Add property for source data
   public isEditing = false;
   public flowStateService = inject(FlowDiagramStateService);
+  private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
 
   constructor() {
     console.log(this.dynamicDialogConfig.data);
@@ -44,6 +46,6 @@ export class SourceNodeDetailsComponent implements OnInit {
   public fakeSaved(data: any) {
     console.log('Source Info:', data, this.dynamicDialogConfig.data);
     const nodeId = this.dynamicDialogConfig.data.id;
-    this.flowStateService.updateNodeData(nodeId, { nodeData: data });
+    this.flowSignalNodeStateService.updateNodeData(nodeId, { nodeData: data });
   }
 }

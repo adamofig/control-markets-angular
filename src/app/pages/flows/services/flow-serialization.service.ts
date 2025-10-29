@@ -69,9 +69,9 @@ export class FlowSerializationService {
       } else if (node.component === 'AudioTTsNodeComponent') {
         const audioTTsNode = this.flowComponentRefStateService.getNodeComponentRef(node.id);
         const value = (audioTTsNode as any)?.value;
-        const settings = (audioTTsNode as any)?.ttsPlayground?.getCurrentSettings();
+        const settings = { ...(audioTTsNode as any)?.settings() };
         // Temporal, settings should be consistent storagePath should save in settings but i have instead storage.path
-        settings['storagePath'] = (audioTTsNode as any)?.storagePath || settings.storage.path;
+        // settings['storagePath'] = (audioTTsNode as any)?.storagePath || settings.storage.path;
         const nodeData = { ...(node?.data?.nodeData || {}), value, settings };
         serializableData = { ...node?.data, nodeData };
       } else {

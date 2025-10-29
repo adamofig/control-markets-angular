@@ -10,6 +10,7 @@ import { FlowDiagramStateService } from '../../services/flow-diagram-state.servi
 import { FlowComponentRefStateService } from '../../services/flow-component-ref-state.service';
 import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 import { TagModule } from 'primeng/tag';
+import { FlowSignalNodeStateService } from '../../services/flow-signal-node-state.service';
 
 export interface CustomSourceNode extends ComponentDynamicNode {
   // Renamed interface
@@ -29,6 +30,7 @@ export class SourcesNodeComponent extends CustomNodeComponent<CustomSourceNode> 
   public dialogService = inject(DialogService);
   public flowDiagramStateService = inject(FlowDiagramStateService);
   public flowComponentRefStateService = inject(FlowComponentRefStateService);
+  private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
 
   public source: IAgentSource | null = null; // Updated property
 
@@ -75,7 +77,7 @@ export class SourcesNodeComponent extends CustomNodeComponent<CustomSourceNode> 
   }
 
   removeNode() {
-    this.flowDiagramStateService.removeNode(this.node().id);
+    this.flowSignalNodeStateService.removeNode(this.node().id);
   }
 
   handleToolbarEvents(event: string) {

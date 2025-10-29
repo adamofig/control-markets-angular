@@ -6,6 +6,7 @@ import { FlowComponentRefStateService } from '../services/flow-component-ref-sta
 import { FlowExecutionStateService } from '../services/flow-execution-state.service';
 import { IFlowExecutionState, IJobExecutionState, ITaskExecutionState, StatusJob } from '../models/flows.model';
 import { NodeSearchesService } from '../services/node-searches.service';
+import { FlowSignalNodeStateService } from '../services/flow-signal-node-state.service';
 
 // Intrucciones del base Node
 // 1. El nodo prove la capaicidad de injectar la referencia a un estado global para encontrar rapidamente el estado y modificar sus propiedades
@@ -31,6 +32,7 @@ export abstract class BaseFlowNode<T extends ComponentDynamicNode> extends Custo
   public flowComponentRefStateService = inject(FlowComponentRefStateService);
   public flowExecutionStateService = inject(FlowExecutionStateService);
   public nodeSearchesService = inject(NodeSearchesService);
+  protected flowSignalNodeStateService = inject(FlowSignalNodeStateService);
 
   public nodeCategory: 'process' | 'input' | 'output' = 'input';
 
@@ -106,7 +108,7 @@ export abstract class BaseFlowNode<T extends ComponentDynamicNode> extends Custo
   }
 
   removeNode(): void {
-    this.flowDiagramStateService.removeNode(this.node().id);
+    this.flowSignalNodeStateService.removeNode(this.node().id);
   }
 
   selectNode(): void {

@@ -73,6 +73,6 @@ export class AssetGeneratedNodeComponent extends BaseFlowNode<CustomAssetGenerat
     const generatedAsset = (await this.generatedAssetsService.findOne(this.node().data?.nodeData?.id || '')) as unknown as IGeneratedAsset;
     this.generatedAsset = generatedAsset;
 
-    this.flowDiagramStateService.updateNodeData(this.node().id, { nodeData: this.generatedAsset });
+    this.flowSignalNodeStateService.updateNodeData(this.node().id, { nodeData: this.generatedAsset });
   }
 }

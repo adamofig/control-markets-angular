@@ -1,10 +1,11 @@
 import { Injectable, signal, inject, NgZone, Type } from '@angular/core';
-import { IJobExecutionState } from '../models/flows.model';
-import { DynamicNodeWithData } from './flow-diagram-state.service';
+import { IJobExecutionState, NodeType } from '../models/flows.model';
+import { DynamicNodeWithData, FlowDiagramStateService } from './flow-diagram-state.service';
 import { IGeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-vertex';
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 import { nanoid } from 'nanoid';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
+import { AudioTTsNodeComponent } from '../nodes/audio-tts-node/audio-tts-node';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset
 export class FlowNodeCreationService {
   private generatedAssetsService = inject(GeneratedAssetsService);
   private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
+  private flowDiagramStateService = inject(FlowDiagramStateService);
 
   public async addGeneratedAssetNodeToFlow(jobExecutionState: IJobExecutionState) {
     const generatedAsset = await this.generatedAssetsService.findOne(jobExecutionState.outputEntityId);
@@ -41,6 +43,19 @@ export class FlowNodeCreationService {
       category: 'output',
       data: { nodeData: generatedAsset },
       component: 'AssetGeneratedNodeComponent',
+    };
+    this.flowSignalNodeStateService.nodes.set([...this.flowSignalNodeStateService.nodes(), newNode]);
+  }
+
+  public addAudioTTSNode() {
+    this.flowDiagramStateService.vflowComponent.panTo({ x: 100, y: 100 });
+    // this.flowDiagramStateService.vflowComponent.zoomTo(1);
+    const newNode: DynamicNodeWithData = {
+      id: 'audio-tts-gen-node-' + nanoid(),
+      point: signal({ x: 100, y: 100 }), // Default position
+      type: AudioTTsNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      category: 'process',
+      component: NodeType.AudioTTsNodeComponent,
     };
     this.flowSignalNodeStateService.nodes.set([...this.flowSignalNodeStateService.nodes(), newNode]);
   }

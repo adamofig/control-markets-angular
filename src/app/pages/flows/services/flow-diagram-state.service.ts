@@ -1,6 +1,6 @@
 import { inject, Injectable, signal, Type } from '@angular/core';
 import { IAgentFlows, IJobExecutionState, NodeData } from '../models/flows.model';
-import { Connection, DynamicNode, Edge } from 'ngx-vflow';
+import { Connection, DynamicNode, Edge, VflowComponent } from 'ngx-vflow';
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
 import { IAgentTask } from '../../tasks/models/tasks-models'; // Corrected path
@@ -20,7 +20,11 @@ export class FlowDiagramStateService {
   private jobService = inject(JobService);
   private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
   private toastService = inject(TOAST_ALERTS_TOKEN);
+  public vflowComponent!: VflowComponent;
 
+  public setVflowComponent(vflowComponent: VflowComponent) {
+    this.vflowComponent = vflowComponent;
+  }
   public getFlow() {
     return this.flowSignalNodeStateService.flow();
   }
@@ -63,9 +67,9 @@ export class FlowDiagramStateService {
     console.log('outcomeJobNode', outcomeJobNode);
   }
 
-  public updateNodeData(nodeId: string, data: NodeData) {
-    this.flowSignalNodeStateService.updateNodeData(nodeId, data);
-  }
+  // public updateNodeData(nodeId: string, data: NodeData) {
+  //   this.flowSignalNodeStateService.updateNodeData(nodeId, data);
+  // }
 
   public findOutcomeNodeByAgentCardId(agentCardId: string): DynamicNodeWithData | undefined {
     return this.flowSignalNodeStateService.findOutcomeNodeByAgentCardId(agentCardId);
@@ -75,36 +79,8 @@ export class FlowDiagramStateService {
     this.flowSignalNodeStateService.createConnectionInputToProcessNode(inputNode, processNode);
   }
 
-  public addAudioTTSGenNode() {
-    this.flowSignalNodeStateService.addAudioTTSNode();
-  }
-
-  public addVideoGenNode() {
-    this.flowSignalNodeStateService.addVideoGenNode();
-  }
-
-  public addTaskToFlow(task: IAgentTask): void {
-    this.flowSignalNodeStateService.addTaskToFlow(task);
-  }
-
-  public addAssetNode(asset: IAssetNodeData): void {
-    this.flowSignalNodeStateService.addAssetNode(asset);
-  }
-
-  public removeNode(nodeId: string): void {
-    this.flowSignalNodeStateService.removeNode(nodeId);
-  }
-
-  public createEdge({ source, target }: Connection) {
-    this.flowSignalNodeStateService.createEdge({ source, target });
-  }
-
   public addDistributionNode() {
     this.flowSignalNodeStateService.addDistributionNode();
-  }
-
-  public addSourceNode(source?: Partial<IAgentSource>) {
-    this.flowSignalNodeStateService.addSourceNode(source);
   }
 
   public createConnectedAssetGeneratedNode(generatedAsset: IGeneratedAsset, inputNodeId: string, processNodeId: string) {

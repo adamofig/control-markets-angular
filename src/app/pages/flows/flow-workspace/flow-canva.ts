@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { Connection, Vflow } from 'ngx-vflow';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { Connection, Vflow, VflowComponent } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { AgentCardListComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { EntityBaseFormComponent, OnActionEvent } from '@dataclouder/ngx-core';
@@ -21,6 +21,7 @@ import { SpeedDialModule } from 'primeng/speeddial';
 import { RedSquareData, RedSquareNodeComponent } from '../nodes/test-node/test-node';
 import { IAgentSource } from '../../sources/models/sources.model';
 import { FlowSignalNodeStateService } from '../services/flow-signal-node-state.service';
+import { FlowNodeCreationService } from '../services/flow-node-creation.service';
 
 @Component({
   templateUrl: './flow-canva.html',
@@ -41,9 +42,12 @@ import { FlowSignalNodeStateService } from '../services/flow-signal-node-state.s
     SpeedDialModule,
   ],
 })
-export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> implements OnInit {
+export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> implements OnInit, AfterViewInit {
   override form: FormGroup<any> = new FormGroup({});
 
+  ngAfterViewInit(): void {
+    this.flowDiagramStateService.setVflowComponent(this.vflowRef);
+  }
   protected override patchForm(entity: IAgentFlows): void {
     this.form.patchValue(entity);
   }
@@ -59,6 +63,7 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
   public flowDiagramStateService = inject(FlowDiagramStateService);
   public flowSignalNodeStateService = inject(FlowSignalNodeStateService);
   public flowExecutionStateService = inject(FlowExecutionStateService);
+  private flowNodeCreationService = inject(FlowNodeCreationService);
   // public toastService = inject(TOAST_ALERTS_TOKEN);
 
   public flowName = '';
@@ -83,12 +88,14 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
   public flowExecutionState = this.flowExecutionStateService.getFlowExecutionStateSignal(); // Updated to use service signal
 
   @ViewChild('sourceFileInput') sourceFileInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('vflowRef') vflowRef!: VflowComponent;
 
   async ngOnInit(): Promise<void> {
     if (this.entityId()) {
       this.flow = await this.flowOrchestrationService.loadInitialFlow(this.flowId, this.executionId);
       this.flowName = this.flow?.name || '';
     }
+    console.log('vflowRef', this.vflowRef);
 
     this.resourceItems = [
       {
@@ -132,33 +139,33 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
   }
 
   public createEdge(connection: Connection): void {
-    this.flowDiagramStateService.createEdge(connection);
+    this.flowSignalNodeStateService.createEdge(connection);
   }
 
   addAgentToFlow(event: OnActionEvent): void {
     const card: IAgentCard = event.item;
-    this.flowDiagramStateService.addAgentToFlow(card);
+    this.flowSignalNodeStateService.addAgentToFlow(card);
     this.closeDialog();
   }
 
   addTaskToFlow(event: OnActionEvent) {
     console.log('addTaskToFlow', event);
     const task: IAgentTask = event.item;
-    this.flowDiagramStateService.addTaskToFlow(task);
+    this.flowSignalNodeStateService.addTaskToFlow(task);
 
     this.closeDialog();
   }
 
   addAssetToFlow(event: IAssetNodeData) {
     console.log('addAssetToFlow', event);
-    this.flowDiagramStateService.addAssetNode(event);
+    this.flowSignalNodeStateService.addAssetNode(event);
     this.closeDialog();
   }
 
   addSourceToFlow(event: Partial<IAgentSource>) {
     // TODO: implement logic to add source from event
     console.log('addSourceToFlow', event);
-    this.flowDiagramStateService.addSourceNode(event);
+    this.flowSignalNodeStateService.addSourceNode(event);
     this.closeDialog();
   }
 
@@ -182,23 +189,28 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
   }
 
   public async runFlow(): Promise<void> {
-    this.isRunningFlow.set(true);
-    try {
-      await this.flowOrchestrationService.runFlow(this.flowId, this.flowName);
-    } finally {
-      this.isRunningFlow.set(false);
-    }
+    // console.log('runFlow', this.vflowRef.);
+    this.vflowRef.panTo({ x: 0, y: 0 });
+    this.vflowRef.zoomTo(1);
+    this.vflowRef.documentPointToFlowPoint({ x: 0, y: 0 });
+
+    // this.isRunningFlow.set(true);
+    // try {
+    //   await this.flowOrchestrationService.runFlow(this.flowId, this.flowName);
+    // } finally {
+    //   this.isRunningFlow.set(false);
+    // }
   }
 
   public addDistributionNode() {
-    this.flowDiagramStateService.addDistributionNode();
+    this.flowSignalNodeStateService.addDistributionNode();
   }
 
   public addVideoGenNode() {
-    this.flowDiagramStateService.addVideoGenNode();
+    this.flowSignalNodeStateService.addVideoGenNode();
   }
 
   public addAudioTTSGenNode() {
-    this.flowDiagramStateService.addAudioTTSGenNode();
+    this.flowNodeCreationService.addAudioTTSNode();
   }
 }
