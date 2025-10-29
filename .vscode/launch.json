@@ -8,7 +8,7 @@
       "name": "Debug in Chrome",
       "request": "launch",
       "type": "chrome",
-      "url": "http://localhost:4202",
+      "url": "http://localhost:8120",
       "webRoot": "${workspaceFolder}",
       "sourceMaps": true,
       "sourceMapPathOverrides": {

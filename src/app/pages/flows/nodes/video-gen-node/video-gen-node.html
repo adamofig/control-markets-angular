@@ -2,10 +2,11 @@
 <app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"> </app-node-toolbar>
 }
 <div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
-  <div class="node-card" [ngClass]="'status-' + (statusJob() || 'default')">
+  <div class="node-card" [ngClass]="'status-' + (jobExecutionState()?.status || 'default')">
     <div class="image-background" alt="">
       <p-tag class="tag" [value]="node()?.data?.nodeData?.provider" severity="contrast" />
 
+      <img src="assets/icons/clapperboard.png" width="50px" height="50px" alt="" />
       <p class="text-node">{{ node()?.data?.nodeData?.prompt }}</p>
       <p-tag class="tag" [value]="taskExecutionState()?.status || '🦻'" severity="danger" />
       <div style="display: flex; gap: 10px">

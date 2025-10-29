@@ -20,6 +20,7 @@ import { ComfyStatusComponent } from '../canvas-components/comfy-status/comfy-st
 import { SpeedDialModule } from 'primeng/speeddial';
 import { RedSquareData, RedSquareNodeComponent } from '../nodes/test-node/test-node';
 import { IAgentSource } from '../../sources/models/sources.model';
+import { FlowSignalNodeStateService } from '../services/flow-signal-node-state.service';
 
 @Component({
   templateUrl: './flow-canva.html',
@@ -56,6 +57,7 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
   protected entityCommunicationService = inject(FlowService);
 
   public flowDiagramStateService = inject(FlowDiagramStateService);
+  public flowSignalNodeStateService = inject(FlowSignalNodeStateService);
   public flowExecutionStateService = inject(FlowExecutionStateService);
   // public toastService = inject(TOAST_ALERTS_TOKEN);
 

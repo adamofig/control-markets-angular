@@ -30,22 +30,33 @@ interface StatusResponse {
 export class ComfyStatusComponent implements OnInit {
   public status = signal<StatusResponse | null>(null);
   private appConfig = inject(APP_CONFIG);
+  private retries = 0;
+  private intervalId: any;
 
   async ngOnInit(): Promise<void> {
-    setInterval(async () => {
+    this.intervalId = setInterval(async () => {
       await this.getStatus();
     }, 6000);
   }
 
   public async getStatus() {
     try {
-      const status = await this.httpCoreService.getHttp({
+      const status = await this.httpCoreService.getHttp<StatusResponse>({
         host: this.appConfig.aiServicesUrl || this.appConfig.backendNodeUrl,
         service: 'api/comfy-sdk/status',
       });
+      if (status.status === 'Server Down') {
+        throw new Error('Server is down');
+      }
       this.status.set(status);
+      this.retries = 0; // Reset on success
     } catch (error) {
-      console.error('Not able to get status');
+      this.retries++;
+      console.error(`Not able to get status. Retry attempt: ${this.retries}`);
+      if (this.retries >= 3) {
+        clearInterval(this.intervalId);
+        console.error('Stopped asking for status after 3 failed attempts.');
+      }
     }
   }
 

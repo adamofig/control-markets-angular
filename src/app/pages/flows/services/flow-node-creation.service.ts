@@ -1,7 +1,8 @@
 import { Injectable, signal, inject, NgZone, Type } from '@angular/core';
 import { IJobExecutionState } from '../models/flows.model';
-import { DynamicNodeWithData, FlowDiagramStateService } from './flow-diagram-state.service';
+import { DynamicNodeWithData } from './flow-diagram-state.service';
 import { IGeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-vertex';
+import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 import { nanoid } from 'nanoid';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
 
@@ -10,7 +11,7 @@ import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset
 })
 export class FlowNodeCreationService {
   private generatedAssetsService = inject(GeneratedAssetsService);
-  private flowDiagramStateService = inject(FlowDiagramStateService);
+  private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
 
   public async addGeneratedAssetNodeToFlow(jobExecutionState: IJobExecutionState) {
     const generatedAsset = await this.generatedAssetsService.findOne(jobExecutionState.outputEntityId);
@@ -21,19 +22,26 @@ export class FlowNodeCreationService {
       } else {
         // alert('Debería crear un nuevo nodo');
       }
+      // Por ahora siempre agregar el nodo.
+
+      this.addAssetGeneratedNode(generatedAsset, jobExecutionState.inputNodeId, jobExecutionState.processNodeId);
     }
-    this.addAssetGeneratedNode(generatedAsset);
   }
 
-  public addAssetGeneratedNode(generatedAsset: IGeneratedAsset) {
+  public addAssetGeneratedNode(generatedAsset: IGeneratedAsset, inputNodeId: string, processNodeId: string) {
+    const inputNode = this.flowSignalNodeStateService.nodes().find(node => node?.id === inputNodeId);
+    const processNode = this.flowSignalNodeStateService.nodes().find(node => node?.id === processNodeId);
+    const x = processNode?.point().x! + (processNode?.point().x! - inputNode?.point().x!);
+    const y = processNode?.point().y! + (processNode?.point().y! - inputNode?.point().y!);
+
     const newNode: DynamicNodeWithData = {
       id: 'asset-generated-node-' + nanoid(),
-      point: signal({ x: 100, y: 100 }), // Default position
+      point: signal({ x: x, y: y }), // Default position
       type: AssetGeneratedNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'output',
       data: { nodeData: generatedAsset },
       component: 'AssetGeneratedNodeComponent',
     };
-    this.flowDiagramStateService.nodes.set([...this.flowDiagramStateService.nodes(), newNode]);
+    this.flowSignalNodeStateService.nodes.set([...this.flowSignalNodeStateService.nodes(), newNode]);
   }
 }

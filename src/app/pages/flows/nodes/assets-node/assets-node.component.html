@@ -3,7 +3,7 @@
 }
 
 <div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
-  <div class="node-card" [ngClass]="'status-' + (statusJob() || 'default')">
+  <div class="node-card" [ngClass]="'status-' + (jobExecutionState()?.status || 'default')">
     <!-- SOLO SI EL nodo es imagen. -->
     @if(node()?.data?.nodeData?.type === 'image') {
     <div class="image-background" [style.background-image]="'url(' + node()?.data?.nodeData?.storage?.url + ')'">

@@ -1,10 +1,14 @@
 
-@use "sass:color";
+@use "../mixins" as *;
 
 .node-container {
   border-radius: 20px;
   overflow: hidden;
   padding: 5px;
+  background-color: hsl(169, 97%, 48%);
+  background-image: linear-gradient(0deg, hsla(0,0%,0%,0) 0, hsla(0, 0%, 0%, 0.2) 3px),
+    linear-gradient(90deg, hsla(0, 87%, 27%, 0) 0, hsla(0,0%,0%,0.1) 5px);
+  background-size: 3px 3px;
 }
 
 .node-card {
@@ -22,36 +26,23 @@
   width: 150px;
 }
 
-@mixin status-animation($color) {
-  animation: status-animation-#{$color} 3s infinite;
-
-  @keyframes status-animation-#{$color} {
-    0%,
-    100% {
-      box-shadow: 7px 7px 21px #{$color}, -7px -7px 21px #ffffff;
-    }
-    50% {
-      box-shadow: 7px 7px 21px color.adjust($color, $lightness: 20%), -7px -7px 21px #ffffff;
-    }
-  }
-}
-
 .status-default {
-  @include status-animation(#f57403); // Default orange
+  @include status-animation("white", white); // Default orange
 }
+
 
 .status-pending {
-  @include status-animation(yellow);
+  @include status-animation("yellow", yellow);
 }
 
 .status-in_progress {
-  @include status-animation(blue);
+  @include status-animation("blue", blue);
 }
 
 .status-completed {
-  @include status-animation(green);
+  @include status-animation("green", green);
 }
 
 .status-failed {
-  @include status-animation(red);
+  @include status-animation("red", red);
 }

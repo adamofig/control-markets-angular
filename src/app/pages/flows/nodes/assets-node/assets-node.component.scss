@@ -5,6 +5,8 @@
   border-radius: 20px;
   overflow: hidden;
   padding: 5px;
+  min-width: 200px;
+
 }
 
 .node-card {
@@ -24,8 +26,9 @@
 
 
 .status-default {
-  @include status-animation("default", #f57403); // Default orange
+  @include status-animation("white", white); // Default orange
 }
+
 
 .status-pending {
   @include status-animation("yellow", yellow);

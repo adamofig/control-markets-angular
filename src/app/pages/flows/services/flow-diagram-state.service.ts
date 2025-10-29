@@ -12,7 +12,7 @@ import { IAgentSource } from '../../sources/models/sources.model';
 // NOt able to set a type for data yet.
 
 export type DynamicNodeWithData = DynamicNode & { data?: any; category: 'input' | 'output' | 'process' | 'other'; component: string };
-
+// 🥕 NOTE: Looks like this service is now a pure wraper, remove it soon.
 @Injectable({
   providedIn: 'root',
 })
@@ -20,14 +20,6 @@ export class FlowDiagramStateService {
   private jobService = inject(JobService);
   private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
   private toastService = inject(TOAST_ALERTS_TOKEN);
-
-  public get nodes() {
-    return this.flowSignalNodeStateService.nodes;
-  }
-
-  public get edges() {
-    return this.flowSignalNodeStateService.edges;
-  }
 
   public getFlow() {
     return this.flowSignalNodeStateService.flow();

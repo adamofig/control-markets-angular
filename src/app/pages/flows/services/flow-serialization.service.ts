@@ -1,11 +1,12 @@
 import { Injectable, Type, inject, signal } from '@angular/core';
 import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
-import { DynamicNodeWithData, FlowDiagramStateService } from './flow-diagram-state.service';
+import { DynamicNodeWithData } from './flow-diagram-state.service';
 import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
 import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
 import { FlowComponentRefStateService } from './flow-component-ref-state.service';
 import { AudioTTsNodeComponent } from '../nodes/audio-tts-node/audio-tts-node';
+import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 
 // Node Type Mapping
 function getNodeTypeMap(): { [key: string]: Type<any> | 'default' } {
@@ -53,9 +54,10 @@ function getNodeComponentFromString(typeString: string): Type<any> | 'default' {
 })
 export class FlowSerializationService {
   public flowComponentRefStateService = inject(FlowComponentRefStateService);
+  public flowSignalNodeStateService = inject(FlowSignalNodeStateService);
 
-  public serializeFlow(flowDiagramStateService: FlowDiagramStateService): { nodes: any[]; edges: any[] } {
-    const serializableNodes = flowDiagramStateService.nodes().map((node: any) => {
+  public serializeFlow(): { nodes: any[]; edges: any[] } {
+    const serializableNodes = this.flowSignalNodeStateService.nodes().map((node: any) => {
       const plainPoint = node.point();
       let serializableText: string | undefined;
       let serializableData: any | undefined;
@@ -97,7 +99,7 @@ export class FlowSerializationService {
       return serializableNode;
     });
 
-    const serializableEdges = flowDiagramStateService.edges().map(edge => ({ ...edge }));
+    const serializableEdges = this.flowSignalNodeStateService.edges().map(edge => ({ ...edge }));
 
     return {
       nodes: serializableNodes,
@@ -105,7 +107,7 @@ export class FlowSerializationService {
     };
   }
 
-  public loadFlow(flowDiagramStateService: FlowDiagramStateService, savedFlowData: { nodes: any[]; edges: any[] }): void {
+  public loadFlow(savedFlowData: { nodes: any[]; edges: any[] }): void {
     if (!savedFlowData || !savedFlowData.nodes || !savedFlowData.edges) {
       console.error('Invalid data provided to loadFlow:', savedFlowData);
       return;
@@ -137,7 +139,7 @@ export class FlowSerializationService {
       return dynamicNode;
     });
 
-    flowDiagramStateService.nodes.set(nodes);
-    flowDiagramStateService.edges.set(savedFlowData.edges.map((edge: any) => ({ ...edge })));
+    this.flowSignalNodeStateService.nodes.set(nodes);
+    this.flowSignalNodeStateService.edges.set(savedFlowData.edges.map((edge: any) => ({ ...edge })));
   }
 }

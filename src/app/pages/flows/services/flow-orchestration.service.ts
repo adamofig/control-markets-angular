@@ -26,7 +26,7 @@ export class FlowOrchestrationService {
     const currentFlowName = this.flowState.flow()?.name || '';
 
     try {
-      const flowData = this.flowSerializationService.serializeFlow(this.flowDiagramStateService);
+      const flowData = this.flowSerializationService.serializeFlow();
 
       const urlImages: string[] = [];
       for (const node of flowData.nodes) {
@@ -135,7 +135,7 @@ export class FlowOrchestrationService {
     const flow = await this.flowService.getFlow(flowId);
     if (flow) {
       this.flowDiagramStateService.setFlow(flow);
-      this.flowSerializationService.loadFlow(this.flowDiagramStateService, flow as any);
+      this.flowSerializationService.loadFlow(flow as any);
       if (executionId) {
         this.flowExecutionStateService.initializeExecutionStateListener(executionId);
       }
