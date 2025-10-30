@@ -96,6 +96,9 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> impl
         closable: true,
         draggable: true,
         styleClass: 'draggable-dialog',
+        inputValues: {
+          agentCard: agentNode.data.nodeData,
+        },
       });
 
       if (ref) {
