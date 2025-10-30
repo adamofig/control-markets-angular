@@ -90,6 +90,11 @@ export class FlowOrchestrationService {
   }
 
   public async runNode(flowId: string, nodeId: string): Promise<void> {
+    // This actually must decide if should save before running the node, for now always
+    // TODO: add logic to save if is not saved latest.
+    const savedFlow = await this.saveFlow(flowId, this.flowDiagramStateService.getFlow()?.name || '');
+    this.toastService.info({ title: 'Flow saved', subtitle: 'Flow as saved before running node.' });
+
     try {
       const result: any = await this.flowService.runNode(flowId, nodeId);
       if (result && result.flowExecutionId) {
