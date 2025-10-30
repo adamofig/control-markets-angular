@@ -150,14 +150,15 @@ export class FlowSignalNodeStateService {
     let x = 100;
     let y = 100;
 
-    const randomAdd = Math.floor(Math.random() * 150);
+    const randomAdd = Math.floor(Math.random() * 200);
+    const yRandom = Math.random() > 0.5 ? randomAdd : -randomAdd;
 
     if (refNodeId) {
       const refNode = this.nodes().find(n => n.id === refNodeId);
       if (refNode) {
         const refPoint = refNode.point();
-        x = refPoint.x + 350 + randomAdd; // Position to the right
-        y = refPoint.y + 100 + randomAdd;
+        x = refPoint.x + 250 + randomAdd; // Position to the right
+        y = refPoint.y + yRandom;
       }
     }
 

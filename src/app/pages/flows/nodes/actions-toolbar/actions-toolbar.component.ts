@@ -22,6 +22,9 @@ export class ActionsToolbarComponent {
   isJobInProgress = computed(() => this.statusJob() === StatusJob.IN_PROGRESS);
 
   onRunNode() {
+    // debugger;
+    const audio = new Audio('assets/audios/notifications/short-whistle.wav');
+    audio.play();
     this.runNode.emit();
   }
 

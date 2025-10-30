@@ -1,17 +1,18 @@
 import { ChangeDetectionStrategy, Component, OnInit, computed, effect, inject } from '@angular/core';
-import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
+import { CommonModule } from '@angular/common';
+
 import { ComponentDynamicNode, Vflow } from 'ngx-vflow';
 import { DialogService } from 'primeng/dynamicdialog';
-import { AgentDetailsComponent } from './agent-details/agent-details';
-import { DynamicNodeWithData } from '../../services/flow-diagram-state.service';
-import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ButtonModule } from 'primeng/button';
-import { NodeCategory, StatusJob } from '../../models/flows.model';
-import { TagModule } from 'primeng/tag';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TagModule } from 'primeng/tag';
+import { IAgentCard, DefaultAgentCardsService } from '@dataclouder/ngx-agent-cards';
+
+import { AgentDetailsComponent } from './agent-details/agent-details';
 import { FlowExecutionUtilsService } from '../../services/flow-execution-utils';
 import { BaseFlowNode } from '../base-flow-node';
-import { CommonModule } from '@angular/common';
+import { NodeCategory, StatusJob } from '../../models/flows.model';
+import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 
 export interface CustomAgentNode extends ComponentDynamicNode {
   nodeData: IAgentCard;
@@ -27,7 +28,18 @@ export interface CustomAgentNode extends ComponentDynamicNode {
 export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements OnInit {
   public dialogService = inject(DialogService);
   public flowExecutionUtilsService = inject(FlowExecutionUtilsService);
+  private defaultAgentCardsService = inject(DefaultAgentCardsService);
   public agentCard = computed(() => this.node()?.data?.nodeData);
+
+  private fullAgentCard: IAgentCard | null = null;
+
+  public async getFullAgentCard(): Promise<IAgentCard> {
+    if (!this.fullAgentCard) {
+      this.fullAgentCard = await this.defaultAgentCardsService.findOne(this.agentCard()?._id || this.agentCard()?.id || '');
+    }
+
+    return this.fullAgentCard;
+  }
 
   public override nodeCategory: NodeCategory = NodeCategory.INPUT;
 

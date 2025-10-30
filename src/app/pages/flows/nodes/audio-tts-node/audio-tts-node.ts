@@ -15,6 +15,8 @@ import { TtsPlaygroundWrapperComponent } from './tts-playground-wrapper/tts-play
 import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { NodeType } from '../../models/flows.model';
 import { AgentAudioGeneratorComponent } from './agent-audio-generator/agent-audio-generator.component';
+import { FlowComponentRefStateService } from '../../services/flow-component-ref-state.service';
+import { AgentNodeComponent } from '../agent-node/agent-node.component';
 
 export interface CustomAudioTTsNode extends ComponentDynamicNode {
   nodeData: { value: string; settings: any };
@@ -83,12 +85,17 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> impl
     });
   }
 
-  public openModal() {
+  public async openModal() {
     console.log('Buscar quien si tiene un agente contetado');
 
     const agentNode = this.nodeSearchesService.getFirstInputNodeOfType(this.node()?.id, NodeType.AgentNodeComponent);
 
     if (agentNode) {
+      const agentNodeComponent = this.flowComponentRefStateService.getNodeComponentRef(agentNode?.id!) as AgentNodeComponent;
+      const fullAgentCard = await agentNodeComponent.getFullAgentCard();
+
+      console.log('agentCard', fullAgentCard);
+
       console.log('Se encontro un node. de agente. abrir otro modal  ', agentNode);
       const ref = this.dialogService.open(AgentAudioGeneratorComponent, {
         header: 'Generate Audio from Agent',
@@ -97,17 +104,15 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> impl
         draggable: true,
         styleClass: 'draggable-dialog',
         inputValues: {
-          agentCard: agentNode.data.nodeData,
+          fullAgentCard: fullAgentCard,
+        },
+        data: {
+          ttsGenerated: (event: any) => this.onTtsGenerated(event),
         },
       });
 
       if (ref) {
-        ref.onClose.subscribe(result => {
-          if (result && result.message) {
-            // TODO: Call a service to generate audio with the message and agent
-            console.log('generate audio with message', result.message);
-          }
-        });
+        ref.onClose.subscribe(result => {});
       }
       return;
     }

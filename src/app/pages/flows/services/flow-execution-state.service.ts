@@ -56,6 +56,9 @@ export class FlowExecutionStateService {
       console.log('justCompletedJobs', justCompletedJobs);
       // Here you can trigger your actions for each job in newlyCompleted
       justCompletedJobs.forEach(job => {
+        const audio = new Audio('assets/audios/notifications/end-whistle.wav');
+        audio.play();
+
         if (job.resultType === 'outcome') {
           this.flowDiagramStateService.addOutcomeToFlow(job);
         } else if (job.resultType === 'generatedAsset') {

@@ -1,7 +1,12 @@
 <div class="agent-audio-generator">
-  <textarea pInputTextarea [(ngModel)]="message" rows="5" cols="30" placeholder="Enter message for TTS"></textarea>
+  <textarea pInputTextarea [(ngModel)]="message" rows="3" cols="30" placeholder="Enter message for TTS"></textarea>
+  <div class="p-fluid">
+    <label for="temperature">Temperature: {{ temperature }}</label>
+    <p-slider [(ngModel)]="temperature" [min]="0" [max]="1" [step]="0.1"></p-slider>
+  </div>
   <div class="buttons">
     <button pButton type="button" label="Cancel" class="p-button-secondary" (click)="cancel()"></button>
-    <button pButton type="button" label="Generate Audio" (click)="generateAudio()"></button>
+    <button pButton type="button" label="Generate Audio" (click)="generateAudio()" [loading]="isGenerating()"></button>
+    <button pButton type="button" label="Generate Variations" (click)="generateVariations()" [loading]="isGenerating()"></button>
   </div>
 </div>
