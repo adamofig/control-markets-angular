@@ -13,6 +13,8 @@ import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component
 import { CommonModule } from '@angular/common';
 import { TtsPlaygroundWrapperComponent } from './tts-playground-wrapper/tts-playground-wrapper.component';
 import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
+import { NodeType } from '../../models/flows.model';
+import { AgentAudioGeneratorComponent } from './agent-audio-generator/agent-audio-generator.component';
 
 export interface CustomAudioTTsNode extends ComponentDynamicNode {
   nodeData: { value: string; settings: any };
@@ -82,6 +84,31 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> impl
   }
 
   public openModal() {
+    console.log('Buscar quien si tiene un agente contetado');
+
+    const agentNode = this.nodeSearchesService.getFirstInputNodeOfType(this.node()?.id, NodeType.AgentNodeComponent);
+
+    if (agentNode) {
+      console.log('Se encontro un node. de agente. abrir otro modal  ', agentNode);
+      const ref = this.dialogService.open(AgentAudioGeneratorComponent, {
+        header: 'Generate Audio from Agent',
+        width: '450px',
+        closable: true,
+        draggable: true,
+        styleClass: 'draggable-dialog',
+      });
+
+      if (ref) {
+        ref.onClose.subscribe(result => {
+          if (result && result.message) {
+            // TODO: Call a service to generate audio with the message and agent
+            console.log('generate audio with message', result.message);
+          }
+        });
+      }
+      return;
+    }
+
     const ref = this.dialogService.open(TtsPlaygroundWrapperComponent, {
       header: 'TTS Playground',
       width: '650px',
@@ -99,9 +126,9 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> impl
 
     if (ref) {
       ref.onClose.subscribe((result: any) => {
-        // TODO:  Check settings are saved.
-        this.settings.set(result.settings);
-        console.log('result', result);
+        if (result && result.settings) {
+          this.settings.set(result.settings);
+        }
         if (result) {
           this.onTtsGenerated(result);
         }

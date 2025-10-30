@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { TTSGenerated, TtsPlaygroundComponent, TTSPlaygroundSettings } from '@dataclouder/ngx-vertex';
 import { CommonModule } from '@angular/common';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -11,14 +11,12 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class TtsPlaygroundWrapperComponent implements OnInit {
+export class TtsPlaygroundWrapperComponent {
   @Input() settings: TTSPlaygroundSettings = {
     storagePath: 'temporal',
   };
 
   public ttsSettings: TTSPlaygroundSettings | null = null;
-
-  ngOnInit(): void {}
 
   @Output() ttsGenerated = new EventEmitter<TTSGenerated>();
   @Output() formValues = new EventEmitter<Partial<TTSPlaygroundSettings>>();

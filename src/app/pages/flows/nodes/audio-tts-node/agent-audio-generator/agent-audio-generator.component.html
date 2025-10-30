@@ -1,0 +1,7 @@
+<div class="agent-audio-generator">
+  <textarea pInputTextarea [(ngModel)]="message" rows="5" cols="30" placeholder="Enter message for TTS"></textarea>
+  <div class="buttons">
+    <button pButton type="button" label="Cancel" class="p-button-secondary" (click)="cancel()"></button>
+    <button pButton type="button" label="Generate Audio" (click)="generateAudio()"></button>
+  </div>
+</div>
