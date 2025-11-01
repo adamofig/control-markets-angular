@@ -81,8 +81,8 @@ importers:
         specifier: ^0.0.44
         version: 0.0.44(@angular/common@20.1.6(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/fire@19.2.0(9fdf63c9e8c0a39b49a47e87a5824331))(@capacitor-community/apple-sign-in@6.0.0(@capacitor/core@6.2.1))(@codetrix-studio/capacitor-google-auth@3.4.0-rc.4(@capacitor/core@6.2.1))
       '@dataclouder/ngx-agent-cards':
-        specifier: ^0.1.64
-        version: 0.1.64(9763839a3dbc2ae440bf4ff1d15f9038)
+        specifier: ^0.1.68
+        version: 0.1.68(9763839a3dbc2ae440bf4ff1d15f9038)
       '@dataclouder/ngx-cloud-storage':
         specifier: ^0.0.29
         version: 0.0.29(@angular/common@20.1.6(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/fire@19.2.0(9fdf63c9e8c0a39b49a47e87a5824331))(ngx-image-cropper@9.1.5(@angular/common@20.1.6(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1)))(primeng@20.2.0(1e48c736918f92e733ee6c22e7405f4f))
@@ -94,7 +94,7 @@ importers:
         version: 0.0.1(@angular/common@20.1.6(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))
       '@dataclouder/ngx-lessons':
         specifier: ^0.1.14
-        version: 0.1.14(1b4fc113cd3bed93f771c9dfdb7a0810)
+        version: 0.1.14(feb874cb9137ce975a3ec722729a5e66)
       '@dataclouder/ngx-logs':
         specifier: ^0.0.2
         version: 0.0.2(@angular/common@20.1.6(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))
@@ -937,8 +937,8 @@ packages:
       '@capacitor-community/apple-sign-in': '>=6.0.0'
       '@codetrix-studio/capacitor-google-auth': ^3.3.0 || ^3.4.0-rc.4
 
-  '@dataclouder/ngx-agent-cards@0.1.64':
-    resolution: {integrity: sha512-JjTJXkNgXfJ3GUVkBOlPCKcEes80p4o28mf6bA1h6xtdyrsYUV5gcW4x+3jvwhhvLj8StIoCxsxonPjmWYWsMQ==}
+  '@dataclouder/ngx-agent-cards@0.1.68':
+    resolution: {integrity: sha512-IWz5S97B2EN6wi+XiNu9NvCX6ZvRg2GOdoLnPJQUBbzZOLQOrkgm+cdIuTchTyVkqJ9jrHmusvAZdvxvEIcU6g==}
     peerDependencies:
       '@angular/cdk': '>=18.0.0'
       '@angular/common': '>=18.0.0'
@@ -6929,7 +6929,7 @@ snapshots:
       '@codetrix-studio/capacitor-google-auth': 3.4.0-rc.4(@capacitor/core@6.2.1)
       tslib: 2.8.1
 
-  '@dataclouder/ngx-agent-cards@0.1.64(9763839a3dbc2ae440bf4ff1d15f9038)':
+  '@dataclouder/ngx-agent-cards@0.1.68(9763839a3dbc2ae440bf4ff1d15f9038)':
     dependencies:
       '@angular/cdk': 20.1.5(@angular/common@20.1.6(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/common': 20.1.6(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
@@ -6968,12 +6968,12 @@ snapshots:
       '@angular/core': 20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1)
       tslib: 2.8.1
 
-  '@dataclouder/ngx-lessons@0.1.14(1b4fc113cd3bed93f771c9dfdb7a0810)':
+  '@dataclouder/ngx-lessons@0.1.14(feb874cb9137ce975a3ec722729a5e66)':
     dependencies:
       '@angular/cdk': 20.1.5(@angular/common@20.1.6(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/common': 20.1.6(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/core': 20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1)
-      '@dataclouder/ngx-agent-cards': 0.1.64(9763839a3dbc2ae440bf4ff1d15f9038)
+      '@dataclouder/ngx-agent-cards': 0.1.68(9763839a3dbc2ae440bf4ff1d15f9038)
       tslib: 2.8.1
     optionalDependencies:
       '@dataclouder/ngx-cloud-storage': 0.0.29(@angular/common@20.1.6(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/fire@19.2.0(9fdf63c9e8c0a39b49a47e87a5824331))(ngx-image-cropper@9.1.5(@angular/common@20.1.6(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.6(@angular/compiler@20.1.6)(rxjs@7.8.2)(zone.js@0.15.1)))(primeng@20.2.0(1e48c736918f92e733ee6c22e7405f4f))

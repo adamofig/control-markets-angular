@@ -4,13 +4,14 @@ import { IonContent, IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, Ion
 import { Router } from '@angular/router';
 import { RouteNames } from 'src/app/core/enums';
 import { APP_CONFIG } from '@dataclouder/ngx-core';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
   standalone: true,
-  imports: [IonImg, IonText, IonIcon, IonButton, IonTitle, IonButtons, IonToolbar, IonHeader, IonContent],
+  imports: [IonImg, IonText, IonIcon, IonButton, IonTitle, IonButtons, IonToolbar, IonHeader, IonContent, CardModule],
 })
 export class LandingComponent {
   private router = inject(Router);

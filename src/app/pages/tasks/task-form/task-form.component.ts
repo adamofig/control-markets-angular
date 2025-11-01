@@ -29,7 +29,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ToastAlertService } from 'src/app/services/toast.service';
 import { SourceService } from '../../sources/sources.service';
 import { AspectType, ResolutionType, CropperComponentModal } from '@dataclouder/ngx-cloud-storage';
-import { EntityBaseFormComponent, EntityCommunicationService } from '@dataclouder/ngx-core';
+import { EModelQuality, EntityBaseFormComponent, EntityCommunicationService } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-task-form',
@@ -85,7 +85,12 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
     sources: this.fb.control<any[]>([]),
     taskAttached: this.fb.control<any>({}),
     output: this.fb.control<ITaskOutput>({}),
-    model: this.fb.group({ provider: [''], modelName: [''], id: [''] }),
+    model: this.fb.nonNullable.group({
+      provider: '',
+      modelName: '',
+      id: '',
+      quality: EModelQuality.FAST,
+    }),
   });
 
   public taskTypes = AgentTaskOptions;

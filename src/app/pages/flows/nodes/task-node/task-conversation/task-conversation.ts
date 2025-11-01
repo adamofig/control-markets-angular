@@ -64,6 +64,10 @@ export class TaskConversationComponent implements OnInit {
       messages: systemMessages,
       userMustStart: true,
       model: { quality: EModelQuality.BALANCED },
+      avatarImages: {
+        user: 'assets/defaults/icons/default-avatar.png',
+        assistant: agent.assets?.image?.url || '',
+      },
     });
     return agent;
   }

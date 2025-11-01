@@ -30,7 +30,7 @@ export class FlowOrchestrationService {
 
       const urlImages: string[] = [];
       for (const node of flowData.nodes) {
-        if (node.data?.nodeData?.storage?.url) {
+        if (node.data?.nodeData?.type === 'image' && node.data?.nodeData?.storage?.url) {
           urlImages.push(node.data.nodeData.storage.url);
         }
       }

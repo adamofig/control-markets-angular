@@ -34,6 +34,7 @@ export interface IAIModel {
   id: string;
   provider: string;
   modelName: string;
+  quality: string;
 }
 
 export interface ITaskOutput {

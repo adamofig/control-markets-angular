@@ -69,6 +69,7 @@ export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements
         node: this.node(),
       },
       maximizable: true,
+      duplicate: true,
     });
   }
 
