@@ -14,6 +14,7 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { Capacitor } from '@capacitor/core';
 // PrimeNG
 import { DialogService } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 // Third Party
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -105,7 +106,7 @@ fetch('/assets/config.json')
         provideFirestore(() => getFirestore()),
 
         DialogService,
-
+        MessageService,
         provideToastAlert(ToastAlertService),
         provideNotionService(NotionService),
         provideAgentCardService(DefaultAgentCardsService),

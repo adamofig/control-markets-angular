@@ -169,6 +169,30 @@
   mix-blend-mode: overlay;
 }
 
+.feature-text-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+
+  h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: white;
+  }
+
+  p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
 
 .card-container {
   display: flex;
