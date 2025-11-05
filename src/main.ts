@@ -38,6 +38,7 @@ import { UserService } from '@dataclouder/ngx-users';
 
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideTranslateService } from '@ngx-translate/core';
+import { MessageService } from 'primeng/api';
 
 fetch('/assets/config.json')
   .then(response => response.json())
@@ -111,6 +112,7 @@ fetch('/assets/config.json')
           }
         }),
         DialogService,
+        MessageService,
 
         provideToastAlert(ToastAlertService),
         provideNotionService(NotionService),
