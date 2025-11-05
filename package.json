@@ -64,7 +64,7 @@
     "@codetrix-studio/capacitor-google-auth": "^3.4.0-rc.4",
     "@dataclouder/app-auth": "^0.0.44",
     "@dataclouder/ngx-agent-cards": "^0.1.68",
-    "@dataclouder/ngx-cloud-storage": "^0.0.29",
+    "@dataclouder/ngx-cloud-storage": "^0.0.30",
     "@dataclouder/ngx-core": "^0.1.43",
     "@dataclouder/ngx-knowledge": "^0.0.1",
     "@dataclouder/ngx-lessons": "^0.1.14",

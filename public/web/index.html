@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Control Markets</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        margin: 0;
+        background-color: #f4f5f8;
+        color: #333;
+      }
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background-image: url('./assets/diamond-sunset-white.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        animation: float 40s ease-in-out infinite;
+      }
+      body.dark::before {
+        background-image: url('./assets/diamond-sunset-dark.svg');
+      }
+      @keyframes float {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .header {
+        background-color: transparent;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+      }
+      .header .logo {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+      .header .buttons button {
+        margin-left: 10px;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .header .buttons .signin {
+        background-color: transparent;
+        color: #a16207;
+      }
+      .header .buttons .signup {
+        background-color: #a16207;
+        color: #fff;
+      }
+      .container {
+        padding: 20px;
+      }
+      .hero-section {
+        text-align: center;
+        padding: 40px 0;
+      }
+      .hero-section h2 {
+        font-size: 1.2em;
+        color: #666;
+      }
+      .hero-section h2 span {
+        color: #a16207;
+      }
+      .hero-section h1 {
+        font-size: 3em;
+        margin: 10px 0;
+      }
+      .hero-image {
+        max-width: 250px;
+        margin: 20px auto;
+        display: block;
+      }
+      .cta-button {
+        background-color: #a16207;
+        color: #fff;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2em;
+        cursor: pointer;
+      }
+      .card-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin: 40px 0;
+      }
+      .card {
+        background-color: transparent;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 300px;
+        text-align: center;
+      }
+      .card h3 {
+        margin-top: 0;
+      }
+      .problem-section,
+      .guarantee-section,
+      .faq-section {
+        text-align: center;
+        margin: 40px 0;
+      }
+      .challenges-list {
+        list-style: none;
+        padding: 0;
+      }
+      .feature-image-container {
+        position: relative;
+        text-align: center;
+        color: white;
+      }
+      .feature-image {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 10px;
+      }
+      .feature-text-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 10px;
+      }
+      .testimonial-card {
+        display: flex;
+        align-items: center;
+        background-color: transparent;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 600px;
+        margin: 20px auto;
+      }
+      .testimonial-image img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-right: 20px;
+      }
+      .faq-item {
+        background-color: transparent;
+        margin-bottom: 10px;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: left;
+      }
+      .footer {
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
+        border-top: 1px solid #ddd;
+      }
+      .copyright {
+        margin-top: 20px;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="logo">Control Markets</div>
+      <div class="buttons">
+        <button class="signin" onclick="goToSignin()">Sign In</button>
+        <button class="signup" onclick="goToSignup()">Sign Up</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <section class="hero-section">
+        <h2>LET THE <span>PERSONA </span>BASED <span> AGENTS</span></h2>
+        <h1>CONTROL THE MARKET</h1>
+        <h2>FOR YOUR BUSINESS NICHE!</h2>
+        <img src="./assets/defaults/icons/logo-trans.png" alt="Control Markets Integration" class="hero-image" />
+        <button class="cta-button" onclick="goToSignup()">Get Started Now</button>
+      </section>
+
+      <div class="card-container">
+        <div class="card">
+          <h3>AI Agent Tasks</h3>
+          <p>Automate content generation and workflows with powerful AI agents.</p>
+        </div>
+        <div class="card">
+          <h3>Market Monitoring</h3>
+          <p>Analyze trends and social networks to dominate your industry.</p>
+        </div>
+        <div class="card">
+          <h3>Viral Video Generation</h3>
+          <p>Automatically create engaging videos for TikTok and similar platforms.</p>
+        </div>
+      </div>
+
+      <div class="card-container">
+        <div class="card">
+          <h3>Create Your Agents</h3>
+          <p>Define their personality and tasks.</p>
+        </div>
+        <div class="card">
+          <h3>Give Instructions</h3>
+          <p>Provide clear goals for your agents.</p>
+        </div>
+        <div class="card">
+          <h3>Let Them Work</h3>
+          <p>Agents execute tasks automatically.</p>
+        </div>
+        <div class="card">
+          <h3>See Results</h3>
+          <p>Track performance and market impact.</p>
+        </div>
+      </div>
+
+      <section class="problem-section">
+        <h2>Ready for the AI Revolution?</h2>
+        <div class="problem-content">
+          <p>Is your valuable information trapped in scattered Notion pages? Struggling to make your data AI-friendly?</p>
+          <ul class="challenges-list">
+            <li>❌ Disconnected Notion databases</li>
+            <li>❌ Unstructured documentation</li>
+            <li>❌ Data not optimized for AI processing</li>
+          </ul>
+        </div>
+      </section>
+
+      <h2>INTEGRATE, PROCESS, TRANSFORM</h2>
+      <p style="text-align: center">
+        Welcome to Control Markets - your all-in-one platform for market domination. Transform your business strategy with AI-powered insights and automated
+        content creation.
+      </p>
+      <div class="card-container">
+        <div class="card">
+          <h3>Seamless Notion Integration</h3>
+          <p>Connect and sync your Notion databases for complete visibility</p>
+        </div>
+        <div class="card">
+          <h3>AI-Powered Market Analysis</h3>
+          <p>Monitor trends and gain competitive insights automatically</p>
+        </div>
+        <div class="card">
+          <h3>Viral Content Creation</h3>
+          <p>Automatically generate engaging videos for social platforms</p>
+        </div>
+      </div>
+
+      <br /><br /><br />
+
+      <h2 style="text-align: center">New Age of AI Agents</h2>
+
+      <div class="feature-image-container">
+        <img class="feature-image" src="./assets/images/golden-human.jpeg" alt="Notion AI Integration" />
+        <div class="feature-text-overlay">
+          <h3>What is a Persona based Agent?</h3>
+          <p>
+            Agents that act like a real person, with Human characteristics or a distinctive identity, own personaly psychology, comunnication patterns, etc.
+          </p>
+        </div>
+      </div>
+
+      <div class="card-container">
+        <div class="card">
+          <h3>Name, Personality, and Unique Voice</h3>
+          <p>Define a name, a distinctive personality, and a voice with a unique accent for each agent.</p>
+        </div>
+        <div class="card">
+          <h3>Communication Style</h3>
+          <p>Establish a marked communication style, including common phrases and filler words.</p>
+        </div>
+        <div class="card">
+          <h3>First-Person Communication</h3>
+          <p>
+            Expresses itself in the first person, such as "I think" or "I can help you," and adapts its responses according to the relationship with the user.
+          </p>
+        </div>
+      </div>
+      <p class="ai-awareness" style="text-align: center">
+        They are aware that they are AI with a personality and do not try to pretend to be a real person, maintaining transparency in their nature.
+      </p>
+
+      <h2 style="text-align: center">TRANSFORM YOUR MARKET PRESENCE</h2>
+      <div class="card-container">
+        <div class="card">
+          <h3>Dominate your niche</h3>
+          <p>Dominate your niche with AI-driven strategies</p>
+        </div>
+        <div class="card">
+          <h3>Real-time monitoring</h3>
+          <p>Real-time market and social media monitoring</p>
+        </div>
+        <div class="card">
+          <h3>Automated content</h3>
+          <p>Automated content creation and distribution</p>
+        </div>
+      </div>
+
+      <h2 style="text-align: center">SUCCESS STORIES</h2>
+      <div class="testimonial-card">
+        <div class="testimonial-image">
+          <img src="./assets/images/kenya-marketera3.jpeg" alt="Kenya Figueroa" />
+        </div>
+        <div class="testimonial-content">
+          <h3>Kenya Figueroa, Marketing Director</h3>
+          <p>
+            "Control Markets completely transformed our Content Creation strategy. The AI-generated content helped us increase daily video creation 3x. Even
+            better our videos are engaging and viral."
+          </p>
+        </div>
+      </div>
+
+      <h2 style="text-align: center">CHOOSE YOUR PLAN</h2>
+      <div class="card-container">
+        <div class="card">
+          <h3>For Curious</h3>
+          <ul>
+            <li>Basic Flows</li>
+            <li>Basic Agents</li>
+            <li>Basic Tools</li>
+          </ul>
+          <button class="select-plan-button">Start Free</button>
+        </div>
+        <div class="card premium">
+          <h3>Enterprise</h3>
+          <p class="price">Custom Pricing</p>
+          <ul>
+            <li>✓ Unlimited database connections</li>
+            <li>✓ Advanced AI processing</li>
+            <li>✓ Custom integration options</li>
+            <li>✓ Priority support</li>
+            <li>✓ API access</li>
+          </ul>
+          <button class="select-plan-button premium-button">Contact Sales</button>
+        </div>
+      </div>
+
+      <section class="guarantee-section">
+        <h2>OUR DATA TRANSFORMATION GUARANTEE</h2>
+        <p>Experience the power of AI-optimized Notion workspaces or get your money back.</p>
+        <p>If you don't see improved efficiency in your workflow, we'll provide a full refund. <strong>No questions asked.</strong></p>
+      </section>
+
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-accordion">
+          <div class="faq-item">
+            <h3>How does Control Markets help me monitor my industry?</h3>
+            <p>
+              Our AI agents continuously scan social networks, news sources, and competitor activities to provide real-time insights about your market. All
+              findings are organized in your Notion workspace for easy access and analysis.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I customize the content created by the AI agents?</h3>
+            <p>
+              Absolutely! You can set parameters for tone, style, and content focus. Our system learns from your preferences over time to create increasingly
+              tailored content that aligns with your brand voice.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        <div class="card-container">
+          <div class="card">
+            <h3>Contact</h3>
+            <p>Email:</p>
+            <div class="social-links"></div>
+          </div>
+          <div class="card">
+            <h3>Legal</h3>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Use</a>
+          </div>
+        </div>
+        <p class="copyright">© 2024 Control Markets. All rights reserved.</p>
+      </div>
+    </div>
+
+    <script>
+      function goToSignin() {
+        console.log('Navigate to Sign In');
+      }
+      function goToSignup() {
+        console.log('Navigate to Sign Up');
+      }
+    </script>
+  </body>
+</html>

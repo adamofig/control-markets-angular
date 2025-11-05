@@ -22,6 +22,7 @@ import { RedSquareData, RedSquareNodeComponent } from '../nodes/test-node/test-n
 import { IAgentSource } from '../../sources/models/sources.model';
 import { FlowSignalNodeStateService } from '../services/flow-signal-node-state.service';
 import { FlowNodeCreationService } from '../services/flow-node-creation.service';
+import { FlowSerializationService } from '../services/flow-serialization.service';
 
 @Component({
   templateUrl: './flow-canva.html',
@@ -44,6 +45,7 @@ import { FlowNodeCreationService } from '../services/flow-node-creation.service'
 })
 export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> implements OnInit, AfterViewInit {
   override form: FormGroup<any> = new FormGroup({});
+  public flowSerializationService = inject(FlowSerializationService);
 
   ngAfterViewInit(): void {
     this.flowDiagramStateService.setVflowComponent(this.vflowRef);
@@ -160,6 +162,7 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
     console.log('addAssetToFlow', event);
     this.flowSignalNodeStateService.addAssetNode(event);
     this.closeDialog();
+    this.flowSerializationService.serializeFlow();
   }
 
   addSourceToFlow(event: Partial<IAgentSource>) {
@@ -167,6 +170,7 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
     console.log('addSourceToFlow', event);
     this.flowSignalNodeStateService.addSourceNode(event);
     this.closeDialog();
+    this.flowSerializationService.serializeFlow();
   }
 
   public async saveFlow(): Promise<void> {
@@ -208,9 +212,11 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
 
   public addVideoGenNode() {
     this.flowSignalNodeStateService.addVideoGenNode();
+    this.flowSerializationService.serializeFlow();
   }
 
   public addAudioTTSGenNode() {
     this.flowNodeCreationService.addAudioTTSNode();
+    this.flowSerializationService.serializeFlow();
   }
 }
