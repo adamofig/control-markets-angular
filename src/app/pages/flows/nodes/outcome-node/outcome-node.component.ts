@@ -75,6 +75,7 @@ export class OutcomeNodeComponent extends BaseFlowNode<CustomOutcomeNode> implem
       inputValues: {
         jobInput: this.outcomeJob,
       },
+      duplicate: true,
     });
   }
 

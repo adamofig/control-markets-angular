@@ -106,6 +106,7 @@ export class IonicLayoutComponent implements OnInit {
     { title: 'Admin Users', url: '/page/admin/users', icon: 'people' },
     { title: 'Admin Other', url: '/page/admin', icon: 'settings' },
     { title: 'Agent Rules', url: '/page/admin/agent-rules', icon: 'receipt' },
+    { title: 'Organizations', url: '/page/admin/organizations', icon: 'receipt' },
   ];
 
   public testingPages = [{ title: 'Test', url: '/page/test', icon: 'code-working' }];
@@ -136,6 +137,7 @@ export class IonicLayoutComponent implements OnInit {
 
   logout() {
     console.log('logout');
+    this.userService.clearUser();
     this.firebaseAuthService.logOut('/');
   }
 

@@ -128,6 +128,11 @@ export const routes: Routes = [
         path: 'video-analizer',
         loadChildren: () => import('./pages/video-analizer/video-analizer.routes').then(m => m.VIDEO_ANALIZER_ROUTES),
       },
+
+      {
+        path: 'admin/organizations',
+        loadChildren: () => import('./pages/organizations/organizations.component').then(m => m.OrganizationsComponent.routes),
+      },
       {
         path: 'video-generator',
         loadComponent: () => import('./pages/video-projects-gen/videoGenerators.component').then(m => m.VideoProjectsGenComponent),

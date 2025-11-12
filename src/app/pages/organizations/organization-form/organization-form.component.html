@@ -1,0 +1,75 @@
+<h3>Organizations Form</h3>
+
+<div class="source-form-card">
+  <p-card [header]="entityId() ? 'Edit Organization' : 'New Organization'">
+    <form [formGroup]="form">
+      <div style="display: flex; gap: 10px">
+        <div class="form-field">
+          <label class="block" pTooltip="Image should be handle after upload">Subir imagen</label>
+          <img width="218px" src="assets/defaults/images/face-3.jpg" />
+          <dc-cropper-modal [imgStorageSettings]="storageImgSettings" (imageUploaded)="handleImageUpload($event)"></dc-cropper-modal>
+        </div>
+
+        <div style="width: 100%">
+          <div class="form-field">
+            <label for="name" class="block">Name</label>
+            <input pInputText id="name" type="text" formControlName="name" placeholder="Enter source name" />
+          </div>
+
+          <div class="form-field">
+            <label for="description" class="block">Description</label>
+            <textarea id="description" pTextarea formControlName="description" rows="3" class="w-full" placeholder="Enter source content"> </textarea>
+          </div>
+
+          <div class="form-field">
+            <label for="type" class="block">Type</label>
+            <p-select
+              [options]="types"
+              formControlName="type"
+              [checkmark]="true"
+              optionLabel="label"
+              optionValue="value"
+              [showClear]="true"
+              placeholder="Select a Type"
+              class="w-full md:w-56" />
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="p-4">
+      <h4 class="mb-2">Guests</h4>
+      @for (guest of entity()?.guests; track guest.id) {
+      <div class="flex items-center justify-between p-2 border-b">
+        <span>{{ guest.email }}</span>
+      </div>
+      } @empty {
+      <p>No guests found for this organization.</p>
+      }
+    </div>
+    <div style="display: flex; justify-content: flex-end">
+      <p-button (click)="save()" label="Save Organization" [disabled]="!form.valid" icon="pi pi-check" iconPos="right"> </p-button>
+    </div>
+  </p-card>
+</div>
+
+<div class="source-form-card" style="margin-top: 20px">
+  <p-card header="Add Users">
+    <div class="form-field">
+      <label for="email" class="block">User Email</label>
+      <div style="display: flex; gap: 10px">
+        <input pInputText id="email" type="email" #userEmail placeholder="Enter user email" style="width: 100%" />
+        <p-button (click)="addUser(userEmail.value)" label="Add User" icon="pi pi-plus"></p-button>
+      </div>
+    </div>
+
+    <div *ngIf="entity?.guests?.length" style="margin-top: 20px">
+      <h5>Guests</h5>
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <div *ngFor="let guest of entity.guests" style="display: flex; justify-content: space-between; align-items: center">
+          <span>{{ guest.email }}</span>
+        </div>
+      </div>
+    </div>
+  </p-card>
+</div>

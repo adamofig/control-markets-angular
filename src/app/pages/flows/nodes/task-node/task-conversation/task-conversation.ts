@@ -5,7 +5,7 @@ import { CustomTaskNode } from '../task-node';
 import { NodeSearchesService } from '../../../services/node-searches.service';
 import { NodeType } from '../../../models/flows.model';
 import { groupBy } from 'es-toolkit/array';
-import { NodePromptBuilderService } from '../../../services/node-prompt-builder.services';
+import { NodePromptBuilderService, PersonaExtractionLevel } from '../../../services/node-prompt-builder.services';
 import { EModelQuality } from '@dataclouder/ngx-core';
 
 @Component({
@@ -51,10 +51,17 @@ export class TaskConversationComponent implements OnInit {
     this.agentCard.set(agent);
     // Por ahora solo va a funcionar con la descripción
 
-    const description = agent.characterCard?.data.description;
-    const prompt = 'You are ai agent here is your description: ' + description;
+    const personaMessages = this.nodePromptBuilder.getAgentCardPersona(agent, PersonaExtractionLevel.BASIC);
+    if (personaMessages.length > 0) {
+      contextPrompts.push(...personaMessages);
+    } else {
+      const description = agent.characterCard?.data.description;
+      const prompt = 'You are ai agent here is your description: ' + description;
+      const ms = { role: ChatRole.System, content: prompt, messageId: 'Description' };
+      contextPrompts.push(ms);
+    }
 
-    const systemMessages: ChatMessage[] = [{ role: ChatRole.System, content: prompt, messageId: 'Description' }, ...contextPrompts];
+    const systemMessages: ChatMessage[] = [...contextPrompts];
 
     // throw new Error('Method not implemented.');
     if (agentTask.description) {
