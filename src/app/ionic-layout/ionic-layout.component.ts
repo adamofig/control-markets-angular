@@ -27,17 +27,15 @@ import {
 } from '@ionic/angular/standalone';
 import * as ionicons from 'ionicons/icons'; // import all icons
 
-import { environment } from 'src/environments/environment';
-import { FirebaseAuthService } from '@dataclouder/app-auth';
+import { FirebaseAuthService } from '@dataclouder/ngx-auth';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
 import { AppUserService } from 'src/app/services/app-user.service';
-import { IUser } from '@dataclouder/ngx-users';
 import { PwaInstallComponent } from '../components/pwa-install/pwa-install.component';
 import { APP_CONFIG } from '@dataclouder/ngx-core';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { PlanIconPipe } from '@dataclouder/app-auth';
+import { PlanIconPipe } from '@dataclouder/ngx-auth';
 
 @Component({
   selector: 'app-ionic-layout',
@@ -134,6 +132,7 @@ export class IonicLayoutComponent implements OnInit {
 
   logout() {
     console.log('logout');
+    this.userService.clearUser();
     this.firebaseAuthService.logOut('/');
   }
 

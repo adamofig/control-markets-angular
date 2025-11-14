@@ -101,10 +101,10 @@ Refer to the main `readme.md` for detailed setup instructions, including automat
 - **Routing (`app.routes.ts`):**
   - Uses Angular standalone components and lazy loading extensively.
   - Defines public routes (landing, legal), authentication routes, and protected feature routes.
-  - Employs `AuthGuardService` (custom) and `redirectToIfAuth` (from `@dataclouder/app-auth`) for route protection.
+  - Employs `AuthGuardService` (custom) and `redirectToIfAuth` (from `@dataclouder/ngx-auth`) for route protection.
   - Features two main authenticated layouts: `IonicLayoutComponent` (tabs) and `StackIonicComponent` (stack navigation).
 - **Authentication:**
-  - Handled primarily by `@dataclouder/app-auth` module, integrating with Firebase Authentication.
+  - Handled primarily by `@dataclouder/ngx-auth` module, integrating with Firebase Authentication.
   - Supports Email/Password, Google Sign-In (`@codetrix-studio/capacitor-google-auth`), and Apple Sign-In (`@capacitor-community/apple-sign-in`).
   - Login/Signup UI located in `src/app/login/`.
 - **Dataclouder Integrations (`@dataclouder/*`):**

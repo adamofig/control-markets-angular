@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuardService } from './services/auth-guard.service';
-import { redirectToIfAuth } from '@dataclouder/app-auth';
+import { redirectToIfAuth } from '@dataclouder/ngx-auth';
 
 import { RouteNames } from './core/enums';
 import { authAndUserGuard } from '@dataclouder/ngx-users';
