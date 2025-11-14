@@ -1,11 +1,18 @@
 import { Injectable, signal, Type } from '@angular/core';
-import { IAgentFlows, NodeType, NodeData } from '../models/flows.model';
+import { IAgentFlows, NodeType, INodeMetadata } from '../models/flows.model';
 import { DynamicNodeWithData } from './flow-diagram-state.service';
 import { Connection, Edge } from 'ngx-vflow';
 import { nanoid } from 'nanoid';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { IAgentTask } from '../../tasks/models/tasks-models';
-import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
+import {
+  AgentNodeComponent,
+  AudioNodeComponent,
+  DistributionChanelNodeComponent,
+  OutcomeNodeComponent,
+  SourcesNodeComponent,
+  TaskNodeComponent,
+} from '../nodes';
 import { IAssetNodeData } from '../models/nodes.model';
 import { IAgentSource } from '../../sources/models/sources.model';
 import { IGeneratedAsset } from '@dataclouder/ngx-vertex';
@@ -36,7 +43,7 @@ export class FlowSignalNodeStateService {
     this._createAgentNode(agentCard);
   }
 
-  public updateNodeData(nodeId: string, data: NodeData) {
+  public updateNodeData(nodeId: string, data: INodeMetadata) {
     this.nodes.update(nodes => nodes.map(node => (node.id === nodeId ? { ...node, data } : node)));
     //
     console.log('updateNodeData', this.nodes());
@@ -169,6 +176,36 @@ export class FlowSignalNodeStateService {
       category: 'input',
       data: { nodeData: asset },
       component: NodeType.AssetsNodeComponent,
+    };
+    this.nodes.set([...this.nodes(), newNode]);
+  }
+  public addAudioNode(asset: IAssetNodeData, refNodeId?: string): void {
+    this._createAudioNode(asset, refNodeId);
+  }
+
+  private _createAudioNode(asset: IAssetNodeData, refNodeId?: string): void {
+    let x = 100;
+    let y = 100;
+
+    const randomAdd = Math.floor(Math.random() * 200);
+    const yRandom = Math.random() > 0.5 ? randomAdd : -randomAdd;
+
+    if (refNodeId) {
+      const refNode = this.nodes().find(n => n.id === refNodeId);
+      if (refNode) {
+        const refPoint = refNode.point();
+        x = refPoint.x + 250 + randomAdd; // Position to the right
+        y = refPoint.y + yRandom;
+      }
+    }
+
+    const newNode: DynamicNodeWithData = {
+      id: 'audio-node-' + nanoid(),
+      point: signal({ x, y }), // Default position
+      type: AudioNodeComponent as Type<any>, // Ensure Type<any> is appropriate
+      category: 'input',
+      data: { nodeData: asset },
+      component: NodeType.AudioNodeComponent,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }

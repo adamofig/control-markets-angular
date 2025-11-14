@@ -4,9 +4,15 @@
 
 <div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
   <div class="node-card" [ngClass]="'status-' + (jobExecutionState()?.status || 'default')">
-    <div class="image-background" [style.background-image]="'url(' + node()?.data?.nodeData?.storage?.url + ')'">
-      <p-tag class="tag" [value]="jobExecutionState()?.status || '🖼️'" severity="danger" />
-      <h4>{{ node()?.data?.nodeData?.name }}</h4>
+    @if(baseMessage){
+    <message-content-displayer [message]="baseMessage"></message-content-displayer>
+    }
+    <div class="audio-container">
+      <p-tag [value]="node()?.data?.nodeData?.name" />
+      <audio controls [src]="node()?.data?.nodeData?.storage?.url"></audio>
+      @if(!hasTranscription){
+      <p-button (click)="getTranscriptions()" label="Get Transcription"></p-button>
+      }
     </div>
 
     <handle type="source" position="right" id="right" />

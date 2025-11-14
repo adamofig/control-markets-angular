@@ -6,3 +6,15 @@
   [buttonLabel]="'Upload Image'"
   [imgStorageSettings]="imageStorageSettings"
   (imageUploaded)="onImageUploaded($event, 'firstFrame')"></dc-cropper-modal>
+
+<h5>Cargar un Audio</h5>
+<p-fileupload
+  mode="basic"
+  name="demo[]"
+  chooseIcon="pi pi-upload"
+  accept="audio/*"
+  maxFileSize="1000000"
+  (onSelect)="onAudioFileChange($event)"
+  [auto]="true"
+  chooseLabel="Browse"
+  [disabled]="isLoading" />

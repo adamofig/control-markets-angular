@@ -26,8 +26,12 @@ export interface IEdgesData {
   edgeLabels?: string[];
 }
 
-export interface NodeData {
-  nodeData?: any;
+export interface INodeData {
+  [key: string]: any;
+}
+
+export interface INodeMetadata {
+  nodeData?: INodeData; // All Data is valid here
   inputNodeId?: string;
   processNodeId?: string;
   [key: string]: any;
@@ -39,7 +43,7 @@ export interface IFlowNode {
   type: string; // not string but is the serialization of the class, use component to rely on the component.
   category: NodeCategory;
   component: NodeType;
-  data: NodeData;
+  data: INodeMetadata;
 }
 export interface IAgentFlows extends AuditDate {
   _id?: string;
@@ -75,6 +79,7 @@ export enum NodeType {
   AssetsNodeComponent = 'AssetsNodeComponent',
   VideoGenNodeComponent = 'VideoGenNodeComponent',
   AudioTTsNodeComponent = 'AudioTTsNodeComponent',
+  AudioNodeComponent = 'AudioNodeComponent',
   default = 'default',
 }
 

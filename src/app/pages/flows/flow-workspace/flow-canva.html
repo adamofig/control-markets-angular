@@ -74,7 +74,7 @@
   <p>Entidad.</p>
   <app-task-list viewMode="table" (onSelect)="addTaskToFlow($event)" />
   } @case ('asset') {
-  <app-assets-uploads (imageUploaded)="addAssetToFlow($event)"></app-assets-uploads>
+  <app-assets-uploads (imageUploaded)="addAssetToFlow($event)" (audioUploaded)="addAssetToFlow($event)"></app-assets-uploads>
   } @case ('source') {
   <h4>Agregar Fuentes de información</h4>
   <app-sources-uploads (sourceUploaded)="addSourceToFlow($event)"></app-sources-uploads>

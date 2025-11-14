@@ -3,3 +3,5 @@ export * from './distribution-chanel-node/distribution-chanel-node.component';
 export * from './outcome-node/outcome-node.component';
 export * from './task-node/task-node';
 export * from './sources-node/sources-node.component';
+
+export * from './audio-node/audio-node.component';

@@ -1,5 +1,12 @@
 import { Injectable, Type, inject, signal } from '@angular/core';
-import { AgentNodeComponent, DistributionChanelNodeComponent, OutcomeNodeComponent, SourcesNodeComponent, TaskNodeComponent } from '../nodes';
+import {
+  AgentNodeComponent,
+  AudioNodeComponent,
+  DistributionChanelNodeComponent,
+  OutcomeNodeComponent,
+  SourcesNodeComponent,
+  TaskNodeComponent,
+} from '../nodes';
 import { DynamicNodeWithData } from './flow-diagram-state.service';
 import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
 import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
@@ -20,6 +27,7 @@ function getNodeTypeMap(): { [key: string]: Type<any> | 'default' } {
     VideoGenNodeComponent: VideoGenNodeComponent,
     AssetGeneratedNodeComponent: AssetGeneratedNodeComponent,
     AudioTTsNodeComponent: AudioTTsNodeComponent,
+    AudioNodeComponent: AudioNodeComponent,
     default: 'default',
   };
 }

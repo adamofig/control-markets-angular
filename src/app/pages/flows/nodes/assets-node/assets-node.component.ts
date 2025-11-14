@@ -1,15 +1,20 @@
+import { CommonModule } from '@angular/common';
+
 import { Component, effect, inject } from '@angular/core';
 import { HandleComponent } from 'ngx-vflow';
 import { ComponentDynamicNode } from 'ngx-vflow';
+
+import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
+import { MessageContentDisplayer } from '@dataclouder/ngx-agent-cards';
+import { Tag } from 'primeng/tag';
+import { TagModule } from 'primeng/tag';
+
 import { BaseFlowNode } from '../base-flow-node';
 import { Button } from 'primeng/button';
 import { IAssetNodeData } from '../../models/nodes.model';
-import { Tag } from 'primeng/tag';
-import { TagModule } from 'primeng/tag';
+
 import { StatusJob } from '../../models/flows.model';
-import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
-import { CommonModule } from '@angular/common';
 
 export interface CustomAssetsNode extends ComponentDynamicNode {
   nodeData: IAssetNodeData;

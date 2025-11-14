@@ -1,0 +1,57 @@
+@if(nodeData){
+<div class="audio-details-container">
+  <div class="header">
+    <i class="pi pi-volume-up icon"></i>
+    <h2 class="title">Audio Details</h2>
+  </div>
+
+  <div class="p-fluid content">
+    <div class="p-field">
+      <label for="name">Name</label>
+      <input id="name" type="text" pInputText [value]="nodeData.name" disabled />
+    </div>
+    <div class="p-field">
+      <label for="url">URL</label>
+      <div class="p-inputgroup">
+        <input id="url" type="text" pInputText [value]="nodeData.storage?.url" disabled class="p-inputtext-sm" />
+        <button type="button" pButton pRipple icon="pi pi-copy" class="p-button-secondary" (click)="copyToClipboard(nodeData.storage?.url)"></button>
+      </div>
+    </div>
+    @if(nodeData.transcription){
+    <div class="p-field">
+      <label for="transcription">Transcription</label>
+      <div class="transcription-container">
+        <textarea id="transcription" pInputTextarea [value]="nodeData.transcription.text" style="width: 100%" disabled rows="5"></textarea>
+        <button
+          type="button"
+          pButton
+          pRipple
+          icon="pi pi-copy"
+          class="p-button-secondary copy-transcription"
+          (click)="copyToClipboard(nodeData.transcription.text)"></button>
+      </div>
+    </div>
+
+    <div class="p-field">
+      <button type="button" pButton pRipple (click)="showTranscriptionJson = !showTranscriptionJson" class="p-button-secondary">
+        {{ showTranscriptionJson ? 'Hide' : 'Show' }} Transcription JSON
+      </button>
+    </div>
+
+    @if(showTranscriptionJson){
+    <div class="p-field">
+      <label for="transcription-json">Transcription JSON</label>
+      <div class="p-inputgroup">
+        <textarea style="width: 100%" id="transcription-json" pInputTextarea [value]="transcriptionJson" disabled rows="10"></textarea>
+        <button type="button" pButton pRipple icon="pi pi-copy" class="p-button-secondary" (click)="copyToClipboard(transcriptionJson)"></button>
+      </div>
+    </div>
+    } }
+  </div>
+</div>
+} @else {
+<div class="no-data">
+  <i class="pi pi-info-circle icon"></i>
+  <p>No data available</p>
+</div>
+}

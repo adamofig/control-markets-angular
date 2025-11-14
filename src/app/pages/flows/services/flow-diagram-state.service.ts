@@ -1,5 +1,5 @@
 import { inject, Injectable, signal, Type } from '@angular/core';
-import { IAgentFlows, IJobExecutionState, NodeData } from '../models/flows.model';
+import { IAgentFlows, IJobExecutionState, INodeMetadata } from '../models/flows.model';
 import { Connection, DynamicNode, Edge, VflowComponent } from 'ngx-vflow';
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
@@ -67,7 +67,7 @@ export class FlowDiagramStateService {
     console.log('outcomeJobNode', outcomeJobNode);
   }
 
-  // public updateNodeData(nodeId: string, data: NodeData) {
+  // public updateNodeData(nodeId: string, data: INodeMetadata) {
   //   this.flowSignalNodeStateService.updateNodeData(nodeId, data);
   // }
 

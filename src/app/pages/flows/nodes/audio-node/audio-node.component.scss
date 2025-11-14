@@ -1,4 +1,3 @@
-
 @use "../mixins" as *;
 
 .node-container {
@@ -6,6 +5,8 @@
   overflow: hidden;
   padding: 5px;
   min-width: 140px;
+
+  max-width: 420px;
 
 }
 
@@ -16,14 +17,6 @@
   box-shadow: 7px 7px 21px #1779f0, -7px -7px 21px #ffffff;
 
 }
-
-.image-background {
-  background-size: cover;
-  background-position: center;
-  height: 200px;
-  width: 100%;
-}
-
 
 .status-default {
   @include status-animation("white", white); // Default orange
@@ -44,4 +37,15 @@
 
 .status-failed {
   @include status-animation("red", red);
+}
+.audio-container {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  audio {
+    width: 100%;
+    border-radius: 5px;
+  }
 }

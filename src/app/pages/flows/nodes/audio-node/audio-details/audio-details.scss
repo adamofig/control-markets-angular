@@ -1,0 +1,88 @@
+:host {
+  display: block;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.audio-details-container {
+  .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+
+    .icon {
+      font-size: 1.5rem;
+      color: #007bff;
+      margin-right: 0.75rem;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #333;
+    }
+  }
+
+  .content {
+    .p-field {
+      margin-bottom: 1.25rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #555;
+      }
+
+      .p-inputgroup {
+        display: flex;
+
+        .p-inputtext-sm {
+          flex-grow: 1;
+        }
+
+        .p-button-secondary {
+          border-left: 0;
+        }
+      }
+
+      .transcription-container {
+        position: relative;
+
+        textarea {
+          width: 100%;
+          padding-right: 3rem; // Space for the button
+        }
+
+        .copy-transcription {
+          position: absolute;
+          top: 50%;
+          right: 0.5rem;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+}
+
+.no-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  color: #888;
+
+  .icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1rem;
+  }
+}

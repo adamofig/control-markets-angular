@@ -160,7 +160,12 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
 
   addAssetToFlow(event: IAssetNodeData) {
     console.log('addAssetToFlow', event);
-    this.flowSignalNodeStateService.addAssetNode(event);
+
+    if (event.type === 'audio') {
+      this.flowSignalNodeStateService.addAudioNode(event);
+    } else {
+      this.flowSignalNodeStateService.addAssetNode(event);
+    }
     this.closeDialog();
     this.flowSerializationService.serializeFlow();
   }
@@ -197,6 +202,8 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
     this.vflowRef.panTo({ x: 0, y: 0 });
     this.vflowRef.zoomTo(1);
     this.vflowRef.documentPointToFlowPoint({ x: 0, y: 0 });
+
+    // this.vflowRef.
 
     // this.isRunningFlow.set(true);
     // try {

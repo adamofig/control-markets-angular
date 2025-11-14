@@ -1,4 +1,5 @@
 import { FileStorageData } from '@dataclouder/ngx-cloud-storage';
+import { TranscriptionsWhisper } from '@dataclouder/ngx-ai-services';
 
 export interface IAssetNodeData {
   _id?: string;
@@ -14,4 +15,8 @@ export interface INodeVideoGenerationData {
   prompt: string;
   request?: any;
   provider: 'veo' | 'comfy';
+}
+
+export interface IAudioAssetsNodeData extends IAssetNodeData {
+  transcription?: TranscriptionsWhisper;
 }
