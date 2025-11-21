@@ -4,7 +4,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree, Route, Ur
 import { from, fromEvent, Observable, of } from 'rxjs';
 import { mergeMap, concatMap, tap, catchError } from 'rxjs/operators';
 import { ToastAlertService } from './toast.service';
-import { FirebaseAuthService } from '@dataclouder/app-auth';
+import { FirebaseAuthService } from '@dataclouder/ngx-auth';
 import { LoadingBarService } from '@dataclouder/ngx-core';
 import { AppUserService } from './app-user.service';
 

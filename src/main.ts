@@ -14,7 +14,6 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { Capacitor } from '@capacitor/core';
 // PrimeNG
 import { DialogService } from 'primeng/dynamicdialog';
-import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 // Third Party
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -22,8 +21,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // DC Libs
 import { AGENT_CARDS_STATE_SERVICE, DefaultAgentCardsService, IAgentCard, provideAgentCardService } from '@dataclouder/ngx-agent-cards';
 import { provideLessonsService, provideNotionService, DefaultLessonsService } from '@dataclouder/ngx-lessons';
-import { provideAuthConfig } from '@dataclouder/app-auth';
 import { HttpCoreService, provideToastAlert, APP_CONFIG, IAppConfig } from '@dataclouder/ngx-core';
+import { provideAuthConfig } from '@dataclouder/ngx-auth';
 // Local
 import { ToastAlertService } from './app/services/toast.service';
 import { authInterceptor } from './app/services/interception.service';
@@ -40,6 +39,7 @@ import { UserService } from '@dataclouder/ngx-users';
 
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideTranslateService } from '@ngx-translate/core';
+import { MessageService } from 'primeng/api';
 
 fetch('/assets/config.json')
   .then(response => response.json())
@@ -104,7 +104,6 @@ fetch('/assets/config.json')
           }
         }),
         provideFirestore(() => getFirestore()),
-
         DialogService,
         MessageService,
         provideToastAlert(ToastAlertService),

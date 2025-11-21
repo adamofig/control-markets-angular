@@ -1,9 +1,9 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'ad.golden.dev ',
-  appName: 'golden',
-  webDir: 'www',
+  appId: 'markets.control.app',
+  appName: 'Control Markets',
+  webDir: 'www/browser',
 };
 
 export default config;
