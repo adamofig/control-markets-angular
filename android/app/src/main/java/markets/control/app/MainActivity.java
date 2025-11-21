@@ -1,4 +1,4 @@
-package dev.dataclouder.template;
+package markets.control.app;
 
 import com.getcapacitor.BridgeActivity;
 

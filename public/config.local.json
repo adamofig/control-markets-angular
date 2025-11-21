@@ -4,9 +4,9 @@
   "envName": "DEV",
   "production": false,
   "authenticationRequired": true,
-  "backendNodeUrl": "http://localhost:8121",
-  "backendPythonUrl": "http://localhost:8122",
-  "aiServicesUrl": "http://localhost:8085",
+  "backendNodeUrl": "http://192.168.2.3:8121",
+  "backendPythonUrl": "http://192.168.2.3:8122",
+  "aiServicesUrl": "http://192.168.2.3:8085",
   "mobile": {},
   "firebase": {
     "apiKey": "AIzaSyAecVnUj1-IjKGDvBarhufKAfO-Y-RyTXw",

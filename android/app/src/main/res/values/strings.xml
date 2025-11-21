@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">dataclouder-template</string>
-    <string name="title_activity_main">dataclouder-template</string>
-    <string name="package_name">dev.dataclouder.template</string>
-    <string name="custom_url_scheme">dev.dataclouder.template</string>
+    <string name="app_name">Control Markets</string>
+    <string name="title_activity_main">Control Markets</string>
+    <string name="package_name">markets.control.app</string>
+    <string name="custom_url_scheme">markets.control.app</string>
 </resources>
