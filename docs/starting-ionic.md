@@ -28,14 +28,30 @@ npm run android:dev
 
 Necesitas hacer esto para que la autentificación con google sea valida. 
 
+### Comandos de android. 
+
+en el package json dejo los scripts. 
+
+android:debug: para ver los cambios en tiempo real. 
+
+npx cap open android
+
+npx cap run android
+
+
+
 ### Problemas no reconociendo android? 
 
 `adb devices -l`
-
-
 
 Este problema me sucede todo el tiempo, siento que no es estable. 
 
 Reiniciar el telefono casi siempre funciona. 
 
 quitar los permisos de debug y volverlos a poner. 
+
+### Otros problemas de conexion 
+
+a menudo voy a necesitar conectar a mis servidores locales, para debuguear y eso. 
+
+Pero si installo la app no funciona como espero 
