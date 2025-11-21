@@ -23,14 +23,20 @@ export class AudioDetailsComponent implements OnInit {
   }
 
   get transcriptionJson() {
-    return JSON.stringify(this.nodeData?.transcription, null, 2);
+    const replacer = (key: any, value: any) => {
+      if (key === 'words') {
+        return JSON.stringify(value);
+      }
+      return value;
+    };
+    return JSON.stringify(this.nodeData?.transcription, replacer, 2).replace(/\\"/g, '"').replace(/"\[/g, '[').replace(/]"/g, ']');
   }
 
   copyToClipboard(text: string | undefined | object) {
     if (!text) {
       return;
     }
-    const textToCopy = typeof text === 'object' ? JSON.stringify(text, null, 2) : text;
+    const textToCopy = typeof text === 'object' ? this.transcriptionJson : text;
     navigator.clipboard.writeText(textToCopy).then(
       () => {
         console.log('Copied to clipboard');

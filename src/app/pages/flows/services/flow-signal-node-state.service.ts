@@ -15,7 +15,7 @@ import {
 } from '../nodes';
 import { IAssetNodeData } from '../models/nodes.model';
 import { IAgentSource } from '../../sources/models/sources.model';
-import { IGeneratedAsset } from '@dataclouder/ngx-vertex';
+import { IGeneratedAsset } from '@dataclouder/ngx-ai-services';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
 import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
 import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';

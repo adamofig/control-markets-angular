@@ -1,7 +1,7 @@
 import { Injectable, signal, inject, NgZone, Type } from '@angular/core';
 import { IJobExecutionState, NodeType } from '../models/flows.model';
 import { DynamicNodeWithData, FlowDiagramStateService } from './flow-diagram-state.service';
-import { IGeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-vertex';
+import { IGeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-ai-services';
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 import { nanoid } from 'nanoid';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';

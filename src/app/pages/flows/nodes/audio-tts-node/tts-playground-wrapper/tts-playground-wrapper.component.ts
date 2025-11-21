@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { TTSGenerated, TtsPlaygroundComponent, TTSPlaygroundSettings } from '@dataclouder/ngx-vertex';
+import { TTSGenerated, TtsPlaygroundComponent, TTSPlaygroundSettings } from '@dataclouder/ngx-ai-services';
 import { CommonModule } from '@angular/common';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 

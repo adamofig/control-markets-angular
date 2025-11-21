@@ -6,7 +6,7 @@ import { AssetGeneratedDetailsComponent } from './asset-generated-details/asset-
 import { ResponseFormat } from 'src/app/pages/jobs/models/jobs.model';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule, JsonPipe } from '@angular/common';
-import { IGeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-vertex';
+import { IGeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-ai-services';
 import { BaseFlowNode } from '../base-flow-node';
 import { ActionsToolbarComponent } from '../actions-toolbar/actions-toolbar.component';
 import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';

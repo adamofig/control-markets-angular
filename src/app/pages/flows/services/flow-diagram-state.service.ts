@@ -6,7 +6,7 @@ import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
 import { IAgentTask } from '../../tasks/models/tasks-models'; // Corrected path
 import { JobService } from '../../jobs/outcome-jobs.service';
 import { IAssetNodeData } from '../models/nodes.model';
-import { IGeneratedAsset } from '@dataclouder/ngx-vertex';
+import { IGeneratedAsset } from '@dataclouder/ngx-ai-services';
 import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { IAgentSource } from '../../sources/models/sources.model';
 // NOt able to set a type for data yet.

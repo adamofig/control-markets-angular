@@ -6,7 +6,7 @@ import { JsonPipe } from '@angular/common';
 import { IAgentTask } from 'src/app/pages/tasks/models/tasks-models';
 import { TaskDetailsComponent } from 'src/app/pages/tasks/task-details/task-details.component';
 import { DynamicNodeWithData, FlowDiagramStateService } from 'src/app/pages/flows/services/flow-diagram-state.service';
-import { ComfyVideoOptionsRequestFormComponent } from '@dataclouder/ngx-vertex';
+import { ComfyVideoOptionsRequestFormComponent } from '@dataclouder/ngx-ai-services';
 import { SelectModule } from 'primeng/select';
 import { NodeCategory, StatusJob } from '../../../models/flows.model';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';

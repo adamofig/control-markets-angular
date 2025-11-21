@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { BaseFlowNode } from '../base-flow-node';
-import { TtsPlaygroundComponent, TTSPlaygroundSettings } from '@dataclouder/ngx-vertex';
+import { TtsPlaygroundComponent, TTSPlaygroundSettings } from '@dataclouder/ngx-ai-services';
 import { FlowSignalNodeStateService } from '../../services/flow-signal-node-state.service';
 import { IAssetNodeData } from '../../models/nodes.model';
 import { ComponentDynamicNode, Vflow } from 'ngx-vflow';
@@ -15,7 +15,6 @@ import { TtsPlaygroundWrapperComponent } from './tts-playground-wrapper/tts-play
 import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { NodeType } from '../../models/flows.model';
 import { AgentAudioGeneratorComponent } from './agent-audio-generator/agent-audio-generator.component';
-import { FlowComponentRefStateService } from '../../services/flow-component-ref-state.service';
 import { AgentNodeComponent } from '../agent-node/agent-node.component';
 
 export interface CustomAudioTTsNode extends ComponentDynamicNode {
@@ -73,7 +72,7 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> impl
       storage: event.storage,
     };
 
-    this.flowSignalNodeStateService.addAssetNode(assetNodeData, this.node()?.id);
+    this.flowSignalNodeStateService.addAudioNode(assetNodeData, this.node()?.id);
     // A ver que hago con el audio?
   }
 

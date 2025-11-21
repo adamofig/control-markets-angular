@@ -15,6 +15,8 @@ import { IAssetNodeData } from '../../models/nodes.model';
 
 import { StatusJob } from '../../models/flows.model';
 import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { AssetDetailsComponent } from './asset-details/asset-details';
 
 export interface CustomAssetsNode extends ComponentDynamicNode {
   nodeData: IAssetNodeData;
@@ -29,6 +31,8 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
 })
 export class AssetsNodeComponent extends BaseFlowNode<CustomAssetsNode> {
   private toastService = inject(TOAST_ALERTS_TOKEN);
+  public dialogService = inject(DialogService);
+
   constructor() {
     super();
     effect(() => {
@@ -49,6 +53,20 @@ export class AssetsNodeComponent extends BaseFlowNode<CustomAssetsNode> {
   }
 
   public openModal() {
-    alert('No hay detalles');
+    const nodeData = this.node()?.data?.nodeData;
+    if (nodeData) {
+      this.dialogService.open(AssetDetailsComponent, {
+        header: 'Asset Details',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        draggable: true,
+        styleClass: 'draggable-dialog',
+        closable: true,
+        width: '650px',
+        data: {
+          ...nodeData,
+        },
+      });
+    }
   }
 }

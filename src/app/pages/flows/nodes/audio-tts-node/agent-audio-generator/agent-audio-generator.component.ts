@@ -5,9 +5,10 @@ import { TextareaModule } from 'primeng/textarea';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { SliderModule } from 'primeng/slider';
-import { HttpCoreService } from '@dataclouder/ngx-core';
+import { HttpCoreService, LoadingBarService } from '@dataclouder/ngx-core';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { MultiObjectStorageService } from '@dataclouder/ngx-cloud-storage';
+import { FlowSignalNodeStateService } from '../../../services/flow-signal-node-state.service';
 
 @Component({
   selector: 'app-agent-audio-generator',
@@ -28,6 +29,8 @@ export class AgentAudioGeneratorComponent implements OnInit {
   private storageService = inject(MultiObjectStorageService);
 
   private httpCoreService = inject(HttpCoreService);
+  private loadingBar = inject(LoadingBarService);
+  private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
 
   @Input() fullAgentCard: IAgentCard = {} as IAgentCard;
   @Output() ttsGenerated = new EventEmitter<any>();
@@ -68,8 +71,15 @@ export class AgentAudioGeneratorComponent implements OnInit {
         blobUrl: window.URL.createObjectURL(response.body),
       };
 
-      const id = new Date().toISOString();
-      const storage = await this.storageService.uploadObject(audioData.blob, 'flow/audios/' + id);
+      const id = new Date().getTime();
+      const flowId = this.flowSignalNodeStateService.flow()?.id;
+      const mess = this.message
+        .toLowerCase()
+        .slice(0, 20)
+        .replace(/\s/g, '_')
+        .replace(/[^a-z0-9_]/g, '');
+      const path = 'flow/' + flowId + '/audios/' + mess + '_' + id + '.mp3';
+      const storage = await this.storageService.uploadObject(audioData.blob, path);
 
       console.log('storage -> ', storage);
 
@@ -87,12 +97,14 @@ export class AgentAudioGeneratorComponent implements OnInit {
   }
 
   async generateVariations() {
+    this.loadingBar.showIndeterminate();
     this.isGenerating.set(true);
     const temperatures = [0.3, 0.5, 0.9];
     for (const temp of temperatures) {
-      const seed = Math.floor(Math.random() * 10000) + 1;
+      const seed = Math.floor(Math.random() * 1000) + 1;
       await this.generateAudio(temp, seed);
     }
+    this.loadingBar.successAndHide();
     this.isGenerating.set(false);
   }
 

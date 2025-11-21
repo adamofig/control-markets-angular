@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { inject } from '@angular/core';
-import { VertexAudioService } from '@dataclouder/ngx-vertex';
+import { VertexAudioService } from '@dataclouder/ngx-ai-services';
 
 @Component({
   selector: 'app-dialog-item',
