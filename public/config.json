@@ -1,12 +1,12 @@
 {
   "projectName": "Dataclouder Template",
-  "version": "0.0.1",
+  "version": "0.0.26",
   "envName": "DEV",
   "production": false,
   "authenticationRequired": true,
-  "backendNodeUrl": "http://localhost:7991",
-  "backendPythonUrl": "http://localhost:8000",
-  "aiServicesUrl": "http://localhost:8082",
+  "backendNodeUrl": "http://192.168.2.3:7991",
+  "backendPythonUrl": "http://192.168.2.3:8000",
+  "aiServicesUrl": "http://192.168.2.3:8082",
   "mobile": {
     "appleAppId": "com.dc-template.app.dev",
     "appleRedirectURI": "https://dataclouder-dev.firebaseapp.com/__/auth/handler",
