@@ -1,4 +1,9 @@
 <div class="form-container">
+  <p-card>
+    <app-organization-selector />
+  </p-card>
+
+  <br />
   <app-profile-form [user]="userService.user()" [userForm]="userForm" (saveData)="saveData($event)"></app-profile-form>
 
   <p-card>

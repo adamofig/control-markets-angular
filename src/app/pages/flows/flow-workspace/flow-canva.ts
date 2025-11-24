@@ -18,11 +18,11 @@ import { FlowService } from '../flows.service';
 import { IAssetNodeData } from '../models/nodes.model';
 import { ComfyStatusComponent } from '../canvas-components/comfy-status/comfy-status';
 import { SpeedDialModule } from 'primeng/speeddial';
-import { RedSquareData, RedSquareNodeComponent } from '../nodes/test-node/test-node';
 import { IAgentSource } from '../../sources/models/sources.model';
 import { FlowSignalNodeStateService } from '../services/flow-signal-node-state.service';
 import { FlowNodeCreationService } from '../services/flow-node-creation.service';
 import { FlowSerializationService } from '../services/flow-serialization.service';
+import { AppUserService } from '../../../services/app-user.service';
 
 @Component({
   templateUrl: './flow-canva.html',
@@ -46,6 +46,14 @@ import { FlowSerializationService } from '../services/flow-serialization.service
 export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> implements OnInit, AfterViewInit {
   override form: FormGroup<any> = new FormGroup({});
   public flowSerializationService = inject(FlowSerializationService);
+
+  public userService = inject(AppUserService);
+
+  override defaultNewObject: IAgentFlows = {
+    name: 'Por favor renombra tu flujo',
+    orgId: this.userService.user()?.defaultOrgId || this.userService.user()?._id,
+    id: '',
+  };
 
   ngAfterViewInit(): void {
     this.flowDiagramStateService.setVflowComponent(this.vflowRef);

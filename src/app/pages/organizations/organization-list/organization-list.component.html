@@ -19,6 +19,7 @@
       <p-card [header]="organization.name">
         <p class="m-0">{{ organization.description | slice : 0 : 250 }}...</p>
         <span>{{ organization?.auditable?.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
+        <p-tag>{{ organization?.type }}</p-tag>
       </p-card>
     </div>
     } @if (items().length === 0) {

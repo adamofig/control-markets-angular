@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal, inject, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
 import { DCFilterBarComponent, QuickTableComponent } from '@dataclouder/ngx-core';
 import { FlowService } from '../flows.service';
 import { IAgentFlows } from '../models/flows.model';
+import { AppUserService, IUserOrganization } from '../../../services/app-user.service';
 import { RouterModule } from '@angular/router';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { MenuItem } from 'primeng/api';
@@ -13,9 +14,11 @@ import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { EntityBaseListComponent } from '@dataclouder/ngx-core';
 import { TagModule } from 'primeng/tag';
+import { MessageModule } from 'primeng/message';
+import { OrganizationSelectorComponent } from 'src/app/components/organization-selector/organization-selector.component';
 
 @Component({
-  selector: 'app-generic-list',
+  selector: 'app-flow-list',
   imports: [
     CardModule,
     ButtonModule,
@@ -28,6 +31,8 @@ import { TagModule } from 'primeng/tag';
     TableModule,
     QuickTableComponent,
     TagModule,
+    MessageModule,
+    OrganizationSelectorComponent,
   ],
   templateUrl: './flow-list.html',
   styleUrl: './flow-list.css',
@@ -35,9 +40,13 @@ import { TagModule } from 'primeng/tag';
 })
 export class FlowListComponent extends EntityBaseListComponent<IAgentFlows> implements OnInit {
   protected override entityCommunicationService = inject(FlowService);
+  private appUserService = inject(AppUserService);
+  public currentOrganization: Signal<IUserOrganization | undefined>;
 
   constructor() {
     super();
+    this.currentOrganization = this.appUserService.currentOrganization;
+    this.filterConfig.filters = { orgId: this.currentOrganization()?.orgId };
     this.filterConfig.returnProps = {
       _id: 1,
       id: 1,
@@ -67,5 +76,10 @@ export class FlowListComponent extends EntityBaseListComponent<IAgentFlows> impl
         command: () => this.doAction({ item, action: 'delete' }),
       },
     ];
+  }
+
+  public reload() {
+    this.filterConfig.filters = { orgId: this.currentOrganization()?.orgId };
+    this.loadData();
   }
 }

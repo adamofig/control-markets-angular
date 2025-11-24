@@ -2,12 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { IUser, ProfileFormComponent, ProfileSettingsFormComponent } from '@dataclouder/ngx-users';
+import { ProfileFormComponent, ProfileSettingsFormComponent } from '@dataclouder/ngx-users';
 import { AudioSpeed, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { AppUserService } from 'src/app/services/app-user.service';
 import { CardModule } from 'primeng/card';
 import { DCConversationUserChatSettingsComponent } from '@dataclouder/ngx-agent-cards';
 import { TranslateModule } from '@ngx-translate/core';
+import { OrganizationSelectorComponent } from 'src/app/components/organization-selector/organization-selector.component';
 
 export const BaseLanguagesOptions = [
   { name: 'Español 🇪🇦 🇲🇽 ', code: 'es' },
@@ -34,9 +35,10 @@ export const AudioSpeedOptions = [
     CardModule,
     DCConversationUserChatSettingsComponent,
     TranslateModule,
+    OrganizationSelectorComponent,
   ],
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   private fb = inject(FormBuilder);
   public userService = inject(AppUserService);
   private toastService = inject(TOAST_ALERTS_TOKEN);
@@ -52,6 +54,7 @@ export class ProfileComponent {
     gender: [<string>''],
     emotionalName: [<string>''],
   });
+
   public baseLanguagesOptions = BaseLanguagesOptions;
 
   public settingsForm = this.fb.group({
@@ -62,44 +65,12 @@ export class ProfileComponent {
     // conversation will be added in child
   });
 
-  profileForm = this.fb.group({
-    id: [''],
-    urlPicture: [''],
-    email: [''],
-    personalData: this.fb.group({
-      nickname: [''],
-      username: [''],
-      firstname: [''],
-      lastname: [''],
-      gender: [''],
-      birthday: [null],
-      emotionalName: [''],
-    }),
-  });
-
   constructor() {
-    this.profileForm = this.fb.group({
-      id: [''],
-      urlPicture: [''],
-      email: [''],
-      personalData: this.fb.group({
-        nickname: [''],
-        username: [''],
-        firstname: [''],
-        lastname: [''],
-        gender: [''],
-        birthday: [null],
-        emotionalName: [''],
-      }),
-    });
-
     const user = this.userService.user();
   }
 
-  ngOnInit() {}
-
-  get nickname() {
-    return this.profileForm.get('personalData.nickname');
+  ngOnInit() {
+    this.userService.user().organizations;
   }
 
   public saveData(event: any) {

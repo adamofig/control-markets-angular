@@ -12,6 +12,7 @@ import { DatePipe, SlicePipe } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { UserService } from '@dataclouder/ngx-users';
+import { Tag } from 'primeng/tag';
 
 @Component({
   selector: 'app-organization-list',
@@ -26,6 +27,7 @@ import { UserService } from '@dataclouder/ngx-users';
     RouterModule,
     TableModule,
     QuickTableComponent,
+    Tag,
   ],
   templateUrl: './organization-list.component.html',
   styleUrl: './organization-list.component.css',

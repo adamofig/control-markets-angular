@@ -58,17 +58,8 @@
     <div class="form-field">
       <label for="email" class="block">User Email</label>
       <div style="display: flex; gap: 10px">
-        <input pInputText id="email" type="email" #userEmail placeholder="Enter user email" style="width: 100%" />
+        <input pInputText id="email" type="email" #userEmail placeholder="Enter user email" style="width: 100%" (keydown.enter)="addUser(userEmail.value)" />
         <p-button (click)="addUser(userEmail.value)" label="Add User" icon="pi pi-plus"></p-button>
-      </div>
-    </div>
-
-    <div *ngIf="entity?.guests?.length" style="margin-top: 20px">
-      <h5>Guests</h5>
-      <div style="display: flex; flex-direction: column; gap: 10px">
-        <div *ngFor="let guest of entity.guests" style="display: flex; justify-content: space-between; align-items: center">
-          <span>{{ guest.email }}</span>
-        </div>
       </div>
     </div>
   </p-card>

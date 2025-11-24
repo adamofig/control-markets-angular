@@ -1,0 +1,9 @@
+<p-select
+  [options]="organizations()"
+  optionLabel="name"
+  optionValue="orgId"
+  placeholder="Select a Organization"
+  class="w-full md:w-56"
+  [formControl]="organizationControl"
+  (onChange)="updateDefaultOrganization($event.value)"
+  appendTo="body" />

@@ -52,6 +52,7 @@ export interface IAgentFlows extends AuditDate {
   nodes?: IFlowNode[];
   edges?: IEdgesData[];
   metadata?: IAgentFlowsMetadata;
+  orgId?: string;
 }
 
 export interface MessageLog {

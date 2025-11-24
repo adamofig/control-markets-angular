@@ -39,7 +39,6 @@ import { OrganizationListComponent } from '../organization-list/organization-lis
 export class OrganizationFormComponent extends EntityBaseFormComponent<IOrganization> {
   protected entityCommunicationService = inject(OrganizationService);
   private fb = inject(FormBuilder);
-  private cdr = inject(ChangeDetectorRef);
 
   public form = this.fb.group({
     name: ['', Validators.required],
@@ -52,6 +51,7 @@ export class OrganizationFormComponent extends EntityBaseFormComponent<IOrganiza
   protected override patchForm(entity: IOrganization): void {
     // NOTE: you may need to custom patchForm if contains arrays or custom logic.
     this.form.patchValue(entity);
+    console.log(this.entity());
   }
 
   public storageImgSettings = {
@@ -59,38 +59,10 @@ export class OrganizationFormComponent extends EntityBaseFormComponent<IOrganiza
     cropSettings: { aspectRatio: AspectType.Square, resolutions: [ResolutionType.MediumLarge], resizeToWidth: 700 },
   };
 
-  extraFields: any[] = [
-    { key: 'title', type: 'input', props: { label: 'Title', placeholder: 'Title', required: false } },
-    { key: 'content', type: 'textarea', props: { label: 'Content', placeholder: 'Content', required: false } },
-  ];
-
-  public peopleOptions = [
-    { id: '1', name: 'Yang Feng', description: 'Description with short description', image: 'assets/defaults/images/face-1.jpg' },
-    { id: '2', name: 'Juan Perez', description: 'Description ', image: 'assets/defaults/images/face-2.jpg' },
-    { id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/defaults/images/face-3.jpg' },
-  ];
-
-  public selectedPeople: any[] = [{ id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/defaults/images/face-3.jpg' }];
-
   public types = [
     { label: 'Personal', value: 'personal' },
     { label: 'Company', value: 'company' },
   ];
-
-  public relationObjects = [
-    { id: 'Relation 1', name: 'relation1', description: 'Description with short description' },
-    { id: 'Relation 2', name: 'relation2', description: 'Description with short description' },
-    { id: 'Relation 3', name: 'relation3', description: 'Description with short description' },
-  ];
-
-  public addItemToList(event: any) {
-    this.selectedPeople.push(event.value);
-  }
-
-  public removeItemFromList(person: any) {
-    this.selectedPeople = this.selectedPeople.filter(p => p.id !== person.id);
-    console.log(this.selectedPeople);
-  }
 
   public handleImageUpload(event: any) {
     // this.organizationForm.patchValue({ image: event });
@@ -122,13 +94,19 @@ export class OrganizationFormComponent extends EntityBaseFormComponent<IOrganiza
     if (!this.entityId() || !email) {
       return;
     }
-    await this.entityCommunicationService.addUserToOrganization(this.entityId(), email);
-    this.entity.update(entity => {
-      if (!entity.guests) {
-        entity.guests = [];
-      }
-      entity.guests.push({ id: '', name: '', email });
-      return { ...entity };
-    });
+    try {
+      await this.entityCommunicationService.addUserToOrganization(this.entityId(), email);
+      this.entity.update(entity => {
+        if (!entity.guests) {
+          entity.guests = [];
+        }
+        entity.guests.push({ id: '', name: '', email });
+        return { ...entity };
+      });
+      this.toastService.success({ title: 'Success', subtitle: 'User added to organization' });
+    } catch (error) {
+      console.log(error);
+      this.toastService.error({ title: 'Error', subtitle: `User not added to organization: ${String(error)}` });
+    }
   }
 }
