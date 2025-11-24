@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, inject, signal, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal, computed, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 import { JobService } from '../outcome-jobs.service';
@@ -30,6 +30,8 @@ export class OutcomeJobDetailComponent implements OnInit {
 
   public job = signal<IAgentOutcomeJob | null>(null);
   @Input() jobInput: IAgentOutcomeJob | null = null;
+  public showDebugData = signal(false);
+  public viewMode = signal('markdown');
 
   public resultWordCount = computed(() => {
     const currentJob = this.job();
@@ -38,6 +40,14 @@ export class OutcomeJobDetailComponent implements OnInit {
     }
     return currentJob.result.content.trim().split(/\s+/).length;
   });
+
+  public toggleDebugData() {
+    this.showDebugData.set(!this.showDebugData());
+  }
+
+  public toggleViewMode() {
+    this.viewMode.set(this.viewMode() === 'markdown' ? 'text' : 'markdown');
+  }
 
   ngOnInit(): void {
     this.loadOutcomeJob();

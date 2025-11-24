@@ -63,6 +63,7 @@ export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements
       draggable: true,
       styleClass: 'draggable-dialog',
       closable: true,
+      modal: false,
       width: '500px',
       data: {
         agentCard: this.node().data?.nodeData,

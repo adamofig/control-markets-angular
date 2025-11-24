@@ -1,19 +1,34 @@
-<div>Detalles de task</div>
+<div style="padding: 1rem; display: flex; justify-content: space-between; align-items: center">
+  <h1>Task Details</h1>
+  <div>
+    <p-button (click)="toggleDebugData()" label="Debug Data" link />
+    <p-button (click)="toggleViewMode()" [label]="viewModeLabel()"></p-button>
+  </div>
+</div>
 
-<app-task-details [id]="agentTask.id"></app-task-details>
+@if (viewMode() === 'details') {
+<div style="padding: 1rem">
+  <app-task-details [id]="agentTask.id"></app-task-details>
+</div>
+} @if (viewMode() === 'form') {
+<div>
+  <app-task-form [id]="agentTask.id"></app-task-form>
+</div>
+} @if(showDebugData()){
+<div style="padding: 1rem">
+  <h6>Debug Data Json</h6>
+  <details>
+    <summary>Node ID {{ this.node.id }}</summary>
+    <pre style="max-width: 300px; overflow: auto">{{ this.node | json }}</pre>
+  </details>
+  <details>
+    <summary>Task ID {{ this.agentTask.id }}</summary>
+    <pre style="max-width: 300px; overflow: auto">{{ this.agentTask | json }}</pre>
+  </details>
 
-<app-task-form [id]="agentTask.id"></app-task-form>
-
-<details>
-  <summary>Node ID {{ this.node.id }}</summary>
-  <pre style="max-width: 300px; overflow: auto">{{ this.node | json }}</pre>
-</details>
-<details>
-  <summary>Task ID {{ this.agentTask.id }}</summary>
-  <pre style="max-width: 300px; overflow: auto">{{ this.agentTask | json }}</pre>
-</details>
-
-<details>
-  <summary>Connected Nodes</summary>
-  <pre style="max-width: 300px; overflow: auto">{{ this.connectedNodes | json }}</pre>
-</details>
+  <details>
+    <summary>Connected Nodes</summary>
+    <pre style="max-width: 300px; overflow: auto">{{ this.connectedNodes | json }}</pre>
+  </details>
+</div>
+}

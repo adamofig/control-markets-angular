@@ -68,6 +68,7 @@ export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements O
       contentStyle: { 'max-height': '90vh', padding: '0px' },
       baseZIndex: 10000,
       draggable: true,
+      modal: false,
       styleClass: 'draggable-dialog',
       closable: true,
       data: this.node(),

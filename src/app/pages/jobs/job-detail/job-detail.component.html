@@ -1,6 +1,12 @@
 @if (job(); as jobData) {
 <div>
-  <h2>Outcome Job Details</h2>
+  <div style="display: flex; justify-content: space-between; align-items: center">
+    <h2>Outcome Job Details</h2>
+    <div>
+      <p-button (click)="toggleDebugData()" label="Debug Data" link />
+      <p-button (click)="toggleViewMode()" [label]="viewMode() === 'markdown' ? 'Text' : 'Markdown'"></p-button>
+    </div>
+  </div>
 
   @if (jobData.agentCard) {
   <div class="section">
@@ -16,17 +22,14 @@
       <div style="flex: 1">
         <h4>Agent Card</h4>
         <p><strong>Title:</strong> {{ jobData.agentCard.title }}</p>
+        <div class="section">
+          <p><strong>Task Name:</strong> {{ jobData.task.name }}</p>
+          <p><strong>Outcome id:</strong> {{ jobData._id }}</p>
+        </div>
       </div>
     </div>
   </div>
-  }
-
-  <div class="section">
-    <p><strong>Task Name:</strong> {{ jobData.task.name }}</p>
-    <p><strong>Outcome id:</strong> {{ jobData._id }}</p>
-  </div>
-
-  @if (jobData.responseFormat === responseFormat.ARRAY) {
+  } @if (jobData.responseFormat === responseFormat.ARRAY) {
   <div class="section">
     <h4>Response ARRAY FORMAT</h4>
     <pre>{{ jobData.result | json }}</pre>
@@ -36,25 +39,34 @@
     <h4>Response JSON FORMAT</h4>
     <pre>{{ jobData.result | json }}</pre>
   </div>
-  } @else if (jobData.responseFormat === responseFormat.DEFAULT_CONTENT) {
+  }
+  <!-- TODO: No se como terminar esto -->
+  <!-- @else if (jobData.responseFormat === responseFormat.DEFAULT_CONTENT) {
   <div class="section">
     <h4>Response DEFAULT FORMAT</h4>
     <pre>{{ jobData.response?.content }}</pre>
   </div>
-  } @else {
+  }  -->
+  <!-- @else {
   <div class="section">
     <h4>Response TEXT FORMAT</h4>
     <pre>{{ jobData.response?.content }}</pre>
   </div>
-  } @if (jobData.result) {
+  }  -->
+
+  @if (jobData.result) {
 
   <p-card header="Result">
     <div class="section">
       <h4>{{ jobData.result.description }}</h4>
       <div class="message">
+        @if(viewMode() === 'markdown'){
         <markdown>
           {{ jobData.result.content }}
         </markdown>
+        } @else {
+        <pre>{{ jobData.result.content }}</pre>
+        }
         <p style="font-size: 0.8em; color: gray">Word count: {{ resultWordCount() }}</p>
       </div>
       @if (jobData.result?.tags && jobData.result.tags.length > 0) {
@@ -72,9 +84,13 @@
   <p-card header="Response: {{ jobData.response.role }}">
     <div class="section">
       <div class="message">
+        @if(viewMode() === 'markdown'){
         <markdown>
           {{ jobData.response.content }}
         </markdown>
+        } @else {
+        <pre>{{ jobData.response.content }}</pre>
+        }
         <!-- <pre>{{ jobData.response.content }}</pre> -->
       </div>
     </div>
@@ -91,7 +107,7 @@
     <h4>Information From Sources</h4>
     <pre>{{ info }}</pre>
   </div>
-  } @if (jobData.messages && jobData.messages.length > 0) {
+  } @if (showDebugData() && jobData.messages && jobData.messages.length > 0) {
   <div class="section">
     <h4>Messages</h4>
     @for (message of jobData.messages; track message.role + message.content; let i = $index) {
@@ -121,9 +137,11 @@
 }
 
 <br />
+@if(showDebugData()){
 <details>
   <summary>Raw JSON Data</summary>
   <pre>
     {{ job() | json }}
   </pre>
 </details>
+}

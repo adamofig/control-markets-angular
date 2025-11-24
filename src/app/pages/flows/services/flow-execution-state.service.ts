@@ -57,6 +57,7 @@ export class FlowExecutionStateService {
       // Here you can trigger your actions for each job in newlyCompleted
       justCompletedJobs.forEach(job => {
         const audio = new Audio('assets/audios/notifications/end-whistle.wav');
+        audio.volume = 0.5;
         audio.play();
 
         if (job.resultType === 'outcome') {

@@ -101,6 +101,7 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> impl
         width: '450px',
         closable: true,
         draggable: true,
+        modal: false,
         styleClass: 'draggable-dialog',
         inputValues: {
           fullAgentCard: fullAgentCard,
@@ -119,6 +120,7 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> impl
     const ref = this.dialogService.open(TtsPlaygroundWrapperComponent, {
       header: 'TTS Playground',
       width: '650px',
+      modal: false,
       data: {
         onTtsGenerated: (event: any) => this.onTtsGenerated(event),
         onFormValues: (event: any) => this.updateAudioNodeSettings(event),

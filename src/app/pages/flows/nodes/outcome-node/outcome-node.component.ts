@@ -63,6 +63,7 @@ export class OutcomeNodeComponent extends BaseFlowNode<CustomOutcomeNode> implem
   public isDialogVisible = false;
 
   openModal(): void {
+    debugger;
     this.isDialogVisible = true;
     this.dialogService.open(OutcomeJobDetailComponent, {
       header: 'Outcome Node',
@@ -71,6 +72,7 @@ export class OutcomeNodeComponent extends BaseFlowNode<CustomOutcomeNode> implem
       draggable: true,
       styleClass: 'draggable-dialog',
       closable: true,
+      modal: false,
       width: '650px',
       inputValues: {
         jobInput: this.outcomeJob,

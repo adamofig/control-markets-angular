@@ -1,17 +1,18 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal, Signal, WritableSignal } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicNode, Vflow } from 'ngx-vflow';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, NgIf } from '@angular/common';
 import { IAgentTask } from 'src/app/pages/tasks/models/tasks-models';
 import { TaskDetailsComponent } from 'src/app/pages/tasks/task-details/task-details.component';
 import { DynamicNodeWithData, FlowDiagramStateService } from 'src/app/pages/flows/services/flow-diagram-state.service';
 import { NodeSearchesService } from '../../../services/node-searches.service';
 import { TaskFormComponent } from 'src/app/pages/tasks/task-form/task-form.component';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-task-node-details',
-  imports: [Vflow, DialogModule, JsonPipe, TaskDetailsComponent, TaskFormComponent],
+  imports: [Vflow, DialogModule, JsonPipe, TaskDetailsComponent, TaskFormComponent, ButtonModule, NgIf],
   templateUrl: './task-node-details.html',
   styleUrl: './task-node-details.css',
   standalone: true,
@@ -23,6 +24,9 @@ export class TaskNodeDetailsComponent implements OnInit {
   public nodeSearchesService = inject(NodeSearchesService);
   public node!: any;
   public agentTask!: IAgentTask;
+  public viewMode: WritableSignal<'details' | 'form'> = signal('details');
+  public viewModeLabel = computed(() => (this.viewMode() === 'details' ? 'Edit' : 'View'));
+  public showDebugData = signal(false);
 
   public task: any | null = null;
   public connectedNodes!: DynamicNodeWithData[];
@@ -30,6 +34,14 @@ export class TaskNodeDetailsComponent implements OnInit {
   constructor() {
     this.node = this.dynamicDialogConfig.data;
     this.agentTask = this.node.data.nodeData;
+  }
+
+  public toggleViewMode() {
+    this.viewMode.set(this.viewMode() === 'details' ? 'form' : 'details');
+  }
+
+  public toggleDebugData() {
+    this.showDebugData.set(!this.showDebugData());
   }
 
   ngOnInit(): void {

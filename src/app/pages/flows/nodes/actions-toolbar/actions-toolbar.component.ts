@@ -24,6 +24,7 @@ export class ActionsToolbarComponent {
   onRunNode() {
     //
     const audio = new Audio('assets/audios/notifications/short-whistle.wav');
+    audio.volume = 0.5;
     audio.play();
     this.runNode.emit();
   }
