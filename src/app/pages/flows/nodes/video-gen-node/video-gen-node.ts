@@ -101,6 +101,7 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
     console.log(this.selected());
     this.dialogService.open(VideoGenDetailsComponent, {
       header: 'Video Gen Node Details',
+      modal: false,
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       draggable: true,

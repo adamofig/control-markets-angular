@@ -63,7 +63,6 @@ export class OutcomeNodeComponent extends BaseFlowNode<CustomOutcomeNode> implem
   public isDialogVisible = false;
 
   openModal(): void {
-    debugger;
     this.isDialogVisible = true;
     this.dialogService.open(OutcomeJobDetailComponent, {
       header: 'Outcome Node',

@@ -1,8 +1,8 @@
 @if (selected()) {
-<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"> </app-node-toolbar>
+<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="openModal()"> </app-node-toolbar>
 }
 
-<div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
+<div class="node-container" (dblclick)="openModal(); $event.stopPropagation()" (click)="selectNode()">
   <div class="node-card" [ngClass]="'status-' + (statusJob() || 'default')">
     <div class="image-background" alt="">
       <video controls [src]="videoUrl()" width="100%" height="auto" autoplay loop [muted]="'muted'"></video>
