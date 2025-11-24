@@ -8,11 +8,11 @@
   "backendPythonUrl": "http://ai.lab:8122",
   "mobile": {},
   "firebase": {
-    "apiKey": "AIzaSyAecVnUj1-IjKGDvBarhufKAfO-Y-RyTXw",
-    "authDomain": "golden-ad-dev.firebaseapp.com",
-    "projectId": "golden-ad-dev",
-    "storageBucket": "golden-ad-dev.firebasestorage.app",
-    "messagingSenderId": "164740776065",
-    "appId": "1:164740776065:web:e2c59fd82d71fe6817cd80"
+    "apiKey": "AIzaSyBX-xd-10lF-_l1F3Zg8iZrri1he5rPULU",
+    "authDomain": "control-markets.firebaseapp.com",
+    "projectId": "control-markets",
+    "storageBucket": "control-markets.firebasestorage.app",
+    "messagingSenderId": "700649316148",
+    "appId": "1:700649316148:web:eb750f679f5cb1b7ed8f61"
   }
 }
