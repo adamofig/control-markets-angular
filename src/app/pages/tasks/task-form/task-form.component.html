@@ -23,6 +23,27 @@
       </div>
 
       <div class="form-field">
+        <div class="flex align-items-center">
+          <label
+            pTooltip="Texto es simple información, Crear contenido crea un titulo y tags ademas de la publicación pero requiere un modelo más inteligente "
+            for="taskType"
+            class="block"
+            >Task Type 🧑‍🔧
+          </label>
+          <!-- <p-button
+            icon="pi pi-info-circle"
+            [text]="true"
+            size="small"
+            pTooltip="Crear contenido: Crea un título y etiquetas además del contenido a publicar. La respuesta es en formato JSON. <br> Respuesta en texto: Devuelve solo texto, no un JSON."
+            tooltipPosition="top" /> -->
+        </div>
+        <p-select id="taskType" [options]="taskTypes" formControlName="taskType" placeholder="Select Task Type" class="w-full"> </p-select>
+      </div>
+
+      <hr />
+      <h6>Optional Fields</h6>
+
+      <div class="form-field">
         <label for="userPrompt" class="block">User Prompt</label>
         <input
           style="width: 100%"
@@ -32,8 +53,6 @@
           formControlName="userPrompt"
           placeholder="Ej. Por favor responde a la siguiente tarea" />
       </div>
-
-      <h6>Optional Fields</h6>
 
       <div class="field">
         <label for="agentCard">Agent Cards</label>
@@ -109,17 +128,6 @@
             <i class="pi pi-file-import"></i>
           </ng-template>
         </p-select>
-      </div>
-
-      <div class="form-field">
-        <label
-          pTooltip="Create JSON response, except for text. this helps to organize data, for JSON Requirest a minimum of inteligence. Flash Lite can fail sometimes."
-          for="taskType"
-          class="block"
-          >Task Type</label
-        >
-        <br />
-        <p-select id="taskType" [options]="taskTypes" formControlName="taskType" placeholder="Select Task Type" class="w-full"> </p-select>
       </div>
 
       @if (taskForm.controls.taskType.value === 'review_task') {

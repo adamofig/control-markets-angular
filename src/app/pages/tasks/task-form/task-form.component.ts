@@ -81,7 +81,7 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
     description: [''],
     userPrompt: [''],
     status: [AgentTaskStatus.ACTIVE],
-    taskType: [AgentTaskType.CREATE_CONTENT],
+    taskType: [AgentTaskType.TEXT_RESPONSE],
     sources: this.fb.control<any[]>([]),
     taskAttached: this.fb.control<any>({}),
     output: this.fb.control<ITaskOutput>({}),

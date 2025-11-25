@@ -259,3 +259,21 @@ body.dark {
     background: rgba(50, 50, 50, 0.8) !important;
   }
 }
+
+/* Modern and cool styles for markdown elements */
+blockquote {
+  border-left: 4px solid var(--ion-color-primary, #3880ff);
+  padding: 3px;
+  margin: 2px;
+  background-color: #f8f9fa6b;
+  border-radius: 0.25rem;
+  font-style: italic;
+  color: var(--ion-text-color);
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, var(--ion-color-primary), var(--ion-text-color), rgba(0, 0, 0, 0));
+  margin: 2rem 0;
+}
