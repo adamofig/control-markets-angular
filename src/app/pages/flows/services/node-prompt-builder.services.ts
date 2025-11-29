@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DynamicNodeWithData } from './flow-diagram-state.service';
 import { ChatMessage, ChatRole, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { groupBy } from 'es-toolkit';
-import { NodeType } from '../models/flows.model';
+import { NodeTypeStr } from '../models/flows.model';
 
 export enum SectionType {
   Intro = 'intro',
@@ -43,7 +43,7 @@ export enum PersonaExtractionLevel {
 export class NodePromptBuilderService {
   public getContextPrompts(nodes: DynamicNodeWithData[]): ChatMessage[] {
     const groupedInputNodes = groupBy(nodes, item => item.component);
-    const sourceNodes = groupedInputNodes[NodeType.SourcesNodeComponent] || [];
+    const sourceNodes = groupedInputNodes[NodeTypeStr.SourcesNodeComponent] || [];
     const messages: ChatMessage[] = [];
 
     if (sourceNodes.length > 0) {

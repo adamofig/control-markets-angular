@@ -40,9 +40,9 @@ export interface INodeMetadata {
 export interface IFlowNode {
   id: string;
   point: { x: number; y: number };
-  type: string; // not string but is the serialization of the class, use component to rely on the component.
+  type: string; // Este es raro, es string al serializar y guardar, pero en memoria es una clase. no recuerdo el proceso, pero siento que necesito mejorar.
+  component: NodeTypeStr; // El string del componente, utilizo este en el backend y para saber que componente es, type lo estoy reservando solo para el Flow Framework
   category: NodeCategory;
-  component: NodeType;
   data: INodeMetadata;
 }
 export interface IAgentFlows extends AuditDate {
@@ -70,7 +70,7 @@ export enum StatusJob {
   FAILED = 'failed',
 }
 
-export enum NodeType {
+export enum NodeTypeStr {
   AgentNodeComponent = 'AgentNodeComponent',
   TaskNodeComponent = 'TaskNodeComponent',
   SourcesNodeComponent = 'SourcesNodeComponent',
@@ -81,6 +81,8 @@ export enum NodeType {
   VideoGenNodeComponent = 'VideoGenNodeComponent',
   AudioTTsNodeComponent = 'AudioTTsNodeComponent',
   AudioNodeComponent = 'AudioNodeComponent',
+  EmptyNodeComponent = 'EmptyNodeComponent',
+  LeadNodeComponent = 'LeadNodeComponent',
   default = 'default',
 }
 
@@ -88,7 +90,7 @@ export interface IJobExecutionState {
   inputNodeId: string; // en el FlowDiagram es el Node Id a que nodo se tomó para ser input.
   processNodeId: string; // en el FlowDiagram es el Node Id a que nodo se tomó para ser el proceso tarea.
   outputNodeId: string; // en el FlowDiagram es el Node Id a que nodo debe actualizar con el output.
-  nodeType: NodeType; // El tipo de Nodo en Angular, la clase del componente.
+  nodeType: NodeTypeStr; // El tipo de Nodo en Angular, la clase del componente.
   inputEntityId: string; // el id del objeto entity, es decir existe en mongo. y lo puedo consultar, se infiere por el tipo de nodo. que collection o table existe el dato.
   status: StatusJob; // El estado del job.
   statusDescription: string;
@@ -104,7 +106,7 @@ export interface ITaskExecutionState {
   flowExecutionId: string; // El id de la ejecucion del flow.
   processNodeId: string; // El id del Node que es de tipo process.
   entityId: string; // if data exits in db, use nodeType to know what database.
-  nodeType: NodeType;
+  nodeType: NodeTypeStr;
   status: StatusJob;
   jobs: Array<IJobExecutionState>;
 }

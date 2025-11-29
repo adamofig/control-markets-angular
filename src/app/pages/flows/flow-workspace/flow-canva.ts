@@ -3,7 +3,7 @@ import { Connection, Vflow, VflowComponent } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { AgentCardListComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { EntityBaseFormComponent, OnActionEvent } from '@dataclouder/ngx-core';
-import { IAgentFlows } from '../models/flows.model';
+import { IAgentFlows, NodeTypeStr } from '../models/flows.model';
 import { ButtonModule } from 'primeng/button';
 import { FlowDiagramStateService } from '../services/flow-diagram-state.service';
 import { TaskListComponent } from '../../tasks/task-list/task-list.component';
@@ -18,6 +18,7 @@ import { FlowService } from '../flows.service';
 import { IAssetNodeData } from '../models/nodes.model';
 import { ComfyStatusComponent } from '../canvas-components/comfy-status/comfy-status';
 import { SpeedDialModule } from 'primeng/speeddial';
+import { PopoverModule } from 'primeng/popover';
 import { IAgentSource } from '../../sources/models/sources.model';
 import { FlowSignalNodeStateService } from '../services/flow-signal-node-state.service';
 import { FlowNodeCreationService } from '../services/flow-node-creation.service';
@@ -41,9 +42,12 @@ import { AppUserService } from '../../../services/app-user.service';
     SourcesUploadsComponent,
     ComfyStatusComponent,
     SpeedDialModule,
+    PopoverModule,
   ],
 })
 export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> implements OnInit, AfterViewInit {
+  public NodeTypeStr = NodeTypeStr;
+  public nodeTypes = Object.values(NodeTypeStr);
   override form: FormGroup<any> = new FormGroup({});
   public flowSerializationService = inject(FlowSerializationService);
 
@@ -232,6 +236,11 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
 
   public addAudioTTSGenNode() {
     this.flowNodeCreationService.addAudioTTSNode();
+    this.flowSerializationService.serializeFlow();
+  }
+
+  public addEmptyNode(nodeType: NodeTypeStr) {
+    this.flowSignalNodeStateService.addEmptyNode(nodeType);
     this.flowSerializationService.serializeFlow();
   }
 }

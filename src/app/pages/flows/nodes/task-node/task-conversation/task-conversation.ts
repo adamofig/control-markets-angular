@@ -3,7 +3,7 @@ import { ChatMessage, ChatRole, DCChatComponent, DefaultAgentCardsService, IAgen
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CustomTaskNode } from '../task-node';
 import { NodeSearchesService } from '../../../services/node-searches.service';
-import { NodeType } from '../../../models/flows.model';
+import { NodeTypeStr } from '../../../models/flows.model';
 import { groupBy } from 'es-toolkit/array';
 import { NodePromptBuilderService, PersonaExtractionLevel } from '../../../services/node-prompt-builder.services';
 import { EModelQuality } from '@dataclouder/ngx-core';
@@ -36,7 +36,7 @@ export class TaskConversationComponent implements OnInit {
     const inputNodes = this.nodeSearchesService.getInputNodes(this.node?.id!);
     const contextPrompts = this.nodePromptBuilder.getContextPrompts(inputNodes);
     const groupedInputNodes = groupBy(inputNodes, item => item.component);
-    const agents = groupedInputNodes[NodeType.AgentNodeComponent];
+    const agents = groupedInputNodes[NodeTypeStr.AgentNodeComponent];
     const agentData = agents[0].data.nodeData;
 
     this.imgBackground.set(agentData?.assets?.image?.url || '');

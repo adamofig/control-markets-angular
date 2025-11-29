@@ -1,5 +1,5 @@
 import { Injectable, signal, inject, NgZone, Type } from '@angular/core';
-import { IJobExecutionState, NodeType } from '../models/flows.model';
+import { IJobExecutionState, NodeTypeStr } from '../models/flows.model';
 import { DynamicNodeWithData, FlowDiagramStateService } from './flow-diagram-state.service';
 import { IGeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-ai-services';
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
@@ -55,7 +55,7 @@ export class FlowNodeCreationService {
       point: signal({ x: 100, y: 100 }), // Default position
       type: AudioTTsNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'process',
-      component: NodeType.AudioTTsNodeComponent,
+      component: NodeTypeStr.AudioTTsNodeComponent,
     };
     this.flowSignalNodeStateService.nodes.set([...this.flowSignalNodeStateService.nodes(), newNode]);
   }

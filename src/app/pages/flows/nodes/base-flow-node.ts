@@ -27,7 +27,7 @@ function jobExecutionStateChanged(a: IJobExecutionState | null, b: IJobExecution
 }
 
 @Directive()
-export abstract class BaseFlowNode<T extends ComponentDynamicNode> extends CustomNodeComponent<T> implements OnInit, OnDestroy {
+export abstract class BaseFlowNode<T extends ComponentDynamicNode & { nodeData: any }> extends CustomNodeComponent<T> implements OnInit, OnDestroy {
   public flowDiagramStateService = inject(FlowDiagramStateService);
   public flowComponentRefStateService = inject(FlowComponentRefStateService);
   public flowExecutionStateService = inject(FlowExecutionStateService);
@@ -35,6 +35,8 @@ export abstract class BaseFlowNode<T extends ComponentDynamicNode> extends Custo
   protected flowSignalNodeStateService = inject(FlowSignalNodeStateService);
 
   public nodeCategory: 'process' | 'input' | 'output' = 'input';
+
+  public nodeData = computed(() => this.node()?.data?.nodeData);
 
   // Tengo que estandarizar como tengo el estatus del job, porque este lo uso en video, para assets, pero en agentes uso jobExecutionState hjkh
   public statusJob = signal<StatusJob>(StatusJob.COMPLETED);

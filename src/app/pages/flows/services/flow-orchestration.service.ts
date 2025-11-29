@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { IAgentFlows } from '../models/flows.model';
 import { FlowDiagramStateService } from './flow-diagram-state.service';
@@ -18,8 +17,6 @@ export class FlowOrchestrationService {
   private flowExecutionStateService = inject(FlowExecutionStateService);
   private flowState = inject(FlowSignalNodeStateService);
   private toastService = inject(TOAST_ALERTS_TOKEN);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
 
   public async saveFlow(flowId: string | null = null, flowName: string | null = null): Promise<void> {
     const currentFlow = this.flowState.flow()?.id || '';

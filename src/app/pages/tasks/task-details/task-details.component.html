@@ -16,6 +16,8 @@
     } @if(task.agentCards?.length){
     <div>
       <strong>Agent Cards:</strong>
+
+      
       <ul>
         <li *ngFor="let agent of task.agentCards">{{ agent.title }}</li>
       </ul>

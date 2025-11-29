@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 import { DynamicNodeWithData } from './flow-diagram-state.service';
-import { NodeType } from '../models/flows.model';
+import { NodeTypeStr } from '../models/flows.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class NodeSearchesService {
     return allNodes.filter(node => inputsIds.includes(node.id));
   }
 
-  public getFirstInputNodeOfType(nodeId: string, type: NodeType): DynamicNodeWithData | undefined {
+  public getFirstInputNodeOfType(nodeId: string, type: NodeTypeStr): DynamicNodeWithData | undefined {
     const inputNodes = this.getInputNodes(nodeId);
     if (inputNodes.length === 0) {
       return undefined;

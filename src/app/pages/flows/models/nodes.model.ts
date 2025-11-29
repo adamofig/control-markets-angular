@@ -20,3 +20,10 @@ export interface INodeVideoGenerationData {
 export interface IAudioAssetsNodeData extends IAssetNodeData {
   transcription?: TranscriptionsWhisper;
 }
+
+export interface ILeadNodeData {
+  id: string;
+  name: string;
+  phone_no: string;
+  nationality: string;
+}

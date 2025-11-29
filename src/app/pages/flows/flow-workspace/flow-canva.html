@@ -7,6 +7,17 @@
     pSize="small"
     style="background-color: transparent !important; border-radius: 40px; border: none; outline: none; font-size: 12px; font-weight: bold; width: 200px" />
 
+  <p-button (click)="op.toggle($event)" icon="pi pi-plus" />
+  <p-popover #op>
+    <ul class="list-none p-0 m-0 flex flex-col gap-4">
+      @for(nodeType of nodeTypes; track nodeType) {
+      <li class="flex items-center gap-2">
+        <p-button (click)="addEmptyNode(nodeType)" [label]="nodeType" [rounded]="true" severity="success" [outlined]="true" />
+      </li>
+      }
+    </ul>
+  </p-popover>
+
   <p-button (click)="showDialog('agent')" label="Agent" icon="pi pi-user-plus" [rounded]="true" severity="success" [outlined]="true" />
   <p-button (click)="showDialog('asset')" label="Asset" icon="pi pi-plus-circle" [rounded]="true" severity="success" [outlined]="true" />
   <p-button (click)="showDialog('source')" icon="pi pi-file-import" label="Source" [rounded]="true" severity="success" [outlined]="true" />

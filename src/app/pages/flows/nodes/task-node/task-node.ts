@@ -128,6 +128,7 @@ export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements O
       header: 'Conversation',
       width: '550px',
       height: '800px',
+      modal: false,
       contentStyle: { 'max-height': '90vh', overflow: 'auto', height: '100%' },
       baseZIndex: 10000,
       draggable: true,

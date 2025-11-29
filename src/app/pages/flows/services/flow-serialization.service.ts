@@ -1,61 +1,8 @@
 import { Injectable, Type, inject, signal } from '@angular/core';
-import {
-  AgentNodeComponent,
-  AudioNodeComponent,
-  DistributionChanelNodeComponent,
-  OutcomeNodeComponent,
-  SourcesNodeComponent,
-  TaskNodeComponent,
-} from '../nodes';
 import { DynamicNodeWithData } from './flow-diagram-state.service';
-import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
-import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
-import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
 import { FlowComponentRefStateService } from './flow-component-ref-state.service';
-import { AudioTTsNodeComponent } from '../nodes/audio-tts-node/audio-tts-node';
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
-
-// Node Type Mapping
-function getNodeTypeMap(): { [key: string]: Type<any> | 'default' } {
-  return {
-    AgentNodeComponent: AgentNodeComponent,
-    DistributionChanelNodeComponent: DistributionChanelNodeComponent,
-    OutcomeNodeComponent: OutcomeNodeComponent,
-    TaskNodeComponent: TaskNodeComponent,
-    SourcesNodeComponent: SourcesNodeComponent,
-    AssetsNodeComponent: AssetsNodeComponent,
-    VideoGenNodeComponent: VideoGenNodeComponent,
-    AssetGeneratedNodeComponent: AssetGeneratedNodeComponent,
-    AudioTTsNodeComponent: AudioTTsNodeComponent,
-    AudioNodeComponent: AudioNodeComponent,
-    default: 'default',
-  };
-}
-
-function getNodeTypeString(type: Type<any> | 'default' | undefined): string {
-  if (typeof type === 'string') {
-    return type;
-  }
-  const nodeTypeMap = getNodeTypeMap();
-  for (const key in nodeTypeMap) {
-    if (nodeTypeMap[key] === type) {
-      return key;
-    }
-  }
-  console.error('Unknown node type during serialization:', type);
-  throw new Error(`Unknown node type: ${type ? (type as any).name : type}`);
-}
-
-function getNodeComponentFromString(typeString: string): Type<any> | 'default' {
-  const nodeTypeMap = getNodeTypeMap();
-  const component = nodeTypeMap[typeString];
-  if (!component) {
-    const error = `Unknown node during deserialization: if ${typeString} is a new Node, add it to the nodeTypeMap in flow-serialization.service.ts`;
-    console.error(error);
-    throw new Error(error);
-  }
-  return component;
-}
+import { FlowNodeRegisterService } from './flow-node-register.service';
 
 @Injectable({
   providedIn: 'root',
@@ -63,6 +10,7 @@ function getNodeComponentFromString(typeString: string): Type<any> | 'default' {
 export class FlowSerializationService {
   public flowComponentRefStateService = inject(FlowComponentRefStateService);
   public flowSignalNodeStateService = inject(FlowSignalNodeStateService);
+  public flowNodeRegisterService = inject(FlowNodeRegisterService);
 
   public serializeFlow(): { nodes: any[]; edges: any[] } {
     const serializableNodes = this.flowSignalNodeStateService.nodes().map((node: any) => {
@@ -91,7 +39,7 @@ export class FlowSerializationService {
       const serializableNode: any = {
         id: node.id,
         point: plainPoint,
-        type: getNodeTypeString(node.type as Type<any> | 'default'),
+        type: this.flowNodeRegisterService.getNodeTypeString(node.type as Type<any>),
         category: node.category,
         component: node.component,
         data: {},
@@ -122,10 +70,10 @@ export class FlowSerializationService {
     }
 
     const nodes = savedFlowData.nodes.map((plainNode: any) => {
-      const nodeType = getNodeComponentFromString(plainNode.type);
+      const nodeType = this.flowNodeRegisterService.getNodeType(plainNode.type || plainNode.component);
       let dynamicNode: DynamicNodeWithData;
 
-      if (nodeType === 'default') {
+      if (nodeType === undefined) {
         dynamicNode = {
           id: plainNode.id,
           point: signal(plainNode.point),
