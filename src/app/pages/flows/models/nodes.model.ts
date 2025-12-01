@@ -27,3 +27,9 @@ export interface ILeadNodeData {
   phone_no: string;
   nationality: string;
 }
+
+export interface ILeadNode {
+  name: string;
+  number: string;
+  nationality: string;
+}

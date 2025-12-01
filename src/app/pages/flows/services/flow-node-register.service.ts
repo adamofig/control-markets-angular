@@ -14,12 +14,13 @@ import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
 import { AudioTTsNodeComponent } from '../nodes/audio-tts-node/audio-tts-node';
 import { NodeTypeStr } from '../models/flows.model';
+import { WrapperNodeComponent } from '../nodes/wrapper-node/wrapper-node.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FlowNodeRegisterService {
-  private nodeTypeMap = signal<{ [key in NodeTypeStr]?: Type<any> }>({});
+  private nodeTypeMap = signal<{ [key in NodeTypeStr | string]?: Type<any> }>({});
 
   constructor() {
     this.registerNodes();
@@ -39,12 +40,13 @@ export class FlowNodeRegisterService {
       [NodeTypeStr.AudioNodeComponent]: AudioNodeComponent,
       [NodeTypeStr.EmptyNodeComponent]: EmptyNodeComponent,
       [NodeTypeStr.LeadNodeComponent]: LeadNodeComponent,
+      ['WrapperNodeComponent']: WrapperNodeComponent,
     });
   }
 
   public getNodeType(typeString: string): Type<any> | undefined {
     const allNodes = this.nodeTypeMap();
-    return allNodes[typeString as NodeTypeStr];
+    return allNodes[typeString];
   }
 
   public getNodeTypeString(type: Type<any>): string | undefined {

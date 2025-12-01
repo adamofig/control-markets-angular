@@ -1,0 +1,11 @@
+@if (selected()) {
+<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"> </app-node-toolbar>
+}
+
+<div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
+  <div class="node-card" [ngClass]="'status-' + (jobExecutionState()?.status || 'default')">
+    <p-tag class="tag" [value]="jobExecutionState()?.status || '🖼️'" severity="danger" />
+    <div #container></div>
+    <handle type="source" position="right" id="right" />
+  </div>
+</div>

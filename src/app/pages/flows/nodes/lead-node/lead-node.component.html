@@ -1,13 +1,14 @@
-<div class="node-container">
-  <app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"></app-node-toolbar>
-  <div class="content">
-    <div class="header">
-      <div class="title">Lead</div>
-    </div>
-    <div class="body">
-      <p>{{ node()?.data?.nodeData?.name }}</p>
-    </div>
+<div class="content" (dblclick)="openModal()">
+  <div class="header">
+    <div class="title">Lead</div>
   </div>
-  <v-handle type="source" position="right" id="a"></v-handle>
-  <v-handle type="target" position="left" id="b"></v-handle>
+  <div class="body">
+    @if(lead){
+    <div>
+      <p>Name: {{ lead.name }}</p>
+      <p>Number: {{ lead.number }}</p>
+      <p>Nationality: {{ lead.nationality }}</p>
+    </div>
+    }
+  </div>
 </div>

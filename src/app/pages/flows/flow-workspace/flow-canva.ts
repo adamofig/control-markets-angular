@@ -24,6 +24,7 @@ import { FlowSignalNodeStateService } from '../services/flow-signal-node-state.s
 import { FlowNodeCreationService } from '../services/flow-node-creation.service';
 import { FlowSerializationService } from '../services/flow-serialization.service';
 import { AppUserService } from '../../../services/app-user.service';
+import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
 
 @Component({
   templateUrl: './flow-canva.html',
@@ -46,6 +47,7 @@ import { AppUserService } from '../../../services/app-user.service';
   ],
 })
 export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> implements OnInit, AfterViewInit {
+  public AssetsNodeComponent = AssetsNodeComponent;
   public NodeTypeStr = NodeTypeStr;
   public nodeTypes = Object.values(NodeTypeStr);
   override form: FormGroup<any> = new FormGroup({});
@@ -240,7 +242,13 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
   }
 
   public addEmptyNode(nodeType: NodeTypeStr) {
-    this.flowSignalNodeStateService.addEmptyNode(nodeType);
+    // this.flowSignalNodeStateService.addEmptyNode(nodeType);
+    // this.flowSerializationService.serializeFlow();
+    this.addWrapperNode(nodeType, {});
+  }
+  public addWrapperNode(component: any, inputs: any) {
+    // this.addEmptyNode(component);
+    this.flowSignalNodeStateService.addWrapperNode(component, inputs);
     this.flowSerializationService.serializeFlow();
   }
 }

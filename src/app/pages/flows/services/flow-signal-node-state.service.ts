@@ -327,4 +327,20 @@ export class FlowSignalNodeStateService {
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
+
+  public addWrapperNode(component: string, inputs: any): void {
+    const newNode: DynamicNodeWithData = {
+      id: 'wrapper-node-' + nanoid(),
+      point: signal({ x: 100, y: 100 }),
+      type: this.flowNodeRegisterService.getNodeType('WrapperNodeComponent') as Type<any>,
+      category: 'input', // Or whatever category is appropriate
+      data: {
+        nodeData: {
+          inputs,
+        },
+      },
+      component,
+    };
+    this.nodes.set([...this.nodes(), newNode]);
+  }
 }
