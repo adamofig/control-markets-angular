@@ -1,5 +1,5 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { GenericListComponent } from './generic-list.component';
+import { LeadListComponent } from './lead-list.component';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { DCFilterBarComponent, QuickTableComponent } from '@dataclouder/ngx-core';
@@ -8,15 +8,15 @@ import { DatePipe, SlicePipe } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
-import { GenericService } from '../generics.service';
+import { LeadService } from '../leads.service';
 import { UserService } from '@dataclouder/ngx-users';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-const meta: Meta<GenericListComponent> = {
-  title: 'Generics/GenericListComponent',
-  component: GenericListComponent,
+const meta: Meta<LeadListComponent> = {
+  title: 'Leads/LeadListComponent',
+  component: LeadListComponent,
   tags: ['autodocs'],
   decorators: [
     moduleMetadata({
@@ -36,7 +36,7 @@ const meta: Meta<GenericListComponent> = {
       ],
       providers: [
         {
-          provide: GenericService,
+          provide: LeadService,
           useValue: {
             getWithQuery: () => of({ data: [], total: 0 }),
             get: () => of({}),
@@ -67,7 +67,7 @@ const meta: Meta<GenericListComponent> = {
 };
 
 export default meta;
-type Story = StoryObj<GenericListComponent>;
+type Story = StoryObj<LeadListComponent>;
 
 export const Default: Story = {
   args: {
@@ -81,7 +81,7 @@ export const WithItems: Story = {
     moduleMetadata({
       providers: [
         {
-          provide: GenericService,
+          provide: LeadService,
           useValue: {
             getWithQuery: () =>
               of({

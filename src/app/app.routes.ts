@@ -90,6 +90,10 @@ export const routes: Routes = [
         loadChildren: () => import('./pages/tasks/tasks.routes').then(m => m.TASKS_ROUTES),
       },
       {
+        path: 'leads',
+        loadChildren: () => import('./pages/lead/lead.routes').then(m => m.GENERICS_ROUTES),
+      },
+      {
         path: 'lessons',
         loadComponent: () => import('./pages/lessons/explore.page').then(m => m.ExplorePage),
         children: [
