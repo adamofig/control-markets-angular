@@ -182,10 +182,10 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
   }
 
   private async getAgentCards() {
-    const agentCards = await this.agentCardService.findAgentCards({ returnProps: { id: 1, title: 1, assets: 1 } });
+    const agentCards = await this.agentCardService.findAgentCards({ returnProps: { id: 1, name: 1, assets: 1 } });
 
     this.agentOptions = agentCards.rows.map((card: IAgentCard) => ({
-      title: card.title || 'Untitled Card',
+      title: card.name || 'Untitled Card',
       id: card.id,
       assets: card.assets,
       name: card?.characterCard?.data?.name,

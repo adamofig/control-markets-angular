@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal, S
 import { DialogModule } from 'primeng/dialog';
 import { Vflow } from 'ngx-vflow';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { JsonPipe } from '@angular/common';
 import { IAgentTask } from 'src/app/pages/tasks/models/tasks-models';
 import { TaskDetailsComponent } from 'src/app/pages/tasks/task-details/task-details.component';
 import { DynamicNodeWithData, FlowDiagramStateService } from 'src/app/pages/flows/services/flow-diagram-state.service';
@@ -21,7 +20,6 @@ import { FlowSignalNodeStateService } from '../../../services/flow-signal-node-s
   imports: [
     Vflow,
     DialogModule,
-    JsonPipe,
     TaskDetailsComponent,
     ComfyVideoOptionsRequestFormComponent,
     SelectModule,

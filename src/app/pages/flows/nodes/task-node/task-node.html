@@ -4,7 +4,7 @@
 <div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
   <div class="node-card" [ngClass]="'status-' + (taskExecutionState()?.status || 'default')">
     <div class="image-background" [style.background-image]="'url(' + node()?.data?.nodeData?.image?.url + ')'" alt="">
-      <p class="text-node">{{ node()?.data?.nodeData?.name }}</p>
+      <p class="text-node">{{ node().data?.nodeData?.name }}</p>
       <p-tag class="tag" [value]="taskExecutionState()?.status || '🦻'" [severity]="statusSeverity()" />
 
       <handle type="target" position="left" id="left" />

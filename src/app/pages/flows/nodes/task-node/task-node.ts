@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, computed, effect, inject } from '@angular/core';
 import { ComponentDynamicNode, CustomNodeComponent, Vflow, HandleComponent } from 'ngx-vflow';
 import { ButtonModule } from 'primeng/button';
@@ -28,7 +28,6 @@ export interface CustomTaskNode extends ComponentDynamicNode {
     DialogModule,
     ButtonModule,
     CommonModule,
-    JsonPipe,
     TagModule,
     ProgressSpinnerModule,
     HandleComponent,
