@@ -38,10 +38,11 @@
 .status-failed {
   @include status-animation("red", red);
 }
+
 .audio-container {
   padding: 10px;
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   gap: 10px;
 
   audio {

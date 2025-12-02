@@ -106,5 +106,25 @@ export class AudioNodeComponent extends BaseFlowNode<CustomAudioNode> {
     return transcription;
   }
 
+  public playAudio() {
+    const audioUrl = this.node()?.data?.nodeData?.storage?.url;
+    if (audioUrl) {
+      const audio = new Audio(audioUrl);
+      audio.play();
+    }
+  }
+
+  public downloadAudio() {
+    const audioUrl = this.node()?.data?.nodeData?.storage?.url;
+    if (audioUrl) {
+      const link = document.createElement('a');
+      link.href = audioUrl;
+      link.download = this.node()?.data?.nodeData?.name || 'audio';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  }
+
   baseMessage: MessageContent | undefined;
 }

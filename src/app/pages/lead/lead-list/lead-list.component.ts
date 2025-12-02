@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-import { DCFilterBarComponent, EntityBaseListComponent, QuickTableComponent } from '@dataclouder/ngx-core';
+import { DCFilterBarComponent, EntityBaseListComponent, OnActionEvent, QuickTableComponent } from '@dataclouder/ngx-core';
 import { LeadService } from '../leads.service';
 import { ILead } from '../models/leads.model';
 import { RouterModule } from '@angular/router';
@@ -53,5 +53,10 @@ export class LeadListComponent extends EntityBaseListComponent<ILead> implements
         command: () => this.doAction({ item, action: 'delete' }),
       },
     ];
+  }
+
+  public override doAction(actionEvent: OnActionEvent): any {
+    debugger;
+    super.doAction(actionEvent);
   }
 }

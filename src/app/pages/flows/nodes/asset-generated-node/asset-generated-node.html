@@ -5,7 +5,13 @@
 <div class="node-container" (dblclick)="openModal(); $event.stopPropagation()" (click)="selectNode()">
   <div class="node-card" [ngClass]="'status-' + (statusJob() || 'default')">
     <div class="image-background" alt="">
-      <video controls [src]="videoUrl()" width="100%" height="auto" autoplay loop [muted]="'muted'"></video>
+      @if(gifUrl()){
+      <img [src]="gifUrl()" width="100%" height="auto" alt="" />
+
+      } @else {
+      <!-- <video controls [src]="videoUrl()" width="100%" height="auto" autoplay loop [muted]="'muted'"></video> -->
+
+      }
 
       <handle type="target" position="left" id="left" />
       <handle type="source" position="right" id="right" />

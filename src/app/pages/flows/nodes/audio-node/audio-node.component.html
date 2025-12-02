@@ -9,9 +9,12 @@
     }
     <div class="audio-container">
       <p-tag [value]="node()?.data?.nodeData?.name" />
-      <audio controls [src]="node()?.data?.nodeData?.storage?.url"></audio>
+      <!-- <audio controls [src]="node()?.data?.nodeData?.storage?.url"></audio> -->
+
+      <button (click)="playAudio()" label="Play" pButton icon="pi pi-play"></button>
+      <button (click)="downloadAudio()" label="Download" pButton icon="pi pi-download"></button>
       @if(!hasTranscription){
-      <p-button (click)="getTranscriptions()" label="Get Transcription"></p-button>
+      <button (click)="getTranscriptions()" label="Get Transcription"></button>
       }
     </div>
 

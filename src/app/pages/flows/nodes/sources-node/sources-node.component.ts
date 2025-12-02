@@ -11,6 +11,8 @@ import { FlowComponentRefStateService } from '../../services/flow-component-ref-
 import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 import { TagModule } from 'primeng/tag';
 import { FlowSignalNodeStateService } from '../../services/flow-signal-node-state.service';
+import { BaseFlowNode } from '../base-flow-node';
+import { CommonModule } from '@angular/common';
 
 export interface CustomSourceNode extends ComponentDynamicNode {
   // Renamed interface
@@ -19,18 +21,18 @@ export interface CustomSourceNode extends ComponentDynamicNode {
 
 @Component({
   selector: 'app-sources-node', // Updated selector
-  imports: [Vflow, DialogModule, ButtonModule, BaseNodeToolbarComponent, TagModule, SlicePipe],
+  imports: [Vflow, DialogModule, ButtonModule, BaseNodeToolbarComponent, TagModule, SlicePipe, CommonModule],
   templateUrl: './sources-node.component.html', // Updated template URL
   styleUrl: './sources-node.component.scss', // Updated style URL
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class SourcesNodeComponent extends CustomNodeComponent<CustomSourceNode> implements OnInit, OnDestroy {
+export class SourcesNodeComponent extends BaseFlowNode<CustomSourceNode> implements OnInit, OnDestroy {
   // Renamed class
   public dialogService = inject(DialogService);
-  public flowDiagramStateService = inject(FlowDiagramStateService);
-  public flowComponentRefStateService = inject(FlowComponentRefStateService);
-  private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
+  public override flowDiagramStateService = inject(FlowDiagramStateService);
+  public override flowComponentRefStateService = inject(FlowComponentRefStateService);
+  protected override flowSignalNodeStateService = inject(FlowSignalNodeStateService);
 
   public source: IAgentSource | null = null; // Updated property
 
@@ -39,11 +41,10 @@ export class SourcesNodeComponent extends CustomNodeComponent<CustomSourceNode> 
 
   override ngOnInit() {
     super.ngOnInit();
-    this.flowComponentRefStateService.addNodeComponentRef(this.node().id, this);
   }
 
-  ngOnDestroy() {
-    this.flowComponentRefStateService.removeNodeComponentRef(this.node().id);
+  override ngOnDestroy() {
+    super.ngOnDestroy();
   }
 
   constructor() {
@@ -76,11 +77,11 @@ export class SourcesNodeComponent extends CustomNodeComponent<CustomSourceNode> 
     });
   }
 
-  removeNode() {
+  override removeNode() {
     this.flowSignalNodeStateService.removeNode(this.node().id);
   }
 
-  handleToolbarEvents(event: string) {
+  override handleToolbarEvents(event: string) {
     switch (event) {
       case 'delete':
         this.removeNode();

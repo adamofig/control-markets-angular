@@ -45,7 +45,7 @@
   [background]="backDots"
   (onConnect)="createEdge($event)">
   <ng-template let-ctx edgeLabelHtml>
-    <p-button icon="pi pi-times" (click)="flowDiagramStateService.deleteEdge(ctx.edge)" [rounded]="true" [text]="true" severity="danger" />
+    <div (click)="flowDiagramStateService.deleteEdge(ctx.edge)" class="pi pi-times cursor-pointer p-2 border-round"></div>
   </ng-template>
 </vflow>
 
