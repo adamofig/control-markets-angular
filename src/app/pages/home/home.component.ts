@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild, effect, signal, OnInit } from '@angular/core'; // Import effect
+import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild, effect, signal, OnInit } from '@angular/core';
+import { DialogService } from 'primeng/dynamicdialog';
+import { MarkdownDialogComponent } from 'src/app/shared/components/markdown-dialog/markdown-dialog.component';
 
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -20,6 +22,7 @@ interface CardItem {
   title: string;
   subtitle: string;
   content: string;
+  externalLink?: string;
 }
 
 register();
@@ -31,10 +34,12 @@ register();
   styleUrls: ['./home.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DialogService],
 })
 export class HomeComponent implements OnInit {
   // Services
   private audioTourService = inject(AudioTourService);
+  private dialogService = inject(DialogService);
   private lessonsService = inject(LESSONS_TOKEN);
   private agentCardService = inject(AgentCardService);
 
@@ -49,29 +54,36 @@ export class HomeComponent implements OnInit {
   // States
   isDarkMode = false;
   swiper?: Swiper; // You might not need this property if you access via swiperRef().nativeElement.swiper
-
+  // https://adamofig.notion.site/Aprende-los-Fundamentos-de-Control-Markets-2bdec05dc75e804c8cb8e55f153ef5ad
   // Card data using signal for reactivity
   cards = signal<CardItem[]>([
     {
+      imageUrl: 'https://images.unsplash.com/photo-1610375461246-83df859d849d?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&w=1000',
+      title: 'Fundamentos',
+      subtitle: 'Entiende que es y como funciona Control Markets',
+      content: 'Fundamentos Teoricos para comenzar a utilizar Control Markets',
+      externalLink: 'https://adamofig.notion.site/Aprende-los-Fundamentos-de-Control-Markets-2bdec05dc75e804c8cb8e55f153ef5ad',
+    },
+    {
       imageUrl: 'assets/defaults/images/default-feature-1.jpg',
       title: 'Creación de contenido',
-      subtitle: 'Con modelos de IA',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
+      subtitle: 'Crea contenido con Agentes',
+      content: 'Aprende a crear un agente, darle personaliza y utilizalo en algun flujo para generar contenido',
+      externalLink: 'https://adamofig.notion.site/Como-clonar-voces-2bdec05dc75e80419008d34b8e386be0',
     },
     {
-      imageUrl: 'assets/defaults/images/default-feature-2.jpg',
-      title: 'Marketing',
-      subtitle: 'Ideas y estrategias',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
+      imageUrl: 'assets/defaults/images/voice.jpg',
+      title: 'Clonar voces',
+      subtitle: 'Genera una nueva voz ',
+      content: 'Aprende los pasos para clonar una voz que puedas utilizar en tus videos.',
+      externalLink: 'https://adamofig.notion.site/Como-clonar-voces-2bdec05dc75e80419008d34b8e386be0',
     },
     {
-      imageUrl: 'assets/defaults/images/default-feature-3.jpg',
-      title: 'Análisis de datos',
-      subtitle: 'Tendencias en marcados',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
+      imageUrl: 'https://images.unsplash.com/photo-1648437595587-e6a8b0cdf1f9?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&w=1000',
+      title: 'Ejercicio de flujo',
+      subtitle: 'Agente para la taquería',
+      content: 'Aprenderás a crear un flujo completo, el agente la tarea y contexto de la taquería ',
+      externalLink: 'https://www.notion.so/adamofig/Ejercicio-de-Flujo-de-Agentes-2beec05dc75e8012a16fde468264ebec',
     },
   ]);
 
@@ -115,5 +127,24 @@ export class HomeComponent implements OnInit {
 
   public handleAction(event: any) {
     console.log('handleAction', event);
+  }
+
+  public openMarkdownDialog(card: CardItem): void {
+    this.dialogService.open(MarkdownDialogComponent, {
+      header: card.title,
+      width: '70%',
+      contentStyle: { 'max-height': '500px', overflow: 'auto' },
+      baseZIndex: 10000,
+      closable: true,
+      data: {
+        content: card.content,
+      },
+    });
+  }
+
+  public openExternalLink(card: CardItem): void {
+    if (card.externalLink) {
+      window.open(card.externalLink, '_blank');
+    }
   }
 }

@@ -12,4 +12,19 @@
 .card-slider {
   width: 300px;
 }
-  
+
+.card-header-image {
+  height: 250px; /* Adjust as needed */
+  /* overflow: hidden; */
+}
+
+/* :host ::ng-deep .card-slider .p-card-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+:host ::ng-deep .card-slider .p-card-content {
+  flex-grow: 1;
+}
+   */
