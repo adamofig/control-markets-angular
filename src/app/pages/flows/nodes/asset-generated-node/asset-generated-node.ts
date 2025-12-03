@@ -42,7 +42,7 @@ export class AssetGeneratedNodeComponent extends BaseFlowNode<CustomAssetGenerat
     effect(() => {
       this.generatedAsset = this.data()?.nodeData || null;
       if (this.generatedAsset) {
-        // debugger;
+        //
         this.gifUrl.set((this.generatedAsset?.result as any)?.gif?.url);
 
         this.videoUrl.set(this.generatedAsset?.result?.url);

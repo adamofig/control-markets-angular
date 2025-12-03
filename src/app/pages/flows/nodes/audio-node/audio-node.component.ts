@@ -84,6 +84,8 @@ export class AudioNodeComponent extends BaseFlowNode<CustomAudioNode> {
       styleClass: 'draggable-dialog',
       closable: true,
       width: '500px',
+      modal: false,
+      duplicate: true,
 
       inputValues: {
         nodeData: this.node()?.data?.nodeData,
@@ -111,18 +113,6 @@ export class AudioNodeComponent extends BaseFlowNode<CustomAudioNode> {
     if (audioUrl) {
       const audio = new Audio(audioUrl);
       audio.play();
-    }
-  }
-
-  public downloadAudio() {
-    const audioUrl = this.node()?.data?.nodeData?.storage?.url;
-    if (audioUrl) {
-      const link = document.createElement('a');
-      link.href = audioUrl;
-      link.download = this.node()?.data?.nodeData?.name || 'audio';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
     }
   }
 

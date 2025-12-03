@@ -10,6 +10,11 @@
       <label for="name">Name</label>
       <input id="name" type="text" pInputText [value]="nodeData.name" disabled />
     </div>
+
+    <audio controls [src]="nodeData.storage?.url"></audio>
+
+    <!-- <audio controls [src]="node()?.data?.nodeData?.storage?.url"></audio> -->
+
     <div class="p-field">
       <label for="url">URL</label>
       <div class="p-inputgroup">

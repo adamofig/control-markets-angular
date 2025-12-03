@@ -1,5 +1,5 @@
 @if (selected()) {
-<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"> </app-node-toolbar>
+<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="openModal()"> </app-node-toolbar>
 }
 
 <div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
@@ -9,10 +9,10 @@
     }
     <div class="audio-container">
       <p-tag [value]="node()?.data?.nodeData?.name" />
-      <!-- <audio controls [src]="node()?.data?.nodeData?.storage?.url"></audio> -->
+      <br />
 
-      <button (click)="playAudio()" label="Play" pButton icon="pi pi-play"></button>
-      <button (click)="downloadAudio()" label="Download" pButton icon="pi pi-download"></button>
+      <button (click)="openModal()" class="pi pi-download">Descarga</button>
+
       @if(!hasTranscription){
       <button (click)="getTranscriptions()" label="Get Transcription"></button>
       }

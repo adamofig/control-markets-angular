@@ -56,7 +56,6 @@ export class LeadListComponent extends EntityBaseListComponent<ILead> implements
   }
 
   public override doAction(actionEvent: OnActionEvent): any {
-    debugger;
     super.doAction(actionEvent);
   }
 }
