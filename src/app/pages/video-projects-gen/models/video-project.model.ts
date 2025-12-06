@@ -1,6 +1,6 @@
 import { CloudStorage } from '@dataclouder/ngx-cloud-storage';
 import { IAgentSource } from '../../sources/models/sources.model';
-import { IAgentTask } from '../../tasks/models/tasks-models';
+import { ILlmTask } from '../../tasks/models/tasks-models';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 
 export interface AuditDate {
@@ -45,7 +45,7 @@ export interface IVideoProjectGenerator extends AuditDate {
   dialogs?: IDialog[];
   // Having one is temporary in the future probably will migrate to array.
   agent?: Partial<AgentCardWithReference>;
-  task?: Partial<IAgentTask>;
+  task?: Partial<ILlmTask>;
   compositionPlan?: ICompositionPlan;
 }
 

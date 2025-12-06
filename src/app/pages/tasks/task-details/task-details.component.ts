@@ -7,7 +7,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
-import { IAgentTask, ISourceTask } from '../models/tasks-models';
+import { ILlmTask, ISourceTask } from '../models/tasks-models';
 import { TasksService } from '../services/tasks.service';
 import { MarkdownComponent } from 'ngx-markdown';
 
@@ -20,7 +20,7 @@ import { MarkdownComponent } from 'ngx-markdown';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskDetailsComponent implements OnInit {
-  public task: IAgentTask | null = null;
+  public task: ILlmTask | null = null;
   @Input() public id: string | null = null;
   private routeId = this.route.snapshot.params['id'];
 

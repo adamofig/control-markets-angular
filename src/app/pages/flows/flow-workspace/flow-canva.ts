@@ -9,7 +9,7 @@ import { FlowDiagramStateService } from '../services/flow-diagram-state.service'
 import { TaskListComponent } from '../../tasks/task-list/task-list.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormGroup, FormsModule } from '@angular/forms';
-import { IAgentTask } from '../../tasks/models/tasks-models';
+import { ILlmTask } from '../../tasks/models/tasks-models';
 import { FlowExecutionStateService } from '../services/flow-execution-state.service';
 import { FlowOrchestrationService } from '../services/flow-orchestration.service';
 import { AssetsUploadsComponent } from '../canvas-components/assets-uploads/assets-uploads.component';
@@ -166,7 +166,7 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
 
   addTaskToFlow(event: OnActionEvent) {
     console.log('addTaskToFlow', event);
-    const task: IAgentTask = event.item;
+    const task: ILlmTask = event.item;
     this.flowSignalNodeStateService.addTaskToFlow(task);
 
     this.closeDialog();

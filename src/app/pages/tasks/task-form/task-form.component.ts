@@ -13,7 +13,7 @@ import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 
 import {
-  IAgentTask,
+  ILlmTask,
   AgentTaskOptions,
   AgentTaskStatus,
   AgentTaskStatusOptions,
@@ -21,6 +21,7 @@ import {
   ISourceTask,
   ITaskOutput,
   IAIModel,
+  LlmOutputFormatOptions,
 } from '../models/tasks-models';
 import { TasksService } from '../services/tasks.service';
 import { AgentCardService } from 'src/app/services/agent-cards.service';
@@ -53,15 +54,15 @@ import { EModelQuality, EntityBaseFormComponent, EntityCommunicationService } fr
   styleUrl: './task-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> implements OnInit {
+export class TaskFormComponent extends EntityBaseFormComponent<ILlmTask> implements OnInit {
   public form: FormGroup<any> = this.fb.group({});
 
   protected override entityCommunicationService = inject(TasksService);
-  protected override patchForm(entity: IAgentTask): void {
+  protected override patchForm(entity: ILlmTask): void {
     this.form.patchValue(entity);
   }
 
-  public task = signal<IAgentTask | null>(null);
+  public task = signal<ILlmTask | null>(null);
   public sourceSuggestions: ISourceTask[] = [];
   public selectedSource: string = '';
   public selectedAssets: any = null;
@@ -79,12 +80,13 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
     notionOutput: this.fb.control<any>({}),
     name: ['', Validators.required],
     description: [''],
-    userPrompt: [''],
+    prompt: [''],
     status: [AgentTaskStatus.ACTIVE],
     taskType: [AgentTaskType.TEXT_RESPONSE],
     sources: this.fb.control<any[]>([]),
     taskAttached: this.fb.control<any>({}),
     output: this.fb.control<ITaskOutput>({}),
+    outputFormat: this.fb.control<any>('default'),
     model: this.fb.nonNullable.group({
       provider: '',
       modelName: '',
@@ -94,11 +96,12 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
   });
 
   public taskTypes = AgentTaskOptions;
+  public outputFormats = LlmOutputFormatOptions;
 
   public statuses = AgentTaskStatusOptions;
   public sourcesOptions: ISourceTask[] = [];
   public agentOptions: IAgentCard[] = [];
-  public taskAttachedOptions: Partial<IAgentTask>[] = [];
+  public taskAttachedOptions: Partial<ILlmTask>[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -124,7 +127,7 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
 
   private async getAgentTasks() {
     const taskAttached = await this.tasksService.getFilteredTasks({ returnProps: { id: 1, name: 1 } });
-    this.taskAttachedOptions = taskAttached.rows.map((task: IAgentTask) => ({ name: task.name, id: task._id }));
+    this.taskAttachedOptions = taskAttached.rows.map((task: ILlmTask) => ({ name: task.name, id: task._id }));
     console.log('Task attached options:', this.taskAttachedOptions);
   }
 
@@ -157,7 +160,7 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
 
   async onSubmit() {
     if (this.taskForm.valid) {
-      const taskData: IAgentTask = this.taskForm.value as any;
+      const taskData: ILlmTask = this.taskForm.value as any;
       console.log('Task submitted:', taskData);
       const task = await this.tasksService.saveTask(taskData);
       if (!this.id) {
@@ -169,13 +172,13 @@ export class TaskFormComponent extends EntityBaseFormComponent<IAgentTask> imple
   }
 
   public async uploadImage(image: any) {
-    const taskData: Partial<IAgentTask> = {
+    const taskData: Partial<ILlmTask> = {
       id: this.task()?.id || '',
       image: image,
     };
 
     await this.tasksService.saveTask(taskData);
-    const updatedTask = { ...this.task(), ...taskData } as IAgentTask;
+    const updatedTask = { ...this.task(), ...taskData } as ILlmTask;
     this.task.set(updatedTask);
 
     this.toastService.success({ title: 'Tarea actualizada', subtitle: 'Tarea actualizada correctamente' });

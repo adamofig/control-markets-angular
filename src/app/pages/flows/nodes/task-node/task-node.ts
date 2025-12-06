@@ -7,7 +7,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { TaskNodeDetailsComponent } from './task-details/task-node-details';
 import { TaskConversationComponent } from './task-conversation/task-conversation';
 import { TaskWebhookDetailsComponent } from './task-webhook-details/task-webhook-details';
-import { IAgentTask } from '../../../tasks/models/tasks-models';
+import { ILlmTask } from '../../../tasks/models/tasks-models';
 import { IFlowExecutionState, ITaskExecutionState, StatusJob } from '../../models/flows.model';
 import { TagModule } from 'primeng/tag';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -18,7 +18,7 @@ import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component
 import { ActionsToolbarComponent } from '../actions-toolbar/actions-toolbar.component';
 
 export interface CustomTaskNode extends ComponentDynamicNode {
-  nodeData: IAgentTask;
+  nodeData: ILlmTask;
 }
 
 @Component({

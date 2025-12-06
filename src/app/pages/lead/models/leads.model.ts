@@ -24,4 +24,14 @@ export interface ILead {
   auditable?: IAuditable;
   assets: IAssetable;
   phoneNumber?: string;
+  phoneNumberData?: PhoneNumberData;
+}
+
+export interface PhoneNumberData {
+  countryCode: string;
+  areaCode: string;
+  country: string;
+  state: string;
+  municipality: string;
+  fullNumber: string;
 }

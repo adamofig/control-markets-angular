@@ -3,7 +3,7 @@ import { IAgentFlows, IJobExecutionState, INodeMetadata } from '../models/flows.
 import { Connection, DynamicNode, Edge, VflowComponent } from 'ngx-vflow';
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
-import { IAgentTask } from '../../tasks/models/tasks-models'; // Corrected path
+import { ILlmTask } from '../../tasks/models/tasks-models'; // Corrected path
 import { JobService } from '../../jobs/outcome-jobs.service';
 import { IAssetNodeData } from '../models/nodes.model';
 import { IGeneratedAsset } from '@dataclouder/ngx-ai-services';

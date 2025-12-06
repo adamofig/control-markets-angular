@@ -4,7 +4,7 @@ import { DynamicNodeWithData } from './flow-diagram-state.service';
 import { Connection, Edge } from 'ngx-vflow';
 import { nanoid } from 'nanoid';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
-import { IAgentTask } from '../../tasks/models/tasks-models';
+import { ILlmTask } from '../../tasks/models/tasks-models';
 import { IAssetNodeData } from '../models/nodes.model';
 import { IAgentSource } from '../../sources/models/sources.model';
 import { IGeneratedAsset } from '@dataclouder/ngx-ai-services';
@@ -111,7 +111,7 @@ export class FlowSignalNodeStateService {
     this.nodes.set([...this.nodes(), newNode]);
   }
 
-  public addTaskToFlow(task: IAgentTask): void {
+  public addTaskToFlow(task: ILlmTask): void {
     this._createTaskNode(task);
   }
 
@@ -127,7 +127,7 @@ export class FlowSignalNodeStateService {
     this.nodes.set([...this.nodes(), newNode]);
   }
 
-  private _createTaskNode(task: IAgentTask): void {
+  private _createTaskNode(task: ILlmTask): void {
     const newNode: DynamicNodeWithData = {
       id: 'task-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position

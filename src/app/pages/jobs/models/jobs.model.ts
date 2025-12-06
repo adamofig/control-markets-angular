@@ -1,4 +1,4 @@
-import { IAgentCardMinimal, IAgentTask, ISourceTask } from '../../tasks/models/tasks-models';
+import { IAgentCardMinimal, ILlmTask, ISourceTask } from '../../tasks/models/tasks-models';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 
 export interface AuditDate {
@@ -20,7 +20,7 @@ export interface MessageAI {
 export interface IAgentOutcomeJob extends AuditDate {
   _id?: string;
   id?: string;
-  task: Partial<IAgentTask>; // Relation with the task
+  task: Partial<ILlmTask>; // Relation with the task
   agentCard?: Partial<IAgentCard>; // Relation with the agent card
   messages: MessageAI[]; // Messages of the chat
   response: MessageAI; // Response of the AI

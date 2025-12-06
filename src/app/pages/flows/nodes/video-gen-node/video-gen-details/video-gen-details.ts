@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal, S
 import { DialogModule } from 'primeng/dialog';
 import { Vflow } from 'ngx-vflow';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { IAgentTask } from 'src/app/pages/tasks/models/tasks-models';
+import { ILlmTask } from 'src/app/pages/tasks/models/tasks-models';
 import { TaskDetailsComponent } from 'src/app/pages/tasks/task-details/task-details.component';
 import { DynamicNodeWithData, FlowDiagramStateService } from 'src/app/pages/flows/services/flow-diagram-state.service';
 import { ComfyVideoOptionsRequestFormComponent } from '@dataclouder/ngx-ai-services';
@@ -41,7 +41,7 @@ export class VideoGenDetailsComponent implements OnInit {
   private nodeSearchesService = inject(NodeSearchesService);
   private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
   public node!: any;
-  public agentTask!: IAgentTask;
+  public agentTask!: ILlmTask;
   public prompt = 'Describe your idea';
 
   public fb = inject(FormBuilder);

@@ -37,8 +37,12 @@ import { LeadListComponent } from '../lead-list/lead-list.component';
   standalone: true,
 })
 export class LeadFormComponent extends EntityBaseFormComponent<ILead> implements OnInit {
+  ngOnInit(): void {
+    // throw new Error('Method not implemented.');
+  }
   protected entityCommunicationService = inject(LeadService);
   private fb = inject(FormBuilder);
+  private leadService = inject(LeadService);
 
   public form = this.fb.group({
     name: ['', Validators.required],
@@ -51,47 +55,6 @@ export class LeadFormComponent extends EntityBaseFormComponent<ILead> implements
   protected override patchForm(entity: ILead): void {
     // NOTE: you may need to custom patchForm if contains arrays or custom logic.
     this.form.patchValue(entity);
-  }
-
-  public storageImgSettings = {
-    path: `leads`,
-    cropSettings: { aspectRatio: AspectType.Square, resolutions: [ResolutionType.MediumLarge], resizeToWidth: 700 },
-  };
-
-  extraFields: any[] = [
-    { key: 'title', type: 'input', props: { label: 'Title', placeholder: 'Title', required: false } },
-    { key: 'content', type: 'textarea', props: { label: 'Content', placeholder: 'Content', required: false } },
-  ];
-
-  public peopleOptions = [
-    { id: '1', name: 'Yang Feng', description: 'Description with short description', image: 'assets/defaults/images/face-1.jpg' },
-    { id: '2', name: 'Juan Perez', description: 'Description ', image: 'assets/defaults/images/face-2.jpg' },
-    { id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/defaults/images/face-3.jpg' },
-  ];
-
-  public selectedPeople: any[] = [{ id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/defaults/images/face-3.jpg' }];
-
-  public leadTypes = [
-    { label: 'Type 1', value: 'type1' },
-    { label: 'Type 2', value: 'type2' },
-    { label: 'Type 3', value: 'type3' },
-  ];
-
-  public relationObjects = [
-    { id: 'Relation 1', name: 'relation1', description: 'Description with short description' },
-    { id: 'Relation 2', name: 'relation2', description: 'Description with short description' },
-    { id: 'Relation 3', name: 'relation3', description: 'Description with short description' },
-  ];
-
-  async ngOnInit(): Promise<void> {}
-
-  public addItemToList(event: any) {
-    this.selectedPeople.push(event.value);
-  }
-
-  public removeItemFromList(person: any) {
-    this.selectedPeople = this.selectedPeople.filter(p => p.id !== person.id);
-    console.log(this.selectedPeople);
   }
 
   public handleImageUpload(event: any) {
@@ -119,5 +82,20 @@ export class LeadFormComponent extends EntityBaseFormComponent<ILead> implements
     this.isDialogVisible = false;
     this.relationPopupSelector.push(relation);
     alert('Relation selected');
+  }
+
+  public async extractNumberInformation() {
+    alert('Extract number information');
+    const testNumber = '+52 945 123 456';
+    const content = await this.leadService.extractNumberInformation(testNumber);
+
+    const response = await this.entityCommunicationService.partialUpdate(this.entity()?.id, { phoneNumberData: content });
+
+    console.log(response);
+  }
+
+  public async processPhoneExtractionAll() {
+    // 1)
+    this.leadService.startPhoneExtractionAll();
   }
 }

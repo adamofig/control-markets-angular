@@ -1,5 +1,5 @@
 <div class="conversation-container" [style.background-image]="'url(' + imgBackground() + ')'">
   @if (conversationSettings(); as settings) {
-  <dc-chat [conversationSettings]="settings"></dc-chat>
+  <dc-chat [conversationSettings]="settings" [chatUserSettings]="chatUserSettings()"></dc-chat>
   }
 </div>

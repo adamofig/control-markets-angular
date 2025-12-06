@@ -4,12 +4,6 @@
   <p-card [header]="entityId() ? 'Edit Lead' : 'New Lead'">
     <form [formGroup]="form">
       <div style="display: flex; gap: 10px">
-        <div class="form-field">
-          <label class="block" pTooltip="Image should be handle after upload">Subir imagen</label>
-          <img width="218px" src="assets/defaults/images/face-3.jpg" />
-          <dc-cropper-modal [imgStorageSettings]="storageImgSettings" (imageUploaded)="handleImageUpload($event)"></dc-cropper-modal>
-        </div>
-
         <div style="width: 100%">
           <div class="form-field">
             <label for="name" class="block">Name</label>
@@ -23,49 +17,14 @@
         </div>
       </div>
 
-      <div class="form-field">
-        <label for="type" class="block">Type</label>
-        <p-select id="type" [options]="leadTypes" formControlName="type" optionLabel="label" optionValue="value" placeholder="Select a type" />
-      </div>
-
-      <!-- Different is releation contains a whole object meanwhile type is only string -->
-      <div class="form-field">
-        <label for="relation" class="block" pTooltip="One object attached to the form">Relation</label>
-        <p-select id="relation" [options]="relationObjects" formControlName="relation" optionLabel="name" placeholder="Select a relation" />
-      </div>
-
-      <div class="form-field">
-        <label class="block" pTooltip="List of Objects handled by custom methods">Testimonials</label>
-
-        <p-select [options]="peopleOptions" [placeholder]="'Select a testimonial'" [style]="{ width: '100%' }" (onChange)="addItemToList($event)">
-          <ng-template #selectedItem let-selectedOption>
-            @if(selectedOption) {
-            <div style="display: flex; align-items: center; gap: 10px">
-              <div>{{ selectedOption.name }}</div>
-            </div>
-            }
-          </ng-template>
-
-          <ng-template let-item #item>
-            <div style="display: flex; gap: 10px">
-              <img [src]="item.image" style="width: 18px" />
-              <div>{{ item?.name }}</div>
-            </div>
-          </ng-template>
-
-          <ng-template #dropdownicon>
-            <i class="pi pi-user-plus"></i>
-          </ng-template>
-        </p-select>
-
-        <div style="display: flex; gap: 10px; margin-top: 10px">
-          @for(person of selectedPeople; track person.id) {
-          <p-chip [label]="person.name" [image]="person.image" alt="Avatar image" [removable]="true" (onRemove)="removeItemFromList(person)" />
-          }
-        </div>
-      </div>
       <div>
-        <p-button (click)="isDialogVisible = true" label="Search for relation" icon="pi pi-search" iconPos="right"> </p-button>
+        <p-button (click)="extractNumberInformation()" label="Extract number information" icon="pi pi-search" iconPos="right"> </p-button>
+      </div>
+
+      <br />
+
+      <div>
+        <p-button (click)="processPhoneExtractionAll()" label="Extract number information for all Pending" icon="pi pi-search" iconPos="right"> </p-button>
       </div>
     </form>
 
