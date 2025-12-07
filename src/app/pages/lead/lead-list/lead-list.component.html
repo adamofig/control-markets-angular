@@ -38,7 +38,7 @@
   }
 
   <div class="paginator-container">
-    <p-paginator
+    <!-- <p-paginator
       currentPageReportTemplate="{{ totalRecords }} conversations"
       [showCurrentPageReport]="true"
       (onPageChange)="onPageChange($event)"
@@ -46,6 +46,17 @@
       [rows]="rows"
       [totalRecords]="totalRecords"
       [rowsPerPageOptions]="[10, 20, 30]">
-    </p-paginator>
+    </p-paginator> -->
+
+    <p-paginator
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="totalRecordsSignal()"
+      (onPageChange)="onPageChange($event)"
+      [showCurrentPageReport]="true"
+      [showPageLinks]="false"
+      [showFirstLastIcon]="false"
+      [rowsPerPageOptions]="[10, 20, 30]"
+      currentPageReportTemplate=" {first}- {last} de {totalRecords} " />
   </div>
 </div>

@@ -1,7 +1,221 @@
-<h3>Lead Detail</h3>
-<h5>Construye esta sección para mostrar los detalles de la entidad</h5>
+@if (lead(); as leadData) {
+<div class="container mx-auto p-4 space-y-6 bg-gray-50 min-h-screen">
+  <!-- Header Section -->
+  <div class="bg-white rounded-xl shadow-sm p-6 flex flex-col md:flex-row items-start md:items-center gap-6">
+    <div class="relative">
+      @if (leadData.assets?.image?.url) {
+      <img [src]="leadData.assets!.image!.url" alt="Lead Avatar" class="w-24 h-24 rounded-full object-cover border-4 border-blue-50" />
+      } @else {
+      <div class="w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 text-3xl font-bold border-4 border-blue-50">
+        {{ leadData.name?.charAt(0) || 'L' }}
+      </div>
+      }
+      <div class="absolute bottom-0 right-0 bg-green-500 w-6 h-6 rounded-full border-4 border-white"></div>
+    </div>
 
-<br />
-<pre>
-  {{ lead() | json }}
-</pre>
+    <div class="flex-1">
+      <h1 class="text-2xl font-bold text-gray-800">{{ leadData.name || 'Unknown Lead' }}</h1>
+      <div class="flex flex-wrap gap-4 mt-2 text-gray-600">
+        <div class="flex items-center gap-2">
+          <i class="pi pi-phone"></i>
+          <span>{{ leadData.phoneNumber }}</span>
+        </div>
+        @if (leadData.phoneNumberData?.country) {
+        <div class="flex items-center gap-2">
+          <i class="pi pi-map-marker"></i>
+          <span>{{ leadData.phoneNumberData?.country }}</span>
+        </div>
+        }
+        <div class="flex items-center gap-2">
+          <i class="pi pi-calendar"></i>
+          <span>Created: {{ leadData.createdAt | date : 'mediumDate' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-end gap-2">
+      <span class="px-4 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-700">
+        {{ leadData.conversationAnalysis?.funnelStage | titlecase }}
+      </span>
+      <span class="text-sm text-gray-500">
+        Probability: <span class="font-bold text-gray-800">{{ leadData.conversationAnalysis?.purchaseProbability | titlecase }}</span>
+      </span>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Chat History Column -->
+    <div class="lg:col-span-1 bg-white rounded-xl shadow-sm flex flex-col h-[800px]">
+      <div class="p-4 border-b border-gray-100">
+        <h2 class="text-lg font-semibold text-gray-800">Conversation History</h2>
+      </div>
+      <div class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+        @for (msg of leadData.messages; track msg.createdAt) {
+        <div class="flex flex-col max-w-[85%] {{ msg.role === 'user' ? 'self-end items-end ml-auto' : 'self-start items-start' }}">
+          <div
+            class="p-3 rounded-2xl text-sm shadow-sm {{
+              msg.role === 'user' ? 'bg-blue-600 text-white rounded-tr-none' : 'bg-white text-gray-800 rounded-tl-none'
+            }}">
+            @if (msg.content) {
+            <p class="whitespace-pre-wrap">{{ msg.content }}</p>
+            } @if (msg.attachments?.length) {
+            <div class="mt-2 space-y-2">
+              @for (att of msg.attachments; track att.id) { @if (att.file_type === 'image') {
+              <img [src]="att.thumb_url || att.data_url" class="rounded-lg max-w-full h-auto" alt="Attachment" />
+              } @if (att.file_type === 'video') {
+              <video [src]="att.data_url" controls class="rounded-lg max-w-full h-auto"></video>
+              } }
+            </div>
+            }
+          </div>
+          <span class="text-xs text-gray-400 mt-1 px-1">
+            {{ msg.createdAt * 1000 | date : 'shortTime' }}
+          </span>
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- Analysis Dashboard Column -->
+    <div class="lg:col-span-2 space-y-6">
+      <!-- Key Insights Card -->
+      <div class="bg-white rounded-xl shadow-sm p-6">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2"><i class="pi pi-bolt text-yellow-500"></i> AI Insights</h2>
+        <div class="space-y-4">
+          <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+            <h3 class="font-semibold text-blue-800 mb-2">Opinion</h3>
+            <p class="text-blue-900 text-sm">{{ leadData.conversationAnalysis?.insights?.opinion }}</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-green-50 p-4 rounded-lg border border-green-100">
+              <h3 class="font-semibold text-green-800 mb-2">Recommendations</h3>
+              <p class="text-green-900 text-sm">{{ leadData.conversationAnalysis?.insights?.recommendations }}</p>
+            </div>
+            <div class="bg-purple-50 p-4 rounded-lg border border-purple-100">
+              <h3 class="font-semibold text-purple-800 mb-2">Next Steps</h3>
+              <ul class="list-disc list-inside text-purple-900 text-sm space-y-1">
+                <!-- @for (step of leadData.conversationAnalysis?.insights?.nextSteps; track step) {
+                <li>{{ step }}</li>
+                } -->
+
+                <li>{{ leadData.conversationAnalysis?.insights?.nextSteps }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Behavioral Signals -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-green-500">
+          <h3 class="font-semibold text-gray-700 mb-3">Buying Signals</h3>
+          <ul class="space-y-2">
+            @for (signal of leadData.conversationAnalysis?.behavioralSignals?.buyingSignals; track signal) {
+            <li class="text-sm text-gray-600 flex items-start gap-2">
+              <i class="pi pi-check-circle text-green-500 mt-1"></i>
+              {{ signal }}
+            </li>
+            } @empty {
+            <li class="text-sm text-gray-400 italic">No signals detected</li>
+            }
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-yellow-500">
+          <h3 class="font-semibold text-gray-700 mb-3">Hesitation Points</h3>
+          <ul class="space-y-2">
+            @for (point of leadData.conversationAnalysis?.behavioralSignals?.hesitationPoints; track point) {
+            <li class="text-sm text-gray-600 flex items-start gap-2">
+              <i class="pi pi-exclamation-circle text-yellow-500 mt-1"></i>
+              {{ point }}
+            </li>
+            } @empty {
+            <li class="text-sm text-gray-400 italic">No hesitations detected</li>
+            }
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-blue-500">
+          <h3 class="font-semibold text-gray-700 mb-3">Proactive Actions</h3>
+          <ul class="space-y-2">
+            @for (action of leadData.conversationAnalysis?.behavioralSignals?.proactiveActions; track action) {
+            <li class="text-sm text-gray-600 flex items-start gap-2">
+              <i class="pi pi-arrow-circle-right text-blue-500 mt-1"></i>
+              {{ action }}
+            </li>
+            } @empty {
+            <li class="text-sm text-gray-400 italic">No actions detected</li>
+            }
+          </ul>
+        </div>
+      </div>
+
+      <!-- Metrics Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white rounded-xl shadow-sm p-4 text-center">
+          <div class="text-2xl font-bold text-gray-800">{{ leadData.conversationAnalysis?.metrics?.questionsRatio }}</div>
+          <div class="text-xs text-gray-500 uppercase tracking-wide mt-1">Questions Ratio</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm p-4 text-center">
+          <div class="text-2xl font-bold text-gray-800">{{ leadData.conversationAnalysis?.metrics?.messagesRatio }}</div>
+          <div class="text-xs text-gray-500 uppercase tracking-wide mt-1">Messages Ratio</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm p-4 text-center">
+          <div class="text-2xl font-bold text-gray-800">{{ leadData.conversationAnalysis?.metrics?.leadMessagesCount }}</div>
+          <div class="text-xs text-gray-500 uppercase tracking-wide mt-1">Lead Msgs</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm p-4 text-center">
+          <div class="text-2xl font-bold text-gray-800">{{ leadData.conversationAnalysis?.metrics?.assistantMessagesCount }}</div>
+          <div class="text-xs text-gray-500 uppercase tracking-wide mt-1">Assistant Msgs</div>
+        </div>
+      </div>
+
+      <!-- Features & Micro-conversions -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="font-semibold text-gray-800 mb-4">Features Shown</h3>
+          <div class="grid grid-cols-2 gap-3">
+            @for (feature of leadData.conversationAnalysis?.featuresShown | keyvalue; track feature.key) {
+            <div class="flex items-center justify-between p-2 rounded bg-gray-50">
+              <span class="text-sm text-gray-600 capitalize">{{ feature.key }}</span>
+              @if (feature.value) {
+              <i class="pi pi-check text-green-500"></i>
+              } @else {
+              <i class="pi pi-times text-gray-300"></i>
+              }
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="font-semibold text-gray-800 mb-4">Micro Conversions</h3>
+          <div class="space-y-3">
+            @for (conversion of leadData.conversationAnalysis?.microConversions | keyvalue; track conversion.key) {
+            <div class="flex items-center gap-3">
+              <div
+                class="w-5 h-5 rounded-full flex items-center justify-center {{
+                  conversion.value ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+                }}">
+                <i class="pi {{ conversion.value ? 'pi-check' : 'pi-minus' }} text-xs"></i>
+              </div>
+              <span class="text-sm {{ conversion.value ? 'text-gray-800 font-medium' : 'text-gray-500' }}">
+                {{ conversion.key | titlecase }}
+              </span>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+} @else {
+<div class="flex items-center justify-center min-h-screen bg-gray-50">
+  <div class="text-center">
+    <i class="pi pi-spin pi-spinner text-4xl text-blue-500 mb-4"></i>
+    <p class="text-gray-500">Loading lead details...</p>
+  </div>
+</div>
+}

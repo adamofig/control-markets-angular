@@ -95,6 +95,8 @@ export class IonicLayoutComponent implements OnInit {
     { title: 'Tasks', url: '/page/tasks', icon: 'barbell' },
     { title: 'Jobs', url: '/page/jobs', icon: 'document-text' },
     { title: 'Sources', url: '/page/sources', icon: 'document-attach' },
+    { title: 'Leads', url: '/page/leads', icon: 'people' },
+
     { title: 'Video Analizer', url: '/page/video-analizer', icon: 'analytics' },
     { title: 'Video Generator', url: '/page/video-generator', icon: 'videocam' },
     { title: 'Test', url: '/page/test', icon: 'code-working' },

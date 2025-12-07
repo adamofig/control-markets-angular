@@ -71,7 +71,7 @@
     "@dataclouder/ngx-ai-services": "^0.0.45",
     "@dataclouder/ngx-auth": "^0.0.47",
     "@dataclouder/ngx-cloud-storage": "^0.0.31",
-    "@dataclouder/ngx-core": "^0.1.45",
+    "@dataclouder/ngx-core": "^0.1.47",
     "@dataclouder/ngx-knowledge": "^0.0.1",
     "@dataclouder/ngx-lessons": "^0.1.17",
     "@dataclouder/ngx-logs": "^0.0.2",

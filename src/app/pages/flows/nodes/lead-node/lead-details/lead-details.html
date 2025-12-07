@@ -1,17 +1,79 @@
 <div *ngIf="nodeData" class="p-4">
-  <div class="flex flex-col gap-2">
-    <h3 class="text-lg font-semibold">Lead Details</h3>
-    <div class="flex flex-col">
-      <label class="font-medium">Name:</label>
-      <span>{{ nodeData.name }}</span>
+  <div class="flex flex-col gap-4">
+    <h3 class="text-lg font-semibold border-b pb-2">Lead Details</h3>
+
+    <!-- Basic Information -->
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="font-medium text-gray-600">Name:</label>
+        <p>{{ nodeData.name }}</p>
+      </div>
+      <div>
+        <label class="font-medium text-gray-600">Phone Number:</label>
+        <p>{{ nodeData.phoneNumber }}</p>
+      </div>
+      <div>
+        <label class="font-medium text-gray-600">Country:</label>
+        <p>{{ nodeData.phoneNumberData?.country }}</p>
+      </div>
+      <div>
+        <label class="font-medium text-gray-600">Created At:</label>
+        <p>{{ nodeData.createdAt | date:'short' }}</p>
+      </div>
+      <div>
+        <label class="font-medium text-gray-600">Updated At:</label>
+        <p>{{ nodeData.updatedAt | date:'short' }}</p>
+      </div>
     </div>
-    <div class="flex flex-col">
-      <label class="font-medium">Number:</label>
-      <span>{{ nodeData.number }}</span>
+
+    <!-- Conversation Analysis -->
+    <div *ngIf="nodeData.conversationAnalysis" class="mt-4">
+      <h4 class="text-md font-semibold border-b pb-1 mb-2">Conversation Analysis</h4>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="font-medium text-gray-600">Funnel Stage:</label>
+          <p>{{ nodeData.conversationAnalysis.funnelStage }}</p>
+        </div>
+        <div>
+          <label class="font-medium text-gray-600">Purchase Probability:</label>
+          <p>{{ nodeData.conversationAnalysis.purchaseProbability }}</p>
+        </div>
+      </div>
+      <div class="mt-2">
+        <label class="font-medium text-gray-600">Opinion:</label>
+        <p>{{ nodeData.conversationAnalysis.insights.opinion }}</p>
+      </div>
+      <div class="mt-2">
+        <label class="font-medium text-gray-600">Recommendations:</label>
+        <p>{{ nodeData.conversationAnalysis.insights.recommendations }}</p>
+      </div>
+      <div class="mt-2">
+        <label class="font-medium text-gray-600">Next Steps:</label>
+        <ul class="list-disc list-inside">
+          <li>{{ nodeData.conversationAnalysis.insights.nextSteps }}</li>
+          <!-- @for (step of nodeData.conversationAnalysis.insights.nextSteps; track step) {
+          <li>{{ step }}</li>
+          
+          } -->
+        </ul>
+      </div>
     </div>
-    <div class="flex flex-col">
-      <label class="font-medium">Nationality:</label>
-      <span>{{ nodeData.nationality }}</span>
+
+    <!-- Behavioral Signals -->
+    <div *ngIf="nodeData.conversationAnalysis?.behavioralSignals" class="mt-4">
+      <h4 class="text-md font-semibold border-b pb-1 mb-2">Behavioral Signals</h4>
+      <div *ngIf="nodeData.conversationAnalysis?.behavioralSignals?.proactiveActions?.length">
+        <label class="font-medium text-gray-600">Proactive Actions:</label>
+        <ul class="list-disc list-inside">
+          <li *ngFor="let action of nodeData.conversationAnalysis?.behavioralSignals?.proactiveActions">{{ action }}</li>
+        </ul>
+      </div>
+      <div *ngIf="nodeData.conversationAnalysis?.behavioralSignals?.buyingSignals?.length" class="mt-2">
+        <label class="font-medium text-gray-600">Buying Signals:</label>
+        <ul class="list-disc list-inside">
+          <li *ngFor="let signal of nodeData.conversationAnalysis?.behavioralSignals?.buyingSignals">{{ signal }}</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

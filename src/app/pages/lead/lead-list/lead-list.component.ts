@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-import { DCFilterBarComponent, EntityBaseListComponent, OnActionEvent, QuickTableComponent } from '@dataclouder/ngx-core';
+import { DCFilterBarComponent, EntityBaseListV2Component, OnActionEvent, QuickTableComponent } from '@dataclouder/ngx-core';
 import { LeadService } from '../leads.service';
 import { ILead } from '../models/leads.model';
 import { RouterModule } from '@angular/router';
@@ -31,7 +31,7 @@ import { UserService } from '@dataclouder/ngx-users';
   styleUrl: './lead-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LeadListComponent extends EntityBaseListComponent<ILead> implements OnInit {
+export class LeadListComponent extends EntityBaseListV2Component<ILead> implements OnInit {
   protected override entityCommunicationService = inject(LeadService);
   public userService = inject(UserService);
 
@@ -55,7 +55,15 @@ export class LeadListComponent extends EntityBaseListComponent<ILead> implements
     ];
   }
 
-  public override doAction(actionEvent: OnActionEvent): any {
-    super.doAction(actionEvent);
-  }
+  // public override doAction(actionEvent: OnActionEvent): any {
+  //   debugger;
+  //   if (actionEvent.action === 'changeView') {
+  //     this.viewType.set('table');
+  //   }
+  //   if (actionEvent.action === 'filterChange') {
+  //     this.updateQueryFromFilter(actionEvent.item);
+  //   } else {
+  //     super.doAction(actionEvent);
+  //   }
+  // }
 }

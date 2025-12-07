@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { LeadService } from '../leads.service';
 import { ActivatedRoute } from '@angular/router';
-import { JsonPipe } from '@angular/common';
+import { DatePipe, JsonPipe, KeyValuePipe, TitleCasePipe } from '@angular/common';
 import { ILead } from '../models/leads.model';
 
 @Component({
   selector: 'app-lead-detail',
-  imports: [JsonPipe],
+  imports: [JsonPipe, DatePipe, TitleCasePipe, KeyValuePipe],
   templateUrl: './lead-detail.component.html',
   styleUrl: './lead-detail.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { ILead } from 'src/app/pages/lead/models/leads.model';
 @Component({
   selector: 'app-lead-details',
   templateUrl: './lead-details.html',
@@ -14,7 +15,7 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
   imports: [CommonModule, DialogModule, ButtonModule, InputTextModule, RippleModule],
 })
 export class LeadDetailsComponent implements OnInit {
-  @Input() nodeData: ILeadNode | undefined;
+  @Input() nodeData: ILead | undefined;
   private dialogConfig = inject(DynamicDialogConfig);
 
   ngOnInit(): void {
