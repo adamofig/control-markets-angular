@@ -1,5 +1,5 @@
 export const environment = {
-  projectName: 'Golden',
+  projectName: 'Control Markets',
   version: '0.0.34',
   envName: 'DEV',
   production: true,
@@ -9,9 +9,7 @@ export const environment = {
   clientId: '',
   androidClientId: '',
   iosClientId: '',
-  // backendNodeUrl: 'http://localhost:8080',
   backendNodeUrl: 'https://golden-ad-node-164740776065.us-central1.run.app',
-  // backendPythonUrl: 'http://localhost:8000',
   backendPythonUrl: 'https://python-server-905545672221.us-central1.run.app',
   n8nUrl: 'http://192.168.2.5:5678/webhook',
 

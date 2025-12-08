@@ -155,7 +155,7 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    background-image: url('/assets/diamond-sunset-white.svg');
+    background-image: url('/assets/backgrounds/diamond-sunset-white.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -164,7 +164,7 @@
 
 // Add dark mode specific styles
 body.dark::before {
-    background-image: url('/assets/diamond-sunset-dark.svg');
+    background-image: url('/assets/backgrounds/diamond-sunset-dark.svg');
 }
 
 @keyframes float {

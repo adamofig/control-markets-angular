@@ -1,12 +1,12 @@
 {
-  "name": "control-markets",
+  "name": "control-markets-angular",
   "config": {
-    "appId": "ad.golden.dev ",
-    "appIdDev": "ad.golden.dev .dev"
+    "appId": "markets.control.app",
+    "appIdDev": "markets.control.app.dev"
   },
   "version": "0.0.45",
-  "author": "Dataclouder",
-  "homepage": "dataclouder.dev",
+  "author": "Adamo",
+  "homepage": "https://github.com/adamofig/control-markets-angular",
   "scripts": {
     "ng": "ng",
     "config:internalnet": "cp public/config.internalnet.json public/config.json",
@@ -27,14 +27,14 @@
     "deploy-prod-local": "ng build -c production & npx serve -s www/browser",
     "watch": "ng build --watch --configuration development",
     "update:dc": "pnpm install @dataclouder/app-auth@latest @dataclouder/ngx-agent-cards@latest @dataclouder/ngx-lessons@latest @dataclouder/ngx-cloud-storage@latest @dataclouder/ngx-core@latest @dataclouder/ngx-mic@latest @dataclouder/ngx-tts@latest  @dataclouder/ngx-ai-services@latest @dataclouder/ngx-users@latest @dataclouder/ngx-logs@latest @dataclouder/ngx-knowledge@latest",
-    "deploy": "pnpm run build && firebase deploy --only hosting:dataclouder-dev",
+    "deploy": "pnpm run build && firebase deploy --only hosting:control-markets-dev",
     "ios:dev": "ng build -c development && cap copy ios && npx cap run ios",
     "ios:prod": "ng build -c production && cap copy ios && npx cap run ios --configuration Release",
     "ios:dev-sim": "ng build -c development && cap copy ios && npx cap run ios --target 3FFDE946-E48B-4215-A7CD-D7C1872FDAF2",
     "android:debug": "ionic cap run android -l --external",
     "android:run": "npx cap run android",
     "android:open": "npx cap open android",
-    "android:install-dev": "ng build -c development && cap copy android && cd android && ./gradlew assembleDev && adb install app/build/outputs/apk/dev/app-dev.apk && adb shell monkey -p dev.dataclouder.template.dev -c android.intent.category.LAUNCHER 1",
+    "android:install-dev": "ng build -c development && cap copy android && cd android && ./gradlew assembleDev && adb install app/build/outputs/apk/dev/app-dev.apk && adb shell monkey -p markets.control.app.dev -c android.intent.category.LAUNCHER 1",
     "android:install-pro": "ng build -c production && cap copy android && cd android && ./gradlew assembleRelease && adb install app/build/outputs/apk/release/app-release.apk && adb shell monkey -p ${npm_package_config_appId} -c android.intent.category.LAUNCHER 1",
     "test": "ng test",
     "lint": "ng lint",
