@@ -154,5 +154,5 @@
     "storybook": "^10.0.4",
     "typescript": "~5.8.3"
   },
-  "description": "An Ionic project"
+  "description": "Control the market with persona-based agents"
 }
