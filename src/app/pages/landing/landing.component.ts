@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { RouteNames } from 'src/app/core/enums';
 import { APP_CONFIG } from '@dataclouder/ngx-core';
 import { CardModule } from 'primeng/card';
+import { addIcons } from 'ionicons';
+import { logoGithub } from 'ionicons/icons';
 
 @Component({
   selector: 'app-landing',
@@ -24,7 +26,9 @@ export class LandingComponent {
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);
 
-  constructor() {}
+  constructor() {
+    addIcons({ logoGithub });
+  }
 
   public goToSignup() {
     this.router.navigate([RouteNames.Auth + '/' + RouteNames.Signup]);
@@ -35,4 +39,10 @@ export class LandingComponent {
   }
 
   public goTo() {}
+
+  public githubAlert() {
+    alert(
+      "Sorry, the project is still in alpha development. As soon as I can create a beta version, the repo will be shown here. I'm in the last steps of fixing important issues, it will be ready soon!"
+    );
+  }
 }

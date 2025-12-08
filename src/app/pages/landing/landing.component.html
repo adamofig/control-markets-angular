@@ -14,235 +14,95 @@
       <!-- Hero Section -->
 
       <section class="hero-section">
-        <h2>LET THE <span>PERSONA </span>BASED <span> AGENTS</span></h2>
+        <h2>NOW OPEN SOURCE</h2>
         <h1>CONTROL THE MARKET</h1>
-        <h2>FOR YOUR BUSINESS NICHE!</h2>
+        <h2>WITH PERSONA BASED AGENTS</h2>
         <img src="assets/defaults/icons/logo-trans.png" alt="Control Markets Integration" class="hero-image" />
-        <ion-button class="cta-button" (click)="goToSignup()">Get Started Now</ion-button>
+        <div class="hero-buttons">
+          <ion-button class="cta-button" (click)="githubAlert()">
+            <ion-icon name="logo-github" slot="start"></ion-icon>
+            View on GitHub
+          </ion-button>
+          <ion-button class="cta-button secondary" (click)="goToSignup()"> Try Demo </ion-button>
+        </div>
+      </section>
+
+      <section class="video-section">
+        <h4>Check Demo Here</h4>
+        <video style="border-radius: 20px" src="assets/videos/demo.mp4" alt="Demo Video" controls></video>
+      </section>
+
+      <!-- Open Source Section -->
+      <section class="open-source-section">
+        <h2>Why Open Source?</h2>
+        <p class="section-subtitle">I believe in the power of community-driven innovation.</p>
+
+        <div class="card-container">
+          <p-card header="Transparency">
+            <p>Inspect the code, understand how your agents work, and ensure your data is handled securely.</p>
+          </p-card>
+          <p-card header="Customizability">
+            <p>Adapt the platform to your specific needs. Build custom nodes, integrations, and agent behaviors.</p>
+          </p-card>
+          <p-card header="Community">
+            <p>Join a growing community of developers and marketers building the future of AI automation.</p>
+          </p-card>
+        </div>
       </section>
 
       <!-- Key Features Section -->
-      <div class="card-container">
-        <p-card header="AI Agent Tasks">
-          <p>Automate content generation and workflows with powerful AI agents.</p>
-        </p-card>
-        <p-card header="Market Monitoring">
-          <p>Analyze trends and social networks to dominate your industry.</p>
-        </p-card>
-        <p-card header="Viral Video Generation">
-          <p>Automatically create engaging videos for TikTok and similar platforms.</p>
-        </p-card>
-      </div>
-
-      <!-- Steps Section -->
-      <div class="card-container">
-        <p-card header="Create Your Agents">
-          <p>Define their personality and tasks.</p>
-        </p-card>
-        <p-card header="Give Instructions">
-          <p>Provide clear goals for your agents.</p>
-        </p-card>
-        <p-card header="Let Them Work">
-          <p>Agents execute tasks automatically.</p>
-        </p-card>
-        <p-card header="See Results">
-          <p>Track performance and market impact.</p>
-        </p-card>
-      </div>
-
-      <!-- Problem Section -->
-      <section class="problem-section">
-        <h2>Ready for the AI Revolution?</h2>
-        <div class="problem-content">
-          <p>Is your valuable information trapped in scattered Notion pages? Struggling to make your data AI-friendly?</p>
-          <ul class="challenges-list">
-            <li>❌ Disconnected Notion databases</li>
-            <li>❌ Unstructured documentation</li>
-            <li>❌ Data not optimized for AI processing</li>
-          </ul>
+      <section class="features-section">
+        <h2>POWERFUL CAPABILITIES</h2>
+        <div class="card-container">
+          <p-card header="AI Agent Tasks">
+            <p>Automate content generation and workflows with powerful AI agents.</p>
+          </p-card>
+          <p-card header="Market Monitoring">
+            <p>Analyze trends and social networks to dominate your industry.</p>
+          </p-card>
+          <p-card header="Viral Video Generation">
+            <p>Automatically create engaging videos for TikTok and similar platforms.</p>
+          </p-card>
         </div>
       </section>
 
-      <!-- Solution Section -->
-      <h2>INTEGRATE, PROCESS, TRANSFORM</h2>
-      <p>
-        Welcome to Control Markets - your all-in-one platform for market domination. Transform your business strategy with AI-powered insights and automated
-        content creation.
-      </p>
-      <div class="card-container">
-        <p-card header="Seamless Notion Integration">
-          <p>Connect and sync your Notion databases for complete visibility</p>
-        </p-card>
-        <p-card header="AI-Powered Market Analysis">
-          <p>Monitor trends and gain competitive insights automatically</p>
-        </p-card>
-        <p-card header="Viral Content Creation">
-          <p>Automatically generate engaging videos for social platforms</p>
-        </p-card>
-      </div>
-
-      <!-- Character Section -->
-      <br />
-      <br />
-      <br />
-
-      <h2>New Age of AI Agents</h2>
-
-      <div class="feature-image-container">
-        <img class="feature-image" src="assets/images/golden-human.jpeg" alt="Notion AI Integration" />
-        <div class="feature-image-overlay"></div>
-        <div class="feature-text-overlay">
-          <h3>What is a Persona based Agent?</h3>
-          <p>
-            Agents that act like a real person, with Human characteristics or a distinctive identity, own personaly psychology, comunnication patterns, etc.
-          </p>
+      <!-- Persona Agents Section -->
+      <section class="persona-section">
+        <h2>PERSONA BASED AGENTS</h2>
+        <div class="feature-image-container">
+          <img class="feature-image" src="assets/images/golden-human.jpeg" alt="Persona Based Agents" />
+          <div class="feature-image-overlay"></div>
+          <div class="feature-text-overlay">
+            <h3>More Than Just Chatbots</h3>
+            <p>
+              Create agents with distinct personalities, psychological profiles, and communication patterns. They don't just execute tasks; they embody your
+              brand.
+            </p>
+          </div>
         </div>
-      </div>
 
-      <div class="card-container">
-        <p-card header="Name, Personality, and Unique Voice">
-          <p>Define a name, a distinctive personality, and a voice with a unique accent for each agent.</p>
-        </p-card>
-        <p-card header="Communication Style">
-          <p>Establish a marked communication style, including common phrases and filler words.</p>
-        </p-card>
-        <p-card header="First-Person Communication">
-          <p>
-            Expresses itself in the first person, such as "I think" or "I can help you," and adapts its responses according to the relationship with the user.
-          </p>
-        </p-card>
-      </div>
-      <p class="ai-awareness">
-        They are aware that they are AI with a personality and do not try to pretend to be a real person, maintaining transparency in their nature.
-      </p>
-
-      <!-- Benefits Section -->
-      <h2>TRANSFORM YOUR MARKET PRESENCE</h2>
-      <div class="card-container">
-        <p-card header="Dominate your niche">
-          <p>Dominate your niche with AI-driven strategies</p>
-        </p-card>
-        <p-card header="Real-time monitoring">
-          <p>Real-time market and social media monitoring</p>
-        </p-card>
-        <p-card header="Automated content">
-          <p>Automated content creation and distribution</p>
-        </p-card>
-      </div>
-
-      <!-- Testimonials Section -->
-      <h2>SUCCESS STORIES</h2>
-      <div class="testimonial-card">
-        <div class="testimonial-image">
-          <img src="assets/images/kenya-marketera3.jpeg" alt="Kenya Figueroa" />
+        <div class="card-container">
+          <p-card header="Unique Identity">
+            <p>Define names, personalities, and unique voices with specific accents for each agent.</p>
+          </p-card>
+          <p-card header="Communication Style">
+            <p>Establish distinct speaking patterns, including common phrases and filler words.</p>
+          </p-card>
+          <p-card header="Self-Awareness">
+            <p>Agents know they are AI with a personality, maintaining transparency while delivering authentic interactions.</p>
+          </p-card>
         </div>
-        <div class="testimonial-content">
-          <h3>Kenya Figueroa, Marketing Director</h3>
-          <p>
-            "Control Markets completely transformed our Content Creation strategy. The AI-generated content helped us increase daily video creation 3x. Even
-            better our videos are engaging and viral."
-          </p>
-        </div>
-      </div>
-
-      <!-- Pricing Section -->
-      <h2>CHOOSE YOUR PLAN</h2>
-      <div class="card-container">
-        <p-card header="For Curious">
-          <ul>
-            <li>Basic Flows</li>
-            <li>Basic Agents</li>
-            <li>Basic Tools</li>
-          </ul>
-          <ion-button class="select-plan-button">Start Free</ion-button>
-        </p-card>
-        <p-card header="Enterprise" styleClass="premium">
-          <p class="price">Custom Pricing</p>
-          <ul>
-            <li>✓ Unlimited database connections</li>
-            <li>✓ Advanced AI processing</li>
-            <li>✓ Custom integration options</li>
-            <li>✓ Priority support</li>
-            <li>✓ API access</li>
-          </ul>
-          <ion-button class="select-plan-button premium-button">Contact Sales</ion-button>
-        </p-card>
-      </div>
-
-      <!-- Guarantee Section -->
-      <section class="guarantee-section">
-        <h2>OUR DATA TRANSFORMATION GUARANTEE</h2>
-        <p>Experience the power of AI-optimized Notion workspaces or get your money back.</p>
-        <p>If you don't see improved efficiency in your workflow, we'll provide a full refund. <strong>No questions asked.</strong></p>
       </section>
 
-      <!-- FAQ Section -->
-      <section class="faq-section">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq-accordion">
-          <div class="faq-item">
-            <h3>How does Control Markets help me monitor my industry?</h3>
-            <p>
-              Our AI agents continuously scan social networks, news sources, and competitor activities to provide real-time insights about your market. All
-              findings are organized in your Notion workspace for easy access and analysis.
-            </p>
-          </div>
-
-          <div class="faq-item">
-            <h3>Can I customize the content created by the AI agents?</h3>
-            <p>
-              Absolutely! You can set parameters for tone, style, and content focus. Our system learns from your preferences over time to create increasingly
-              tailored content that aligns with your brand voice.
-            </p>
-          </div>
-
-          <div class="faq-item">
-            <h3>How does the automatic video creation work?</h3>
-            <p>
-              Our platform analyzes trending content in your niche, then uses AI to generate engaging short-form videos optimized for platforms like TikTok. You
-              can review and approve videos before they're published or set them to post automatically.
-            </p>
-          </div>
-
-          <div class="faq-item">
-            <h3>What happens to my existing Notion structure?</h3>
-            <p>
-              Your existing Notion structure remains intact. We enhance and optimize it without disrupting your current setup, ensuring a smooth transition to
-              AI-ready data.
-            </p>
-          </div>
-
-          <div class="faq-item">
-            <h3>Is my data secure during processing?</h3>
-            <p>
-              Absolutely. We maintain the highest security standards with end-to-end encryption. Your data never leaves your control, and we comply with all
-              major data protection regulations.
-            </p>
-          </div>
-
-          <div class="faq-item">
-            <h3>Do I need technical expertise to use Control Markets?</h3>
-            <p>
-              No. Our platform is designed to be user-friendly while delivering powerful results. We provide full documentation and support for users of all
-              technical levels.
-            </p>
-          </div>
-
-          <div class="faq-item">
-            <h3>Can I access my optimized content from anywhere?</h3>
-            <p>
-              Yes, your AI-optimized Notion workspace remains accessible from any device, maintaining the same flexibility you're used to with Notion while
-              adding powerful AI capabilities.
-            </p>
-          </div>
-
-          <div class="faq-item">
-            <h3>Can I integrate with other platforms besides Notion?</h3>
-            <p>
-              While Notion is our primary integration for organizing insights and content, we also offer connections to major social media platforms for direct
-              publishing and analytics tracking.
-            </p>
-          </div>
+      <!-- Call to Action -->
+      <section class="cta-section">
+        <h2>Ready to Control Your Market?</h2>
+        <p>Deploy your own instance or try our hosted solution.</p>
+        <div class="cta-buttons">
+          <ion-button class="cta-button" (click)="githubAlert()">
+            <ion-icon name="logo-github" slot="start"></ion-icon>
+            Star on GitHub
+          </ion-button>
         </div>
       </section>
 
@@ -255,10 +115,10 @@
             <!-- Add social media links -->
           </div>
         </p-card>
-        <p-card header="Legal">
+        <!-- <p-card header="Legal">
           <a href="/privacy">Privacy Policy</a>
           <a href="/terms">Terms of Use</a>
-        </p-card>
+        </p-card> -->
       </div>
       <p class="copyright">© 2024 Control Markets. All rights reserved.</p>
 

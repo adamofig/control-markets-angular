@@ -113,10 +113,59 @@
     --border-radius: 30px;
     text-transform: uppercase;
   }
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cta-button {
+    &.secondary {
+      --background: transparent;
+      --background-hover: rgba(var(--ion-color-primary-rgb), 0.1);
+      --color: var(--ion-color-primary);
+      --border-color: var(--ion-color-primary);
+      --border-width: 2px;
+      --border-style: solid;
+      --box-shadow: none;
+    }
+  }
 }
 
+.open-source-section {
+  text-align: center;
+  padding: 4rem 0;
+  background: rgba(var(--ion-color-primary-rgb), 0.05);
+  border-radius: 20px;
+  margin-bottom: 100px;
 
+  .section-subtitle {
+    font-size: 1.2rem;
+    color: var(--ion-color-medium);
+    margin-bottom: 3rem;
+  }
+}
 
+.cta-section {
+  text-align: center;
+  padding: 6rem 0;
+  
+  h2 {
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: var(--ion-color-medium);
+    margin-bottom: 2rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+  }
+}
 
 // Responsive Design
 @media (max-width: 768px) {
