@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Signal, inject, OnInit } from '@ang
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-import { DCFilterBarComponent, QuickTableComponent } from '@dataclouder/ngx-core';
+import { DCFilterBarComponent, EntityBaseListV2Component, QuickTableComponent } from '@dataclouder/ngx-core';
 import { FlowService } from '../flows.service';
 import { IAgentFlows } from '../models/flows.model';
 import { AppUserService, IUserOrganization } from '../../../services/app-user.service';
@@ -12,7 +12,6 @@ import { MenuItem } from 'primeng/api';
 import { DatePipe, SlicePipe } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
-import { EntityBaseListComponent } from '@dataclouder/ngx-core';
 import { TagModule } from 'primeng/tag';
 import { MessageModule } from 'primeng/message';
 import { OrganizationSelectorComponent } from 'src/app/components/organization-selector/organization-selector.component';
@@ -38,7 +37,7 @@ import { OrganizationSelectorComponent } from 'src/app/components/organization-s
   styleUrl: './flow-list.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FlowListComponent extends EntityBaseListComponent<IAgentFlows> implements OnInit {
+export class FlowListComponent extends EntityBaseListV2Component<IAgentFlows> implements OnInit {
   protected override entityCommunicationService = inject(FlowService);
   private appUserService = inject(AppUserService);
   public currentOrganization: Signal<IUserOrganization | undefined>;
@@ -46,8 +45,11 @@ export class FlowListComponent extends EntityBaseListComponent<IAgentFlows> impl
   constructor() {
     super();
     this.currentOrganization = this.appUserService.currentOrganization;
-    this.filterConfig.filters = { orgId: this.currentOrganization()?.orgId };
-    this.filterConfig.returnProps = {
+
+    // this.mongoState.query.filters = { orgId: this.currentOrganization()?.orgId };
+
+    this.mongoState.query = { orgId: this.currentOrganization()?.orgId || this.appUserService.user()._id };
+    this.mongoState.projection = {
       _id: 1,
       id: 1,
       name: 1,
@@ -79,7 +81,11 @@ export class FlowListComponent extends EntityBaseListComponent<IAgentFlows> impl
   }
 
   public reload() {
-    this.filterConfig.filters = { orgId: this.currentOrganization()?.orgId };
+    debugger;
+    this.mongoState.query = { orgId: this.currentOrganization()?.orgId || this.appUserService.user().id };
+    console.log('Reloading with query:', this.mongoState.query);
+
+    // this.filterConfig.filters = { orgId: this.currentOrganization()?.orgId };
     this.loadData();
   }
 }

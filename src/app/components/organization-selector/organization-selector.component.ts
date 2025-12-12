@@ -20,8 +20,9 @@ export class OrganizationSelectorComponent {
   public organizationControl = new FormControl<string | null>(this.userService.user()?.defaultOrgId || null);
 
   public organizations = computed(() => {
+    debugger;
     const userOrgs = this.userService.user()?.organizations || [];
-    return [{ name: 'Personal Space', orgId: null }, ...userOrgs] as IUserOrganization[];
+    return [{ name: 'Personal Space', orgId: this.userService.user().id }, ...userOrgs] as IUserOrganization[];
   });
 
   constructor() {
@@ -31,17 +32,16 @@ export class OrganizationSelectorComponent {
   }
 
   async updateDefaultOrganization(orgId: string | null) {
+    debugger;
+    const userUpdate = { defaultOrgId: orgId, id: this.userService.user()?.id };
+
+    await this.userService.updatePartialUserServer(userUpdate);
+
     this.toastService.info({
       title: 'Organization updated successfully',
       subtitle: 'Organization updated successfully',
     });
 
-    const userUpdate = {
-      defaultOrgId: orgId,
-      id: this.userService.user()?.id,
-    };
-
-    await this.userService.updatePartialUserServer(userUpdate);
     this.organizationUpdated.emit();
   }
 }

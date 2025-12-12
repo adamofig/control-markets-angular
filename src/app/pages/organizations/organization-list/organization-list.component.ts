@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-import { DCFilterBarComponent, EntityBaseListComponent, QuickTableComponent } from '@dataclouder/ngx-core';
+import { DCFilterBarComponent, EntityBaseListComponent, EntityBaseListV2Component, QuickTableComponent } from '@dataclouder/ngx-core';
 import { OrganizationService } from '../organizations.service';
 import { IOrganization } from '../models/organizations.model';
 import { RouterModule } from '@angular/router';
@@ -33,9 +33,25 @@ import { Tag } from 'primeng/tag';
   styleUrl: './organization-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrganizationListComponent extends EntityBaseListComponent<IOrganization> implements OnInit {
+export class OrganizationListComponent extends EntityBaseListV2Component<IOrganization> implements OnInit {
   protected override entityCommunicationService = inject(OrganizationService);
   public userService = inject(UserService);
+
+  constructor() {
+    super();
+
+    this.mongoState.query = { type: 'company' };
+
+    this.mongoState.projection = {
+      _id: 1,
+      id: 1,
+      name: 1,
+      description: 1,
+      createdAt: 1,
+      updatedAt: 1,
+      metadata: 1,
+    };
+  }
 
   getCustomButtons(item: any): MenuItem[] {
     return [

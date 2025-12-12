@@ -38,11 +38,7 @@ export class LandingComponent {
     this.router.navigate([RouteNames.Auth + '/' + RouteNames.Signin]);
   }
 
-  public goTo() {}
-
-  public githubAlert() {
-    alert(
-      "Sorry, the project is still in alpha development. As soon as I can create a beta version, the repo will be shown here. I'm in the last steps of fixing important issues, it will be ready soon!"
-    );
+  public goToGithub() {
+    window.open('https://github.com/adamofig/control-markets-angular', '_blank');
   }
 }
