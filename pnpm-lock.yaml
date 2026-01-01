@@ -81,11 +81,11 @@ importers:
         specifier: ^0.0.44
         version: 0.0.44(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/fire@19.2.0(ffa92933957d2ffff27f4751e70b11ac))(@capacitor-community/apple-sign-in@7.1.0(@capacitor/core@7.4.4))(@codetrix-studio/capacitor-google-auth@3.4.0-rc.4(@capacitor/core@7.4.4))
       '@dataclouder/ngx-agent-cards':
-        specifier: ^0.1.72
-        version: 0.1.72(50b07fbabaace745725e1abcc67bcecd)
+        specifier: ^0.1.91
+        version: 0.1.91(3ff383c14c1bbddbac6a1eeba59db294)
       '@dataclouder/ngx-ai-services':
-        specifier: ^0.0.45
-        version: 0.0.45(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))
+        specifier: ^0.0.46
+        version: 0.0.46(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))
       '@dataclouder/ngx-auth':
         specifier: ^0.0.47
         version: 0.0.47(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/fire@19.2.0(ffa92933957d2ffff27f4751e70b11ac))(@capacitor-community/apple-sign-in@7.1.0(@capacitor/core@7.4.4))(@codetrix-studio/capacitor-google-auth@3.4.0-rc.4(@capacitor/core@7.4.4))
@@ -93,26 +93,26 @@ importers:
         specifier: ^0.0.31
         version: 0.0.31(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/fire@19.2.0(ffa92933957d2ffff27f4751e70b11ac))(ngx-image-cropper@9.1.5(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)))(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))
       '@dataclouder/ngx-core':
-        specifier: ^0.1.47
-        version: 0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)
+        specifier: ^0.1.49
+        version: 0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)
       '@dataclouder/ngx-knowledge':
         specifier: ^0.0.1
         version: 0.0.1(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))
       '@dataclouder/ngx-lessons':
-        specifier: ^0.1.17
-        version: 0.1.17(ca10ff9c356dd1690a984ed211085ba2)
+        specifier: ^0.1.22
+        version: 0.1.22(993426d01a54f57e4c8cd57b4cdb5af1)
       '@dataclouder/ngx-logs':
         specifier: ^0.0.2
         version: 0.0.2(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))
       '@dataclouder/ngx-mic':
-        specifier: ^0.1.3
-        version: 0.1.3(33663647b3cc781f0ba005faa0b6aa08)
+        specifier: ^0.1.4
+        version: 0.1.4(7f5b3570790572d86bfcb805d6b95585)
       '@dataclouder/ngx-tts':
         specifier: ^0.0.2
-        version: 0.0.2(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))
+        version: 0.0.2(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))
       '@dataclouder/ngx-users':
-        specifier: ^0.0.19
-        version: 0.0.19(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))
+        specifier: ^0.0.21
+        version: 0.0.21(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))
       '@ionic/angular':
         specifier: ^8.7.10
         version: 8.7.10(50d90cf94c9cd73e771331c1c034d2bd)
@@ -1566,8 +1566,8 @@ packages:
       '@capacitor-community/apple-sign-in': '>=6.0.0'
       '@codetrix-studio/capacitor-google-auth': ^3.3.0 || ^3.4.0-rc.4
 
-  '@dataclouder/ngx-agent-cards@0.1.72':
-    resolution: {integrity: sha512-t/Mvds7gxM6OzLtA4GK+eDUSDlykYrFbaHDEG3DCCw23SJT+jqDHzyojjjoBha4qVBUf0zh5jQlUjhA4n4pkxg==}
+  '@dataclouder/ngx-agent-cards@0.1.91':
+    resolution: {integrity: sha512-2ByO4gGj528YOVnXZ82L1XvQNkBoaBnHSeKreK/iAgLjS52C3jxQNA7/BmMB1UMXr/7VMQE8zYz9YIunhaWxgw==}
     peerDependencies:
       '@angular/cdk': '>=18.0.0'
       '@angular/common': '>=18.0.0'
@@ -1587,8 +1587,8 @@ packages:
       '@dataclouder/ngx-users':
         optional: true
 
-  '@dataclouder/ngx-ai-services@0.0.45':
-    resolution: {integrity: sha512-mM9FegO/idKTiC/T2e6M6BYI5XoVN+3E0wFQImMJg1zeHyj4pleCPQNUITqeWeDTOIMEwcjNRIXKUpONs9g7+Q==}
+  '@dataclouder/ngx-ai-services@0.0.46':
+    resolution: {integrity: sha512-ypRBNHXcqOVJ8Od2PVPqX9QBqfn6XHcK9KIziSCHsf4utGDHUZrlhtdt8FICN4ccvsFDA++lHvnnxA5AyIl4KQ==}
     peerDependencies:
       '@angular/common': ^19.2.0
       '@angular/core': ^19.2.0
@@ -1612,8 +1612,8 @@ packages:
       ngx-image-cropper: ^9.0.0
       primeng: '>=19.0.0'
 
-  '@dataclouder/ngx-core@0.1.47':
-    resolution: {integrity: sha512-AOTWhsgcz80iQwzujlWyZotIWDhYoB6T9q7F+6y/d2R1r2Cjl0Lp5sllZFve/ciAO/GF7dw6NnInnNgtVK7Hrg==}
+  '@dataclouder/ngx-core@0.1.49':
+    resolution: {integrity: sha512-o346mLrXdM3Qwa6Gs5KBNegjRpBWyqoKuZ/vYZ4FnIkkU3CW1AjdZaLWCz0uM8bGklPz/KAuTvzl/fUYWBQMww==}
     peerDependencies:
       '@angular/cdk': '>=18.0.0'
       '@angular/common': '>=18.0.0'
@@ -1629,8 +1629,8 @@ packages:
       '@angular/common': ^19.2.0
       '@angular/core': ^19.2.0
 
-  '@dataclouder/ngx-lessons@0.1.17':
-    resolution: {integrity: sha512-oQZUGGMRwUI0w7yonUGAhgPjtdLY3alcne1zxWxVkmnO+kIq50krpvzVfL5lI2PmDgzsmjD9slnsHxNvDD4GXg==}
+  '@dataclouder/ngx-lessons@0.1.22':
+    resolution: {integrity: sha512-rI2HtM0aSo1Xw9Jh8d96j8ekrr7vsTnsE/tzTtjdMu+WyxkxQ/I7XXFb+rueuqREemTAFNh0v69FzYR034PQHQ==}
     peerDependencies:
       '@angular/cdk': '>=18.0.0'
       '@angular/common': '>=18.0.0'
@@ -1650,8 +1650,8 @@ packages:
       '@angular/common': ^19.2.0
       '@angular/core': ^19.2.0
 
-  '@dataclouder/ngx-mic@0.1.3':
-    resolution: {integrity: sha512-R7kGW1yNnXbc7IFfVxHmOsI5HY9f36QsG7HywzV9uau7I2GL1BpqiIvkVwLBk51u8feE2PDh35JpThsat43zhQ==}
+  '@dataclouder/ngx-mic@0.1.4':
+    resolution: {integrity: sha512-Cu6BlmSXmKUh/p0gMtPYJj2yFPplzwvmWuU+dKvZ0Mu0kPd6WNtRMizbQxX/Sq0hewb4Qp/5NHvoEs0AE+sRhg==}
     peerDependencies:
       '@angular/common': ^19.1.1
       '@angular/core': ^19.1.1
@@ -1674,8 +1674,8 @@ packages:
       '@angular/core': ^19.1.1
       '@dataclouder/ngx-core': '>=0.0.1'
 
-  '@dataclouder/ngx-users@0.0.19':
-    resolution: {integrity: sha512-oS0z6mrhvcTCs5C5nXLlh9v85FXa01Kvwgf4b9lSZonipTeEoidHfcPSK+mryGIEzowA41VilMrzd1U5WUgSJQ==}
+  '@dataclouder/ngx-users@0.0.21':
+    resolution: {integrity: sha512-0Gt+GdFTyiei9DxbMh5bPigQ2NMQTPYIJx/vwcy277rsI888p0e/pe62yZbnye8/goJhD1HwvjEqYO9bz/tcIw==}
     peerDependencies:
       '@angular/common': ^19.2.0
       '@angular/core': ^19.2.0
@@ -7868,6 +7868,10 @@ packages:
     resolution: {integrity: sha512-uaW0WwXKpL9blXE2o0bRhoL2EGXIrZxQ2ZQ4mgcfoBxdFmQold+qWsD2jLrfZ0trjKL6vOw0j//eAwcALFjKSw==}
     engines: {node: '>= 18'}
 
+  send@1.2.1:
+    resolution: {integrity: sha512-1gnZf7DFcoIcajTjTwjwuDjzuz4PPcY2StKPlsGAQ1+YH20IRVrBaXSWmdjowTJ6u8Rc01PoYOGHXfP1mYcZNQ==}
+    engines: {node: '>= 18'}
+
   serialize-javascript@6.0.2:
     resolution: {integrity: sha512-Saa1xPByTTq2gdeFZYLLo+RFE35NHZkAbqZeWNd3BpzppeVisAqpDjcp8dyf6uIvEqJRd46jemmyA4iFIeVk8g==}
 
@@ -11169,7 +11173,7 @@ snapshots:
       object-assign: 4.1.1
       open: 8.4.0
       proxy-middleware: 0.15.0
-      send: 1.2.0
+      send: 1.2.1
       serve-index: 1.9.1
     transitivePeerDependencies:
       - supports-color
@@ -11196,7 +11200,7 @@ snapshots:
       '@codetrix-studio/capacitor-google-auth': 3.4.0-rc.4(@capacitor/core@7.4.4)
       tslib: 2.8.1
 
-  '@dataclouder/ngx-agent-cards@0.1.72(50b07fbabaace745725e1abcc67bcecd)':
+  '@dataclouder/ngx-agent-cards@0.1.91(3ff383c14c1bbddbac6a1eeba59db294)':
     dependencies:
       '@angular/cdk': 20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/common': 20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
@@ -11205,15 +11209,15 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@dataclouder/ngx-cloud-storage': 0.0.31(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/fire@19.2.0(ffa92933957d2ffff27f4751e70b11ac))(ngx-image-cropper@9.1.5(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)))(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))
-      '@dataclouder/ngx-core': 0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)
-      '@dataclouder/ngx-mic': 0.1.3(33663647b3cc781f0ba005faa0b6aa08)
-      '@dataclouder/ngx-users': 0.0.19(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))
+      '@dataclouder/ngx-core': 0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)
+      '@dataclouder/ngx-mic': 0.1.4(7f5b3570790572d86bfcb805d6b95585)
+      '@dataclouder/ngx-users': 0.0.21(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))
 
-  '@dataclouder/ngx-ai-services@0.0.45(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))':
+  '@dataclouder/ngx-ai-services@0.0.46(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))':
     dependencies:
       '@angular/common': 20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/core': 20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)
-      '@dataclouder/ngx-core': 0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)
+      '@dataclouder/ngx-core': 0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)
       tslib: 2.8.1
 
   '@dataclouder/ngx-auth@0.0.47(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/fire@19.2.0(ffa92933957d2ffff27f4751e70b11ac))(@capacitor-community/apple-sign-in@7.1.0(@capacitor/core@7.4.4))(@codetrix-studio/capacitor-google-auth@3.4.0-rc.4(@capacitor/core@7.4.4))':
@@ -11234,7 +11238,7 @@ snapshots:
       primeng: 20.3.0(4e4115555d635722947a0e684d5132b4)
       tslib: 2.8.1
 
-  '@dataclouder/ngx-core@0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)':
+  '@dataclouder/ngx-core@0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)':
     dependencies:
       '@angular/cdk': 20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/common': 20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
@@ -11251,16 +11255,16 @@ snapshots:
       '@angular/core': 20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)
       tslib: 2.8.1
 
-  '@dataclouder/ngx-lessons@0.1.17(ca10ff9c356dd1690a984ed211085ba2)':
+  '@dataclouder/ngx-lessons@0.1.22(993426d01a54f57e4c8cd57b4cdb5af1)':
     dependencies:
       '@angular/cdk': 20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/common': 20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/core': 20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)
-      '@dataclouder/ngx-agent-cards': 0.1.72(50b07fbabaace745725e1abcc67bcecd)
+      '@dataclouder/ngx-agent-cards': 0.1.91(3ff383c14c1bbddbac6a1eeba59db294)
       tslib: 2.8.1
     optionalDependencies:
       '@dataclouder/ngx-cloud-storage': 0.0.31(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/fire@19.2.0(ffa92933957d2ffff27f4751e70b11ac))(ngx-image-cropper@9.1.5(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)))(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))
-      '@dataclouder/ngx-core': 0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)
+      '@dataclouder/ngx-core': 0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)
 
   '@dataclouder/ngx-logs@0.0.2(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))':
     dependencies:
@@ -11268,7 +11272,7 @@ snapshots:
       '@angular/core': 20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)
       tslib: 2.8.1
 
-  '@dataclouder/ngx-mic@0.1.3(33663647b3cc781f0ba005faa0b6aa08)':
+  '@dataclouder/ngx-mic@0.1.4(7f5b3570790572d86bfcb805d6b95585)':
     dependencies:
       '@angular/common': 20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/core': 20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)
@@ -11279,20 +11283,20 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@dataclouder/ngx-cloud-storage': 0.0.31(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/fire@19.2.0(ffa92933957d2ffff27f4751e70b11ac))(ngx-image-cropper@9.1.5(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)))(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))
-      '@dataclouder/ngx-core': 0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)
+      '@dataclouder/ngx-core': 0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)
 
-  '@dataclouder/ngx-tts@0.0.2(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))':
+  '@dataclouder/ngx-tts@0.0.2(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))':
     dependencies:
       '@angular/common': 20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/core': 20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)
-      '@dataclouder/ngx-core': 0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)
+      '@dataclouder/ngx-core': 0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)
       tslib: 2.8.1
 
-  '@dataclouder/ngx-users@0.0.19(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))':
+  '@dataclouder/ngx-users@0.0.21(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))':
     dependencies:
       '@angular/common': 20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/core': 20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)
-      '@dataclouder/ngx-core': 0.1.47(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)
+      '@dataclouder/ngx-core': 0.1.49(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2)
       tslib: 2.8.1
 
   '@dataclouder/storage-uploader@0.0.19(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/fire@19.2.0(ffa92933957d2ffff27f4751e70b11ac))(ngx-image-cropper@9.1.5(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)))(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))':
@@ -18198,6 +18202,22 @@ snapshots:
       - supports-color
 
   send@1.2.0:
+    dependencies:
+      debug: 4.4.3
+      encodeurl: 2.0.0
+      escape-html: 1.0.3
+      etag: 1.8.1
+      fresh: 2.0.0
+      http-errors: 2.0.1
+      mime-types: 3.0.2
+      ms: 2.1.3
+      on-finished: 2.4.1
+      range-parser: 1.2.1
+      statuses: 2.0.2
+    transitivePeerDependencies:
+      - supports-color
+
+  send@1.2.1:
     dependencies:
       debug: 4.4.3
       encodeurl: 2.0.0

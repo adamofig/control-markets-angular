@@ -1,6 +1,6 @@
 {
   "projectName": "Control Markets",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "envName": "DEV",
   "production": false,
   "authenticationRequired": true,
@@ -15,5 +15,5 @@
     "storageBucket": "control-markets.firebasestorage.app",
     "messagingSenderId": "700649316148",
     "appId": "1:700649316148:web:eb750f679f5cb1b7ed8f61"
-}
+  }
 }
