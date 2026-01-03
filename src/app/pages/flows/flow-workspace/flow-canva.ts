@@ -3,7 +3,7 @@ import { Connection, Vflow, VflowComponent } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { AgentCardListComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { EntityBaseFormComponent, OnActionEvent } from '@dataclouder/ngx-core';
-import { IAgentFlows, NodeTypeStr } from '../models/flows.model';
+import { IAgentFlows, NodeCompTypeStr } from '../models/flows.model';
 import { ButtonModule } from 'primeng/button';
 import { FlowDiagramStateService } from '../services/flow-diagram-state.service';
 import { TaskListComponent } from '../../tasks/task-list/task-list.component';
@@ -48,8 +48,8 @@ import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component'
 })
 export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> implements OnInit, AfterViewInit {
   public AssetsNodeComponent = AssetsNodeComponent;
-  public NodeTypeStr = NodeTypeStr;
-  public nodeTypes = Object.values(NodeTypeStr);
+  public NodeCompTypeStr = NodeCompTypeStr;
+  public nodeComponentsList = Object.values(NodeCompTypeStr);
   override form: FormGroup<any> = new FormGroup({});
   public flowSerializationService = inject(FlowSerializationService);
 
@@ -251,7 +251,7 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
     this.flowSerializationService.serializeFlow();
   }
 
-  public addEmptyNode(nodeType: NodeTypeStr) {
+  public addEmptyNode(nodeType: NodeCompTypeStr) {
     // this.flowSignalNodeStateService.addEmptyNode(nodeType);
     // this.flowSerializationService.serializeFlow();
     this.addWrapperNode(nodeType, {});

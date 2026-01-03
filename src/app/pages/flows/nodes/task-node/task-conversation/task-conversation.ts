@@ -3,7 +3,7 @@ import { ChatMessage, ChatRole, DCChatComponent, DefaultAgentCardsService, IAgen
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CustomTaskNode } from '../task-node';
 import { NodeSearchesService } from '../../../services/node-searches.service';
-import { NodeTypeStr } from '../../../models/flows.model';
+import { NodeCompTypeStr } from '../../../models/flows.model';
 import { groupBy } from 'es-toolkit/array';
 import { NodePromptBuilderService, PersonaExtractionLevel } from '../../../services/node-prompt-builder.services';
 import { ChatUserSettings, EModelQuality } from '@dataclouder/ngx-core';
@@ -40,7 +40,7 @@ export class TaskConversationComponent implements OnInit {
     const inputNodes = this.nodeSearchesService.getInputNodes(this.node?.id!);
     const contextPrompts = this.nodePromptBuilder.getContextPrompts(inputNodes);
     const groupedInputNodes = groupBy(inputNodes, item => item.component);
-    const agents = groupedInputNodes[NodeTypeStr.AgentNodeComponent] || [];
+    const agents = groupedInputNodes[NodeCompTypeStr.AgentNodeComponent] || [];
     if (agents.length > 0) {
       const agentData = agents[0].data.nodeData;
 

@@ -40,6 +40,8 @@ export class EmptyNodeComponent extends BaseFlowNode<CustomEmptyNode> implements
       styleClass: 'draggable-dialog',
       closable: true,
       width: '650px',
+      duplicate: true, 
+      modal: true,
       data: {
         ...nodeData,
       },

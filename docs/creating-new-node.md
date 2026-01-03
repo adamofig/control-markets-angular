@@ -46,7 +46,7 @@ Register the string identifier in the global model.
 **File**: [flows.model.ts](file:///Users/adamo/Documents/GitHub/control-markets-angular/src/app/pages/flows/models/flows.model.ts)
 
 ```typescript
-export enum NodeTypeStr {
+export enum NodeCompTypeStr {
   // ... existing nodes
   MyCustomNodeComponent = 'MyCustomNodeComponent',
 }
@@ -139,7 +139,7 @@ openModal(): void {
 
 ## ✅ Summary Checklist
 - [x] Defined Data Interface in `nodes.model.ts`.
-- [x] Added to `NodeTypeStr` enum.
+- [x] Added to `NodeCompTypeStr` enum.
 - [x] Created Component (Content or Full Node).
 - [x] Implemented Details Modal for configuration.
 - [x] Registered in `FlowNodeRegisterService`.

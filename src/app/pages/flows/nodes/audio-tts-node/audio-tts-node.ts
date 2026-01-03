@@ -13,7 +13,7 @@ import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component
 import { CommonModule } from '@angular/common';
 import { TtsPlaygroundWrapperComponent } from './tts-playground-wrapper/tts-playground-wrapper.component';
 import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
-import { NodeTypeStr } from '../../models/flows.model';
+import { NodeCompTypeStr } from '../../models/flows.model';
 import { AgentAudioGeneratorComponent } from './agent-audio-generator/agent-audio-generator.component';
 import { AgentNodeComponent } from '../agent-node/agent-node.component';
 
@@ -87,7 +87,7 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> impl
   public async openModal() {
     console.log('Buscar quien si tiene un agente contetado');
 
-    const agentNode = this.nodeSearchesService.getFirstInputNodeOfType(this.node()?.id, NodeTypeStr.AgentNodeComponent);
+    const agentNode = this.nodeSearchesService.getFirstInputNodeOfType(this.node()?.id, NodeCompTypeStr.AgentNodeComponent);
 
     if (agentNode) {
       const agentNodeComponent = this.flowComponentRefStateService.getNodeComponentRef(agentNode?.id!) as AgentNodeComponent;
