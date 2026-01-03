@@ -138,6 +138,11 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
         command: () => this.addVideoGenNode(),
       },
       {
+        icon: 'pi pi-file-edit',
+        label: 'Video Script',
+        command: () => this.addVideoScriptGenNode(),
+      },
+      {
         icon: 'pi pi-microchip-ai',
         label: 'Task',
         command: () => this.showDialog('task'),
@@ -236,6 +241,11 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
     this.flowSerializationService.serializeFlow();
   }
 
+  public addVideoScriptGenNode() {
+    this.flowSignalNodeStateService.addVideoScriptGenNode();
+    this.flowSerializationService.serializeFlow();
+  }
+
   public addAudioTTSGenNode() {
     this.flowNodeCreationService.addAudioTTSNode();
     this.flowSerializationService.serializeFlow();
@@ -247,6 +257,7 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
     this.addWrapperNode(nodeType, {});
   }
   public addWrapperNode(component: any, inputs: any) {
+    debugger
     // this.addEmptyNode(component);
     this.flowSignalNodeStateService.addWrapperNode(component, inputs);
     this.flowSerializationService.serializeFlow();

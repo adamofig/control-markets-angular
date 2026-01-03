@@ -1,11 +1,26 @@
 @if (selected()) {
-<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"> </app-node-toolbar>
+<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"></app-node-toolbar>
+
+@if (nodeCategory === 'process') {
+<app-actions-toolbar
+  [statusJob]="statusJob()"
+  [taskExecutionState]="taskExecutionState()"
+  (runNode)="handleActionsToolbarEvents('runNode')"
+  (runEndPoint)="handleActionsToolbarEvents('runEndPoint')"
+></app-actions-toolbar>
+}
 }
 
-<div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
-  <div class="node-card" [ngClass]="'status-' + (jobExecutionState()?.status || 'default')">
-    <p-tag class="tag" [value]="jobExecutionState()?.status || '🖼️'" severity="danger" />
+<div class="node-container"  (click)="selectNode()">
+  <div class="node-card" [ngClass]="'status-' + (statusSeverity() || 'default')">
+    <p-tag class="tag" [value]="nodeCategory" [severity]="statusSeverity()" />
+
+    @if (nodeCategory === 'process') {
+    <handle type="target" position="left" id="left" />
+    }
+
     <div #container></div>
+
     <handle type="source" position="right" id="right" />
   </div>
 </div>

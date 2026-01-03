@@ -81,6 +81,7 @@ export enum NodeTypeStr {
   VideoGenNodeComponent = 'VideoGenNodeComponent',
   AudioTTsNodeComponent = 'AudioTTsNodeComponent',
   AudioNodeComponent = 'AudioNodeComponent',
+  VideoScriptGenNodeComponent = 'VideoScriptGenNodeComponent',
   EmptyNodeComponent = 'EmptyNodeComponent',
   LeadNodeComponent = 'LeadNodeComponent',
   default = 'default',

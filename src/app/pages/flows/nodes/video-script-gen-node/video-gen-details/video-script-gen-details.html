@@ -1,0 +1,30 @@
+<div class="details-container p-4">
+  <div class="field mb-4">
+    <label for="prompt" class="block font-bold mb-2">Prompt</label>
+    <textarea
+      id="prompt"
+      pInputTextarea
+      [(ngModel)]="prompt"
+      rows="5"
+      class="w-full"
+      placeholder="Enter the prompt for script generation..."
+    ></textarea>
+  </div>
+
+  <div class="field mb-4">
+    <label for="script" class="block font-bold mb-2">Generated Script</label>
+    <textarea
+      id="script"
+      pInputTextarea
+      [(ngModel)]="script"
+      rows="10"
+      class="w-full"
+      placeholder="The generated script will appear here..."
+    ></textarea>
+  </div>
+
+  <div class="flex justify-content-end gap-2 mt-4">
+    <p-button label="Cancel" icon="pi pi-times" severity="secondary" (onClick)="cancel()"></p-button>
+    <p-button label="Save" icon="pi pi-check" (onClick)="save()"></p-button>
+  </div>
+</div>

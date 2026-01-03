@@ -1,0 +1,13 @@
+.details-container {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  display: block;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+}

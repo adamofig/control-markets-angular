@@ -78,6 +78,18 @@ export class FlowSignalNodeStateService {
     this.nodes.set([...this.nodes(), newNode]);
   }
 
+  public addVideoScriptGenNode() {
+    const newNode: DynamicNodeWithData = {
+      id: 'video-script-gen-node-' + nanoid(),
+      point: signal({ x: 100, y: 100 }), // Default position
+      type: this.flowNodeRegisterService.getNodeType('WrapperNodeComponent') as Type<any>,
+      category: 'process',
+      component: 'VideoScriptGenContent',
+      data: { nodeData: { prompt: '', script: '' } } as any,
+    };
+    this.nodes.set([...this.nodes(), newNode]);
+  }
+
   public addOutcomeToFlowConnected(outcomeJob: IAgentOutcomeJob, inputNodeId: string, processNodeId: string) {
     const inputNode = this.nodes().find(node => node?.id === inputNodeId);
     const processNode = this.nodes().find(node => node?.id === processNodeId);
@@ -329,15 +341,14 @@ export class FlowSignalNodeStateService {
   }
 
   public addWrapperNode(component: string, inputs: any): void {
+    // debugger
     const newNode: DynamicNodeWithData = {
       id: 'wrapper-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }),
       type: this.flowNodeRegisterService.getNodeType('WrapperNodeComponent') as Type<any>,
       category: 'input', // Or whatever category is appropriate
       data: {
-        nodeData: {
-          inputs,
-        },
+        nodeData: inputs,
       },
       component,
     };

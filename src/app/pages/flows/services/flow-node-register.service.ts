@@ -9,6 +9,7 @@ import {
   EmptyNodeComponent,
   LeadNodeComponent,
 } from '../nodes';
+import { VideoScriptGenContentComponent } from '../nodes/video-script-gen-node/video-script-gen-content';
 import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
 import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
@@ -40,6 +41,7 @@ export class FlowNodeRegisterService {
       [NodeTypeStr.AudioNodeComponent]: AudioNodeComponent,
       [NodeTypeStr.EmptyNodeComponent]: EmptyNodeComponent,
       [NodeTypeStr.LeadNodeComponent]: LeadNodeComponent,
+      [NodeTypeStr.VideoScriptGenNodeComponent]: VideoScriptGenContentComponent,
       ['WrapperNodeComponent']: WrapperNodeComponent,
     });
   }

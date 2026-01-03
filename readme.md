@@ -1,8 +1,21 @@
 # Control Markets
 
-> ⚠️ **Note**: This project is currently under development in alpha version and may contain bugs.
+> ⚠️ **Note**: This project is currently under development in Alpha version and may contain bugs.
 
-Control the market with persona-based agents. This project is now open source! I believe in the power of community-driven innovation.
+Control the market with persona-based agents.
+
+Is a platform for automating Tasks, specialized in marketing and sales with AI agents. 
+
+Despite the next task can be achived with AI talking with chatgpt, control markets make it easier and better and automated. 
+
+You can create Content, posts, articles, video scripts and more. 
+You have a canvas creative dashboard, that help you think and create better content. 
+You can create persona-based agents, that can be your sales and marketing team.
+
+
+
+
+
 
 ## Why Open Source?
 
@@ -85,3 +98,14 @@ This project comes with a ready-to-use backend in Nest.js.
 ## License
 
 Not decided yet
+
+
+### Roadmap
+
+*   [ ] Remove dependencie on Google Firebase. 
+Its used for storage and authentication and database real time features. 
+
+*   [ ] Add new engine to comunicate real time.
+
+*   [ ] Add new node to create video scripts. 
+

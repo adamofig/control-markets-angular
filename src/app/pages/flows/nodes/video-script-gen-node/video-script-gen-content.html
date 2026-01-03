@@ -1,0 +1,13 @@
+<div class="content">
+  <div class="prompt-preview" *ngIf="prompt">
+    <strong>Prompt:</strong>
+    <p>{{ prompt }}</p>
+  </div>
+  <div class="script-preview" *ngIf="script">
+    <strong>Script:</strong>
+    <p>{{ script }}</p>
+  </div>
+  <div class="no-data" *ngIf="!prompt && !script">
+    <p>No prompt or script set. Double-click to configure.</p>
+  </div>
+</div>

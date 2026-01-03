@@ -33,3 +33,11 @@ export interface ILeadNode {
   number: string;
   nationality: string;
 }
+
+export interface IVideoScriptGenNodeData {
+  _id?: string;
+  id: string;
+  prompt: string;
+  script?: string;
+  request?: any;
+}
