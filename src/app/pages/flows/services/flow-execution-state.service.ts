@@ -49,7 +49,7 @@ export class FlowExecutionStateService {
     });
   }
 
-  private updateJobNodes() {
+  public updateJobNodes() {
     const justCompletedJobs = this.getJustCompletedJobs();
 
     if (justCompletedJobs.length > 0) {

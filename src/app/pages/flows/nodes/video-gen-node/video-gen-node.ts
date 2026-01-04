@@ -65,8 +65,9 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomVideoGenNode> impl
       const inputNodes = this.nodeSearchesService.getInputNodes(this.node().id);
       let assets = { firstFrame: null };
       for (const inputNode of inputNodes) {
-        if (inputNode.config?.component === NodeCompTypeStr.AssetsNodeComponent) {
-          assets.firstFrame = (inputNode as any).data.nodeData.storage;
+        const nodeDataVal = inputNode.data;
+        if (nodeDataVal?.config?.component === NodeCompTypeStr.AssetsNodeComponent) {
+          assets.firstFrame = (nodeDataVal as any).nodeData?.storage;
           break;
         }
       }

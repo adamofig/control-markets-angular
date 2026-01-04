@@ -48,12 +48,15 @@ export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements
     super();
     effect(() => {
       console.log('agent-node', this.nodeData()?.assets?.image?.url);
+      
     });
     // TODO: ver como usar el BaseFlowNode para suscribirme al estado.
   }
 
   override ngOnInit(): void {
     super.ngOnInit();
+    
+    console.log('agent-node', this.node().data);
   }
 
   openModal(): void {

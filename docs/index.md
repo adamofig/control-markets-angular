@@ -26,6 +26,7 @@ Welcome to the official documentation for **Control Markets**, a node-based plat
 
 - **[Node Registry Standard](reference/node-details-communication.md)**: The communication pattern between nodes and detail views.
 - **[Flow Services Overview](reference/flow-services-overview.md)**: Documentation of the services powering the canvas.
+- **[Frontend Event Sync](reference/frontend-event-sync.md)**: How real-time updates from Firebase are handled.
 - **[Visual Styling Guide](reference/vflow-styling-guide.md)**: How to style nodes using `ngx-vflow`.
 - **[Technical Details](reference/technical-details.md)**: Deep dive into specific implementations.
 - **[PWA Summary](reference/pwa-summary.md)**: Deployment and PWA configuration details.

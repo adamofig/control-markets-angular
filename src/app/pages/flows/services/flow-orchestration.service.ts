@@ -5,6 +5,7 @@ import { FlowDiagramStateService } from './flow-diagram-state.service';
 import { FlowExecutionStateService } from './flow-execution-state.service';
 import { FlowSerializationService } from './flow-serialization.service';
 import { FlowService } from '../flows.service';
+import { FlowEventsService } from './flow-events.service';
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 
 @Injectable({
@@ -15,6 +16,7 @@ export class FlowOrchestrationService {
   private flowDiagramStateService = inject(FlowDiagramStateService);
   private flowSerializationService = inject(FlowSerializationService);
   private flowExecutionStateService = inject(FlowExecutionStateService);
+  private flowEventsService = inject(FlowEventsService);
   private flowState = inject(FlowSignalNodeStateService);
   private toastService = inject(TOAST_ALERTS_TOKEN);
 
@@ -64,10 +66,12 @@ export class FlowOrchestrationService {
 
   public async runFlow(flowId: string, flowName: string): Promise<void> {
     try {
+      this.flowEventsService.disconnect();
       await this.saveFlow(flowId, flowName);
       const result = await this.flowService.runFlow(flowId);
       if (result && result.flowExecutionId) {
         this.flowExecutionStateService.initializeExecutionStateListener(result.flowExecutionId);
+        this.flowEventsService.subscribeToFlow(flowId).subscribe();
         // Optionally navigate to the execution view
         // this.router.navigate(['../', flowId, 'executions', result.executionId], { relativeTo: this.route });
       } else {
@@ -96,6 +100,7 @@ export class FlowOrchestrationService {
       const result: any = await this.flowService.runNode(flowId, nodeId);
       if (result && result.flowExecutionId) {
         this.flowExecutionStateService.initializeExecutionStateListener(result.flowExecutionId);
+        this.flowEventsService.subscribeToFlow(flowId).subscribe();
       } else {
         this.toastService.warn({
           title: 'Run Node Warning',
@@ -117,6 +122,7 @@ export class FlowOrchestrationService {
       const result: any = await this.flowService.runEndPoint(flowId, nodeId);
       if (result && result.flowExecutionId) {
         this.flowExecutionStateService.initializeExecutionStateListener(result.flowExecutionId);
+        this.flowEventsService.subscribeToFlow(flowId).subscribe();
       } else {
         this.toastService.warn({
           title: 'Run EndPoint Warning',
@@ -140,6 +146,7 @@ export class FlowOrchestrationService {
       this.flowSerializationService.loadFlow(flow as any);
       if (executionId) {
         this.flowExecutionStateService.initializeExecutionStateListener(executionId);
+        this.flowEventsService.subscribeToFlow(flowId).subscribe();
       }
     }
     return flow;

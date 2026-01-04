@@ -46,6 +46,7 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
   }
 
   private loadComponent(): void {
+    
     const nodeData = this.node()?.data?.nodeData;
     const component = this.node()?.data?.config?.component;
     if (component) {

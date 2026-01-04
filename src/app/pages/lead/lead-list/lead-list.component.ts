@@ -56,7 +56,7 @@ export class LeadListComponent extends EntityBaseListV2Component<ILead> implemen
   }
 
   // public override doAction(actionEvent: OnActionEvent): any {
-  //   debugger;
+  //   
   //   if (actionEvent.action === 'changeView') {
   //     this.viewType.set('table');
   //   }

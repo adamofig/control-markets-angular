@@ -19,6 +19,27 @@ A Node in NGX VFlow is a `ComponentDynamicNode`, which holds its position and da
 
 This separation ensures that canvas logic (like rendering borders or toolbars) stays decoupled from the business logic of each node.
 
+### Node Structure
+
+All nodes follow a unified structure to ensure consistency across the canvas and serialization:
+
+```typescript
+export interface IFlowNode {
+  id: string;
+  point: { x: number; y: number };
+  type: string;
+  data: INodeMetadata;
+}
+
+export interface INodeMetadata {
+  nodeData?: any; // Business logic data
+  config?: INodeConfig; // UI and Canvas configuration
+  [key: string]: any;
+}
+```
+
+This structure is mirrored on the backend, allowing for seamless synchronization.
+
 Next is an example about the config properties of the node. 
 
 ```typescript
@@ -65,6 +86,16 @@ The wrapper uses Angular's `ViewContainerRef` to dynamically render the actual n
 2.  **Type Registry**: It uses `FlowNodeRegisterService` to resolve the `config.component` string identifier into a concrete Angular component class.
 3.  **Visual Metadata**: The wrapper applies `config.color`, `config.icon`, and `config.label` dynamically to the card and its toolbars.
 4.  **Automatic Input Binding**: Once the component is created, the wrapper automatically maps data from `nodeData` to the component's public properties.
+
+### Component Integration
+
+Nodes extending `BaseFlowNode` access their configuration via the `node` signal:
+
+```typescript
+// Inside a Node Component
+public color = computed(() => this.node()?.data?.config?.color || '#03c9f5');
+public icon = computed(() => this.node()?.data?.config?.icon);
+```
 
 ```typescript
 // From WrapperNodeComponent.ts

@@ -1,21 +1,31 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, inject, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-
-import { ExampleSlideComponent } from 'src/app/components/example-slide/example-slide.component'; // Import the example slide component
+import { SseTestService } from './sse-test.service';
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [DialogModule, ButtonModule],
+  imports: [CommonModule, DialogModule, ButtonModule],
   templateUrl: './test.component.html',
   styleUrl: './test.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TestComponent {
-  // Renamed: Component type for the reusable slider
-  exampleSlideComponentType = ExampleSlideComponent;
+export class TestComponent implements OnDestroy {
+  sseService = inject(SseTestService);
 
-  isDialogVisible: boolean = false;
+  emitTest() {
+    this.sseService.emit('Hello from Angular! ' + new Date().toLocaleTimeString())
+      .subscribe({
+        next: (response) => console.log('Emit success:', response),
+        error: (error) => console.error('Emit error:', error)
+      });
+  }
+
+  ngOnDestroy() {
+    this.sseService.disconnect();
+  }
 }
+
+

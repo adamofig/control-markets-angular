@@ -1,3 +1,6 @@
+// Note: This file is Deprecated for environment variables, inject APP_CONFIG and use it 
+// Example: public appConfig = inject(APP_CONFIG);
+
 export const environment = {
   projectName: 'Control Markets',
   version: '0.0.34',

@@ -1,4 +1,42 @@
-<div class="slider-section bg-red-200 decoration-double">Hello this is my section</div>
-<p class="underline decoration-dotted">The quick brown fox...</p>
+<div class="p-4">
+  <h2 class="text-xl font-bold mb-4 text-blue-800">SSE Proof of Concept</h2>
+  
+  <div class="flex gap-2 mb-4">
+    <button 
+      pButton
+      label="Subscribe to SSE"
+      (click)="sseService.connect()" 
+      class="p-button-primary">
+    </button>
+    
+    <button 
+      pButton
+      label="Emit Test Event"
+      (click)="emitTest()" 
+      class="p-button-success">
+    </button>
 
-<!-- <p-dialog header="Dialog Header" [(visible)]="isDialogVisible"> </p-dialog> -->
+    <button 
+      pButton
+      label="Disconnect"
+      (click)="sseService.disconnect()" 
+      class="p-button-danger p-button-outlined">
+    </button>
+  </div>
+
+  <div class="border rounded p-4 bg-white shadow-sm">
+    <h3 class="font-semibold mb-2 flex justify-between items-center">
+      <span>Messages:</span>
+      <span class="text-xs text-gray-400">Target: http://0.0.0.0:8121</span>
+    </h3>
+    <ul class="max-h-96 overflow-y-auto">
+      @for (msg of sseService.messages(); track $index) {
+        <li class="mb-1 p-2 bg-gray-50 border-l-4 border-blue-500 rounded text-sm font-mono">
+          {{ msg | json }}
+        </li>
+      } @empty {
+        <li class="text-gray-500 italic">No messages yet. Click "Subscribe" to start.</li>
+      }
+    </ul>
+  </div>
+</div>

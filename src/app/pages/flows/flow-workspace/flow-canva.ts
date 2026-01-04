@@ -274,7 +274,7 @@ export class FlowsComponent extends EntityBaseFormComponent<ICreativeFlowBoard> 
     this.addWrapperNode(nodeType, {});
   }
   public addWrapperNode(component: any, inputs: any) {
-    debugger
+    
     // this.addEmptyNode(component);
     this.flowSignalNodeStateService.addWrapperNode(component, inputs);
     this.flowSerializationService.serializeFlow();

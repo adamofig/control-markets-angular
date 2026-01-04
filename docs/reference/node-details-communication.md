@@ -8,6 +8,20 @@ This document defines the standard pattern for communication between a flow node
 
 In the refined architecture, the communication and state management logic are centralized in the `WrapperNodeComponent`. Individual content components remain pure views that receive data via `@Input()` properties.
 
+Here's the updated flow for data and configuration changes:
+1.  **User Interacts**: User edits data in the details component.
+2.  **Service Call**: The component calls `FlowSignalNodeStateService.updateNodeData(nodeId, newData)`.
+3.  **State Update**: The service updates the `nodes` signal.
+4.  **Reactivity**: `WrapperNodeComponent` and its content component react to the change via the `node` signal.
+
+```typescript
+// Updating data and config
+this.flowSignalNodeStateService.updateNodeData(nodeId, {
+  nodeData: updatedBusinessData,
+  config: updatedConfig
+});
+```
+
 ```mermaid
 sequenceDiagram
     participant WN as WrapperNodeComponent

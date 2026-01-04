@@ -81,7 +81,7 @@ export class FlowListComponent extends EntityBaseListV2Component<ICreativeFlowBo
   }
 
   public reload() {
-    debugger;
+    
     this.mongoState.query = { orgId: this.currentOrganization()?.orgId || this.appUserService.user().id };
     console.log('Reloading with query:', this.mongoState.query);
 
