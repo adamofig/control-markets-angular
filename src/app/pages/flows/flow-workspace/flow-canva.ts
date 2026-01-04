@@ -25,6 +25,7 @@ import { FlowNodeCreationService } from '../services/flow-node-creation.service'
 import { FlowSerializationService } from '../services/flow-serialization.service';
 import { AppUserService } from '../../../services/app-user.service';
 import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
+import { FlowNodeRegisterService } from '../services/flow-node-register.service';
 
 @Component({
   templateUrl: './flow-canva.html',
@@ -49,7 +50,16 @@ import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component'
 export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> implements OnInit, AfterViewInit {
   public AssetsNodeComponent = AssetsNodeComponent;
   public NodeCompTypeStr = NodeCompTypeStr;
-  public nodeComponentsList = Object.values(NodeCompTypeStr);
+  public flowNodeRegisterService = inject(FlowNodeRegisterService);
+  public nodeComponentsList = Object.values(NodeCompTypeStr).map((type: string) => {
+    const config = this.flowNodeRegisterService.getNodeConfig(type);
+    return {
+      type: type as NodeCompTypeStr,
+      label: config?.label || type,
+      color: config?.color || '#3b82f6',
+      icon: config?.icon || 'pi pi-plus'
+    };
+  });
   override form: FormGroup<any> = new FormGroup({});
   public flowSerializationService = inject(FlowSerializationService);
 
@@ -117,16 +127,19 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
       {
         icon: 'pi pi-user-plus',
         label: 'Agent',
+        color: this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.AgentNodeComponent)?.color,
         command: () => this.showDialog('agent'),
       },
       {
         icon: 'pi pi-plus-circle',
         label: 'Asset',
+        color: this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.AssetsNodeComponent)?.color,
         command: () => this.showDialog('asset'),
       },
       {
         icon: 'pi pi-file-import',
         label: 'Source',
+        color: this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.SourcesNodeComponent)?.color,
         command: () => this.showDialog('source'),
       },
     ];
@@ -135,21 +148,25 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
       {
         icon: 'pi pi-video',
         label: 'Video',
+        color: this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.VideoGenNodeComponent)?.color,
         command: () => this.addVideoGenNode(),
       },
       {
         icon: 'pi pi-file-edit',
         label: 'Video Script',
+        color: this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.VideoScriptGenNodeComponent)?.color,
         command: () => this.addVideoScriptGenNode(),
       },
       {
         icon: 'pi pi-microchip-ai',
         label: 'Task',
+        color: this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.TaskNodeComponent)?.color,
         command: () => this.showDialog('task'),
       },
       {
         icon: 'pi pi-megaphone',
         label: 'Audio',
+        color: this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.AudioTTsNodeComponent)?.color,
         command: () => this.addAudioTTSGenNode(),
       },
     ];

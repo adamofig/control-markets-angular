@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewContainerRef, OnInit, Type, ComponentRef, inject } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef, OnInit, Type, ComponentRef, inject, computed } from '@angular/core';
 import { BaseFlowNode } from '../base-flow-node';
 import { ComponentDynamicNode } from 'ngx-vflow';
 import { CommonModule } from '@angular/common';
@@ -28,6 +28,9 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
   private flowNodeRegisterService = inject(FlowNodeRegisterService);
   private flowOrchestrationService = inject(FlowOrchestrationService);
   private dialogService = inject(DialogService);
+
+  public color = computed(() => (this.node() as any)?.color || '#03c9f5');
+  public icon = computed(() => (this.node() as any)?.icon);
 
   private componentRef!: ComponentRef<any>;
 
@@ -64,23 +67,6 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
     }
   }
 
-  // public openModal() {
-  //   debugger;
-  //   const component = (this.node() as any)?.component;
-  //   if (component === 'VideoScriptGenContent') {
-  //     this.dialogService.open(VideoScriptGenDetailsComponent, {
-  //       header: 'Video Script Generation Details',
-  //       modal: false,
-  //       contentStyle: { overflow: 'auto' },
-  //       baseZIndex: 10000,
-  //       draggable: true,
-  //       styleClass: 'draggable-dialog',
-  //       closable: true,
-  //       data: this.node(),
-  //       width: '450px',
-  //     });
-  //   }
-  // }
 
   runNode(): void {
     const flowId = this.flowDiagramStateService.getFlow()?.id;

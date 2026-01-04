@@ -11,7 +11,7 @@ import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { IAgentSource } from '../../sources/models/sources.model';
 // NOt able to set a type for data yet.
 
-export type DynamicNodeWithData = DynamicNode & { data?: any; category: 'input' | 'output' | 'process' | 'other'; component: string };
+export type DynamicNodeWithData = DynamicNode & { data?: any; category: 'input' | 'output' | 'process' | 'other'; component: string; color?: string; icon?: string };
 // 🥕 NOTE: Looks like this service is now a pure wraper, remove it soon.
 @Injectable({
   providedIn: 'root',

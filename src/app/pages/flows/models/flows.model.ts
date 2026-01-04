@@ -44,6 +44,8 @@ export interface IFlowNode {
   component: NodeCompTypeStr; // El string del componente, utilizo este en el backend y para saber que componente es, type lo estoy reservando solo para el Flow Framework
   category: NodeCategory;
   data: INodeMetadata;
+  color?: string;
+  icon?: string;
 }
 export interface IAgentFlows extends AuditDate {
   _id?: string;

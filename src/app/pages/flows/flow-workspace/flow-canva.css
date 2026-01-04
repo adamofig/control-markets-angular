@@ -44,3 +44,26 @@
   background-color: rgba(255, 0, 0, 0.4);
   border-radius: 50%;
 }
+
+.node-type-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  border: 1px solid;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.node-type-btn:hover {
+  filter: brightness(1.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.node-type-btn:active {
+  transform: scale(0.98);
+}

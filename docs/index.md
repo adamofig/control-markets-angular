@@ -35,8 +35,20 @@ Explore the technical and structural details of the system:
 *   **[Flow Serialization Plan](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/flow-serialization-plan.md)**: Details on how canvas graphs are saved and loaded from the database.
 *   **[Job Completion Flow](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/flow-job-completion-plan.md)**: Technical plan for tracking execution state of flows.
 *   **[Technical Details](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/technical_details.md)**: Deep dive into specific implementations.
-*   **[Node UI Architecture](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/node-architecture-ui.md)**: Explanation of the dual-layer (Canvas vs. Popups) interface and the **Wrapper Node mechanism** for standardized implementation.
+*   **[Node UI Architecture](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/node-architecture-ui.md)**: Explanation of the dual-layer interface, the **Wrapper Node mechanism**, and the **Dynamic UI Registry**.
 *   **[Flow Services Overview](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/flow-services-overview.md)**: Detailed guide to the services powering the flow canvas.
+
+---
+
+## 🎨 Node Registry & Visual Styling
+
+To maintain visual clarity across complex flows, the system uses a centralized **Node Registry** ([FlowNodeRegisterService](file:///Users/adamo/Documents/GitHub/control-markets-angular/src/app/pages/flows/services/flow-node-register.service.ts)). This registry defines the look and feel of every node type:
+
+*   **Custom Colors**: Each node type (Agent, Task, Asset, etc.) has a unique border color.
+*   **Icons & Labels**: Standardized icons and user-friendly labels are mapped to technical component names.
+*   **Canvas & Menu Synchronization**: The same colors and icons used on the canvas nodes are automatically applied to the "Add Node" menus (SpeedDial and Popovers).
+
+This ensures that as the system grows, adding a new node type only requires a single configuration entry to update the entire UI.
 
 ---
 
@@ -44,15 +56,15 @@ Explore the technical and structural details of the system:
 
 The system supports various specialized nodes (defined in [flows.model.ts](file:///Users/adamo/Documents/GitHub/control-markets-angular/src/app/pages/flows/models/flows.model.ts)):
 
-| Node Type | Category | Description |
-| :--- | :--- | :--- |
-| `AgentNode` | Process | Persona-based AI agent that executes tasks. |
-| `TaskNode` | Process | Specific LLM-driven instruction or action. |
-| `AssetsNode` | Input | Container for static assets (Images, Documents). |
-| `VideoGenNode` | Process | Automates video generation from connected assets. |
-| `OutcomeNode` | Output | Final result or data capture point. |
-| `LeadNode` | Output/Input | Management of marketing leads. |
-| `DistributionChanel` | Output | Publishes content to social networks or platforms. |
+| Node Type | Category | Color | Description |
+| :--- | :--- | :--- | :--- |
+| `AgentNode` | Process | Green | Persona-based AI agent that executes tasks. |
+| `TaskNode` | Process | Amber | Specific LLM-driven instruction or action. |
+| `AssetsNode` | Input | Green | Container for static assets (Images, Documents). |
+| `VideoGenNode` | Process | Amber | Automates video generation from connected assets. |
+| `OutcomeNode` | Output | Blue | Final result or data capture point. |
+| `LeadNode` | Output/Input | Pink | Management of marketing leads. |
+| `DistributionChanel` | Output | Violet | Publishes content to social networks or platforms. |
 
 ---
 

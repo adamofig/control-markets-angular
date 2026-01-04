@@ -21,13 +21,14 @@ export interface CustomEmptyNode extends ComponentDynamicNode {
 })
 
 // COPY THIS NODE TO CREATE NEW NODES
-export class EmptyNodeComponent extends BaseFlowNode<CustomEmptyNode> implements OnInit {
+export class EmptyNodeComponent implements OnInit {
+  ngOnInit(): void {
+    // throw new Error('Method not implemented.');
+  }
   private toastService = inject(TOAST_ALERTS_TOKEN);
   public dialogService = inject(DialogService);
 
-  override ngOnInit(): void {
-    super.ngOnInit();
-  }
+
 
   public openModal() {
 

@@ -17,9 +17,9 @@ ngx-flow is a project experimenting new architecture, using foreignObject to ren
 Safari is used by default in Ipad and Iphone, and for me is important compatibility with all devices. that means i can't use modern css features. and this
 UI is simple but effective. check the guide. Styling Custom Nodes in ngx-vflow 
 
-All componets are wrapped in UI that have 2 borders. with colors. 
-1) shows the node type or component type, should be unique color for node component.
-2) shows the node status, this are usually 4, iddle, pending, error, success.
+All components are wrapped in a UI that features two distinct visual indicators:
+1.  **Node Type (Identity)**: A colored border that identifies the component type (e.g., Green for Inputs, Amber for Processes, Blue for Outputs). This is controlled via the `FlowNodeRegisterService`.
+2.  **Node Status (Execution)**: A secondary animation or color shift that indicates the current state: `default` (white), `pending` (yellow), `in_progress` (blue), `completed` (green), or `failed` (red).
 
 ### Distintion between node and component and Category. 
 
@@ -40,8 +40,9 @@ The `WrapperNodeComponent` acts as a standardized shell that implements `BaseFlo
 The wrapper uses Angular's `ViewContainerRef` to dynamically render the actual node component at runtime.
 
 1.  **Dynamic Projection**: It contains a `<div #container></div>` where the dynamic component is injected.
-2.  **Type Registry**: It uses `FlowNodeRegisterService` to resolve a string identifier (e.g., `'AgentNodeComponent'`) into a concrete Angular component class.
-3.  **Automatic Input Binding**: Once the component is created, the wrapper automatically maps data from the node's state (`nodeData`) to the component's public properties.
+2.  **Type Registry**: It uses `FlowNodeRegisterService` to resolve a string identifier (e.g., `'AgentNodeComponent'`) into a concrete Angular component class and its visual metadata.
+3.  **Visual Metadata**: The registry provides the `color`, `icon`, and `label` which the wrapper applies dynamically to the card and its toolbars.
+4.  **Automatic Input Binding**: Once the component is created, the wrapper automatically maps data from the node's state (`nodeData`) to the component's public properties.
 
 ```typescript
 // From WrapperNodeComponent.ts

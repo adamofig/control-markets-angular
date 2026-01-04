@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
+import { VideoScriptGenDetailsComponent } from './video-gen-details/video-script-gen-details';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-video-script-gen-content',
@@ -36,4 +38,26 @@ import { Component, Input } from '@angular/core';
 export class VideoScriptGenContentComponent {
   @Input() prompt?: string;
   @Input() script?: string;
+
+    public dialogService = inject(DialogService);
+
+
+    public openModal() {
+  
+      const nodeData = {};
+      this.dialogService.open(VideoScriptGenDetailsComponent, {
+        header: 'Empty Node Details',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        draggable: true,
+        styleClass: 'draggable-dialog',
+        closable: true,
+        width: '650px',
+        duplicate: true, 
+        modal: true,
+        data: {
+          ...nodeData,
+        },
+      });
+    }
 }

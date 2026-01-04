@@ -12,7 +12,7 @@
 }
 
 <div class="node-container"  (click)="selectNode()">
-  <div class="node-card" [ngClass]="'status-' + (statusSeverity() || 'default')">
+  <div class="node-card" [ngClass]="'status-' + (statusSeverity() || 'default')" [style.border-color]="color()">
     <p-tag class="tag" [value]="nodeCategory" [severity]="statusSeverity()" />
 
     @if (nodeCategory === 'process') {

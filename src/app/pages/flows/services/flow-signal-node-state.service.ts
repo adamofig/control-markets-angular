@@ -50,14 +50,16 @@ export class FlowSignalNodeStateService {
       const y = inputNode?.point().y! - 30;
       // se calcula X y Y Se pone por default a la derecha.
 
-      // Se guarda además los ids de su process y input nodes.
+      const nodeConfig = this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.OutcomeNodeComponent);
       const newNode: DynamicNodeWithData = {
         id: 'outcome-node-' + nanoid(),
         point: signal({ x: x, y: y }), // Default position, can be made configurable
-        type: this.flowNodeRegisterService.getNodeType(NodeCompTypeStr.OutcomeNodeComponent) as Type<any>, // Ensure Type<any> is appropriate or use specific type
+        type: nodeConfig?.component as Type<any>, // Ensure Type<any> is appropriate or use specific type
         data: { nodeData: {}, inputNodeId: inputNode.id, processNodeId: processNode.id }, // not writable for now, but if i change i need to change serializer.
         category: 'output',
         component: NodeCompTypeStr.OutcomeNodeComponent,
+        color: nodeConfig?.color,
+        icon: nodeConfig?.icon,
       };
 
       this.nodes.set([...this.nodes(), newNode]);
@@ -68,24 +70,31 @@ export class FlowSignalNodeStateService {
   }
 
   public addVideoGenNode() {
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.VideoGenNodeComponent);
     const newNode: DynamicNodeWithData = {
       id: 'video-gen-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position
-      type: this.flowNodeRegisterService.getNodeType(NodeCompTypeStr.VideoGenNodeComponent) as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      type: nodeConfig?.component as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'process',
       component: NodeCompTypeStr.VideoGenNodeComponent,
+      color: nodeConfig?.color,
+      icon: nodeConfig?.icon,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
 
   public addVideoScriptGenNode() {
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.VideoScriptGenNodeComponent);
+    const wrapperConfig = this.flowNodeRegisterService.getNodeConfig('WrapperNodeComponent');
     const newNode: DynamicNodeWithData = {
       id: 'video-script-gen-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position
-      type: this.flowNodeRegisterService.getNodeType('WrapperNodeComponent') as Type<any>,
+      type: wrapperConfig?.component as Type<any>,
       category: 'process',
-      component: 'VideoScriptGenContent',
+      component: NodeCompTypeStr.VideoScriptGenNodeComponent,
       data: { nodeData: { prompt: '', script: '' } } as any,
+      color: nodeConfig?.color,
+      icon: nodeConfig?.icon,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -97,13 +106,16 @@ export class FlowSignalNodeStateService {
     const y = processNode?.point().y! + (processNode?.point().y! - inputNode?.point().y!);
     console.log('x', x);
     console.log('y', y);
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.OutcomeNodeComponent);
     const newNode: DynamicNodeWithData = {
       id: 'asset-generated-node-' + nanoid(),
       point: signal({ x: x, y: y }), // Default position
-      type: this.flowNodeRegisterService.getNodeType(NodeCompTypeStr.OutcomeNodeComponent) as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      type: nodeConfig?.component as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'output',
       component: NodeCompTypeStr.OutcomeNodeComponent,
       data: { nodeData: outcomeJob, inputNodeId, processNodeId },
+      color: nodeConfig?.color,
+      icon: nodeConfig?.icon,
     };
     this.nodes.set([...this.nodes(), newNode]);
 
@@ -112,13 +124,16 @@ export class FlowSignalNodeStateService {
 
   public addOutcomeToFlow(outcomeJob: IAgentOutcomeJob) {
     // El output usalmente debe estar conectado con su task y su input, aqui no crea ni conection ni agrega los datos para que los encuentre.
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.OutcomeNodeComponent);
     const newNode: DynamicNodeWithData = {
       id: 'outcome-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position, can be made configurable
-      type: this.flowNodeRegisterService.getNodeType(NodeCompTypeStr.OutcomeNodeComponent) as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      type: nodeConfig?.component as Type<any>, // Ensure Type<any> is appropriate or use specific type
       data: { nodeData: outcomeJob }, // not writable for now, but if i change i need to change serializer.
       category: 'output',
       component: NodeCompTypeStr.OutcomeNodeComponent,
+      color: nodeConfig?.color,
+      icon: nodeConfig?.icon,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -128,25 +143,31 @@ export class FlowSignalNodeStateService {
   }
 
   private _createAgentNode(agentCard: IAgentCard): void {
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.AgentNodeComponent);
     const newNode: DynamicNodeWithData = {
       id: 'agent-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position, can be made configurable
-      type: this.flowNodeRegisterService.getNodeType(NodeCompTypeStr.AgentNodeComponent) as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      type: nodeConfig?.component as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'input',
       data: { nodeData: agentCard } as any,
       component: NodeCompTypeStr.AgentNodeComponent,
+      color: nodeConfig?.color,
+      icon: nodeConfig?.icon,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
 
   private _createTaskNode(task: ILlmTask): void {
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.TaskNodeComponent);
     const newNode: DynamicNodeWithData = {
       id: 'task-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position
-      type: this.flowNodeRegisterService.getNodeType(NodeCompTypeStr.TaskNodeComponent) as Type<any>, // Ensure Type<any> is appropriate
+      type: nodeConfig?.component as Type<any>, // Ensure Type<any> is appropriate
       category: 'process',
       data: { nodeData: task } as any,
       component: NodeCompTypeStr.TaskNodeComponent,
+      color: nodeConfig?.color,
+      icon: nodeConfig?.icon,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -171,13 +192,16 @@ export class FlowSignalNodeStateService {
       }
     }
 
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.AssetsNodeComponent);
     const newNode: DynamicNodeWithData = {
       id: 'asset-node-' + nanoid(),
       point: signal({ x, y }), // Default position
-      type: this.flowNodeRegisterService.getNodeType(NodeCompTypeStr.AssetsNodeComponent) as Type<any>, // Ensure Type<any> is appropriate
+      type: nodeConfig?.component as Type<any>, // Ensure Type<any> is appropriate
       category: 'input',
       data: { nodeData: asset },
       component: NodeCompTypeStr.AssetsNodeComponent,
+      color: nodeConfig?.color,
+      icon: nodeConfig?.icon,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -201,13 +225,16 @@ export class FlowSignalNodeStateService {
       }
     }
 
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.AudioNodeComponent);
     const newNode: DynamicNodeWithData = {
       id: 'audio-node-' + nanoid(),
       point: signal({ x, y }), // Default position
-      type: this.flowNodeRegisterService.getNodeType(NodeCompTypeStr.AudioNodeComponent) as Type<any>, // Ensure Type<any> is appropriate
+      type: nodeConfig?.component as Type<any>, // Ensure Type<any> is appropriate
       category: 'input',
       data: { nodeData: asset },
       component: NodeCompTypeStr.AudioNodeComponent,
+      color: nodeConfig?.color,
+      icon: nodeConfig?.icon,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -280,24 +307,30 @@ export class FlowSignalNodeStateService {
   }
 
   public addDistributionNode() {
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.DistributionChanelNodeComponent);
     const newNode: DynamicNodeWithData = {
       id: 'agent-node-' + nanoid(),
       point: signal({ x: 300, y: 100 }), // Default position, can be made configurable
-      type: this.flowNodeRegisterService.getNodeType(NodeCompTypeStr.DistributionChanelNodeComponent) as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      type: nodeConfig?.component as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'output',
       component: NodeCompTypeStr.DistributionChanelNodeComponent,
+      color: nodeConfig?.color,
+      icon: nodeConfig?.icon,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
 
   public addSourceNode(source?: Partial<IAgentSource>) {
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.SourcesNodeComponent);
     const newNode: DynamicNodeWithData = {
       id: 'source-node-' + nanoid(), // Changed prefix for clarity
       point: signal({ x: 500, y: 100 }), // Default position, can be made configurable
-      type: this.flowNodeRegisterService.getNodeType(NodeCompTypeStr.SourcesNodeComponent) as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      type: nodeConfig?.component as Type<any>, // Ensure Type<any> is appropriate or use specific type
       data: { nodeData: source }, // Pass initial data
       category: 'input',
       component: NodeCompTypeStr.SourcesNodeComponent,
+      color: nodeConfig?.color,
+      icon: nodeConfig?.icon,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
@@ -309,13 +342,16 @@ export class FlowSignalNodeStateService {
     const y = processNode?.point().y! + (processNode?.point().y! - inputNode?.point().y!);
     console.log('x', x);
     console.log('y', y);
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.AssetGeneratedNodeComponent);
     const newNode: DynamicNodeWithData = {
       id: 'asset-generated-node-' + nanoid(),
       point: signal({ x: x, y: y }), // Default position
-      type: this.flowNodeRegisterService.getNodeType(NodeCompTypeStr.AssetGeneratedNodeComponent) as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      type: nodeConfig?.component as Type<any>, // Ensure Type<any> is appropriate or use specific type
       category: 'output',
       component: NodeCompTypeStr.AssetGeneratedNodeComponent,
       data: { nodeData: generatedAsset, inputNodeId, processNodeId },
+      color: nodeConfig?.color,
+      icon: nodeConfig?.icon,
     };
     this.nodes.set([...this.nodes(), newNode]);
 
@@ -323,8 +359,8 @@ export class FlowSignalNodeStateService {
   }
 
   public addEmptyNode(nodeType: NodeCompTypeStr) {
-    const nodeComponent = this.flowNodeRegisterService.getNodeType(nodeType);
-    if (!nodeComponent) {
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(nodeType);
+    if (!nodeConfig) {
       console.error(`Node type ${nodeType} not found`);
       return;
     }
@@ -332,25 +368,31 @@ export class FlowSignalNodeStateService {
     const newNode: DynamicNodeWithData = {
       id: `${nodeType}-${nanoid()}`,
       point: signal({ x: 100, y: 100 }),
-      type: nodeComponent as Type<any>,
+      type: nodeConfig.component as Type<any>,
       category: 'process', // This might need to be dynamic based on the node type
       component: nodeType,
       data: { nodeData: {} },
+      color: nodeConfig.color,
+      icon: nodeConfig.icon,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
 
   public addWrapperNode(component: string, inputs: any): void {
     // debugger
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(component);
+    const wrapperConfig = this.flowNodeRegisterService.getNodeConfig('WrapperNodeComponent');
     const newNode: DynamicNodeWithData = {
       id: 'wrapper-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }),
-      type: this.flowNodeRegisterService.getNodeType('WrapperNodeComponent') as Type<any>,
+      type: wrapperConfig?.component as Type<any>,
       category: 'input', // Or whatever category is appropriate
       data: {
         nodeData: inputs,
       },
       component,
+      color: nodeConfig?.color,
+      icon: nodeConfig?.icon,
     };
     this.nodes.set([...this.nodes(), newNode]);
   }
