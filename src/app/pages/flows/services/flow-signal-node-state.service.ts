@@ -369,7 +369,7 @@ export class FlowSignalNodeStateService {
       id: `${nodeType}-${nanoid()}`,
       point: signal({ x: 100, y: 100 }),
       type: nodeConfig.component as Type<any>,
-      category: 'process', // This might need to be dynamic based on the node type
+      category: nodeConfig.category,
       component: nodeType,
       data: { nodeData: {} },
       color: nodeConfig.color,
@@ -386,7 +386,7 @@ export class FlowSignalNodeStateService {
       id: 'wrapper-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }),
       type: wrapperConfig?.component as Type<any>,
-      category: 'input', // Or whatever category is appropriate
+      category: nodeConfig?.category || 'input',
       data: {
         nodeData: inputs,
       },

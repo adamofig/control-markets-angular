@@ -1,61 +1,36 @@
 # Control Markets Documentation
 
-Welcome to the official documentation for **Control Markets**, a node-based platform designed for automating marketing and sales tasks using a **Cluster Architecture** of AI agents.
-
-## 🚀 Overview
-
-Control Markets provides a visual, canvas-based dashboard where you can orchestrate complex workflows by connecting different types of nodes. Unlike simple chatbots, these agents can embody specific personas, psychological profiles, and communication patterns.
-
-### Cluster Architecture
-
-The system operates on a cluster architecture where nodes are categorized into three primary types:
-
-1.  **Inputs**: Data sources, files, or triggers that feed into the flow.
-2.  **Process**: Nodes that transform or operate on data (e.g., AI agents, video generators).
-3.  **Outputs**: The result of the flow (e.g., generated assets, distribution channels).
-
-```mermaid
-graph LR
-    Input[Input Node] --> Process[Process Node]
-    Process --> Output[Output Node]
-    
-    subgraph "Example Workflow"
-        Assets[Assets Node] --> VideoGen[Video Gen Node]
-        VideoGen --> Dist[Distribution Channel]
-    end
-```
+Welcome to the official documentation for **Control Markets**, a node-based platform for marketing automation. This documentation is organized into four main categories:
 
 ---
 
-## 🏗️ Core Documentation
+## 💡 Concepts
+*Understand the high-level architecture and design principles.*
 
-Explore the technical and structural details of the system:
-
-*   **[Project Architecture](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/architecture.md)**: High-level overview of the tech stack (Angular, Ionic, Firebase) and project structure.
-*   **[Flow Serialization Plan](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/flow-serialization-plan.md)**: Details on how canvas graphs are saved and loaded from the database.
-*   **[Job Completion Flow](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/flow-job-completion-plan.md)**: Technical plan for tracking execution state of flows.
-*   **[Technical Details](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/technical_details.md)**: Deep dive into specific implementations.
-*   **[Node UI Architecture](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/node-architecture-ui.md)**: Explanation of the dual-layer interface, the **Wrapper Node mechanism**, and the **Dynamic UI Registry**.
-*   **[Flow Services Overview](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/flow-services-overview.md)**: Detailed guide to the services powering the flow canvas.
+- **[Project Architecture](concepts/architecture.md)**: High-level overview of the tech stack (Angular, Ionic, Firebase).
+- **[Cluster Architecture](index.md#cluster-architecture)**: How we orchestrate AI agents using Input, Process, and Output nodes.
+- **[Node UI Architecture](concepts/node-architecture-ui.md)**: Details on the Wrapper Node mechanism and the Dual-Layer interface.
 
 ---
 
-## 🎨 Node Registry & Visual Styling
+## 🛠️ How-to Guides
+*Practical, step-by-step instructions for common tasks.*
 
-To maintain visual clarity across complex flows, the system uses a centralized **Node Registry** ([FlowNodeRegisterService](file:///Users/adamo/Documents/GitHub/control-markets-angular/src/app/pages/flows/services/flow-node-register.service.ts)). This registry defines the look and feel of every node type:
-
-*   **Custom Colors**: Each node type (Agent, Task, Asset, etc.) has a unique border color.
-*   **Icons & Labels**: Standardized icons and user-friendly labels are mapped to technical component names.
-*   **Canvas & Menu Synchronization**: The same colors and icons used on the canvas nodes are automatically applied to the "Add Node" menus (SpeedDial and Popovers).
-
-This ensures that as the system grows, adding a new node type only requires a single configuration entry to update the entire UI.
+- **[Creating a New Node](how-to/creating-new-node.md)**: The standard process for extending the canvas.
+- **[Starting with Ionic](how-to/starting-ionic.md)**: Setup and initial steps for mobile development.
 
 ---
 
-## 🧩 Node Reference
+## 📚 Reference
+*Technical facts, specifications, and API-level details.*
 
-The system supports various specialized nodes (defined in [flows.model.ts](file:///Users/adamo/Documents/GitHub/control-markets-angular/src/app/pages/flows/models/flows.model.ts)):
+- **[Node Registry Standard](reference/node-details-communication.md)**: The communication pattern between nodes and detail views.
+- **[Flow Services Overview](reference/flow-services-overview.md)**: Documentation of the services powering the canvas.
+- **[Visual Styling Guide](reference/vflow-styling-guide.md)**: How to style nodes using `ngx-vflow`.
+- **[Technical Details](reference/technical-details.md)**: Deep dive into specific implementations.
+- **[PWA Summary](reference/pwa-summary.md)**: Deployment and PWA configuration details.
 
+### Node Reference Table
 | Node Type | Category | Color | Description |
 | :--- | :--- | :--- | :--- |
 | `AgentNode` | Process | Green | Persona-based AI agent that executes tasks. |
@@ -68,14 +43,23 @@ The system supports various specialized nodes (defined in [flows.model.ts](file:
 
 ---
 
-## 🛠️ Developer Guides
+## 🗺️ Plans & Roadmap
+*Design documents and future implementation strategies.*
 
-*   **[Creating a New Node](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/creating-new-node.md)**: Step-by-step guide to extending the canvas with custom nodes.
-*   **[Starting Ionic](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/starting-ionic.md)**: Quick start for Ionic and Angular standalone components.
+- **[Flow Serialization](plans/flow-serialization-plan.md)**: Saving and loading graph states.
+- **[Job Completion Tracking](plans/flow-job-completion-plan.md)**: Mechanism for detecting finished tasks.
+- **[Auth Refactoring](plans/auth-refactoring-plan.md)**: Evolution of our authentication system.
 
 ---
 
-## 🗺️ Roadmap & Planning
+## 🎨 Assets
+- **[Architecture Diagrams](assets/)**: Visual representations of the system (Excalidraw).
 
-*   **[Auth Refactoring](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/auth-refactoring-plan.md)**: Ongoing plan for improving authentication mechanisms.
-*   **[PWA Summary](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/PWA_SUMMARY.md)**: Strategies for Progressive Web App deployment.
+---
+
+## 📝 Contribution Guide
+*How to add more documentation:*
+1.  **Identify the type**: Is it a Concept, Guide (How-to), Reference fact, or a Future Plan?
+2.  **Add the file**: Place it in the appropriate subfolder (`docs/concepts/`, etc.).
+3.  **Update Index**: Add a link to the file in this `index.md` under the correct heading.
+4.  **Use Relative Links**: Always link using relative paths for portability.

@@ -4,33 +4,33 @@ Control Markets features a **Dual-Layer Interface** that separates high-level fl
 
 ---
 
-## Understanding the anatomy of a node. 
+## Anatomy of a Node
 
-A Node is an Angular component that is wrapped by  App Flow Node Component that is Compatible with  `ngx-vflow` library to render the node in the canvas.
+A Node is an Angular component wrapped by the **App Flow Node Component**, which is compatible with the `ngx-vflow` library used to render nodes on the canvas.
 
-You can create your own custom node and UI, however to be consistent with the system is better to use the wrapper and instructions. 
-This garanteed you have the same UI experience as the rest of the system.
+While you can create custom nodes and UIs from scratch, it is highly recommended to use the **Wrapper Node** to ensure consistency across the system. This **guarantees** a unified UI experience and simplifies development.
 
-## Understanding UI. 
+## UI Considerations & Compatibility
 
-ngx-flow is a project experimenting new architecture, using foreignObject to render the node in the canvas. but compatible with Safari is very poor, 
-Safari is used by default in Ipad and Iphone, and for me is important compatibility with all devices. that means i can't use modern css features. and this
-UI is simple but effective. check the guide. Styling Custom Nodes in ngx-vflow 
+`ngx-vflow` is an experimental architecture that uses `foreignObject` to render nodes within the SVG canvas. However, `foreignObject` support in **Safari** (default on iPad and iPhone) can be limited. 
 
-All components are wrapped in a UI that features two distinct visual indicators:
-1.  **Node Type (Identity)**: A colored border that identifies the component type (e.g., Green for Inputs, Amber for Processes, Blue for Outputs). This is controlled via the `FlowNodeRegisterService`.
-2.  **Node Status (Execution)**: A secondary animation or color shift that indicates the current state: `default` (white), `pending` (yellow), `in_progress` (blue), `completed` (green), or `failed` (red).
+To ensure full compatibility across all devices, including mobile, we avoid relying on highly modern or non-standard CSS features that might break in Safari. Our UI remains simple yet effective by using a stable wrapper layer.
 
-### Distintion between node and component and Category. 
+For more details, see the [VFlow Styling Guide](../reference/vflow-styling-guide.md).
 
-Its very important understand this concept, becouse can lead to confussion. 
+All nodes are wrapped in a UI that features two distinct visual indicators:
+1.  **Node Type (Identity)**: A colored border identifying the component type (e.g., Green for Inputs, Amber for Processes, Blue for Outputs). This is managed by the `FlowNodeRegisterService`.
+2.  **Node Status (Execution)**: A secondary indicator (color or animation) showing the current state: `default` (white), `pending` (yellow), `in_progress` (blue), `completed` (green), or `failed` (red).
 
-Node Type: This is the Class that Flow expects in order to render.  
-Node Component: This is the Angular Component, may be the same as node type, but will not is you are using the wrapper.
-Node Category: This is the category of the node purpuse only input, process, output. 
+### Distinction: Node vs. Component vs. Category
 
-Example, if you want to follow rules, then use the wrapper as your node type, that add the UI layer to your angular. 
-if not, that is the case of some components until i reafactor, you are in charge of the UI layer.
+It is important to understand these three concepts to avoid confusion:
+
+- **Node Type**: The class/identifier that the Flow engine expects for rendering.
+- **Node Component**: The actual Angular component. When using the wrapper, the component is decoupled from the node type.
+- **Node Category**: The functional purpose of the node (Input, Process, Output).
+
+By using the **Wrapper Node**, you automatically inherit the standard UI layer. If you choose not to use the wrapper (as seen in some legacy components awaiting refactoring), you must manually implement the UI layer and state indicators.
 
 ## 📦 The Wrapper Node Mechanism
 
