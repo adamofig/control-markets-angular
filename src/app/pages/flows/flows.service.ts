@@ -1,33 +1,33 @@
 import { Injectable } from '@angular/core';
-import { IAgentFlows, IFlowExecutionState, ITaskExecutionState } from './models/flows.model';
+import { ICreativeFlowBoard, IFlowExecutionState, ITaskExecutionState } from './models/flows.model';
 import { FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN, EntityCommunicationService } from '@dataclouder/ngx-core';
 
 const server = 'primary';
 // TODO add your own end points
-const Endpoints = 'agent-flows';
+const Endpoints = 'creative-flowboard';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FlowService extends EntityCommunicationService<IAgentFlows> {
+export class FlowService extends EntityCommunicationService<ICreativeFlowBoard> {
   constructor() {
     super(Endpoints);
   }
 
   public async getFilteredFlows(filter: FiltersConfig) {
-    return this.httpService.postHttp<IFilterQueryResponse<IAgentFlows>>({ service: `api/${Endpoints}/query`, data: filter });
+    return this.httpService.postHttp<IFilterQueryResponse<ICreativeFlowBoard>>({ service: `api/${Endpoints}/query`, data: filter });
   }
 
-  public async getFlow(id: string): Promise<IAgentFlows> {
-    return this.httpService.getHttp<IAgentFlows>({ service: `api/${Endpoints}/${id}` });
+  public async getFlow(id: string): Promise<ICreativeFlowBoard> {
+    return this.httpService.getHttp<ICreativeFlowBoard>({ service: `api/${Endpoints}/${id}` });
   }
 
-  public async saveFlow(flow: IAgentFlows): Promise<IAgentFlows> {
-    return this.httpService.postHttp<IAgentFlows>({ service: `api/${Endpoints}`, data: flow });
+  public async saveFlow(flow: ICreativeFlowBoard): Promise<ICreativeFlowBoard> {
+    return this.httpService.postHttp<ICreativeFlowBoard>({ service: `api/${Endpoints}`, data: flow });
   }
 
   public async deleteFlow(id: string) {
-    return this.httpService.deleteHttp<IAgentFlows>({ service: `${Endpoints}/${id}` });
+    return this.httpService.deleteHttp<ICreativeFlowBoard>({ service: `${Endpoints}/${id}` });
   }
 
   public async runFlow(flowid: string): Promise<IFlowExecutionState> {

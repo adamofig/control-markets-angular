@@ -52,7 +52,8 @@ export interface IFlowNode {
   data: INodeMetadata;
   config: INodeConfig;
 }
-export interface IAgentFlows extends AuditDate {
+
+export interface ICreativeFlowBoard extends AuditDate {
   _id?: string;
   id: string;
   name?: string;

@@ -3,7 +3,7 @@ import { Connection, Vflow, VflowComponent } from 'ngx-vflow';
 import { DialogModule } from 'primeng/dialog';
 import { AgentCardListComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { EntityBaseFormComponent, OnActionEvent } from '@dataclouder/ngx-core';
-import { IAgentFlows, NodeCompTypeStr } from '../models/flows.model';
+import { ICreativeFlowBoard, NodeCompTypeStr } from '../models/flows.model';
 import { ButtonModule } from 'primeng/button';
 import { FlowDiagramStateService } from '../services/flow-diagram-state.service';
 import { TaskListComponent } from '../../tasks/task-list/task-list.component';
@@ -47,7 +47,7 @@ import { FlowNodeRegisterService } from '../services/flow-node-register.service'
     PopoverModule,
   ],
 })
-export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> implements OnInit, AfterViewInit {
+export class FlowsComponent extends EntityBaseFormComponent<ICreativeFlowBoard> implements OnInit, AfterViewInit {
   public AssetsNodeComponent = AssetsNodeComponent;
   public NodeCompTypeStr = NodeCompTypeStr;
   public flowNodeRegisterService = inject(FlowNodeRegisterService);
@@ -65,7 +65,7 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
 
   public userService = inject(AppUserService);
 
-  override defaultNewObject: IAgentFlows = {
+  override defaultNewObject: ICreativeFlowBoard = {
     name: 'Por favor renombra tu flujo',
     orgId: this.userService.user()?.defaultOrgId || this.userService.user()?._id,
     id: '',
@@ -74,7 +74,7 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
   ngAfterViewInit(): void {
     this.flowDiagramStateService.setVflowComponent(this.vflowRef);
   }
-  protected override patchForm(entity: IAgentFlows): void {
+  protected override patchForm(entity: ICreativeFlowBoard): void {
     this.form.patchValue(entity);
   }
 
@@ -107,7 +107,7 @@ export class FlowsComponent extends EntityBaseFormComponent<IAgentFlows> impleme
     size: 1,
   };
 
-  public flow: IAgentFlows | null = null;
+  public flow: ICreativeFlowBoard | null = null;
   public flowId = this.route.snapshot.params['id'];
   public executionId = this.route.snapshot.params['executionId']; // Added outcomeId
 

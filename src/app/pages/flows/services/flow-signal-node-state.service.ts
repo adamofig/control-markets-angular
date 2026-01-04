@@ -1,5 +1,5 @@
 import { Injectable, signal, Type, inject } from '@angular/core';
-import { IAgentFlows, NodeCompTypeStr, INodeMetadata, NodeCategory } from '../models/flows.model';
+import { ICreativeFlowBoard, NodeCompTypeStr, INodeMetadata, NodeCategory } from '../models/flows.model';
 import { DynamicNodeWithData } from './flow-diagram-state.service';
 import { Connection, Edge } from 'ngx-vflow';
 import { nanoid } from 'nanoid';
@@ -16,7 +16,7 @@ import { FlowNodeRegisterService } from './flow-node-register.service';
 })
 export class FlowSignalNodeStateService {
   public flowNodeRegisterService = inject(FlowNodeRegisterService);
-  public flow = signal<IAgentFlows | null>(null);
+  public flow = signal<ICreativeFlowBoard | null>(null);
   public nodes = signal<DynamicNodeWithData[]>([]);
   public edges = signal<Edge[]>([]);
 

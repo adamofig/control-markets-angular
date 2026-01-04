@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 
 import { DCFilterBarComponent, EntityBaseListV2Component, QuickTableComponent } from '@dataclouder/ngx-core';
 import { FlowService } from '../flows.service';
-import { IAgentFlows } from '../models/flows.model';
+import { ICreativeFlowBoard } from '../models/flows.model';
 import { AppUserService, IUserOrganization } from '../../../services/app-user.service';
 import { RouterModule } from '@angular/router';
 import { SpeedDialModule } from 'primeng/speeddial';
@@ -37,7 +37,7 @@ import { OrganizationSelectorComponent } from 'src/app/components/organization-s
   styleUrl: './flow-list.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FlowListComponent extends EntityBaseListV2Component<IAgentFlows> implements OnInit {
+export class FlowListComponent extends EntityBaseListV2Component<ICreativeFlowBoard> implements OnInit {
   protected override entityCommunicationService = inject(FlowService);
   private appUserService = inject(AppUserService);
   public currentOrganization: Signal<IUserOrganization | undefined>;

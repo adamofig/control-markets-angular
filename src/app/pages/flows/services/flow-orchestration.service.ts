@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
-import { IAgentFlows } from '../models/flows.model';
+import { ICreativeFlowBoard } from '../models/flows.model';
 import { FlowDiagramStateService } from './flow-diagram-state.service';
 import { FlowExecutionStateService } from './flow-execution-state.service';
 import { FlowSerializationService } from './flow-serialization.service';
@@ -32,7 +32,7 @@ export class FlowOrchestrationService {
         }
       }
 
-      const flow: IAgentFlows = {
+      const flow: ICreativeFlowBoard = {
         id: flowId || currentFlow,
         name: flowName || currentFlowName,
         nodes: flowData.nodes,
@@ -133,7 +133,7 @@ export class FlowOrchestrationService {
     }
   }
 
-  public async loadInitialFlow(flowId: string, executionId?: string): Promise<IAgentFlows> {
+  public async loadInitialFlow(flowId: string, executionId?: string): Promise<ICreativeFlowBoard> {
     const flow = await this.flowService.getFlow(flowId);
     if (flow) {
       this.flowDiagramStateService.setFlow(flow);
@@ -146,7 +146,7 @@ export class FlowOrchestrationService {
   }
 
   // public async createNewFlow(): Promise<void> {
-  //   const newFlow: IAgentFlows = { id: '' };
+  //   const newFlow: ICreativeFlowBoard = { id: '' };
   //   const savedFlow = await this.flowService.saveFlow(newFlow);
   //   this.router.navigate(['./', savedFlow.id], { relativeTo: this.route });
   // }

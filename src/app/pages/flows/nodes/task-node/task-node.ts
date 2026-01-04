@@ -81,13 +81,11 @@ export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements O
   }
 
   public getExecutionUrl(): void {
-    // /api/agent-flows/run-node?flowId=sdfsdf&nodeId=sdfsdf
-    // const exeUrl = `${this.appConfig.backendNodeUrl}/api/agent-flows/run-node?flowId=${this.flowDiagramStateService.getFlow()?.id}&nodeId=${this.node().id}`;
 
     const postRequest = {
       method: 'POST',
       host: this.appConfig.backendNodeUrl,
-      service: 'api/agent-flows/webhook/node',
+      service: 'api/creative-flowboard/webhook/node',
       body: {
         flowId: this.flowDiagramStateService.getFlow()?.id,
         nodeId: this.node().id,

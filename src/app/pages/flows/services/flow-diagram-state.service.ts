@@ -1,5 +1,5 @@
 import { inject, Injectable, signal, Type } from '@angular/core';
-import { IAgentFlows, IJobExecutionState, INodeMetadata, INodeConfig } from '../models/flows.model';
+import { ICreativeFlowBoard, IJobExecutionState, INodeMetadata, INodeConfig } from '../models/flows.model';
 import { Connection, DynamicNode, Edge, VflowComponent } from 'ngx-vflow';
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
@@ -33,7 +33,7 @@ export class FlowDiagramStateService {
     this.flowSignalNodeStateService.addNodeToCanvas(node);
   }
 
-  public setFlow(flow: IAgentFlows) {
+  public setFlow(flow: ICreativeFlowBoard) {
     this.flowSignalNodeStateService.flow.set(flow);
   }
 
