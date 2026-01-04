@@ -19,6 +19,22 @@ A Node in NGX VFlow is a `ComponentDynamicNode`, which holds its position and da
 
 This separation ensures that canvas logic (like rendering borders or toolbars) stays decoupled from the business logic of each node.
 
+
+### Important Caveat can potencially lead to bugs
+
+* ComponentDynamicNode original class contains data as the only property to save data in node, that means i can't have sibligs properties like config. i found a lot of inconsistencies tring to save everything in data since is a signal, but in the practice i had some linting issues accessing like data() so i decided to override this logic. suspecting this issue comes from how vflow uses data() but cant confirm it.
+
+that bring me to create my own class extending from original DynamicNode,  export type DynamicNodeWithData = DynamicNode & { data?: any; config: INodeConfig };
+so data and config are sibligs now, but it creates a new issue. BaseFlowNode component since uses internal class should not had access to config property.
+
+export abstract class BaseFlowNode<T extends { config?: INodeConfig; data?: any } > extends CustomNodeComponent<T> implements OnInit, OnDestroy {
+
+that why i cast in order to access config property. 
+
+  public config = computed(() => (this.node() as any)?.config);
+So not cusing any errors anymore. Condsider for future versions. 
+
+
 ### Node Structure
 
 All nodes follow a unified structure to ensure consistency across the canvas and serialization:
@@ -29,11 +45,11 @@ export interface IFlowNode {
   point: { x: number; y: number };
   type: string;
   data: INodeMetadata;
+  config?: INodeConfig; // UI and Canvas configuration
 }
 
 export interface INodeMetadata {
   nodeData?: any; // Business logic data
-  config?: INodeConfig; // UI and Canvas configuration
   [key: string]: any;
 }
 ```
@@ -75,6 +91,21 @@ It is important to understand these three concepts to avoid confusion:
 
 By using the **Wrapper Node**, you automatically inherit the standard UI layer. If you choose not to use the wrapper (as seen in some legacy components awaiting refactoring), you must manually implement the UI layer and state indicators.
 
+### 🏷️ How Category Affects the Wrapper
+
+The `category` defined in the node configuration significantly impacts how the `WrapperNodeComponent` behaves and renders on the canvas:
+
+| Feature | `INPUT` Category | `PROCESS` Category | `OUTPUT` Category |
+| :--- | :--- | :--- | :--- |
+| **Input Handle** | No (Cannot receive connections) | **Yes** (Left side) | Yes (Left side) |
+| **Output Handle** | Yes (Right side) | Yes (Right side) | No (End of flow) |
+| **Actions Toolbar** | Hidden | **Visible** (Run/Stop actions) | Hidden |
+| **State Logic** | Uses `jobExecutionState` | Uses `taskExecutionState` | N/A |
+| **Visual Tag** | Labeled "input" | Labeled "process" | Labeled "output" |
+
+> [!IMPORTANT]
+> If a node is intended to receive data from another node and perform an operation (like `VideoScriptGenNode`), it **must** be registered with the `PROCESS` category.
+
 ## 📦 The Wrapper Node Mechanism
 
 The `WrapperNodeComponent` acts as a standardized shell that implements `BaseFlowNode`. It decouples the canvas-level integration (handles, toolbars, status-based styling) from the specific node content.
@@ -86,37 +117,22 @@ The wrapper uses Angular's `ViewContainerRef` to dynamically render the actual n
 2.  **Type Registry**: It uses `FlowNodeRegisterService` to resolve the `config.component` string identifier into a concrete Angular component class.
 3.  **Visual Metadata**: The wrapper applies `config.color`, `config.icon`, and `config.label` dynamically to the card and its toolbars.
 4.  **Automatic Input Binding**: Once the component is created, the wrapper automatically maps data from `nodeData` to the component's public properties.
-
-### Component Integration
-
-Nodes extending `BaseFlowNode` access their configuration via the `node` signal:
-
-```typescript
-// Inside a Node Component
-public color = computed(() => this.node()?.data?.config?.color || '#03c9f5');
-public icon = computed(() => this.node()?.data?.config?.icon);
-```
+5.  **Standardized Interaction**: It implements `openDetails()` to automatically open the registered `detailsComponent` for that node type on double-click.
 
 ```typescript
 // From WrapperNodeComponent.ts
-private loadComponent(): void {
-  const nodeData = this.node()?.data?.nodeData;
-  const componentStr = this.node()?.data?.config?.component;
+override openDetails(): void {
+  const componentStr = this.config()?.component; // 👈 Resolved from config registry
+  if (!componentStr) return;
   
-  if (componentStr) {
-    const ComponentType = this.flowNodeRegisterService.getNodeType(componentStr);
-    if (ComponentType) {
-      this.componentRef = this.container.createComponent(ComponentType);
-      
-      if (nodeData) {
-        // Auto-bind keys from nodeData to component inputs
-        Object.keys(nodeData).forEach(inputName => {
-          if (inputName in this.componentRef.instance) {
-             this.componentRef.instance[inputName] = nodeData[inputName];
-          }
-        });
-      }
-    }
+  const DetailsComponent = this.flowNodeRegisterService.getNodeDetailsType(componentStr);
+
+  if (DetailsComponent) {
+    this.dialogService.open(DetailsComponent, {
+      header: `${this.config()?.label} Details`,
+      data: this.node(), // 👈 Pass the full node with data and config
+      // ... dialog configuration
+    });
   }
 }
 ```

@@ -29,9 +29,11 @@ sequenceDiagram
     participant DV as Details View (Modal)
     participant CC as Content Component
 
-    WN->>DV: dblclick -> Open Modal (using registered DetailsComponent)
+    WN->>WN: dblclick -> openDetails()
+    Note over WN: Resolves detailsComponent from config
+    WN->>DV: dialogService.open(DetailsComponent, { data: node })
     Note over DV: User edits form
-    DV->>WN: Close Modal (Return form.value)
+    DV->>WN: ref.close(form.value)
     WN->>SS: updateNodeData(nodeId, newData)
     SS->>WN: Signal Update (computed nodeData)
     WN->>CC: Update @Input() properties

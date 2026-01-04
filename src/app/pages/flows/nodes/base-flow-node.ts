@@ -27,14 +27,16 @@ function jobExecutionStateChanged(a: IJobExecutionState | null, b: IJobExecution
 }
 
 @Directive()
-export abstract class BaseFlowNode<T extends { config: INodeConfig; data?: any }> extends CustomNodeComponent<T> implements OnInit, OnDestroy {
+export abstract class BaseFlowNode<T extends { config?: INodeConfig; data?: any } > extends CustomNodeComponent<T> implements OnInit, OnDestroy {
   public flowDiagramStateService = inject(FlowDiagramStateService);
   public flowComponentRefStateService = inject(FlowComponentRefStateService);
   public flowExecutionStateService = inject(FlowExecutionStateService);
   public nodeSearchesService = inject(NodeSearchesService);
   protected flowSignalNodeStateService = inject(FlowSignalNodeStateService);
 
-  public nodeCategory = computed(() => this.node()?.data?.config?.category || 'input');
+  public config = computed(() => (this.node() as any)?.config);
+
+  public nodeCategory = computed(() => this.config()?.category || 'input');
 
   public nodeData = computed(() => (this.node()?.data as any)?.nodeData || this.node()?.data?.data);
 

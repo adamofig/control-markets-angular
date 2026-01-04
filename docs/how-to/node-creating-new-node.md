@@ -7,8 +7,9 @@ This guide explains how to add a completely new node type to the Control Markets
 ## 🚀 The Fastest Way: Use the `EmptyNode` Template
 If you want to create a new node quickly, the best way is to copy the existing `EmptyNode` template. This node is already configured with:
 - `BaseFlowNode` integration
+- **Wrapper Node** enabled by default
 - Toolbar support
-- Double-click to open Dynamic Dialog
+- Double-click to open Dynamic Dialog (via Wrapper)
 - Default styling
 
 ### 1. Copy the Template Folder
@@ -133,7 +134,8 @@ Most nodes need a configuration dialog for the **Popup Layer**.
     - Register your content component.
     - Register your details component.
 2.  **Creation**: Add `addMyCustomNode()` to [flow-signal-node-state.service.ts](file:///Users/adamo/Documents/GitHub/control-markets-angular/src/app/pages/flows/services/flow-signal-node-state.service.ts).
-    - If using the **Wrapper approach**, ensure the `component` property of the new node matches your registered string.
+    - **Crucial**: Ensure the `type` property of the new node is set to `WrapperNodeComponent`.
+    - Ensure the `config.component` property matches your registered string.
 3.  **UI**: Add to the toolbar in [flow-canva.ts](file:///Users/adamo/Documents/GitHub/control-markets-angular/src/app/pages/flows/flow-workspace/flow-canva.ts).
 
 ---

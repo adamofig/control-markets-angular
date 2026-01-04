@@ -409,12 +409,13 @@ export class FlowSignalNodeStateService {
 
   public addEmptyNode(nodeType: NodeCompTypeStr) {
     const nodeConfig = this.flowNodeRegisterService.getNodeConfig(nodeType);
-    if (!nodeConfig) return;
+    const wrapperConfig = this.flowNodeRegisterService.getNodeConfig('WrapperNodeComponent');
+    if (!nodeConfig || !wrapperConfig) return;
 
     const newNode: DynamicNodeWithData = {
       id: `${nodeType}-${nanoid()}`,
       point: signal({ x: 100, y: 100 }),
-      type: nodeConfig.component as Type<any>,
+      type: wrapperConfig.component as Type<any>,
       data: { nodeData: {} },
       config: {
         component: nodeType,
@@ -428,7 +429,6 @@ export class FlowSignalNodeStateService {
   }
 
   public addWrapperNode(component: string, inputs: any): void {
-    // debugger
     const nodeConfig = this.flowNodeRegisterService.getNodeConfig(component);
     const wrapperConfig = this.flowNodeRegisterService.getNodeConfig('WrapperNodeComponent');
     if (!wrapperConfig || !nodeConfig) return;

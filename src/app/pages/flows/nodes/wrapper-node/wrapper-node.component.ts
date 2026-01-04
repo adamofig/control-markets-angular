@@ -31,8 +31,8 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
   private flowOrchestrationService = inject(FlowOrchestrationService);
   private dialogService = inject(DialogService);
 
-  public color = computed(() => this.node()?.data?.config?.color || '#03c9f5');
-  public icon = computed(() => this.node()?.data?.config?.icon);
+  public color = computed(() => this.config()?.color || '#03c9f5');
+  public icon = computed(() => this.config()?.icon);
 
   private componentRef!: ComponentRef<any>;
 
@@ -47,8 +47,9 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
 
   private loadComponent(): void {
     
+    
     const nodeData = this.node()?.data?.nodeData;
-    const component = this.node()?.data?.config?.component;
+    const component = this.config()?.component;
     if (component) {
       this.container.clear();
       const ComponentType = this.flowNodeRegisterService.getNodeType(component);
@@ -71,7 +72,7 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
   }
 
   override openDetails(): void {
-    const componentStr = this.node()?.data?.config?.component;
+    const componentStr = this.config()?.component;
     if (!componentStr) return;
     const DetailsComponent = this.flowNodeRegisterService.getNodeDetailsType(componentStr as string);
 

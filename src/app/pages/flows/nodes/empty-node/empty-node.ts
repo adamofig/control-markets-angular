@@ -23,13 +23,12 @@ export interface CustomEmptyNode extends ComponentDynamicNode {
 })
 
 // COPY THIS NODE TO CREATE NEW NODES
-export class EmptyNodeComponent extends BaseFlowNode<CustomEmptyNode> implements OnInit {
+export class EmptyNodeComponent implements OnInit {
+  ngOnInit(): void {
+    
+  }
   public name: string = '';
   public description: string = '';
 
-  override ngOnInit(): void {
-    super.ngOnInit();
-    this.name = this.nodeData()?.name || '';
-    this.description = this.nodeData()?.description || '';
-  }
+
 }
