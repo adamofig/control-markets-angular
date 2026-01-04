@@ -1,0 +1,33 @@
+
+.node-card-content {
+  overflow: hidden;
+}
+
+.image-background-content {
+  height: 200px;
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  text-align: center;
+}
+
+.empty-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+h4 {
+    margin: 5px 0;
+    font-size: 1rem;
+    word-break: break-word;
+}
+
+p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #666;
+    word-break: break-word;
+}

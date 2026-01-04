@@ -67,6 +67,39 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
     }
   }
 
+  override openDetails(): void {
+    const componentStr = (this.node() as any).component;
+    const DetailsComponent = this.flowNodeRegisterService.getNodeDetailsType(componentStr);
+
+    if (DetailsComponent) {
+      const ref = this.dialogService.open(DetailsComponent, {
+        header: `${this.flowNodeRegisterService.getNodeConfig(componentStr)?.label || 'Node'} Details`,
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        draggable: true,
+        styleClass: 'draggable-dialog',
+        closable: true,
+        width: '650px',
+        modal: true,
+        data: this.node(),
+      });
+
+      if (ref) {
+        ref.onClose.subscribe((result) => {
+          if (result) {
+            this.flowSignalNodeStateService.updateNodeData(this.node().id, {
+              ...this.node().data,
+              nodeData: {
+                ...this.node().data?.nodeData,
+                ...result,
+              },
+            });
+            this.loadComponent(); // Reload to reflect changes if necessary
+          }
+        });
+      }
+    }
+  }
 
   runNode(): void {
     const flowId = this.flowDiagramStateService.getFlow()?.id;

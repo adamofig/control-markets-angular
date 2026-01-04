@@ -1,5 +1,6 @@
 import { FileStorageData } from '@dataclouder/ngx-cloud-storage';
 import { TranscriptionsWhisper } from '@dataclouder/ngx-ai-services';
+import { IDialog } from '../../video-projects-gen/models/video-project.model';
 
 export interface IAssetNodeData {
   _id?: string;
@@ -39,5 +40,11 @@ export interface IVideoScriptGenNodeData {
   id: string;
   prompt: string;
   script?: string;
+  dialogs?: IDialog[];
   request?: any;
+}
+
+export interface IEmptyNodeData {
+  name: string;
+  description: string;
 }

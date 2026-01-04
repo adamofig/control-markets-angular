@@ -117,16 +117,17 @@ export abstract class BaseFlowNode<T extends ComponentDynamicNode & { nodeData: 
     this.selected.set(true);
   }
 
+  openDetails(): void {
+    // Override in child class if needed
+  }
+
   handleToolbarEvents(event: string) {
     switch (event) {
       case 'delete':
         this.removeNode();
         break;
       case 'details':
-        // this.openModal();
-        break;
-      case 'none':
-        // Do nothing
+        this.openDetails();
         break;
     }
   }

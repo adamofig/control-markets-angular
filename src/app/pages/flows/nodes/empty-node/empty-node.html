@@ -1,11 +1,8 @@
 
-<div (dblclick)="openModal()">
-  <div class="node-card">
-    <div class="image-background">
-      <div class="empty-icon">🔲</div>
-      <h4>Empty Node</h4>
-      <p>Template</p>
-    </div>
-
+<div class="node-card-content">
+  <div class="image-background-content">
+    <div class="empty-icon">🔲</div>
+    <h4>{{ name || 'Empty Node' }}</h4>
+    <p>{{ description || 'Template' }}</p>
   </div>
 </div>

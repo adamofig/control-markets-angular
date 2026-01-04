@@ -12,7 +12,12 @@ If you want to create a new node quickly, the best way is to copy the existing `
 - Default styling
 
 ### 1. Copy the Template Folder
-Copy the folder `src/app/pages/flows/nodes/empty-node` and rename it to your new node name (e.g., `my-custom-node`).
+Copy the folder `src/app/pages/flows/nodes/empty-node` and rename it to your new node name (e.g., `my-custom-node`). 
+
+The `EmptyNode` is the gold standard for implementation because:
+- **Reactive State**: It uses `nodeData()` computed signal from `BaseFlowNode`.
+- **Standardized Communication**: It follows the [Node-Details Communication](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/node-details-communication.md) pattern.
+- **Built-in Fields**: Includes `name` and `description` as base properties.
 
 ### 2. Rename Files and Classes
 Go through the files in your new folder and rename:
@@ -113,24 +118,20 @@ export class MyCustomNodeComponent extends BaseFlowNode<CustomMyNode> implements
 ## 🔍 Step 4: Details Modal Pattern
 Most nodes need a configuration dialog for the **Popup Layer**.
 
-1.  Create `MyCustomDetailsComponent`.
-2.  Use `DialogService` in the node component to open it.
+**See full guide: [Node-Details Communication Standard](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/node-details-communication.md)**
 
-```typescript
-openModal(): void {
-  this.dialogService.open(MyCustomDetailsComponent, {
-    header: 'Configure Node',
-    data: this.node(), // Pass the whole node
-    width: '500px'
-  });
-}
-```
+1.  **Direct Registration**: Simply register your `detailsComponent` in the `FlowNodeRegisterService`.
+2.  **Automatic Handling**: The `WrapperNodeComponent` will automatically:
+    - Open the modal on double-click.
+    - Pass the node data.
+    - Save the result back to the global state.
 
 ---
 
 ## ⚡ Step 5: Service Registration
 1.  **Registry**: Add to [flow-node-register.service.ts](file:///Users/adamo/Documents/GitHub/control-markets-angular/src/app/pages/flows/services/flow-node-register.service.ts).
-    - If using the **Wrapper approach**, register your content component here.
+    - Register your content component.
+    - Register your details component.
 2.  **Creation**: Add `addMyCustomNode()` to [flow-signal-node-state.service.ts](file:///Users/adamo/Documents/GitHub/control-markets-angular/src/app/pages/flows/services/flow-signal-node-state.service.ts).
     - If using the **Wrapper approach**, ensure the `component` property of the new node matches your registered string.
 3.  **UI**: Add to the toolbar in [flow-canva.ts](file:///Users/adamo/Documents/GitHub/control-markets-angular/src/app/pages/flows/flow-workspace/flow-canva.ts).

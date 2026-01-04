@@ -16,9 +16,12 @@ import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset
 import { AudioTTsNodeComponent } from '../nodes/audio-tts-node/audio-tts-node';
 import { NodeCompTypeStr } from '../models/flows.model';
 import { WrapperNodeComponent } from '../nodes/wrapper-node/wrapper-node.component';
+import { VideoScriptGenDetailsComponent } from '../nodes/video-script-gen-node/video-gen-details/video-script-gen-details';
+import { EmptyDetailsComponent } from '../nodes/empty-node/empty-details/empty-details';
 
 export interface INodeConfig {
   component: Type<any>;
+  detailsComponent?: Type<any>; // 👈 Added
   color: string;
   icon?: string;
   label?: string;
@@ -98,6 +101,7 @@ export class FlowNodeRegisterService {
       },
       [NodeCompTypeStr.EmptyNodeComponent]: {
         component: EmptyNodeComponent,
+        detailsComponent: EmptyDetailsComponent, // 👈 Registered
         color: '#6b7280', // gray-500
         icon: 'pi pi-plus',
         label: 'Empty'
@@ -110,6 +114,7 @@ export class FlowNodeRegisterService {
       },
       [NodeCompTypeStr.VideoScriptGenNodeComponent]: {
         component: VideoScriptGenContentComponent,
+        detailsComponent: VideoScriptGenDetailsComponent, // 👈 Registered
         color: '#f50bb3ff', // amber-500
         icon: 'pi pi-file-edit',
         label: 'Video Script'
@@ -123,6 +128,10 @@ export class FlowNodeRegisterService {
 
   public getNodeType(typeString: string): Type<any> | undefined {
     return this.nodeConfigMap()[typeString]?.component;
+  }
+
+  public getNodeDetailsType(typeString: string): Type<any> | undefined {
+    return this.nodeConfigMap()[typeString]?.detailsComponent;
   }
 
   public getNodeConfig(typeString: string): INodeConfig | undefined {
