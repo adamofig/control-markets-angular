@@ -37,11 +37,14 @@ this.nodeConfigMap.set({
   [NodeCompTypeStr.MyNode]: {
     component: MyContentComponent,
     detailsComponent: MyDetailsComponent, // 👈 Register here
+    category: NodeCategory.INPUT,
     color: '#...',
     icon: 'pi pi-...',
     label: 'My Node'
   },
 });
+
+// These registered values populate the 'config' field automatically.
 ```
 
 ---
@@ -89,6 +92,7 @@ export class MyDetailsComponent implements OnInit {
   }
 
   private initForm() {
+    // node.data contains both 'config' (metadata) and 'nodeData' (business data)
     const nodeData = this.node?.data?.nodeData;
     this.form = this.fb.group({
       myField: [nodeData?.myField || ''],

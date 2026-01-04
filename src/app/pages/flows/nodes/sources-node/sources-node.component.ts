@@ -13,9 +13,12 @@ import { TagModule } from 'primeng/tag';
 import { FlowSignalNodeStateService } from '../../services/flow-signal-node-state.service';
 import { BaseFlowNode } from '../base-flow-node';
 import { CommonModule } from '@angular/common';
+import { INodeConfig } from '../../models/flows.model';
 
 export interface CustomSourceNode extends ComponentDynamicNode {
   // Renamed interface
+  data?: any;
+  config: INodeConfig;
   nodeData: IAgentSource | null; // Updated property name
 }
 
@@ -50,8 +53,8 @@ export class SourcesNodeComponent extends BaseFlowNode<CustomSourceNode> impleme
   constructor() {
     super();
     effect(() => {
-      console.log('sources-node source:', this.data()?.nodeData); // Updated log and property
-      this.source = this.data()?.nodeData || null; // Updated property
+      console.log('sources-node source:', this.nodeData()); // Updated log and property
+      this.source = this.nodeData() || null; // Updated property
     });
   }
 

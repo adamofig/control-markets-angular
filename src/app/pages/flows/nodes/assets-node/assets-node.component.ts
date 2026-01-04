@@ -13,12 +13,14 @@ import { BaseFlowNode } from '../base-flow-node';
 import { Button } from 'primeng/button';
 import { IAssetNodeData } from '../../models/nodes.model';
 
-import { StatusJob } from '../../models/flows.model';
+import { INodeConfig, StatusJob } from '../../models/flows.model';
 import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AssetDetailsComponent } from './asset-details/asset-details';
 
 export interface CustomAssetsNode extends ComponentDynamicNode {
+  data?: any;
+  config: INodeConfig;
   nodeData: IAssetNodeData;
 }
 
@@ -27,7 +29,7 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
   templateUrl: './assets-node.component.html',
   styleUrls: ['./assets-node.component.scss'],
   standalone: true,
-  imports: [HandleComponent, Button, Tag, TagModule, BaseNodeToolbarComponent, CommonModule],
+  imports: [HandleComponent, Tag, TagModule, BaseNodeToolbarComponent, CommonModule],
 })
 export class AssetsNodeComponent extends BaseFlowNode<CustomAssetsNode> {
   private toastService = inject(TOAST_ALERTS_TOKEN);

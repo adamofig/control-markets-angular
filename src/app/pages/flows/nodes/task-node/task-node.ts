@@ -8,7 +8,7 @@ import { TaskNodeDetailsComponent } from './task-details/task-node-details';
 import { TaskConversationComponent } from './task-conversation/task-conversation';
 import { TaskWebhookDetailsComponent } from './task-webhook-details/task-webhook-details';
 import { ILlmTask } from '../../../tasks/models/tasks-models';
-import { IFlowExecutionState, ITaskExecutionState, StatusJob } from '../../models/flows.model';
+import { IFlowExecutionState, INodeConfig, ITaskExecutionState, StatusJob } from '../../models/flows.model';
 import { TagModule } from 'primeng/tag';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FlowOrchestrationService } from '../../services/flow-orchestration.service';
@@ -18,6 +18,8 @@ import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component
 import { ActionsToolbarComponent } from '../actions-toolbar/actions-toolbar.component';
 
 export interface CustomTaskNode extends ComponentDynamicNode {
+  data?: any;
+  config: INodeConfig;
   nodeData: ILlmTask;
 }
 
@@ -44,11 +46,10 @@ export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements O
   public flowOrchestrationService = inject(FlowOrchestrationService);
   public appConfig = inject(APP_CONFIG);
 
-  public agentTask = computed(() => this.node()?.data?.nodeData);
+  public agentTask = computed(() => this.nodeData());
   public statusJobEnum = StatusJob;
   public status = computed(() => this.taskExecutionState()?.status || this.statusJobEnum.PENDING);
 
-  public override nodeCategory: 'process' | 'input' | 'output' = 'process';
 
   public override ngOnInit(): void {
     super.ngOnInit();

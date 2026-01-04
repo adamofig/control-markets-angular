@@ -10,15 +10,18 @@ import { IGeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-ai-ser
 import { BaseFlowNode } from '../base-flow-node';
 import { ActionsToolbarComponent } from '../actions-toolbar/actions-toolbar.component';
 import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
+import { INodeConfig } from '../../models/flows.model';
 import { TagModule } from 'primeng/tag';
 
 export interface CustomAssetGeneratedNode extends ComponentDynamicNode {
+  data?: any;
+  config: INodeConfig;
   nodeData: IGeneratedAsset | null;
 }
 
 @Component({
-  selector: 'app-outcome-node',
-  imports: [Vflow, DialogModule, ButtonModule, JsonPipe, BaseNodeToolbarComponent, ActionsToolbarComponent, CommonModule, TagModule],
+  selector: 'app-asset-generated-node',
+  imports: [Vflow, DialogModule, ButtonModule, BaseNodeToolbarComponent, CommonModule, TagModule],
   templateUrl: './asset-generated-node.html',
   styleUrl: './asset-generated-node.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,7 +43,7 @@ export class AssetGeneratedNodeComponent extends BaseFlowNode<CustomAssetGenerat
     super();
     this.backgroundImageUrl = `url('assets/defaults/images/default_2_3.webp')`;
     effect(() => {
-      this.generatedAsset = this.data()?.nodeData || null;
+      this.generatedAsset = this.nodeData() || null;
       if (this.generatedAsset) {
         //
         this.gifUrl.set((this.generatedAsset?.result as any)?.gif?.url);
@@ -74,7 +77,7 @@ export class AssetGeneratedNodeComponent extends BaseFlowNode<CustomAssetGenerat
 
   public async refreshNode() {
     console.log(this.node().data);
-    const generatedAsset = (await this.generatedAssetsService.findOne(this.node().data?.nodeData?.id || '')) as unknown as IGeneratedAsset;
+    const generatedAsset = (await this.generatedAssetsService.findOne(this.nodeData()?.id || '')) as unknown as IGeneratedAsset;
     this.generatedAsset = generatedAsset;
 
     this.flowSignalNodeStateService.updateNodeData(this.node().id, { nodeData: this.generatedAsset });

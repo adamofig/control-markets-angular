@@ -8,8 +8,11 @@ import { ButtonModule } from 'primeng/button';
 import { JsonPipe } from '@angular/common';
 import { BaseFlowNode } from '../base-flow-node';
 import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
+import { INodeConfig } from '../../models/flows.model';
 
 export interface CustomOutcomeNode extends ComponentDynamicNode {
+  data?: any;
+  config: INodeConfig;
   nodeData: IAgentOutcomeJob;
   inputNodeId: string;
   processNodeId: string;
@@ -44,19 +47,14 @@ export class OutcomeNodeComponent extends BaseFlowNode<CustomOutcomeNode> implem
     }, 500);
 
     console.log('outcomeJob', this.outcomeJob);
-    console.log('nodeData', this.data()?.nodeData);
+    console.log('nodeData', this.nodeData());
   }
 
   constructor() {
     super();
     this.backgroundImageUrl.set(`url('assets/defaults/images/default_2_3.webp')`);
     effect(() => {
-      this.outcomeJob = this.data()?.nodeData || null;
-      // if (this.outcomeJob) {
-      //   const imageUrl = this.outcomeJob?.agentCard?.assets?.image?.url;
-      //   this.backgroundImageUrl.set(imageUrl ? `url('${imageUrl}')` : `url('assets/defaults/images/default_2_3.webp')`);
-      //   console.log('outcomeJob', this.outcomeJob.result);
-      // }
+      this.outcomeJob = this.nodeData() || null;
     });
   }
 

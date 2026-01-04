@@ -4,7 +4,7 @@ import { FlowDiagramStateService } from '../services/flow-diagram-state.service'
 import { ComponentDynamicNode } from 'ngx-vflow';
 import { FlowComponentRefStateService } from '../services/flow-component-ref-state.service';
 import { FlowExecutionStateService } from '../services/flow-execution-state.service';
-import { IFlowExecutionState, IJobExecutionState, ITaskExecutionState, StatusJob } from '../models/flows.model';
+import { IFlowExecutionState, IJobExecutionState, ITaskExecutionState, StatusJob, INodeConfig } from '../models/flows.model';
 import { NodeSearchesService } from '../services/node-searches.service';
 import { FlowSignalNodeStateService } from '../services/flow-signal-node-state.service';
 
@@ -27,16 +27,16 @@ function jobExecutionStateChanged(a: IJobExecutionState | null, b: IJobExecution
 }
 
 @Directive()
-export abstract class BaseFlowNode<T extends ComponentDynamicNode & { nodeData: any }> extends CustomNodeComponent<T> implements OnInit, OnDestroy {
+export abstract class BaseFlowNode<T extends { config: INodeConfig; data?: any }> extends CustomNodeComponent<T> implements OnInit, OnDestroy {
   public flowDiagramStateService = inject(FlowDiagramStateService);
   public flowComponentRefStateService = inject(FlowComponentRefStateService);
   public flowExecutionStateService = inject(FlowExecutionStateService);
   public nodeSearchesService = inject(NodeSearchesService);
   protected flowSignalNodeStateService = inject(FlowSignalNodeStateService);
 
-  public nodeCategory: 'process' | 'input' | 'output' = 'input';
+  public nodeCategory = computed(() => this.node()?.data?.config?.category || 'input');
 
-  public nodeData = computed(() => this.node()?.data?.nodeData);
+  public nodeData = computed(() => (this.node()?.data as any)?.nodeData || this.node()?.data?.data);
 
   // Tengo que estandarizar como tengo el estatus del job, porque este lo uso en video, para assets, pero en agentes uso jobExecutionState hjkh
   public statusJob = signal<StatusJob>(StatusJob.COMPLETED);
@@ -44,7 +44,7 @@ export abstract class BaseFlowNode<T extends ComponentDynamicNode & { nodeData: 
   public taskExecutionState = computed(() => {
     const executionState: IFlowExecutionState | null = this.flowExecutionStateService.flowExecutionState();
     if (executionState) {
-      if (this.nodeCategory === 'process') {
+      if (this.nodeCategory() === 'process') {
         const executionTask = executionState?.tasks.find(t => t.processNodeId === this.node().id);
         if (executionTask) {
           return executionTask;
@@ -74,7 +74,7 @@ export abstract class BaseFlowNode<T extends ComponentDynamicNode & { nodeData: 
   public jobExecutionState = computed(
     () => {
       const executionState = this.flowExecutionStateService.flowExecutionState();
-      if (!executionState || this.nodeCategory !== 'input') {
+      if (!executionState || this.nodeCategory() !== 'input') {
         return null;
       }
 

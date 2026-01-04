@@ -13,11 +13,13 @@ import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component
 import { CommonModule } from '@angular/common';
 import { TtsPlaygroundWrapperComponent } from './tts-playground-wrapper/tts-playground-wrapper.component';
 import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
-import { NodeCompTypeStr } from '../../models/flows.model';
+import { INodeConfig, NodeCompTypeStr } from '../../models/flows.model';
 import { AgentAudioGeneratorComponent } from './agent-audio-generator/agent-audio-generator.component';
 import { AgentNodeComponent } from '../agent-node/agent-node.component';
 
 export interface CustomAudioTTsNode extends ComponentDynamicNode {
+  data?: any;
+  config: INodeConfig;
   nodeData: { value: string; settings: any };
   inputNodeId: string;
   processNodeId: string;
@@ -53,8 +55,8 @@ export class AudioTTsNodeComponent extends BaseFlowNode<CustomAudioTTsNode> impl
         console.log('Se encontro un node. de agente. ', agentSource);
         this.agentSource.set(agentSource);
       }
-      if (this.node()?.data?.nodeData?.settings) {
-        this.settings.set(this.node()?.data?.nodeData?.settings);
+      if (this.nodeData()?.settings) {
+        this.settings.set(this.nodeData()?.settings);
       }
     });
   }

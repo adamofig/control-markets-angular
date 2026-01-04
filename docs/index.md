@@ -31,6 +31,9 @@ Welcome to the official documentation for **Control Markets**, a node-based plat
 - **[PWA Summary](reference/pwa-summary.md)**: Deployment and PWA configuration details.
 
 ### Node Reference Table
+> [!NOTE]
+> All nodes follow a dual-layer structure where visual configuration (color, icon, category) is centralized in a `config` object, separate from the `nodeData` business business properties.
+
 | Node Type | Category | Color | Description |
 | :--- | :--- | :--- | :--- |
 | `AgentNode` | Process | Green | Persona-based AI agent that executes tasks. |

@@ -17,17 +17,16 @@ export class FlowSerializationService {
       const plainPoint = node.point();
       let serializableText: string | undefined;
       let serializableData: any | undefined;
+      const config = node.config;
 
       if (node.type === 'default') {
         if (node.text && typeof node.text === 'function') {
           serializableText = node.text();
         }
-      } else if (node.component === 'AudioTTsNodeComponent') {
+      } else if (config?.component === 'AudioTTsNodeComponent') {
         const audioTTsNode = this.flowComponentRefStateService.getNodeComponentRef(node.id);
         const value = (audioTTsNode as any)?.value;
         const settings = { ...(audioTTsNode as any)?.settings() };
-        // Temporal, settings should be consistent storagePath should save in settings but i have instead storage.path
-        // settings['storagePath'] = (audioTTsNode as any)?.storagePath || settings.storage.path;
         const nodeData = { ...(node?.data?.nodeData || {}), value, settings };
         serializableData = { ...node?.data, nodeData };
       } else {
@@ -40,9 +39,8 @@ export class FlowSerializationService {
         id: node.id,
         point: plainPoint,
         type: this.flowNodeRegisterService.getNodeTypeString(node.type as Type<any>),
-        category: node.category,
-        component: node.component,
         data: {},
+        config: node.config,
       };
 
       if (serializableText !== undefined) {
@@ -79,8 +77,11 @@ export class FlowSerializationService {
           point: signal(plainNode.point),
           type: 'default',
           text: signal(plainNode.text !== undefined ? plainNode.text : ''),
-          category: 'other',
-          component: plainNode.component,
+          config: plainNode.config || {
+            component: 'default' as any,
+            category: 'other' as any,
+            color: '#6b7280',
+          }
         };
       } else {
         dynamicNode = {
@@ -88,8 +89,7 @@ export class FlowSerializationService {
           point: signal(plainNode.point),
           type: nodeType as Type<any>,
           data: { ...plainNode.data },
-          category: plainNode.category,
-          component: plainNode.component,
+          config: plainNode.config,
         };
       }
       return dynamicNode;

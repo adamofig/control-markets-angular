@@ -25,7 +25,7 @@ export class NodeSearchesService {
     if (inputNodes.length === 0) {
       return undefined;
     }
-    return inputNodes.find(node => node.component === type);
+    return inputNodes.find(node => node.config.component === type);
   }
 
   public getOutputNodes(nodeId: string): DynamicNodeWithData[] {

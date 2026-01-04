@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { FlowOrchestrationService } from '../../services/flow-orchestration.service';
 import { BaseFlowNode } from '../base-flow-node';
 import { INodeVideoGenerationData } from '../../models/nodes.model';
+import { INodeConfig, NodeCompTypeStr } from '../../models/flows.model';
 import { TagModule } from 'primeng/tag';
 import { TextareaModule } from 'primeng/textarea';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,7 +20,9 @@ import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component
 import { ActionsToolbarComponent } from '../actions-toolbar/actions-toolbar.component';
 import { ToastAlertService } from 'src/app/services/toast.service';
 
-export interface CustomAssetsNode extends ComponentDynamicNode {
+export interface CustomVideoGenNode extends ComponentDynamicNode {
+  data?: any;
+  config: INodeConfig;
   nodeData: INodeVideoGenerationData;
 }
 
@@ -42,7 +45,7 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
     ActionsToolbarComponent,
   ],
 })
-export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implements OnInit, OnDestroy {
+export class VideoGenNodeComponent extends BaseFlowNode<CustomVideoGenNode> implements OnInit, OnDestroy {
   public flowOrchestrationService = inject(FlowOrchestrationService);
   private generatedAssetsService = inject(GeneratedAssetsService);
   private dialogService = inject(DialogService);
@@ -50,7 +53,6 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
 
   public fb = inject(FormBuilder);
 
-  public override nodeCategory: 'process' | 'input' | 'output' = 'process';
 
   runNode(): void {
     this.flowOrchestrationService.runNode(this.flowDiagramStateService.getFlow()?.id!, this.node().id);
@@ -63,8 +65,8 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
       const inputNodes = this.nodeSearchesService.getInputNodes(this.node().id);
       let assets = { firstFrame: null };
       for (const inputNode of inputNodes) {
-        if (inputNode.component === 'AssetsNodeComponent') {
-          assets.firstFrame = inputNode.data.nodeData.storage;
+        if (inputNode.config?.component === NodeCompTypeStr.AssetsNodeComponent) {
+          assets.firstFrame = (inputNode as any).data.nodeData.storage;
           break;
         }
       }
@@ -74,10 +76,10 @@ export class VideoGenNodeComponent extends BaseFlowNode<CustomAssetsNode> implem
       }
 
       const genAssetObj: Partial<IGeneratedAsset> = {
-        prompt: this.node()?.data?.nodeData?.prompt,
-        request: this.node()?.data?.nodeData?.request,
+        prompt: this.nodeData()?.prompt,
+        request: this.nodeData()?.request,
         assets: assets as unknown as IAssetsGeneration,
-        provider: this.node()?.data?.nodeData?.provider as 'comfy' | 'vertex',
+        provider: this.nodeData()?.provider as 'comfy' | 'vertex',
       };
 
       const asset = await this.generatedAssetsService.createOrUpdate(genAssetObj);

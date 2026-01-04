@@ -1,10 +1,18 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, Input, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ILeadNode } from '../../models/nodes.model';
 import { LeadDetailsComponent } from './lead-details/lead-details';
-import { DialogService } from 'primeng/dynamicdialog';
 import { LeadService } from 'src/app/pages/lead/leads.service';
 import { ILead } from 'src/app/pages/lead/models/leads.model';
+import { BaseFlowNode } from '../base-flow-node';
+import { INodeConfig } from '../../models/flows.model';
+import { ComponentDynamicNode } from 'ngx-vflow';
+import { DialogService } from 'primeng/dynamicdialog';
+
+export interface CustomLeadNode extends ComponentDynamicNode {
+  data?: any;
+  config: INodeConfig;
+  nodeData: ILead;
+}
 
 @Component({
   selector: 'app-lead-node',
@@ -14,12 +22,14 @@ import { ILead } from 'src/app/pages/lead/models/leads.model';
   imports: [CommonModule, LeadDetailsComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class LeadNodeComponent implements OnInit {
-  @Input() lead!: ILead;
+export class LeadNodeComponent extends BaseFlowNode<CustomLeadNode> implements OnInit {
+  public lead: ILead | null = null;
   private dialogService = inject(DialogService);
   private leadService = inject(LeadService);
 
-  async ngOnInit(): Promise<void> {
+  override async ngOnInit(): Promise<void> {
+    super.ngOnInit();
+    this.lead = this.nodeData();
     console.log(this.lead);
     if (!this.lead) {
       alert('No lead found');
@@ -29,7 +39,6 @@ export class LeadNodeComponent implements OnInit {
   }
 
   public openModal() {
-    debugger;
     this.dialogService.open(LeadDetailsComponent, {
       header: 'Lead Node Details',
       contentStyle: { 'max-height': '90vh', padding: '0px' },
@@ -39,7 +48,7 @@ export class LeadNodeComponent implements OnInit {
       modal: false,
       width: '500px',
       data: {
-        nodeData: this.lead,
+        nodeData: this.lead || this.nodeData(),
       },
       maximizable: true,
     });

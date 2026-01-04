@@ -1,5 +1,5 @@
 import { Injectable, signal, inject, NgZone, Type } from '@angular/core';
-import { IJobExecutionState, NodeCompTypeStr } from '../models/flows.model';
+import { IJobExecutionState, NodeCategory, NodeCompTypeStr } from '../models/flows.model';
 import { DynamicNodeWithData, FlowDiagramStateService } from './flow-diagram-state.service';
 import { IGeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-ai-services';
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
@@ -40,9 +40,11 @@ export class FlowNodeCreationService {
       id: 'asset-generated-node-' + nanoid(),
       point: signal({ x: x, y: y }), // Default position
       type: AssetGeneratedNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
-      category: 'output',
+      config: {
+        category: NodeCategory.OUTPUT,
+        component: NodeCompTypeStr.AssetGeneratedNodeComponent,
+      },
       data: { nodeData: generatedAsset },
-      component: 'AssetGeneratedNodeComponent',
     };
     this.flowSignalNodeStateService.nodes.set([...this.flowSignalNodeStateService.nodes(), newNode]);
   }
@@ -54,8 +56,10 @@ export class FlowNodeCreationService {
       id: 'audio-tts-gen-node-' + nanoid(),
       point: signal({ x: 100, y: 100 }), // Default position
       type: AudioTTsNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
-      category: 'process',
-      component: NodeCompTypeStr.AudioTTsNodeComponent,
+      config: {
+        category: NodeCategory.PROCESS,
+        component: NodeCompTypeStr.AudioTTsNodeComponent,
+      },
     };
     this.flowSignalNodeStateService.nodes.set([...this.flowSignalNodeStateService.nodes(), newNode]);
   }

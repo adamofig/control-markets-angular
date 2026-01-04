@@ -1,4 +1,5 @@
 import { Component, ViewChild, ViewContainerRef, OnInit, Type, ComponentRef, inject, computed } from '@angular/core';
+import { INodeConfig, NodeCompTypeStr } from '../../models/flows.model';
 import { BaseFlowNode } from '../base-flow-node';
 import { ComponentDynamicNode } from 'ngx-vflow';
 import { CommonModule } from '@angular/common';
@@ -11,8 +12,9 @@ import { VideoScriptGenDetailsComponent } from '../video-script-gen-node/video-g
 import { FlowOrchestrationService } from '../../services/flow-orchestration.service';
 import { ActionsToolbarComponent } from '../actions-toolbar/actions-toolbar.component';
 
-export interface WrapperNode extends ComponentDynamicNode {
+export interface WrapperNode {
   nodeData: { [key: string]: any };
+  config: INodeConfig;
 }
 
 @Component({
@@ -29,8 +31,8 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
   private flowOrchestrationService = inject(FlowOrchestrationService);
   private dialogService = inject(DialogService);
 
-  public color = computed(() => (this.node() as any)?.color || '#03c9f5');
-  public icon = computed(() => (this.node() as any)?.icon);
+  public color = computed(() => this.node()?.data?.config?.color || '#03c9f5');
+  public icon = computed(() => this.node()?.data?.config?.icon);
 
   private componentRef!: ComponentRef<any>;
 
@@ -45,7 +47,7 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
 
   private loadComponent(): void {
     const nodeData = this.node()?.data?.nodeData;
-    const component = (this.node() as any)?.component;
+    const component = this.node()?.data?.config?.component;
     if (component) {
       this.container.clear();
       const ComponentType = this.flowNodeRegisterService.getNodeType(component);
@@ -68,12 +70,14 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
   }
 
   override openDetails(): void {
-    const componentStr = (this.node() as any).component;
-    const DetailsComponent = this.flowNodeRegisterService.getNodeDetailsType(componentStr);
+    const componentStr = this.node()?.data?.config?.component;
+    if (!componentStr) return;
+    const DetailsComponent = this.flowNodeRegisterService.getNodeDetailsType(componentStr as string);
 
     if (DetailsComponent) {
+      const config = this.flowNodeRegisterService.getNodeConfig(componentStr as string);
       const ref = this.dialogService.open(DetailsComponent, {
-        header: `${this.flowNodeRegisterService.getNodeConfig(componentStr)?.label || 'Node'} Details`,
+        header: `${config?.label || 'Node'} Details`,
         contentStyle: { overflow: 'auto' },
         baseZIndex: 10000,
         draggable: true,

@@ -1,5 +1,5 @@
 import { inject, Injectable, signal, Type } from '@angular/core';
-import { IAgentFlows, IJobExecutionState, INodeMetadata } from '../models/flows.model';
+import { IAgentFlows, IJobExecutionState, INodeMetadata, INodeConfig } from '../models/flows.model';
 import { Connection, DynamicNode, Edge, VflowComponent } from 'ngx-vflow';
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards'; // Added
@@ -11,7 +11,7 @@ import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { IAgentSource } from '../../sources/models/sources.model';
 // NOt able to set a type for data yet.
 
-export type DynamicNodeWithData = DynamicNode & { data?: any; category: 'input' | 'output' | 'process' | 'other'; component: string; color?: string; icon?: string };
+export type DynamicNodeWithData = DynamicNode & { data?: any; config: INodeConfig };
 // 🥕 NOTE: Looks like this service is now a pure wraper, remove it soon.
 @Injectable({
   providedIn: 'root',

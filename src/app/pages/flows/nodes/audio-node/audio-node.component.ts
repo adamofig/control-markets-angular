@@ -14,13 +14,15 @@ import { BaseFlowNode } from '../base-flow-node';
 import { Button } from 'primeng/button';
 import { IAssetNodeData, IAudioAssetsNodeData } from '../../models/nodes.model';
 
-import { StatusJob } from '../../models/flows.model';
+import { INodeConfig, StatusJob } from '../../models/flows.model';
 import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 import { AudioDetailsComponent } from './audio-details/audio-details';
 import { DialogService } from 'primeng/dynamicdialog';
 import { LoadingBarService } from '@dataclouder/ngx-core';
 
 export interface CustomAudioNode extends ComponentDynamicNode {
+  data?: any;
+  config: INodeConfig;
   nodeData: IAudioAssetsNodeData;
 }
 
@@ -29,7 +31,7 @@ export interface CustomAudioNode extends ComponentDynamicNode {
   templateUrl: './audio-node.component.html',
   styleUrls: ['./audio-node.component.scss'],
   standalone: true,
-  imports: [HandleComponent, Button, Tag, TagModule, BaseNodeToolbarComponent, CommonModule, MessageContentDisplayer],
+  imports: [HandleComponent, Tag, TagModule, BaseNodeToolbarComponent, CommonModule, MessageContentDisplayer],
 })
 export class AudioNodeComponent extends BaseFlowNode<CustomAudioNode> {
   private toastService = inject(TOAST_ALERTS_TOKEN);
@@ -55,14 +57,14 @@ export class AudioNodeComponent extends BaseFlowNode<CustomAudioNode> {
 
   override ngOnInit(): void {
     super.ngOnInit();
-    console.log('audio-node', this.node()?.data?.nodeData);
-    this.transcription = this.node()?.data?.nodeData?.transcription;
+    console.log('audio-node', this.nodeData());
+    this.transcription = this.nodeData()?.transcription;
     this.hasTranscription = !!this.transcription;
     this.buildBaseMessage();
   }
 
   private buildBaseMessage(): void {
-    const nodeData = this.node()?.data?.nodeData;
+    const nodeData = this.nodeData();
     if (nodeData) {
       this.baseMessage = {
         messageId: nodeData.id,
@@ -88,7 +90,7 @@ export class AudioNodeComponent extends BaseFlowNode<CustomAudioNode> {
       duplicate: true,
 
       inputValues: {
-        nodeData: this.node()?.data?.nodeData,
+        nodeData: this.nodeData(),
       },
       maximizable: true,
     });
@@ -96,9 +98,9 @@ export class AudioNodeComponent extends BaseFlowNode<CustomAudioNode> {
 
   public async getTranscriptions() {
     this.loadingBar.showIndeterminate();
-    const transcription = await this.whisperService.transcribe(this.node()?.data?.nodeData?.storage?.url || '');
+    const transcription = await this.whisperService.transcribe(this.nodeData()?.storage?.url || '');
     console.log('transcription', transcription);
-    const nodeMetadata = { ...this.node()?.data, nodeData: { ...this.node()?.data?.nodeData, transcription } };
+    const nodeMetadata = { ...this.node()?.data, nodeData: { ...this.nodeData(), transcription } };
 
     this.flowSignalNodeStateService.updateNodeData(this.node().id, nodeMetadata);
     this.hasTranscription = true;
@@ -109,7 +111,7 @@ export class AudioNodeComponent extends BaseFlowNode<CustomAudioNode> {
   }
 
   public playAudio() {
-    const audioUrl = this.node()?.data?.nodeData?.storage?.url;
+    const audioUrl = this.nodeData()?.storage?.url;
     if (audioUrl) {
       const audio = new Audio(audioUrl);
       audio.play();

@@ -39,7 +39,7 @@ export class TaskConversationComponent implements OnInit {
 
     const inputNodes = this.nodeSearchesService.getInputNodes(this.node?.id!);
     const contextPrompts = this.nodePromptBuilder.getContextPrompts(inputNodes);
-    const groupedInputNodes = groupBy(inputNodes, item => item.component);
+    const groupedInputNodes = groupBy(inputNodes, item => item.config.component);
     const agents = groupedInputNodes[NodeCompTypeStr.AgentNodeComponent] || [];
     if (agents.length > 0) {
       const agentData = agents[0].data.nodeData;

@@ -42,7 +42,7 @@ export enum PersonaExtractionLevel {
 })
 export class NodePromptBuilderService {
   public getContextPrompts(nodes: DynamicNodeWithData[]): ChatMessage[] {
-    const groupedInputNodes = groupBy(nodes, item => item.component);
+    const groupedInputNodes = groupBy(nodes, item => item.config.component);
     const sourceNodes = groupedInputNodes[NodeCompTypeStr.SourcesNodeComponent] || [];
     const messages: ChatMessage[] = [];
 

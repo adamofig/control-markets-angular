@@ -11,10 +11,12 @@ import { IAgentCard, DefaultAgentCardsService } from '@dataclouder/ngx-agent-car
 import { AgentDetailsComponent } from './agent-details/agent-details';
 import { FlowExecutionUtilsService } from '../../services/flow-execution-utils';
 import { BaseFlowNode } from '../base-flow-node';
-import { NodeCategory, StatusJob } from '../../models/flows.model';
+import { INodeConfig, NodeCategory, StatusJob } from '../../models/flows.model';
 import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 
 export interface CustomAgentNode extends ComponentDynamicNode {
+  data?: any;
+  config: INodeConfig;
   nodeData: IAgentCard;
 }
 
@@ -29,7 +31,7 @@ export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements
   public dialogService = inject(DialogService);
   public flowExecutionUtilsService = inject(FlowExecutionUtilsService);
   private defaultAgentCardsService = inject(DefaultAgentCardsService);
-  public agentCard = computed(() => this.node()?.data?.nodeData);
+  public agentCard = computed(() => this.nodeData());
 
   private fullAgentCard: IAgentCard | null = null;
 
@@ -41,12 +43,11 @@ export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements
     return this.fullAgentCard;
   }
 
-  public override nodeCategory: NodeCategory = NodeCategory.INPUT;
 
   constructor() {
     super();
     effect(() => {
-      console.log('agent-node', this.data()?.nodeData.assets?.image?.url);
+      console.log('agent-node', this.nodeData()?.assets?.image?.url);
     });
     // TODO: ver como usar el BaseFlowNode para suscribirme al estado.
   }
@@ -66,8 +67,8 @@ export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements
       modal: false,
       width: '500px',
       data: {
-        agentCard: this.node().data?.nodeData,
-        node: this.node(),
+        agentCard: this.nodeData(),
+        node: this.node().data,
       },
       maximizable: true,
       duplicate: true,

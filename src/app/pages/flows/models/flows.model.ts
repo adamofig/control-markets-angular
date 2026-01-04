@@ -37,15 +37,20 @@ export interface INodeMetadata {
   [key: string]: any;
 }
 
+export interface INodeConfig {
+  component: NodeCompTypeStr;
+  category: NodeCategory;
+  color?: string;
+  icon?: string;
+  label?: string;
+}
+
 export interface IFlowNode {
   id: string;
   point: { x: number; y: number };
   type: string; // Este es raro, es string al serializar y guardar, pero en memoria es una clase. no recuerdo el proceso, pero siento que necesito mejorar.
-  component: NodeCompTypeStr; // El string del componente, utilizo este en el backend y para saber que componente es, type lo estoy reservando solo para el Flow Framework
-  category: NodeCategory;
   data: INodeMetadata;
-  color?: string;
-  icon?: string;
+  config: INodeConfig;
 }
 export interface IAgentFlows extends AuditDate {
   _id?: string;

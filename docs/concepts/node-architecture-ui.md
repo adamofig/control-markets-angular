@@ -10,6 +10,28 @@ A Node is an Angular component wrapped by the **App Flow Node Component**, which
 
 While you can create custom nodes and UIs from scratch, it is highly recommended to use the **Wrapper Node** to ensure consistency across the system. This **guarantees** a unified UI experience and simplifies development.
 
+## Node State Structure
+
+A Node in NGX VFlow is a `ComponentDynamicNode`, which holds its position and data. In Control Markets, we extend this into `DynamicNodeWithData` (found in `BaseFlowNode`) ensuring a consistent structure across all specialized nodes:
+
+1.  **`config`**: Centralized canvas-level metadata (Category, Component ID, Color, Icon, Label). This is the "Identity" of the node on the canvas.
+2.  **`nodeData`**: The business-level data used by the specialized component (e.g., an Agent's prompt, an Asset's URL).
+
+This separation ensures that canvas logic (like rendering borders or toolbars) stays decoupled from the business logic of each node.
+
+Next is an example about the config properties of the node. 
+
+```typescript
+// INodeConfig structure
+{
+  component: NodeCompTypeStr.AudioNodeComponent,
+  category: NodeCategory.INPUT,
+  color: '#10b981', // green-500
+  icon: 'pi pi-volume-up',
+  label: 'Audio'
+}
+```
+
 ## UI Considerations & Compatibility
 
 `ngx-vflow` is an experimental architecture that uses `foreignObject` to render nodes within the SVG canvas. However, `foreignObject` support in **Safari** (default on iPad and iPhone) can be limited. 
@@ -40,25 +62,29 @@ The `WrapperNodeComponent` acts as a standardized shell that implements `BaseFlo
 The wrapper uses Angular's `ViewContainerRef` to dynamically render the actual node component at runtime.
 
 1.  **Dynamic Projection**: It contains a `<div #container></div>` where the dynamic component is injected.
-2.  **Type Registry**: It uses `FlowNodeRegisterService` to resolve a string identifier (e.g., `'AgentNodeComponent'`) into a concrete Angular component class and its visual metadata.
-3.  **Visual Metadata**: The registry provides the `color`, `icon`, and `label` which the wrapper applies dynamically to the card and its toolbars.
-4.  **Automatic Input Binding**: Once the component is created, the wrapper automatically maps data from the node's state (`nodeData`) to the component's public properties.
+2.  **Type Registry**: It uses `FlowNodeRegisterService` to resolve the `config.component` string identifier into a concrete Angular component class.
+3.  **Visual Metadata**: The wrapper applies `config.color`, `config.icon`, and `config.label` dynamically to the card and its toolbars.
+4.  **Automatic Input Binding**: Once the component is created, the wrapper automatically maps data from `nodeData` to the component's public properties.
 
 ```typescript
 // From WrapperNodeComponent.ts
 private loadComponent(): void {
   const nodeData = this.node()?.data?.nodeData;
-  const component = (this.node() as any)?.component;
+  const componentStr = this.node()?.data?.config?.component;
   
-  if (nodeData && component) {
-    const ComponentType = this.flowNodeRegisterService.getNodeType(component);
+  if (componentStr) {
+    const ComponentType = this.flowNodeRegisterService.getNodeType(componentStr);
     if (ComponentType) {
       this.componentRef = this.container.createComponent(ComponentType);
       
-      // Auto-bind keys from nodeData to component inputs
-      Object.keys(nodeData).forEach(inputName => {
-        this.componentRef.instance[inputName] = nodeData[inputName];
-      });
+      if (nodeData) {
+        // Auto-bind keys from nodeData to component inputs
+        Object.keys(nodeData).forEach(inputName => {
+          if (inputName in this.componentRef.instance) {
+             this.componentRef.instance[inputName] = nodeData[inputName];
+          }
+        });
+      }
     }
   }
 }

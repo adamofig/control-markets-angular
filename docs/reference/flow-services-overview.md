@@ -42,6 +42,7 @@ Maps node IDs to their actual Angular component instances.
 ### [FlowSerializationService](file:///Users/adamo/Documents/GitHub/control-markets-angular/src/app/pages/flows/services/flow-serialization.service.ts)
 Handles the conversion between the live canvas state and the persistable database format.
 - **Responsibility**: `serializeFlow()` for saving and `loadFlow()` for restoring.
+- **Key Feature**: Correcting handling of the centralized `config` object ensuring canvas settings are preserved.
 
 ### [FlowNodeRegisterService](file:///Users/adamo/Documents/GitHub/control-markets-angular/src/app/pages/flows/services/flow-node-register.service.ts)
 A registry that maps string identifiers to Angular component types.
