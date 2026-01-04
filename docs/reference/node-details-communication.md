@@ -4,6 +4,23 @@ This document defines the standard pattern for communication between a flow node
 
 ---
 
+## 🌉 The Dual-Layer Connection
+
+Control Markets uses a **Dual-Layer Architecture** to keep the canvas clean while allowing deep configuration. It's crucial to understand how these layers stay synced:
+
+1.  **Canvas Layer (VFlow)**: The orchestration layer where nodes live, connect, and move.
+2.  **Popup Layer (PrimeNG Modal)**: A floating, draggable window where detailed business logic and configuration are handled.
+
+### Context Awareness
+Even though the modal "floats" above the canvas, it is **fully tethered** to its source node. When a modal opens, it receives the complete `node` object (ID, configuration, data).
+
+This allows the Details Component to make sense of the entire flow:
+- **Graph Discovery**: Using the `node.id`, the details view can use services like `NodeSearchesService` to find what nodes are connected to it.
+- **Data Extraction**: It can look "upstream" to see what inputs are providing data (e.g., a Video Script node looking at a Source node's content).
+- **State Persistence**: Any changes made in the modal are pushed back to the main flow state via the `FlowSignalNodeStateService`, reflecting instantly on the canvas.
+
+---
+
 ## 🔄 The Centralized Pattern
 
 In the refined architecture, the communication and state management logic are centralized in the `WrapperNodeComponent`. Individual content components remain pure views that receive data via `@Input()` properties.

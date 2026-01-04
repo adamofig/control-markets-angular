@@ -157,6 +157,15 @@ The system manages two distinct visual layers, each with its own drag-and-drop c
 - **Purpose**: Deep configuration and inspection of node-specific data (e.g., viewing an asset, editing agent prompt, checking job logs).
 - **Interaction**: These windows float **above** the canvas. They are independent and draggable within the entire viewport, allowing you to move them aside while still looking at the canvas structure.
 
+### 🔁 Shared State & Graph Awareness
+
+Both layers are unified by the **Shared Node State**. When a detail window opens, it is passed the full `IFlowNode` object. 
+
+This is what makes the "disconnected" floating window actually "connected" to the flow logic:
+- **Shared Identity**: The modal knows its `id` and `config` (color, label, type).
+- **Graph Power**: Because the modal has the `node.id`, it can use global services to traverse the graph and locate its neighbors.
+- **Real-time Sync**: Edges and connections are managed globally. If a node's data changes in the popup layer, the canvas layer reacts immediately because they both depend on the same underlying signal state.
+
 ---
 
 ## 🖱️ Interaction Pattern: Double-Click to Detail

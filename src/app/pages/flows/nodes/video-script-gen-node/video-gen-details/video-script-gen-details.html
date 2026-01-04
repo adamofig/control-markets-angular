@@ -6,7 +6,7 @@
         id="prompt"
         pInputTextarea
         formControlName="prompt"
-        rows="5"
+        rows="1"
         class="w-full"
         placeholder="Enter the prompt for script generation..."
       ></textarea>
@@ -18,7 +18,7 @@
         id="script"
         pInputTextarea
         formControlName="script"
-        rows="10"
+        rows="1"
         class="w-full"
         placeholder="The generated script will appear here..."
       ></textarea>
@@ -29,8 +29,35 @@
         <app-dialogs [arrayForm]="dialogsFormArray" [dialogs]="node?.data?.nodeData?.dialogs"></app-dialogs>
     </div>
 
+    @if (inputNodes.length > 0) {
+      <div class="inputs-section mb-4">
+        <h3 class="font-bold mb-2">Input Contents</h3>
+        <div class="flex flex-column gap-3">
+          @for (inputNode of inputNodes; track inputNode.id) {
+            <div class="input-item p-3 border-round surface-100">
+              <div class="font-bold mb-1 flex align-items-center gap-2">
+                <i [class]="inputNode.config?.icon"></i>
+                {{ inputNode.config?.label || 'Input' }}
+              </div>
+              <div class="text-sm line-height-3 white-space-pre-wrap">
+                {{ inputNode.data?.nodeData?.content || 'No content available' }}
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
     <div class="flex justify-content-end gap-2 mt-4">
       <p-button label="Cancel" icon="pi pi-times" severity="secondary" (onClick)="cancel()"></p-button>
+      <p-button 
+        label="Generate Script" 
+        icon="pi pi-sparkles" 
+        severity="help" 
+        [loading]="isLoading" 
+        (onClick)="generateScript()"
+        [disabled]="isLoading"
+      ></p-button>
       <p-button label="Save" icon="pi pi-check" (onClick)="save()"></p-button>
     </div>
   </form>

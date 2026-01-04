@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { FormBuilder, FormArray, ReactiveFormsModule, FormGroup } from '@angular/forms';
@@ -12,7 +12,6 @@ import { DialogItemComponent } from './dialog-item/dialog-item.component';
   imports: [CommonModule, ReactiveFormsModule, ButtonModule, DialogItemComponent],
   templateUrl: './dialogs.component.html',
   styleUrls: ['./dialogs.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogsComponent implements OnInit {
   private fb: FormBuilder = inject(FormBuilder);
