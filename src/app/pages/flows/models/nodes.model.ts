@@ -38,8 +38,7 @@ export interface ILeadNode {
 export interface IVideoScriptGenNodeData {
   _id?: string;
   id: string;
-  prompt: string;
-  script?: string;
+  prompt?: string;
   dialogs?: IDialog[];
   useAudioTts?: boolean;
   request?: any;

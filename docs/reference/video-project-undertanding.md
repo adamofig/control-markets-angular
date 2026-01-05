@@ -47,7 +47,7 @@ The **Video Script Node** is the primary engine for turning raw information into
 The `VideoScriptGenDetailsComponent` provides the interface to generate and manage the script:
 
 #### 1. Input Aggregation
-When the details modal is opened, it automatically detects all connected input nodes. It pulls the `content` or `nodeData` from these inputs to build a rich context for the AI.
+When the details modal is opened, it automatically detects all connected input nodes. It pulls the `content` or `nodeData` (including AI responses) from these inputs to build a rich context for the AI. This allows for a multi-step chain where a previous node's output becomes the basis for the script.
 
 #### 2. AI Script Generation
 By clicking the **Generate Script** button, the system:
@@ -56,12 +56,20 @@ By clicking the **Generate Script** button, the system:
 *   Calls the `LlmService` with a request for a guaranteed JSON response.
 *   The AI is instructed to return an array of `IDialog` objects.
 
-#### 3. Automatic Form Population
-The response from the LLM is parsed and used to clear and then re-populate the `dialogs` form array. This allows the user to immediately see the generated lines, edit them, or proceed to voice synthesis.
+#### 3. TTS Integration & Audio Generation
+If an **Audio TTS Node** is connected as an input, the component unlocks advanced audio features:
+*   **Generate Audios**: A dedicated button appears that allows you to synthesize speech for all dialogs in batch.
+*   **Automatic Settings**: It inherits voice settings (voice ID, speed, storage path) directly from the connected TTS node.
+*   **State Management**: It tracks which dialogs already have audio and only generates it for the ones missing it.
+*   **Cloud Synchronization**: Synthesized audios are automatically uploaded to cloud storage and linked to the dialog metadata.
+
+#### 4. Automatic Form Population
+The response from the LLM or the results of TTS synthesis are parsed and used to update the `dialogs` form array. This allows the user to immediately see the generated lines, listen to the audio, or edit the content.
 
 ### Next Steps in the Flow
-Once the dialogs are generated:
-*   **Voice Synthesis**: Each dialog line can be sent to TTS services to generate the `audio` file.
+Once the dialogs and audios are ready:
 *   **Composition**: The dialogs and associated media are used to build the `ICompositionPlan` for final video rendering.
+*   **Preview**: The assets can be previewed in the specialized video editing components.
+
 
 

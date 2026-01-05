@@ -8,7 +8,7 @@
 
     @if(dialog?.audio) {
     <p-inputgroup-addon>
-      <p-button icon="pi pi-ellipsis-v" severity="secondary" />
+      <p-button icon="pi pi-download" severity="secondary" (click)="onDownloadAudio()" pTooltip="Download Audio" />
     </p-inputgroup-addon>
     } @else {
     <p-inputgroup-addon>
@@ -17,10 +17,7 @@
     }
 
     <p-inputgroup-addon>
-      <p-button icon="pi pi-ellipsis-v" severity="secondary" />
-    </p-inputgroup-addon>
-    <p-inputgroup-addon>
-      <p-button icon="pi pi-play-circle" severity="primary" variant="text" (click)="onPlayAudio()" />
+      <p-button icon="pi pi-play-circle" severity="primary" variant="text" (click)="onPlayAudio()" pTooltip="Play Audio" />
     </p-inputgroup-addon>
   </p-inputgroup>
 </div>

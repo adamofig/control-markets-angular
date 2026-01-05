@@ -81,11 +81,11 @@ importers:
         specifier: ^0.0.44
         version: 0.0.44(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/fire@19.2.0(ffa92933957d2ffff27f4751e70b11ac))(@capacitor-community/apple-sign-in@7.1.0(@capacitor/core@7.4.4))(@codetrix-studio/capacitor-google-auth@3.4.0-rc.4(@capacitor/core@7.4.4))
       '@dataclouder/ngx-agent-cards':
-        specifier: ^0.1.92
-        version: 0.1.92(f8f82730061f7e46051b176d18e3c12c)
+        specifier: ^0.1.93
+        version: 0.1.93(f8f82730061f7e46051b176d18e3c12c)
       '@dataclouder/ngx-ai-services':
-        specifier: ^0.0.46
-        version: 0.0.46(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.50(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))
+        specifier: ^0.0.48
+        version: 0.0.48(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.50(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))
       '@dataclouder/ngx-auth':
         specifier: ^0.0.47
         version: 0.0.47(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/fire@19.2.0(ffa92933957d2ffff27f4751e70b11ac))(@capacitor-community/apple-sign-in@7.1.0(@capacitor/core@7.4.4))(@codetrix-studio/capacitor-google-auth@3.4.0-rc.4(@capacitor/core@7.4.4))
@@ -100,7 +100,7 @@ importers:
         version: 0.0.1(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))
       '@dataclouder/ngx-lessons':
         specifier: ^0.1.22
-        version: 0.1.22(d2f051564efbed47af39a79aef77c994)
+        version: 0.1.22(947b2009dce3631fef37e7527b697a7d)
       '@dataclouder/ngx-logs':
         specifier: ^0.0.2
         version: 0.0.2(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))
@@ -269,13 +269,13 @@ importers:
         version: 12.3.0(chokidar@4.0.3)
       '@storybook/addon-docs':
         specifier: ^10.0.4
-        version: 10.0.8(@types/react@19.2.6)(esbuild@0.25.12)(rollup@4.52.3)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)))(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))(webpack@5.103.0(esbuild@0.25.12))
+        version: 10.0.8(@types/react@19.2.6)(esbuild@0.25.12)(rollup@4.52.3)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)))(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))(webpack@5.103.0(esbuild@0.25.12))
       '@storybook/addon-onboarding':
         specifier: ^10.0.4
-        version: 10.0.8(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)))
+        version: 10.0.8(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)))
       '@storybook/angular':
         specifier: ^10.0.4
-        version: 10.0.8(20d92e5ba70b2e18f7d66926ac0ffc83)
+        version: 10.0.8(5e1f4b6918e610a64f7dec522f25a432)
       '@types/jasmine':
         specifier: ~5.1.0
         version: 5.1.13
@@ -302,7 +302,7 @@ importers:
         version: 1.2.2(eslint@8.57.1)
       eslint-plugin-storybook:
         specifier: ^10.0.4
-        version: 10.0.8(eslint@8.57.1)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)))(typescript@5.8.3)
+        version: 10.0.8(eslint@8.57.1)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)))(typescript@5.8.3)
       jasmine-core:
         specifier: ~5.1.0
         version: 5.1.2
@@ -326,7 +326,7 @@ importers:
         version: 2.1.0(jasmine-core@5.1.2)(karma-jasmine@5.1.0(karma@6.4.4))(karma@6.4.4)
       storybook:
         specifier: ^10.0.4
-        version: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))
+        version: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))
       typescript:
         specifier: ~5.8.3
         version: 5.8.3
@@ -1566,8 +1566,8 @@ packages:
       '@capacitor-community/apple-sign-in': '>=6.0.0'
       '@codetrix-studio/capacitor-google-auth': ^3.3.0 || ^3.4.0-rc.4
 
-  '@dataclouder/ngx-agent-cards@0.1.92':
-    resolution: {integrity: sha512-W024Sr+ClQMEo5pmr7OjBuEGH3v/sKOmqWk4OqBYKdxep+uclnDdDD35HmvCcAmvAX/d/2i191YaRTlGA+FALg==}
+  '@dataclouder/ngx-agent-cards@0.1.93':
+    resolution: {integrity: sha512-MQixsiFnoGEee+JtohmVPmIjLlU15oGLRG9kbpQ/NnrDME7nYw4tt4RrHSoy7iPVDRPAoPpVYD/hg0KI1/asCg==}
     peerDependencies:
       '@angular/cdk': '>=18.0.0'
       '@angular/common': '>=18.0.0'
@@ -1587,8 +1587,8 @@ packages:
       '@dataclouder/ngx-users':
         optional: true
 
-  '@dataclouder/ngx-ai-services@0.0.46':
-    resolution: {integrity: sha512-ypRBNHXcqOVJ8Od2PVPqX9QBqfn6XHcK9KIziSCHsf4utGDHUZrlhtdt8FICN4ccvsFDA++lHvnnxA5AyIl4KQ==}
+  '@dataclouder/ngx-ai-services@0.0.48':
+    resolution: {integrity: sha512-B+BPvgSSB+YiLvGvUCqbXVZ/fSBg+I8/AHqQteEcXMsMrFj9ecYiI8Eyj7tSCHkIYFhvfuV1fwDYO9B9HcQSFQ==}
     peerDependencies:
       '@angular/common': ^19.2.0
       '@angular/core': ^19.2.0
@@ -7864,10 +7864,6 @@ packages:
     resolution: {integrity: sha512-dW41u5VfLXu8SJh5bwRmyYUbAoSB3c9uQh6L8h/KtsFREPWpbX1lrljJo186Jc4nmci/sGUZ9a0a0J2zgfq2hw==}
     engines: {node: '>= 0.8.0'}
 
-  send@1.2.0:
-    resolution: {integrity: sha512-uaW0WwXKpL9blXE2o0bRhoL2EGXIrZxQ2ZQ4mgcfoBxdFmQold+qWsD2jLrfZ0trjKL6vOw0j//eAwcALFjKSw==}
-    engines: {node: '>= 18'}
-
   send@1.2.1:
     resolution: {integrity: sha512-1gnZf7DFcoIcajTjTwjwuDjzuz4PPcY2StKPlsGAQ1+YH20IRVrBaXSWmdjowTJ6u8Rc01PoYOGHXfP1mYcZNQ==}
     engines: {node: '>= 18'}
@@ -11200,7 +11196,7 @@ snapshots:
       '@codetrix-studio/capacitor-google-auth': 3.4.0-rc.4(@capacitor/core@7.4.4)
       tslib: 2.8.1
 
-  '@dataclouder/ngx-agent-cards@0.1.92(f8f82730061f7e46051b176d18e3c12c)':
+  '@dataclouder/ngx-agent-cards@0.1.93(f8f82730061f7e46051b176d18e3c12c)':
     dependencies:
       '@angular/cdk': 20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/common': 20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
@@ -11213,7 +11209,7 @@ snapshots:
       '@dataclouder/ngx-mic': 0.1.4(a997d51a3824b933f9d023f48bb7a923)
       '@dataclouder/ngx-users': 0.0.21(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.50(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))
 
-  '@dataclouder/ngx-ai-services@0.0.46(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.50(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))':
+  '@dataclouder/ngx-ai-services@0.0.48(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@dataclouder/ngx-core@0.1.50(@angular/cdk@20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@capacitor-community/speech-recognition@7.0.1(@capacitor/core@7.4.4))(@capacitor/core@7.4.4)(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))(rxjs@7.8.2))':
     dependencies:
       '@angular/common': 20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/core': 20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)
@@ -11255,12 +11251,12 @@ snapshots:
       '@angular/core': 20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)
       tslib: 2.8.1
 
-  '@dataclouder/ngx-lessons@0.1.22(d2f051564efbed47af39a79aef77c994)':
+  '@dataclouder/ngx-lessons@0.1.22(947b2009dce3631fef37e7527b697a7d)':
     dependencies:
       '@angular/cdk': 20.1.7(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/common': 20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/core': 20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)
-      '@dataclouder/ngx-agent-cards': 0.1.92(f8f82730061f7e46051b176d18e3c12c)
+      '@dataclouder/ngx-agent-cards': 0.1.93(f8f82730061f7e46051b176d18e3c12c)
       tslib: 2.8.1
     optionalDependencies:
       '@dataclouder/ngx-cloud-storage': 0.0.31(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/fire@19.2.0(ffa92933957d2ffff27f4751e70b11ac))(ngx-image-cropper@9.1.5(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)))(primeng@20.3.0(4e4115555d635722947a0e684d5132b4))
@@ -13183,15 +13179,15 @@ snapshots:
       '@rollup/rollup-win32-arm64-msvc': 4.34.9
       '@rollup/rollup-win32-x64-msvc': 4.34.9
 
-  '@storybook/addon-docs@10.0.8(@types/react@19.2.6)(esbuild@0.25.12)(rollup@4.52.3)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)))(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))(webpack@5.103.0(esbuild@0.25.12))':
+  '@storybook/addon-docs@10.0.8(@types/react@19.2.6)(esbuild@0.25.12)(rollup@4.52.3)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)))(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))(webpack@5.103.0(esbuild@0.25.12))':
     dependencies:
       '@mdx-js/react': 3.1.1(@types/react@19.2.6)(react@19.2.0)
-      '@storybook/csf-plugin': 10.0.8(esbuild@0.25.12)(rollup@4.52.3)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)))(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))(webpack@5.103.0(esbuild@0.25.12))
+      '@storybook/csf-plugin': 10.0.8(esbuild@0.25.12)(rollup@4.52.3)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)))(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))(webpack@5.103.0(esbuild@0.25.12))
       '@storybook/icons': 1.6.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      '@storybook/react-dom-shim': 10.0.8(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)))
+      '@storybook/react-dom-shim': 10.0.8(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)))
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
-      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))
+      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))
       ts-dedent: 2.2.0
     transitivePeerDependencies:
       - '@types/react'
@@ -13200,11 +13196,11 @@ snapshots:
       - vite
       - webpack
 
-  '@storybook/addon-onboarding@10.0.8(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)))':
+  '@storybook/addon-onboarding@10.0.8(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)))':
     dependencies:
-      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))
+      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))
 
-  '@storybook/angular@10.0.8(20d92e5ba70b2e18f7d66926ac0ffc83)':
+  '@storybook/angular@10.0.8(5e1f4b6918e610a64f7dec522f25a432)':
     dependencies:
       '@angular-devkit/architect': 0.2003.11(chokidar@4.0.3)
       '@angular-devkit/build-angular': 20.1.6(@angular/compiler-cli@20.1.8(@angular/compiler@20.1.8)(typescript@5.8.3))(@angular/compiler@20.1.8)(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.1.8(@angular/animations@20.1.8(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/service-worker@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@types/node@24.10.1)(chokidar@4.0.3)(html-webpack-plugin@5.6.5(webpack@5.103.0(esbuild@0.25.12)))(jiti@2.6.1)(karma@6.4.4)(lightningcss@1.30.2)(tailwindcss@4.1.17)(typescript@5.8.3)
@@ -13216,10 +13212,10 @@ snapshots:
       '@angular/forms': 20.1.8(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.1.8(@angular/animations@20.1.8(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
       '@angular/platform-browser': 20.1.8(@angular/animations@20.1.8(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))
       '@angular/platform-browser-dynamic': 20.1.8(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/compiler@20.1.8)(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.1.8(@angular/animations@20.1.8(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.1.8(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.1.8(@angular/compiler@20.1.8)(rxjs@7.8.2)(zone.js@0.15.1)))
-      '@storybook/builder-webpack5': 10.0.8(esbuild@0.25.12)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)))(typescript@5.8.3)
+      '@storybook/builder-webpack5': 10.0.8(esbuild@0.25.12)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)))(typescript@5.8.3)
       '@storybook/global': 5.0.0
       rxjs: 7.8.2
-      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))
+      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))
       telejson: 8.0.0
       ts-dedent: 2.2.0
       tsconfig-paths-webpack-plugin: 4.2.0
@@ -13236,9 +13232,9 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@storybook/builder-webpack5@10.0.8(esbuild@0.25.12)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)))(typescript@5.8.3)':
+  '@storybook/builder-webpack5@10.0.8(esbuild@0.25.12)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)))(typescript@5.8.3)':
     dependencies:
-      '@storybook/core-webpack': 10.0.8(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)))
+      '@storybook/core-webpack': 10.0.8(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)))
       case-sensitive-paths-webpack-plugin: 2.4.0
       cjs-module-lexer: 1.4.3
       css-loader: 7.1.2(webpack@5.103.0(esbuild@0.25.12))
@@ -13246,7 +13242,7 @@ snapshots:
       fork-ts-checker-webpack-plugin: 9.1.0(typescript@5.8.3)(webpack@5.103.0(esbuild@0.25.12))
       html-webpack-plugin: 5.6.5(webpack@5.103.0(esbuild@0.25.12))
       magic-string: 0.30.21
-      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))
+      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))
       style-loader: 4.0.0(webpack@5.103.0(esbuild@0.25.12))
       terser-webpack-plugin: 5.3.14(esbuild@0.25.12)(webpack@5.103.0(esbuild@0.25.12))
       ts-dedent: 2.2.0
@@ -13263,19 +13259,19 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@storybook/core-webpack@10.0.8(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)))':
+  '@storybook/core-webpack@10.0.8(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)))':
     dependencies:
-      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))
+      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))
       ts-dedent: 2.2.0
 
-  '@storybook/csf-plugin@10.0.8(esbuild@0.25.12)(rollup@4.52.3)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)))(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))(webpack@5.103.0(esbuild@0.25.12))':
+  '@storybook/csf-plugin@10.0.8(esbuild@0.25.12)(rollup@4.52.3)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)))(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))(webpack@5.103.0(esbuild@0.25.12))':
     dependencies:
-      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))
+      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))
       unplugin: 2.3.10
     optionalDependencies:
       esbuild: 0.25.12
       rollup: 4.52.3
-      vite: 7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)
+      vite: 7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)
       webpack: 5.103.0(esbuild@0.25.12)
 
   '@storybook/global@5.0.0': {}
@@ -13285,11 +13281,11 @@ snapshots:
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
 
-  '@storybook/react-dom-shim@10.0.8(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)))':
+  '@storybook/react-dom-shim@10.0.8(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)))':
     dependencies:
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
-      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))
+      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))
 
   '@tailwindcss/node@4.1.17':
     dependencies:
@@ -13819,13 +13815,13 @@ snapshots:
       chai: 5.3.3
       tinyrainbow: 2.0.0
 
-  '@vitest/mocker@3.2.4(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))':
+  '@vitest/mocker@3.2.4(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))':
     dependencies:
       '@vitest/spy': 3.2.4
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)
+      vite: 7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)
 
   '@vitest/pretty-format@3.2.4':
     dependencies:
@@ -15436,11 +15432,11 @@ snapshots:
     dependencies:
       eslint: 8.57.1
 
-  eslint-plugin-storybook@10.0.8(eslint@8.57.1)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)))(typescript@5.8.3):
+  eslint-plugin-storybook@10.0.8(eslint@8.57.1)(storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)))(typescript@5.8.3):
     dependencies:
       '@typescript-eslint/utils': 8.47.0(eslint@8.57.1)(typescript@5.8.3)
       eslint: 8.57.1
-      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))
+      storybook: 10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -15641,7 +15637,7 @@ snapshots:
       qs: 6.14.0
       range-parser: 1.2.1
       router: 2.2.0
-      send: 1.2.0
+      send: 1.2.1
       serve-static: 2.2.0
       statuses: 2.0.2
       type-is: 2.0.1
@@ -18201,22 +18197,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  send@1.2.0:
-    dependencies:
-      debug: 4.4.3
-      encodeurl: 2.0.0
-      escape-html: 1.0.3
-      etag: 1.8.1
-      fresh: 2.0.0
-      http-errors: 2.0.1
-      mime-types: 3.0.2
-      ms: 2.1.3
-      on-finished: 2.4.1
-      range-parser: 1.2.1
-      statuses: 2.0.2
-    transitivePeerDependencies:
-      - supports-color
-
   send@1.2.1:
     dependencies:
       debug: 4.4.3
@@ -18515,14 +18495,14 @@ snapshots:
       es-errors: 1.3.0
       internal-slot: 1.1.0
 
-  storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1)):
+  storybook@10.0.8(@testing-library/dom@10.4.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1)):
     dependencies:
       '@storybook/global': 5.0.0
       '@storybook/icons': 1.6.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@testing-library/jest-dom': 6.9.1
       '@testing-library/user-event': 14.6.1(@testing-library/dom@10.4.1)
       '@vitest/expect': 3.2.4
-      '@vitest/mocker': 3.2.4(vite@7.0.6(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.43.1))
+      '@vitest/mocker': 3.2.4(vite@7.1.11(@types/node@24.10.1)(jiti@2.6.1)(less@4.3.0)(lightningcss@1.30.2)(sass@1.90.0)(terser@5.43.1))
       '@vitest/spy': 3.2.4
       esbuild: 0.25.12
       recast: 0.23.11

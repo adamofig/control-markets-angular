@@ -35,10 +35,14 @@ export class DialogsComponent implements OnInit {
   }
 
   playAudio(index: number): void {
+    debugger
     const dialog = this.arrayForm.at(index);
-    if (dialog && dialog.get('audio')?.value) {
-      // Play audio here
+    const url = dialog.value?.audio?.url;
+    if (url) {
+      const audio = new Audio(url);
+      audio.play();
     }
+
   }
 
   pushDialogForm(): void {

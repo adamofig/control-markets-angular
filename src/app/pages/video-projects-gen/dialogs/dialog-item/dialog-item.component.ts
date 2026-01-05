@@ -36,12 +36,19 @@ export class DialogItemComponent {
     this.playAudio.emit(this.index);
   }
 
+  onDownloadAudio(): void {
+    if (this.dialog?.audio?.url) {
+      const link = document.createElement('a');
+      link.href = this.dialog.audio.url;
+      link.target = '_blank';
+      link.download = `audio-${this.index}.mp3`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  }
+
   onAddAudio(): void {
-    // const audioFile = this.vertexAudioService.generateAudio({
-    //   text: this.formGroup.get('content')?.value,
-    //   voiceName: 'es-ES-Standard-A',
-    //   languageCode: 'es-ES',
-    // });
     // LLamar al servicio de generar audio
     // Guardar el audio en el formGroup
     // Guardar el form

@@ -1,39 +1,31 @@
 <div class="details-container p-4">
   <form [formGroup]="form">
+
     <div class="field mb-4">
-      <label for="prompt" class="block font-bold mb-2">Prompt</label>
+      <label for="prompt" class="block font-bold mb-2">Generation Prompt (Optional)</label>
       <textarea
         id="prompt"
         pInputTextarea
         formControlName="prompt"
         rows="1"
         class="w-full"
-        placeholder="Enter the prompt for script generation..."
+        placeholder="Add extra instructions or context for the AI script generation..."
       ></textarea>
+      <small class="text-secondary">This prompt is combined with content from all connected input nodes.</small>
     </div>
 
     @if (hasAudioTtsInput) {
       <div class="field mb-4 flex align-items-center gap-2 p-3 border-round surface-100 border-1 border-primary-100">
-        <i class="pi pi-megaphone text-primary"></i>
+        <i class="pi pi-megaphone text-primary" style="font-size: 1.5rem"></i>
         <div class="flex-grow-1">
-          <label for="useAudioTts" class="block font-bold">Use Audio TTS</label>
-          <small class="text-secondary">Automatically generate audio for each dialog using the connected TTS node.</small>
+          <label for="useAudioTts" class="block font-bold">Automatic Audio Generation</label>
+          <small class="text-secondary">Enable this to use settings from the connected TTS node to generate speech for each dialog line.</small>
         </div>
         <p-toggleSwitch id="useAudioTts" formControlName="useAudioTts"></p-toggleSwitch>
       </div>
     }
 
-    <div class="field mb-4">
-      <label for="script" class="block font-bold mb-2">Generated Script</label>
-      <textarea
-        id="script"
-        pInputTextarea
-        formControlName="script"
-        rows="1"
-        class="w-full"
-        placeholder="The generated script will appear here..."
-      ></textarea>
-    </div>
+
 
     <div class="dialogs-section mb-4">
         <h3 class="font-bold mb-2">Dialogs</h3>
@@ -51,7 +43,7 @@
                 {{ inputNode.config?.label || 'Input' }}
               </div>
               <div class="text-sm line-height-3 white-space-pre-wrap">
-                {{ inputNode.data?.nodeData?.content || 'No content available' }}
+                {{ getInputContent(inputNode) || 'No content available' }}
               </div>
             </div>
           }
@@ -61,15 +53,25 @@
 
     <div class="flex justify-content-end gap-2 mt-4">
       <p-button label="Cancel" icon="pi pi-times" severity="secondary" (onClick)="cancel()"></p-button>
+      @if (hasAudioTtsInput) {
+        <p-button 
+          label="Generate Audios" 
+          icon="pi pi-volume-up" 
+          severity="info" 
+          [loading]="isGeneratingAudio" 
+          (onClick)="generateAudio()"
+          [disabled]="isGeneratingAudio || isLoading"
+        ></p-button>
+      }
       <p-button 
         label="Generate Script" 
         icon="pi pi-sparkles" 
         severity="help" 
         [loading]="isLoading" 
         (onClick)="generateScript()"
-        [disabled]="isLoading"
+        [disabled]="isLoading || isGeneratingAudio || !hasInputContent"
       ></p-button>
-      <p-button label="Save" icon="pi pi-check" (onClick)="save()"></p-button>
+      <p-button label="Save" icon="pi pi-check" (onClick)="save()" [disabled]="isLoading || isGeneratingAudio"></p-button>
     </div>
   </form>
 </div>
