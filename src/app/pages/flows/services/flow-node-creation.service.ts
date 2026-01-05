@@ -5,7 +5,7 @@ import { IGeneratedAsset, GeneratedAssetsService } from '@dataclouder/ngx-ai-ser
 import { FlowSignalNodeStateService } from './flow-signal-node-state.service';
 import { nanoid } from 'nanoid';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
-import { AudioTTsNodeComponent } from '../nodes/audio-tts-node/audio-tts-node';
+import { FlowNodeRegisterService } from './flow-node-register.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +14,7 @@ export class FlowNodeCreationService {
   private generatedAssetsService = inject(GeneratedAssetsService);
   private flowSignalNodeStateService = inject(FlowSignalNodeStateService);
   private flowDiagramStateService = inject(FlowDiagramStateService);
+  private flowNodeRegisterService = inject(FlowNodeRegisterService);
 
   public async addGeneratedAssetNodeToFlow(jobExecutionState: IJobExecutionState) {
     const generatedAsset = await this.generatedAssetsService.findOne(jobExecutionState.outputEntityId);
@@ -51,15 +52,23 @@ export class FlowNodeCreationService {
 
   public addAudioTTSNode() {
     this.flowDiagramStateService.vflowComponent.panTo({ x: 100, y: 100 });
-    // this.flowDiagramStateService.vflowComponent.zoomTo(1);
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.AudioTTsNodeComponent);
+    const wrapperConfig = this.flowNodeRegisterService.getNodeConfig('WrapperNodeComponent');
+    
+    if (!nodeConfig || !wrapperConfig) return;
+
     const newNode: DynamicNodeWithData = {
       id: 'audio-tts-gen-node-' + nanoid(),
-      point: signal({ x: 100, y: 100 }), // Default position
-      type: AudioTTsNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      point: signal({ x: 100, y: 100 }), 
+      type: wrapperConfig.component as Type<any>,
+      data: { nodeData: {} },
       config: {
-        category: NodeCategory.PROCESS,
         component: NodeCompTypeStr.AudioTTsNodeComponent,
-      },
+        category: NodeCategory.PROCESS,
+        color: nodeConfig.color,
+        icon: nodeConfig.icon,
+        label: nodeConfig.label
+      }
     };
     this.flowSignalNodeStateService.nodes.set([...this.flowSignalNodeStateService.nodes(), newNode]);
   }

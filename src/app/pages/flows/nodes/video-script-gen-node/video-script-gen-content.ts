@@ -1,7 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
-import { VideoScriptGenDetailsComponent } from './video-gen-details/video-script-gen-details';
-import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-video-script-gen-content',

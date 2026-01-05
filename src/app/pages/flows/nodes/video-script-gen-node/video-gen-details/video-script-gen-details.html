@@ -12,6 +12,17 @@
       ></textarea>
     </div>
 
+    @if (hasAudioTtsInput) {
+      <div class="field mb-4 flex align-items-center gap-2 p-3 border-round surface-100 border-1 border-primary-100">
+        <i class="pi pi-megaphone text-primary"></i>
+        <div class="flex-grow-1">
+          <label for="useAudioTts" class="block font-bold">Use Audio TTS</label>
+          <small class="text-secondary">Automatically generate audio for each dialog using the connected TTS node.</small>
+        </div>
+        <p-toggleSwitch id="useAudioTts" formControlName="useAudioTts"></p-toggleSwitch>
+      </div>
+    }
+
     <div class="field mb-4">
       <label for="script" class="block font-bold mb-2">Generated Script</label>
       <textarea

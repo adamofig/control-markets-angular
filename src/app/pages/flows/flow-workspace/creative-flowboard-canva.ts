@@ -28,8 +28,8 @@ import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component'
 import { FlowNodeRegisterService } from '../services/flow-node-register.service';
 
 @Component({
-  templateUrl: './flow-canva.html',
-  styleUrl: './flow-canva.css',
+  templateUrl: './creative-flowboard-canva.html',
+  styleUrl: './creative-flowboard-canva.css',
   changeDetection: ChangeDetectionStrategy.Default,
   standalone: true,
   imports: [

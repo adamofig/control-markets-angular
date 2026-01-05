@@ -13,11 +13,12 @@ import { VideoScriptGenContentComponent } from '../nodes/video-script-gen-node/v
 import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
 import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
 import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
-import { AudioTTsNodeComponent } from '../nodes/audio-tts-node/audio-tts-node';
+import { AudioTTsDetailsComponent } from '../nodes/audio-tts-node/audio-tts-details/audio-tts-details';
 import { NodeCategory, NodeCompTypeStr } from '../models/flows.model';
 import { WrapperNodeComponent } from '../nodes/wrapper-node/wrapper-node.component';
 import { VideoScriptGenDetailsComponent } from '../nodes/video-script-gen-node/video-gen-details/video-script-gen-details';
 import { EmptyDetailsComponent } from '../nodes/empty-node/empty-details/empty-details';
+import { AudioTTsNodeComponent } from '../nodes/audio-tts-node/audio-tts-node';
 
 export interface INodeConfig {
   component: Type<any>;
@@ -98,6 +99,7 @@ export class FlowNodeRegisterService {
       },
       [NodeCompTypeStr.AudioTTsNodeComponent]: {
         component: AudioTTsNodeComponent,
+        detailsComponent: AudioTTsDetailsComponent,
         category: NodeCategory.PROCESS,
         color: '#f59e0b', // amber-500
         icon: 'pi pi-megaphone',

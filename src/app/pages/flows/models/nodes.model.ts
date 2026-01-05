@@ -41,6 +41,7 @@ export interface IVideoScriptGenNodeData {
   prompt: string;
   script?: string;
   dialogs?: IDialog[];
+  useAudioTts?: boolean;
   request?: any;
 }
 

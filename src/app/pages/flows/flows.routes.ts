@@ -7,14 +7,14 @@ export const FLOWS_ROUTES: Routes = [
   },
   {
     path: 'edit',
-    loadComponent: () => import('./flow-workspace/flow-canva').then(m => m.FlowsComponent),
+    loadComponent: () => import('./flow-workspace/creative-flowboard-canva').then(m => m.FlowsComponent),
   },
   {
     path: 'edit/:id',
-    loadComponent: () => import('./flow-workspace/flow-canva').then(m => m.FlowsComponent),
+    loadComponent: () => import('./flow-workspace/creative-flowboard-canva').then(m => m.FlowsComponent),
   },
   {
     path: 'edit/:id/:executionId',
-    loadComponent: () => import('./flow-workspace/flow-canva').then(m => m.FlowsComponent),
+    loadComponent: () => import('./flow-workspace/creative-flowboard-canva').then(m => m.FlowsComponent),
   },
 ];

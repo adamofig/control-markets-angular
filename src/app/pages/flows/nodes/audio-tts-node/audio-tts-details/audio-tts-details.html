@@ -1,0 +1,33 @@
+<div class="details-container">
+  <div class="field mb-4">
+    <label for="prompt" class="block font-bold mb-2">Synthesis Prompt / Text</label>
+    <textarea 
+      id="prompt" 
+      pInputTextarea 
+      [(ngModel)]="prompt" 
+      rows="3" 
+      class="w-full"
+      placeholder="Enter the text to synthesize...">
+    </textarea>
+    <div class="flex justify-end mt-2">
+      <button pButton label="Save Prompt" icon="pi pi-save" (click)="savePrompt()" class="p-button-sm p-button-secondary"></button>
+    </div>
+  </div>
+
+  <hr class="my-4 border-gray-700">
+
+  @if (useAgentGenerator && fullAgentCard) {
+    <app-agent-audio-generator 
+      [fullAgentCard]="fullAgentCard"
+      [message]="prompt"
+      (ttsGenerated)="onTtsGenerated($event)"
+      (cancel)="close()">
+    </app-agent-audio-generator>
+  } @else {
+    <app-tts-playground-wrapper
+      [settings]="settings"
+      (ttsGenerated)="onTtsGenerated($event)"
+      (formValues)="updateSettings($event)">
+    </app-tts-playground-wrapper>
+  }
+</div>

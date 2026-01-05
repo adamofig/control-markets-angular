@@ -282,6 +282,10 @@ export class FlowSignalNodeStateService {
       }
     };
     this.nodes.set([...this.nodes(), newNode]);
+
+    if (refNodeId) {
+      this._createEdge({ source: refNodeId, target: newNode.id });
+    }
   }
 
   public removeNode(nodeId: string): void {

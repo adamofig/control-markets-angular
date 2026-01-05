@@ -4,12 +4,14 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angul
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ButtonModule } from 'primeng/button';
 import { TextareaModule } from 'primeng/textarea';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { FlowSignalNodeStateService } from '../../../services/flow-signal-node-state.service';
 import { IVideoScriptGenNodeData } from '../../../models/nodes.model';
 import { DialogsComponent } from '../../../../video-projects-gen/dialogs/dialogs.component';
 import { NodeSearchesService } from '../../../services/node-searches.service';
 import { DynamicNodeWithData } from '../../../services/flow-diagram-state.service';
 import { LlmService } from '@dataclouder/ngx-ai-services';
+import { NodeCompTypeStr } from '../../../models/flows.model';
 
 
 @Component({
@@ -22,6 +24,7 @@ import { LlmService } from '@dataclouder/ngx-ai-services';
     ButtonModule,
     TextareaModule,
     DialogsComponent,
+    ToggleSwitchModule,
   ],
   templateUrl: './video-script-gen-details.html',
   styleUrl: './video-script-gen-details.css',
@@ -39,6 +42,7 @@ export class VideoScriptGenDetailsComponent implements OnInit {
   public node!: DynamicNodeWithData;
   public form!: FormGroup;
   public inputNodes: DynamicNodeWithData[] = [];
+  public hasAudioTtsInput = false;
   public isLoading = false;
 
   constructor() {
@@ -50,6 +54,7 @@ export class VideoScriptGenDetailsComponent implements OnInit {
   private loadInputNodes(): void {
     if (this.node?.id) {
       this.inputNodes = this.nodeSearchesService.getInputNodes(this.node.id);
+      this.hasAudioTtsInput = this.inputNodes.some(n => n.config?.component === NodeCompTypeStr.AudioTTsNodeComponent);
     }
   }
 
@@ -58,6 +63,7 @@ export class VideoScriptGenDetailsComponent implements OnInit {
     this.form = this.fb.group({
       prompt: [nodeData?.prompt || ''],
       script: [nodeData?.script || ''],
+      useAudioTts: [nodeData?.useAudioTts || false],
       dialogs: this.fb.array([]),
     });
   }

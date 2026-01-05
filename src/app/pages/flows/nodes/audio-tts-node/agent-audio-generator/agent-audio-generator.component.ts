@@ -21,7 +21,7 @@ import { FlowSignalNodeStateService } from '../../../services/flow-signal-node-s
 export class AgentAudioGeneratorComponent implements OnInit {
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
-  public message = '';
+  @Input() message = '';
   public temperature = 0.9;
 
   public isGenerating = signal<boolean>(false);

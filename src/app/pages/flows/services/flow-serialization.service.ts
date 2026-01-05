@@ -23,12 +23,6 @@ export class FlowSerializationService {
         if (node.text && typeof node.text === 'function') {
           serializableText = node.text();
         }
-      } else if (config?.component === 'AudioTTsNodeComponent') {
-        const audioTTsNode = this.flowComponentRefStateService.getNodeComponentRef(node.id);
-        const value = (audioTTsNode as any)?.value;
-        const settings = { ...(audioTTsNode as any)?.settings() };
-        const nodeData = { ...(node?.data?.nodeData || {}), value, settings };
-        serializableData = { ...node?.data, nodeData };
       } else {
         serializableData = { ...node.data };
       }
