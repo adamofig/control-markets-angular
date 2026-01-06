@@ -1,15 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { JsonPipe } from '@angular/common';
-import { IAgentCard } from '@dataclouder/ngx-agent-cards';
+import { ChatMessage, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { DynamicNode } from 'ngx-vflow';
 import { ConversationPromptBuilderService } from '@dataclouder/ngx-agent-cards';
 import { PromptPreviewComponent, DefaultAgentCardsService } from '@dataclouder/ngx-agent-cards';
 
 @Component({
   selector: 'app-distribution-chanel-details',
-  imports: [ButtonModule, JsonPipe, PromptPreviewComponent],
+  imports: [ButtonModule, PromptPreviewComponent],
   templateUrl: './agent-details.html',
   styleUrl: './agent-details.css',
   standalone: true,
@@ -21,7 +20,7 @@ export class AgentDetailsComponent {
   public agentCard!: IAgentCard;
   public node!: DynamicNode;
 
-  public messages!: any[];
+  public messages = signal<ChatMessage[]>([]);
 
   private promptBuilder = inject(ConversationPromptBuilderService);
 
@@ -50,10 +49,12 @@ export class AgentDetailsComponent {
     const id = this.agentCard._id || this.agentCard.id;
 
     const agentCard = await this.defaultAgentCardsService.findOneByQuery({ id: id }, { characterCard: 1, conversationFlow: 1 });
-    this.messages = this.promptBuilder.buildConversationMessages(agentCard);
+    this.messages.set(this.promptBuilder.buildConversationMessages(agentCard));
 
     return agentCard;
   }
 
-  public startFlow(): void {}
+  public startFlow(): void {
+    
+  }
 }

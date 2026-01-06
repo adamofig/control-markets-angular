@@ -4,7 +4,7 @@
     "appId": "markets.control.app",
     "appIdDev": "markets.control.app.dev"
   },
-  "version": "0.0.46",
+  "version": "0.0.48",
   "author": "Adamo",
   "homepage": "https://github.com/adamofig/control-markets-angular",
   "scripts": {

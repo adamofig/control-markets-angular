@@ -53,6 +53,7 @@
     line-height: 1.2;
     background: -webkit-linear-gradient(45deg, var(--ion-color-primary), var(--ion-color-secondary));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
@@ -82,13 +83,11 @@
     }
   }
 
-  .subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 2.5rem;
+  .hero-subtitle {
+    font-size: 1.5rem;
     color: var(--ion-color-medium);
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 2rem;
+    max-width: 700px;
   }
 
   .hero-image {
@@ -133,6 +132,65 @@
   }
 }
 
+.video-section {
+  text-align: center;
+  padding: 4rem 0;
+  max-width: 900px;
+  margin: 0 auto;
+
+  h4 {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--ion-color-primary);
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: var(--ion-color-medium);
+    margin-bottom: 3rem;
+  }
+
+  .architecture-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+
+    .arch-item {
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      h5 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--ion-color-secondary);
+      }
+
+      p {
+        font-size: 1rem;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .section-note {
+    font-size: 1.1rem;
+    padding: 1.5rem;
+    background: rgba(var(--ion-color-tertiary-rgb), 0.1);
+    border-radius: 15px;
+    color: var(--ion-text-color);
+  }
+}
+
 .open-source-section {
   text-align: center;
   padding: 4rem 0;
@@ -145,6 +203,11 @@
     color: var(--ion-color-medium);
     margin-bottom: 3rem;
   }
+}
+
+.features-section, .persona-section {
+  text-align: center;
+  margin-bottom: 100px;
 }
 
 .cta-section {
@@ -245,8 +308,26 @@
 
 .card-container {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+
+  p-card {
+    flex: 1 1 300px;
+    min-width: 0;
+    
+    ::ng-deep .p-card {
+      height: 100%;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+      }
+    }
+  }
 }
 .testimonial-card {
   display: flex;

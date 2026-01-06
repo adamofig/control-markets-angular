@@ -1,12 +1,12 @@
 {
   "projectName": "Control Markets",
-  "version": "0.0.46",
+  "version": "0.0.48",
   "envName": "DEV",
   "production": false,
   "authenticationRequired": true,
-  "backendNodeUrl": "http://192.168.2.3:8121",
-  "backendPythonUrl": "http://192.168.2.3:8122",
-  "aiServicesUrl": "http://192.168.2.3:3330",
+  "backendNodeUrl": "https://local-back.control.markets",
+  "backendPythonUrl": "https://python-back.control.markets",
+  "aiServicesUrl": "https://ai-services.control.markets",
   "mobile": {},
   "firebase": {
     "apiKey": "AIzaSyBX-xd-10lF-_l1F3Zg8iZrri1he5rPULU",

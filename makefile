@@ -105,6 +105,7 @@ deploy-cloudflare:
 	@echo "🚀 Building and deploying to Cloudflare..."
 	npm run prebuild
 	npm run build:prod
+	rm -f www/browser/assets/videos/demo.mp4
 	npx wrangler deploy
 	@echo "✅ Deployment to Cloudflare completed successfully."
 
