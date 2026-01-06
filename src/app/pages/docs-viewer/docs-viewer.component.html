@@ -1,0 +1,19 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="backHref"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Documentation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="docs-container">
+    <div class="markdown-body" (click)="handleMarkdownClick($event)">
+      <markdown
+        [src]="markdownPath"
+        mermaid
+      ></markdown>
+    </div>
+  </div>
+</ion-content>

@@ -1,6 +1,6 @@
 {
   "projectName": "Control Markets",
-  "version": "0.0.48",
+  "version": "0.0.49",
   "envName": "DEV",
   "production": false,
   "authenticationRequired": true,

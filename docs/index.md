@@ -29,6 +29,7 @@ Welcome to the official documentation for **Control Markets**, a node-based plat
 - **[Flow Services Overview](reference/flow-services-overview.md)**: Documentation of the services powering the canvas.
 - **[Frontend Event Sync](reference/frontend-event-sync.md)**: How real-time updates from Firebase are handled.
 - **[Visual Styling Guide](reference/vflow-styling-guide.md)**: How to style nodes using `ngx-vflow`.
+- **[Project Structure](reference/project-structure.md)**: Overview of the project's folder and file organization.
 - **[Technical Details](reference/technical-details.md)**: Deep dive into specific implementations.
 - **[PWA Summary](reference/pwa-summary.md)**: Deployment and PWA configuration details.
 - **[TikTok Source Ideas](reference/fuentes-tiktok-ideas.md)**: How to find viral inspiration for your flows.

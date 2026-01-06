@@ -122,7 +122,7 @@ fetch('/assets/config.json')
             appleRedirectURI: config.mobile.appleRedirectURI,
           },
         }),
-        provideMarkdown(),
+
         // provideServiceWorker('ngsw-worker.js', {
         //   enabled: !isDevMode(),
         //   registrationStrategy: 'registerWhenStable:30000',

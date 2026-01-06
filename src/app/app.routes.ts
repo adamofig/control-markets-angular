@@ -26,6 +26,19 @@ export const routes: Routes = [
         path: 'intro',
         loadComponent: () => import('./intro/intro.page').then(m => m.IntroPage),
       },
+      {
+        path: 'docs',
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/docs-viewer/docs-viewer.component').then(m => m.DocsViewerComponent),
+          },
+          {
+            path: '**',
+            loadComponent: () => import('./pages/docs-viewer/docs-viewer.component').then(m => m.DocsViewerComponent),
+          }
+        ]
+      },
     ],
   },
 

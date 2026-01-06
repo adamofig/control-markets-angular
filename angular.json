@@ -33,6 +33,11 @@
                 "output": "assets"
               },
               {
+                "glob": "**/*",
+                "input": "docs",
+                "output": "assets/docs"
+              },
+              {
                 "glob": "manifest.webmanifest",
                 "input": "src",
                 "output": "/"
