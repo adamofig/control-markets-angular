@@ -23,7 +23,6 @@ export class TasksService extends EntityCommunicationService<ILlmTask> {
   }
 
   public getTaskById(id: string): Promise<ILlmTask> {
-    debugger;
     return this.httpService.getHttp({ host: this.config.backendNodeUrl, service: `${Endpoints.Tasks.Task}/${id}` });
   }
 

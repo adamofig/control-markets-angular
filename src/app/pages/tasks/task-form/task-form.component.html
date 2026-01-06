@@ -25,10 +25,8 @@
       <div class="form-field">
         <label for="prompt" class="block">Prompt</label>
         <textarea
-          style="max-height: 700px; overflow-y: auto"
-          [autoResize]="true"
           class="textmin"
-          rows="3"
+          rows="5"
           pInputTextarea
           id="prompt"
           formControlName="prompt"
@@ -164,10 +162,8 @@
       <div class="form-field">
         <label for="status" class="block">Status</label>
         <br />
-        <p-select id="status" [options]="statuses" formControlName="status" placeholder="Select Status" class="w-full"> </p-select>
+        <p-select id="status" [options]="statuses" formControlName="status" placeholder="Select Status" class="w-full" appendTo="body"> </p-select>
       </div>
-
-      <!-- <dc-model-selector [modelForm]="taskForm.controls.model"></dc-model-selector> -->
 
       <div class="flex justify-content-end mt-4">
         <p-button type="submit" label="Save Task" [disabled]="!taskForm.valid" icon="pi pi-check" iconPos="right"> </p-button>

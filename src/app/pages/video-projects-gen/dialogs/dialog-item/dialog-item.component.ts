@@ -33,7 +33,11 @@ export class DialogItemComponent {
   }
 
   onPlayAudio(): void {
-    this.playAudio.emit(this.index);
+    if (this.dialog?.audio?.url) {
+      this.playAudio.emit(this.index);
+    } else {
+      this.onAddAudio();
+    }
   }
 
   onDownloadAudio(): void {
@@ -49,6 +53,7 @@ export class DialogItemComponent {
   }
 
   onAddAudio(): void {
+    alert('Generation will be implemented soon.');
     // LLamar al servicio de generar audio
     // Guardar el audio en el formGroup
     // Guardar el form

@@ -86,7 +86,7 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
         styleClass: 'draggable-dialog',
         closable: true,
         width: '650px',
-        modal: true,
+        modal: false,
         data: this.node(),
       });
 

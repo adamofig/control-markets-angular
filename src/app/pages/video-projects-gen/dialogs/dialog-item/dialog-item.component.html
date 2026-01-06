@@ -6,18 +6,17 @@
 
     <input pInputText [id]="'content-' + index" formControlName="content" placeholder="Enter dialog content" />
 
-    @if(dialog?.audio) {
+    @if(dialog?.audio?.url) {
     <p-inputgroup-addon>
       <p-button icon="pi pi-download" severity="secondary" (click)="onDownloadAudio()" pTooltip="Download Audio" />
     </p-inputgroup-addon>
-    } @else {
-    <p-inputgroup-addon>
-      <p-button icon="pi pi-plus" severity="secondary" pTooltip="Add Audio" (click)="onAddAudio()" />
-    </p-inputgroup-addon>
-    }
-
     <p-inputgroup-addon>
       <p-button icon="pi pi-play-circle" severity="primary" variant="text" (click)="onPlayAudio()" pTooltip="Play Audio" />
     </p-inputgroup-addon>
+    } @else {
+    <p-inputgroup-addon>
+      <p-button icon="pi pi-sparkles" severity="help" pTooltip="Generate Audio" (click)="onAddAudio()" />
+    </p-inputgroup-addon>
+    }
   </p-inputgroup>
 </div>

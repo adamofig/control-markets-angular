@@ -17,6 +17,7 @@ Welcome to the official documentation for **Control Markets**, a node-based plat
 *Practical, step-by-step instructions for common tasks.*
 
 - **[Creating a New Node](how-to/creating-new-node.md)**: The standard process for extending the canvas.
+- **[Creating a Task (EN)](how-to/create-a-task.md)** / **[Crear una Tarea (ES)](how-to/crear-una-tarea.md)**: How to define AI instructions.
 - **[Starting with Ionic](how-to/starting-ionic.md)**: Setup and initial steps for mobile development.
 
 ---
@@ -30,6 +31,7 @@ Welcome to the official documentation for **Control Markets**, a node-based plat
 - **[Visual Styling Guide](reference/vflow-styling-guide.md)**: How to style nodes using `ngx-vflow`.
 - **[Technical Details](reference/technical-details.md)**: Deep dive into specific implementations.
 - **[PWA Summary](reference/pwa-summary.md)**: Deployment and PWA configuration details.
+- **[TikTok Source Ideas](reference/fuentes-tiktok-ideas.md)**: How to find viral inspiration for your flows.
 
 ### Node Reference Table
 > [!NOTE]

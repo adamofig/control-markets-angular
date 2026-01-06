@@ -62,7 +62,6 @@ export class AudioTTsDetailsComponent implements OnInit {
   }
 
   save() {
-    debugger;
     const nodeData = {
       ...this.node.data?.nodeData,
       prompt: this.prompt,
