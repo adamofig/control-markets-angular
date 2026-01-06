@@ -3,6 +3,7 @@
     <ion-toolbar>
       <ion-title>Control Markets</ion-title>
       <ion-buttons slot="primary">
+        <ion-button routerLink="/docs"> Docs </ion-button>
         <ion-button (click)="goToSignin()"> Sign In </ion-button>
         <ion-button (click)="goToSignup()" color="primary" fill="solid"> Sign Up </ion-button>
       </ion-buttons>
@@ -126,6 +127,36 @@
           </p-card>
           <p-card header="Agentic Self-Awareness">
             <p>Agents maintain context of their role and goals, delivering authentic and consistent interactions.</p>
+          </p-card>
+        </div>
+      </section>
+
+      <!-- Documentation Section -->
+      <section class="docs-section">
+        <h2>COMPREHENSIVE KNOWLEDGE</h2>
+        <div class="card-container">
+          <p-card header="For Creators & Marketers">
+            <p>
+              Learn how to build viral-ready workflows, master agent prompting, and leverage AI for market research. 
+              Our user guides are designed to help you scale your creative output.
+            </p>
+            <ion-button fill="outline" routerLink="/docs">
+              <ion-icon name="rocket-outline" slot="start"></ion-icon>
+              User Guides
+              <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+            </ion-button>
+          </p-card>
+
+          <p-card header="For Developers & Engineers">
+            <p>
+              Deep dive into the <strong>Cluster Architecture</strong>, build custom <strong>Nodes</strong>, and understand our state-sync engine. 
+              Extensibility is at the core of Control Markets.
+            </p>
+            <ion-button fill="outline" routerLink="/docs">
+              <ion-icon name="code-slash-outline" slot="start"></ion-icon>
+              Developer Docs
+              <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+            </ion-button>
           </p-card>
         </div>
       </section>

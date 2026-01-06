@@ -75,7 +75,7 @@ Next is an example about the config properties of the node.
 
 To ensure full compatibility across all devices, including mobile, we avoid relying on highly modern or non-standard CSS features that might break in Safari. Our UI remains simple yet effective by using a stable wrapper layer.
 
-For more details, see the [VFlow Styling Guide](../reference/vflow-styling-guide.md).
+For more details, see the [VFlow Styling Guide](./vflow-styling-guide.md).
 
 All nodes are wrapped in a UI that features two distinct visual indicators:
 1.  **Node Type (Identity)**: A colored border identifying the component type (e.g., Green for Inputs, Amber for Processes, Blue for Outputs). This is managed by the `FlowNodeRegisterService`.

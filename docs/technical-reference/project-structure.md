@@ -9,10 +9,11 @@ This document provides a high-level overview of the **Control Markets** project 
 - **`.vscode/`**: Visual Studio Code workspace settings and recommended extensions.
 - **`android/`**: Android-specific files for Capacitor deployment.
 - **`docs/`**: Project documentation (Markdown files).
-  - **`concepts/`**: High-level architecture and design principles.
-  - **`how-to/`**: Practical, step-by-step instructions.
+  - **`concepts/`**: Business-related concepts and high-level platform goals for final users.
+  - **`tutorials/`**: Practical, step-by-step instructions for final users.
+  - **`technical-guides/`**: Knowledge on how to extend the platform for developers.
+  - **`technical-reference/`**: Architecture patterns and technical specifications.
   - **`plans/`**: Design documents and future implementation strategies.
-  - **`reference/`**: Technical facts, specifications, and API-level details.
 - **`ios/`**: iOS-specific files for Capacitor deployment.
 - **`node_modules/`**: Project dependencies (managed by pnpm).
 - **`public/`**: Static assets served at the root (config files, icons, etc.).

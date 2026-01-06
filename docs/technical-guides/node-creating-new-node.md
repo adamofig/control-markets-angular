@@ -17,7 +17,7 @@ Copy the folder `src/app/pages/flows/nodes/empty-node` and rename it to your new
 
 The `EmptyNode` is the gold standard for implementation because:
 - **Reactive State**: It uses `nodeData()` computed signal from `BaseFlowNode`.
-- **Standardized Communication**: It follows the [Node-Details Communication](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/node-details-communication.md) pattern.
+- **Standardized Communication**: It follows the [Node-Details Communication](../technical-reference/node-details-communication.md) pattern.
 - **Built-in Fields**: Includes `name` and `description` as base properties.
 
 ### 2. Rename Files and Classes
@@ -119,7 +119,7 @@ export class MyCustomNodeComponent extends BaseFlowNode<CustomMyNode> implements
 ## 🔍 Step 4: Details Modal Pattern
 Most nodes need a configuration dialog for the **Popup Layer**.
 
-**See full guide: [Node-Details Communication Standard](file:///Users/adamo/Documents/GitHub/control-markets-angular/docs/node-details-communication.md)**
+**See full guide: [Node-Details Communication Standard](../technical-reference/node-details-communication.md)**
 
 1.  **Direct Registration**: Simply register your `detailsComponent` in the `FlowNodeRegisterService`.
 2.  **Automatic Handling**: The `WrapperNodeComponent` will automatically:

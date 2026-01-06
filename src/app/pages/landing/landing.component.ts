@@ -1,19 +1,20 @@
 import { Component, inject } from '@angular/core';
 
-import { IonContent, IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, IonIcon, IonText, IonImg } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { RouteNames } from 'src/app/core/enums';
 import { APP_CONFIG } from '@dataclouder/ngx-core';
 import { CardModule } from 'primeng/card';
 import { addIcons } from 'ionicons';
-import { logoGithub } from 'ionicons/icons';
+import { logoGithub, bookOutline, arrowForwardOutline } from 'ionicons/icons';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
   standalone: true,
-  imports: [IonImg, IonText, IonIcon, IonButton, IonTitle, IonButtons, IonToolbar, IonHeader, IonContent, CardModule],
+  imports: [IonIcon, IonButton, IonTitle, IonButtons, IonToolbar, IonHeader, IonContent, CardModule, RouterLink],
 })
 export class LandingComponent {
   private router = inject(Router);
@@ -27,7 +28,7 @@ export class LandingComponent {
   constructor(...args: unknown[]);
 
   constructor() {
-    addIcons({ logoGithub });
+    addIcons({ logoGithub, 'book-outline': bookOutline, 'arrow-forward-outline': arrowForwardOutline });
   }
 
   public goToSignup() {

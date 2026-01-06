@@ -1,42 +1,64 @@
-# Control Markets Documentation
+# Control Markets Knowledge Base
 
-Welcome to the official documentation for **Control Markets**, a node-based platform for marketing automation. This documentation is organized into four main categories:
+Welcome to the documentation for **Control Markets**. This index is organized to help you navigate between technical details and business concepts.
 
 ---
 
 ## 💡 Concepts
-*Understand the high-level architecture and design principles.*
+*Business-related knowledge and high-level platform goals.*
 
-- **[Project Architecture](concepts/architecture.md)**: High-level overview of the tech stack (Angular, Ionic, Firebase).
-- **[Cluster Architecture](index.md#cluster-architecture)**: How we orchestrate AI agents using Input, Process, and Output nodes.
-- **[Node UI Architecture](concepts/node-architecture-ui.md)**: Details on the Wrapper Node mechanism and the Dual-Layer interface.
-
----
-
-## 🛠️ How-to Guides
-*Practical, step-by-step instructions for common tasks.*
-
-- **[Creating a New Node](how-to/creating-new-node.md)**: The standard process for extending the canvas.
-- **[Creating a Task (EN)](how-to/create-a-task.md)** / **[Crear una Tarea (ES)](how-to/crear-una-tarea.md)**: How to define AI instructions.
-- **[Starting with Ionic](how-to/starting-ionic.md)**: Setup and initial steps for mobile development.
+- **[Platform Overview](concepts/platform-overview.md)**: High-level introduction to flows and nodes.
+- **[Control Market Success](concepts/control-market-success.md)**: Strategies for dominating a market using personas.
 
 ---
 
-## 📚 Reference
-*Technical facts, specifications, and API-level details.*
+## 🎓 Tutorials
+*Step-by-step instructions for final users.*
 
-- **[Node Registry Standard](reference/node-details-communication.md)**: The communication pattern between nodes and detail views.
-- **[Flow Services Overview](reference/flow-services-overview.md)**: Documentation of the services powering the canvas.
-- **[Frontend Event Sync](reference/frontend-event-sync.md)**: How real-time updates from Firebase are handled.
-- **[Visual Styling Guide](reference/vflow-styling-guide.md)**: How to style nodes using `ngx-vflow`.
-- **[Project Structure](reference/project-structure.md)**: Overview of the project's folder and file organization.
-- **[Technical Details](reference/technical-details.md)**: Deep dive into specific implementations.
-- **[PWA Summary](reference/pwa-summary.md)**: Deployment and PWA configuration details.
-- **[TikTok Source Ideas](reference/fuentes-tiktok-ideas.md)**: How to find viral inspiration for your flows.
+- **My First Task**: [English](tutorials/create-a-task.md) | [Español](tutorials/create-a-task_es.md)
+- **Inspiration Sources**: [English](tutorials/how-to-get-inspiration-with-sources.md) | [Español](tutorials/how-to-get-inspiration-with-sources_es.md)
+- **Specialized Agent**: [English](tutorials/first-persona-agent.md) | [Español](tutorials/first-persona-agent_es.md)
 
-### Node Reference Table
-> [!NOTE]
-> All nodes follow a dual-layer structure where visual configuration (color, icon, category) is centralized in a `config` object, separate from the `nodeData` business business properties.
+---
+
+## 💻 Technical Guides
+*Knowledge for developers on how to extend or setup the platform.*
+
+- **[Creating a New Node](technical-guides/node-creating-new-node.md)**: Standard process for extending the canvas.
+- **[Starting with Ionic](technical-guides/starting-ionic.md)**: Setup and initial steps for mobile development.
+
+---
+
+## ⚙️ Technical Reference
+*Architecture, patterns, and deep-dive technical specifications.*
+
+### 🏗️ Architecture & Core
+- **[Project Architecture](technical-reference/architecture.md)**: High-level tech stack and system overview.
+- **[Node UI Architecture](technical-reference/node-architecture-ui.md)**: The Dual-Layer interface mechanism.
+- **[Flow Services Overview](technical-reference/flow-services-overview.md)**: The engine powering the canvas.
+- **[Frontend Event Sync](technical-reference/frontend-event-sync.md)**: Real-time Firebase synchronization.
+- **[Node Registry Standard](technical-reference/node-details-communication.md)**: Communication patterns between layers.
+
+### 🛠️ Development & Details
+- **[Project Structure](technical-reference/project-structure.md)**: Navigation of the codebase.
+- **[Documentation System](technical-reference/docs-system.md)**: How this documentation is built and served.
+- **[Technical Deep Dive](technical-reference/technical-details.md)**: Implementation details of complex components.
+- **[PWA & Deployment](technical-reference/pwa-summary.md)**: Configuration for web and mobile deployment.
+- **[Visual Styling Guide](technical-reference/vflow-styling-guide.md)**: Customizing node appearance.
+- **[Video Project Understanding](technical-reference/video-project-undertanding.md)**: Insights into the video generation logic.
+
+---
+
+## 🗺️ Plans & Roadmap
+*Future implementation strategies and design documents.*
+
+- **[Flow Serialization](plans/flow-serialization-plan.md)**: Saving and loading graph states.
+- **[Job Completion Tracking](plans/flow-job-completion-plan.md)**: Detecting finished tasks.
+- **[Auth Refactoring](plans/auth-refactoring-plan.md)**: Evolution of our authentication system.
+
+---
+
+## 📊 Node Reference Table
 
 | Node Type | Category | Color | Description |
 | :--- | :--- | :--- | :--- |
@@ -50,23 +72,13 @@ Welcome to the official documentation for **Control Markets**, a node-based plat
 
 ---
 
-## 🗺️ Plans & Roadmap
-*Design documents and future implementation strategies.*
-
-- **[Flow Serialization](plans/flow-serialization-plan.md)**: Saving and loading graph states.
-- **[Job Completion Tracking](plans/flow-job-completion-plan.md)**: Mechanism for detecting finished tasks.
-- **[Auth Refactoring](plans/auth-refactoring-plan.md)**: Evolution of our authentication system.
-
----
-
-## 🎨 Assets
-- **[Architecture Diagrams](assets/)**: Visual representations of the system (Excalidraw).
-
----
-
 ## 📝 Contribution Guide
 *How to add more documentation:*
-1.  **Identify the type**: Is it a Concept, Guide (How-to), Reference fact, or a Future Plan?
-2.  **Add the file**: Place it in the appropriate subfolder (`docs/concepts/`, etc.).
-3.  **Update Index**: Add a link to the file in this `index.md` under the correct heading.
-4.  **Use Relative Links**: Always link using relative paths for portability.
+1.  **Select the Folder**: 
+    - `concepts/`: For business theory and user overviews.
+    - `tutorials/`: For user-facing step-by-step instructions.
+    - `technical-guides/`: For developer instructions.
+    - `technical-reference/`: For technical specs and architecture.
+    - `plans/`: For design docs and future work.
+2.  **Use Relative Links**: Always link using relative paths for portability.
+3.  **Update Index**: Add your new file to this `index.md` under the correct section.
