@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { Vflow } from 'ngx-vflow';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -12,18 +12,12 @@ import { CommonModule, JsonPipe } from '@angular/common';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AssetGeneratedDetailsComponent implements OnInit {
+export class AssetGeneratedDetailsComponent {
   public dynamicDialogConfig = inject(DynamicDialogConfig);
+  public node = signal<any>(this.dynamicDialogConfig.data);
+  
+  public nodeData = computed(() => this.node()?.data?.nodeData);
 
-  constructor() {
-    console.log(this.dynamicDialogConfig.data);
-  }
-
-  ngOnInit(): void {
-    console.log(this.dynamicDialogConfig.data);
-  }
-
-  public startFlow(): void {
-    console.log(this.dynamicDialogConfig.data);
-  }
+  constructor() {}
 }
+

@@ -1,17 +1,19 @@
 <div class="asset-details-container p-4">
   <h2 class="text-2xl font-bold mb-4">Asset Generation Details</h2>
 
-  <div *ngIf="dynamicDialogConfig.data as data">
+  
+  <div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div>
         <h3 class="text-lg font-semibold mb-2">Generated Video</h3>
-        <div *ngIf="data.result && data.result.url" class="video-container">
+        @if (nodeData()?.result?.url) {
+        <div class="video-container">
           <video controls autoplay loop muted class="rounded-lg shadow-lg w-full">
-            <source [src]="data.result.url" type="video/mp4" />
+            <source [src]="nodeData()?.result?.url" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
-        @if (!data.result || !data.result.url) {
+        } @else {
         <div class="text-gray-500">Video not available.</div>
         }
       </div>
@@ -21,26 +23,26 @@
         <div class="details-grid">
           <div class="detail-item">
             <span class="font-semibold">ID:</span>
-            <span>{{ data._id }}</span>
+            <span>{{ nodeData()?._id }}</span>
           </div>
           <div class="detail-item">
             <span class="font-semibold">Prompt:</span>
-            <span class="italic">"{{ data.prompt }}"</span>
+            <span class="italic">"{{ nodeData()?.prompt }}"</span>
           </div>
           <div class="detail-item">
             <span class="font-semibold">Status:</span>
-            <span class="status" [ngClass]="'status-' + data?.status?.toLowerCase()">{{ data?.status }}</span>
+            <span class="status" [ngClass]="'status-' + nodeData()?.status?.toLowerCase()">{{ nodeData()?.status }}</span>
           </div>
           <div class="detail-item">
             <span class="font-semibold">Request:</span>
-            <span>{{ data?.request?.seconds }}s, {{ data?.request?.width }}x{{ data?.request?.height }}</span>
+            <span>{{ nodeData()?.request?.seconds }}s, {{ nodeData()?.request?.width }}x{{ nodeData()?.request?.height }}</span>
           </div>
         </div>
 
-        @if (data.assets && data.assets.firstFrame) {
+        @if (nodeData()?.assets && nodeData()?.assets?.firstFrame) {
         <div class="mt-4">
           <h4 class="text-md font-semibold mb-2">First Frame</h4>
-          <img [src]="data.assets.firstFrame.url" alt="First Frame" class="rounded-lg shadow-md w-full" />
+          <img [src]="nodeData()?.assets?.firstFrame?.url" alt="First Frame" class="rounded-lg shadow-md w-full" />
         </div>
         }
       </div>
@@ -48,7 +50,8 @@
 
     <div class="mt-6">
       <h3 class="text-lg font-semibold mb-2">Raw Data</h3>
-      <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-auto" style="max-height: 300px">{{ data | json }}</pre>
+      <pre class="p-4 rounded-lg text-sm overflow-auto" style="max-height: 300px">{{ nodeData() | json }}</pre>
     </div>
   </div>
 </div>
+
