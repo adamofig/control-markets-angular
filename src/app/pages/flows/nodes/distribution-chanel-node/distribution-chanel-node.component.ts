@@ -24,7 +24,6 @@ export type NodeDistributionChanelData = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DistributionChanelNodeComponent extends BaseFlowNode<NodeDistributionChanelData> implements OnInit {
-  public dialogService = inject(DialogService);
 
   constructor() {
     super();

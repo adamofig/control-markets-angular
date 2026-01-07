@@ -7,7 +7,7 @@ Welcome to the documentation for **Control Markets**. This index is organized to
 ## 💡 Concepts
 *Business-related knowledge and high-level platform goals.*
 
-- **[Platform Overview](concepts/platform-overview.md)**: High-level introduction to flows and nodes.
+- **Understanding the Platform**: [English](concepts/understanding-the-platform.md) | [Español](concepts/understanding-the-platform_es.md) 
 - **[Control Market Success](concepts/control-market-success.md)**: Strategies for dominating a market using personas.
 
 ---
@@ -16,6 +16,7 @@ Welcome to the documentation for **Control Markets**. This index is organized to
 *Step-by-step instructions for final users.*
 
 - **My First Task**: [English](tutorials/create-a-task.md) | [Español](tutorials/create-a-task_es.md)
+- **Adding Sources**: [English](tutorials/add-sources.md) | [Español](tutorials/add-sources_es.md)
 - **Inspiration Sources**: [English](tutorials/how-to-get-inspiration-with-sources.md) | [Español](tutorials/how-to-get-inspiration-with-sources_es.md)
 - **Specialized Agent**: [English](tutorials/first-persona-agent.md) | [Español](tutorials/first-persona-agent_es.md)
 
@@ -69,6 +70,9 @@ Welcome to the documentation for **Control Markets**. This index is organized to
 | `OutcomeNode` | Output | Blue | Final result or data capture point. |
 | `LeadNode` | Output/Input | Pink | Management of marketing leads. |
 | `DistributionChanel` | Output | Violet | Publishes content to social networks or platforms. |
+
+> [!TIP]
+> **Interactivity Tip**: Single-click any node to reveal the **Action Toolbar**. You can now **Duplicate** nodes for faster workflow creation or open the **Execution Details** icon to debug failed jobs via the new modal.
 
 ---
 

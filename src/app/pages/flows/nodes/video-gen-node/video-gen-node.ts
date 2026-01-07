@@ -48,7 +48,6 @@ export interface CustomVideoGenNode extends ComponentDynamicNode {
 export class VideoGenNodeComponent extends BaseFlowNode<CustomVideoGenNode> implements OnInit, OnDestroy {
   public flowOrchestrationService = inject(FlowOrchestrationService);
   private generatedAssetsService = inject(GeneratedAssetsService);
-  private dialogService = inject(DialogService);
   private toastAlertService = inject(ToastAlertService);
 
   public fb = inject(FormBuilder);

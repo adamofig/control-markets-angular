@@ -28,7 +28,6 @@ export interface CustomAgentNode extends ComponentDynamicNode {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgentNodeComponent extends BaseFlowNode<CustomAgentNode> implements OnInit {
-  public dialogService = inject(DialogService);
   public flowExecutionUtilsService = inject(FlowExecutionUtilsService);
   private defaultAgentCardsService = inject(DefaultAgentCardsService);
   public agentCard = computed(() => this.nodeData());

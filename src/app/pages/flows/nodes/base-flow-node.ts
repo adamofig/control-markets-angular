@@ -7,6 +7,8 @@ import { FlowExecutionStateService } from '../services/flow-execution-state.serv
 import { IFlowExecutionState, IJobExecutionState, ITaskExecutionState, StatusJob, INodeConfig } from '../models/flows.model';
 import { NodeSearchesService } from '../services/node-searches.service';
 import { FlowSignalNodeStateService } from '../services/flow-signal-node-state.service';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ExecutionDetailsComponent } from './execution-details/execution-details';
 
 // Intrucciones del base Node
 // 1. El nodo prove la capaicidad de injectar la referencia a un estado global para encontrar rapidamente el estado y modificar sus propiedades
@@ -23,7 +25,7 @@ function jobExecutionStateChanged(a: IJobExecutionState | null, b: IJobExecution
     return false;
   }
 
-  return a.status === b.status;
+  return a.status === b.status && a.statusDescription === b.statusDescription;
 }
 
 @Directive()
@@ -33,6 +35,7 @@ export abstract class BaseFlowNode<T extends { config?: INodeConfig; data?: any 
   public flowExecutionStateService = inject(FlowExecutionStateService);
   public nodeSearchesService = inject(NodeSearchesService);
   protected flowSignalNodeStateService = inject(FlowSignalNodeStateService);
+  protected dialogService = inject(DialogService);
 
   public config = computed(() => (this.node() as any)?.config);
 
@@ -56,9 +59,16 @@ export abstract class BaseFlowNode<T extends { config?: INodeConfig; data?: any 
     return null;
   });
 
+  public currentStatus = computed(() => {
+    return this.taskExecutionState()?.status || this.jobExecutionState()?.status || StatusJob.DEFAULT;
+  });
+
+  public statusDescription = computed(() => {
+    return this.taskExecutionState()?.statusDescription || (this.jobExecutionState() as any)?.statusDescription || '';
+  });
+
   public statusSeverity = computed(() => {
-    // Supongo que uno de los 2 debe reaccionar, espero refactorizar para solo tener un nodo de estado.
-    const status = this.taskExecutionState()?.status || this.jobExecutionState()?.status;
+    const status = this.currentStatus();
     switch (status) {
       case StatusJob.COMPLETED:
         return 'success';
@@ -119,6 +129,26 @@ export abstract class BaseFlowNode<T extends { config?: INodeConfig; data?: any 
     this.selected.set(true);
   }
 
+  duplicateNode(): void {
+    this.flowSignalNodeStateService.duplicateNode(this.node().id);
+  }
+
+  openExecutionDetails(): void {
+    const state = this.taskExecutionState() || this.jobExecutionState();
+    if (!state) return;
+
+    this.dialogService.open(ExecutionDetailsComponent, {
+      header: `Execution Details - ${this.config()?.label || 'Node'}`,
+      width: '600px',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      data: {
+        node: this.node(),
+        state: state
+      }
+    });
+  }
+
   openDetails(): void {
     // Override in child class if needed
   }
@@ -130,6 +160,12 @@ export abstract class BaseFlowNode<T extends { config?: INodeConfig; data?: any 
         break;
       case 'details':
         this.openDetails();
+        break;
+      case 'duplicate':
+        this.duplicateNode();
+        break;
+      case 'executionDetails':
+        this.openExecutionDetails();
         break;
     }
   }

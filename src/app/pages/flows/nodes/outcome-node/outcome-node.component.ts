@@ -27,7 +27,6 @@ export interface CustomOutcomeNode extends ComponentDynamicNode {
   standalone: true,
 })
 export class OutcomeNodeComponent extends BaseFlowNode<CustomOutcomeNode> implements OnInit {
-  public dialogService = inject(DialogService);
   public outcomeJob: IAgentOutcomeJob | null = null;
   public responseFormat = ResponseFormat;
   public backgroundImageUrl = signal<string>('');

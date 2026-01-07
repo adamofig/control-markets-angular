@@ -34,6 +34,12 @@ that why i cast in order to access config property.
   public config = computed(() => (this.node() as any)?.config);
 So not cusing any errors anymore. Condsider for future versions. 
 
+### Inherited Services & Capabilities
+`BaseFlowNode` now provides standardized access to core services, reducing boilerplate in specialized components:
+- **`dialogService`**: Open modals (Details, Execution Logs) without manual injection.
+- **`flowSignalNodeStateService`**: Manage node state and lifecycle actions (Delete, Duplicate).
+- **`flowExecutionStateService`**: Reactively access the current execution status.
+
 
 ### Node Structure
 
@@ -77,9 +83,11 @@ To ensure full compatibility across all devices, including mobile, we avoid rely
 
 For more details, see the [VFlow Styling Guide](./vflow-styling-guide.md).
 
-All nodes are wrapped in a UI that features two distinct visual indicators:
-1.  **Node Type (Identity)**: A colored border identifying the component type (e.g., Green for Inputs, Amber for Processes, Blue for Outputs). This is managed by the `FlowNodeRegisterService`.
-2.  **Node Status (Execution)**: A secondary indicator (color or animation) showing the current state: `default` (white), `pending` (yellow), `in_progress` (blue), `completed` (green), or `failed` (red).
+All nodes are wrapped in a UI that features four distinct visual layers:
+1.  **Node Type (Identity)**: A colored border identifying the component type. Managed by `FlowNodeRegisterService`.
+2.  **Node Status (Execution)**: A secondary indicator (color or animation) showing the current state: `pending` (yellow), `in_progress` (blue), `completed` (green), or `failed` (red).
+3.  **Selection State**: When selected, nodes "lift" visually (scale 1.02), cast a dynamic glow matching their type color, and display a checkmark badge.
+4.  **Execution Details**: An info icon appears if `statusDescription` or logs are available.
 
 ### Distinction: Node vs. Component vs. Category
 
@@ -136,11 +144,21 @@ override openDetails(): void {
   }
 }
 ```
+### Safari Compatibility
+- **Safari Compatibility**: By housing the complexity in a stable wrapper, we ensure the simplified UI remains compatible with Safari (iPad/iPhone) as discussed above
 
-### Benefits
-- **Consistency**: All nodes inherit the same standard UI (borders, status indicators) and interaction patterns (double-click, toolbars).
-- **Efficiency**: Developers only need to worry about the "Content" component, while the `WrapperNodeComponent` handles the "Canvas" complexities.
-- **Safari Compatibility**: By housing the complexity in a stable wrapper, we ensure the simplified UI remains compatible with Safari (iPad/iPhone) as discussed above.
+### Standardized Interaction Pattern
+- **Single Click**: Selects the node, activates the toolbar, and applies high-contrast visual cues (Glow & Scale).
+- **Double Click**: Opens the specialized **Details Window** for configuration.
+- **Toolbar Action (Copy)**: Duplicates the node with all its current configuration and data, placing it with a slight offset.
+- **Toolbar Action (List Check)**: Opens the **Execution Details Modal** to inspect logs and status descriptions.
+
+### 🔍 Execution Details Modal
+When a node is part of an active or past execution, it may hold a `jobExecutionState` or `taskExecutionState`.
+- **Status Description**: Reveals the human-readable explanation of the current state, including specific error messages from the backend.
+- **Message Logs**: Provides a chronological view of all messages processed by that specific node during the execution.
+
+This modal is accessible via the toolbar and is critical for debugging complex flow failures.
 
 
 ## 🏗️ The Two UI Layers

@@ -28,7 +28,6 @@ export interface CustomAssetGeneratedNode extends ComponentDynamicNode {
   standalone: true,
 })
 export class AssetGeneratedNodeComponent extends BaseFlowNode<CustomAssetGeneratedNode> {
-  public dialogService = inject(DialogService);
   public generatedAssetsService = inject(GeneratedAssetsService);
 
   public generatedAsset: IGeneratedAsset | null = null;

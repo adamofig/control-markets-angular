@@ -24,6 +24,19 @@ export class FlowSignalNodeStateService {
     this.nodes.set([...this.nodes(), node]);
   }
 
+  public duplicateNode(nodeId: string): void {
+    const node = this.nodes().find(n => n.id === nodeId);
+    if (!node) return;
+
+    const newNode: DynamicNodeWithData = {
+      ...node,
+      id: `${node.config?.component || 'node'}-${nanoid()}`,
+      point: signal({ x: node.point().x + 50, y: node.point().y + 50 }),
+    };
+
+    this.nodes.set([...this.nodes(), newNode]);
+  }
+
   public deleteEdge(edge: Edge): void {
     const currentEdges = this.edges().filter(e => e.id !== edge.id);
     this.edges.set(currentEdges);

@@ -1,14 +1,12 @@
 import { Component, ViewChild, ViewContainerRef, OnInit, Type, ComponentRef, inject, computed } from '@angular/core';
-import { INodeConfig, NodeCompTypeStr } from '../../models/flows.model';
+import { INodeConfig } from '../../models/flows.model';
 import { BaseFlowNode } from '../base-flow-node';
-import { ComponentDynamicNode } from 'ngx-vflow';
 import { CommonModule } from '@angular/common';
 import { HandleComponent } from 'ngx-vflow';
 import { TagModule } from 'primeng/tag';
 import { DialogService } from 'primeng/dynamicdialog';
 import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 import { FlowNodeRegisterService } from '../../services/flow-node-register.service';
-import { VideoScriptGenDetailsComponent } from '../video-script-gen-node/video-gen-details/video-script-gen-details';
 import { FlowOrchestrationService } from '../../services/flow-orchestration.service';
 import { ActionsToolbarComponent } from '../actions-toolbar/actions-toolbar.component';
 
@@ -29,7 +27,6 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
 
   private flowNodeRegisterService = inject(FlowNodeRegisterService);
   private flowOrchestrationService = inject(FlowOrchestrationService);
-  private dialogService = inject(DialogService);
 
   public color = computed(() => this.config()?.color || '#03c9f5');
   public icon = computed(() => this.config()?.icon);

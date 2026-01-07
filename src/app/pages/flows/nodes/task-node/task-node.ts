@@ -42,7 +42,6 @@ export interface CustomTaskNode extends ComponentDynamicNode {
   standalone: true,
 })
 export class TaskNodeComponent extends BaseFlowNode<CustomTaskNode> implements OnInit {
-  public dialogService = inject(DialogService);
   public flowOrchestrationService = inject(FlowOrchestrationService);
   public appConfig = inject(APP_CONFIG);
 

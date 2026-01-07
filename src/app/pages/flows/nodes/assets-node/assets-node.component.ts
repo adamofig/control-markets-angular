@@ -10,7 +10,6 @@ import { Tag } from 'primeng/tag';
 import { TagModule } from 'primeng/tag';
 
 import { BaseFlowNode } from '../base-flow-node';
-import { Button } from 'primeng/button';
 import { IAssetNodeData } from '../../models/nodes.model';
 
 import { INodeConfig, StatusJob } from '../../models/flows.model';
@@ -33,7 +32,6 @@ export interface CustomAssetsNode extends ComponentDynamicNode {
 })
 export class AssetsNodeComponent extends BaseFlowNode<CustomAssetsNode> {
   private toastService = inject(TOAST_ALERTS_TOKEN);
-  public dialogService = inject(DialogService);
 
   constructor() {
     super();

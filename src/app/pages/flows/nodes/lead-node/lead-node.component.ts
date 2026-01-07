@@ -24,7 +24,6 @@ export interface CustomLeadNode extends ComponentDynamicNode {
 })
 export class LeadNodeComponent extends BaseFlowNode<CustomLeadNode> implements OnInit {
   public lead: ILead | null = null;
-  private dialogService = inject(DialogService);
   private leadService = inject(LeadService);
 
   override async ngOnInit(): Promise<void> {

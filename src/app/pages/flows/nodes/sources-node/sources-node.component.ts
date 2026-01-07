@@ -32,7 +32,6 @@ export interface CustomSourceNode extends ComponentDynamicNode {
 })
 export class SourcesNodeComponent extends BaseFlowNode<CustomSourceNode> implements OnInit, OnDestroy {
   // Renamed class
-  public dialogService = inject(DialogService);
   public override flowDiagramStateService = inject(FlowDiagramStateService);
   public override flowComponentRefStateService = inject(FlowComponentRefStateService);
   protected override flowSignalNodeStateService = inject(FlowSignalNodeStateService);

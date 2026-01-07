@@ -36,7 +36,6 @@ export interface CustomAudioNode extends ComponentDynamicNode {
 export class AudioNodeComponent extends BaseFlowNode<CustomAudioNode> {
   private toastService = inject(TOAST_ALERTS_TOKEN);
   private whisperService = inject(AiWhisperService);
-  private dialogService = inject(DialogService);
   public hasTranscription = false;
   public transcription: any;
   private loadingBar = inject(LoadingBarService);

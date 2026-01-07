@@ -1,4 +1,8 @@
-<div style="margin-bottom: 10px; display: flex; justify-content: space-between">
+<div style="margin-bottom: 10px; display: flex; justify-content: space-between; gap: 5px;">
   <button class="btn-trash" (click)="onDelete()"><span class="pi pi-trash"></span></button>
+  <button class="btn-round" (click)="onDuplicate()"><span class="pi pi-copy"></span></button>
+  @if (hasExecutionState) {
+    <button class="btn-round" (click)="onExecutionDetails()"><span class="pi pi-list-check"></span></button>
+  }
   <button class="btn-round" (click)="onDetails()"><span class="pi pi-arrow-up-right-and-arrow-down-left-from-center"></span></button>
 </div>

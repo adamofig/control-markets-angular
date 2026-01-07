@@ -1,23 +1,46 @@
 @if (selected()) {
-<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"></app-node-toolbar>
+<app-node-toolbar
+  [hasExecutionState]="!!(taskExecutionState() || jobExecutionState())"
+  (delete)="handleToolbarEvents('delete')"
+  (none)="handleToolbarEvents('none')"
+  (details)="handleToolbarEvents('details')"
+  (duplicate)="handleToolbarEvents('duplicate')"
+  (executionDetails)="handleToolbarEvents('executionDetails')"
+></app-node-toolbar>
 
-@if (nodeCategory() === 'process') {
-<app-actions-toolbar
-  [statusJob]="statusJob()"
-  [taskExecutionState]="taskExecutionState()"
-  (runNode)="handleActionsToolbarEvents('runNode')"
-  (runEndPoint)="handleActionsToolbarEvents('runEndPoint')"
-></app-actions-toolbar>
-}
+
 }
 
-<div class="node-container"  (click)="selectNode()" (dblclick)="openDetails()">
-  <div class="node-card" [ngClass]="'status-' + (statusSeverity() || 'default')" [style.border-color]="color()">
+<div class="node-container" (click)="selectNode()" (dblclick)="openDetails()">
+  <div
+    class="node-card"
+    [class.selected]="selected()"
+    [ngClass]="'status-' + (statusSeverity() || 'default')"
+    [style.border-color]="color()"
+    [style.--node-color]="color()"
+    [style.--node-color-alpha]="color() + '60'"
+  >
+    @if (statusDescription()) {
+      <div class="status-detail-trigger" [class.failed]="currentStatus() === 'failed'">
+        <i class="pi pi-info-circle"></i>
+        <div class="status-tooltip">
+          <div class="tooltip-header">Status Detail</div>
+          <div class="tooltip-body">{{ statusDescription() }}</div>
+        </div>
+      </div>
+    }
+
+    @if (selected()) {
+      <div class="selection-indicator">
+        <i class="pi pi-check"></i>
+      </div>
+    }
+
     <p-tag class="tag" [value]="nodeCategory()" [severity]="statusSeverity()" />
 
     @if (nodeCategory() === 'process') {
-    <handle type="target" position="left" id="left" />
-    <handle type="target" position="top" id="top" />
+      <handle type="target" position="left" id="left" />
+      <handle type="target" position="top" id="top" />
     }
 
     <div #container></div>
@@ -25,3 +48,13 @@
     <handle type="source" position="right" id="right" />
   </div>
 </div>
+
+
+@if (selected() && nodeCategory() === 'process') {
+<app-actions-toolbar
+  [statusJob]="statusJob()"
+  [taskExecutionState]="taskExecutionState()"
+  (runNode)="handleActionsToolbarEvents('runNode')"
+  (runEndPoint)="handleActionsToolbarEvents('runEndPoint')"
+></app-actions-toolbar>
+}
