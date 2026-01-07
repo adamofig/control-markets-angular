@@ -35,7 +35,7 @@ export class DialogsComponent implements OnInit {
   }
 
   playAudio(index: number): void {
-    debugger
+    
     const dialog = this.arrayForm.at(index);
     const url = dialog.value?.audio?.url;
     if (url) {

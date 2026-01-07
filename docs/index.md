@@ -40,6 +40,9 @@ Welcome to the documentation for **Control Markets**. This index is organized to
 - **[Frontend Event Sync](technical-reference/frontend-event-sync.md)**: Real-time Firebase synchronization.
 - **[Node Registry Standard](technical-reference/node-details-communication.md)**: Communication patterns between layers.
 
+### 🧩 Components
+- **[Wrapper Node](technical-reference/wrapper-node-component.md)**: The shell for all canvas nodes.
+
 ### 🛠️ Development & Details
 - **[Project Structure](technical-reference/project-structure.md)**: Navigation of the codebase.
 - **[Documentation System](technical-reference/docs-system.md)**: How this documentation is built and served.

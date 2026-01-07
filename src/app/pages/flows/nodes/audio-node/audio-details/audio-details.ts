@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IAudioAssetsNodeData } from '../../../models/nodes.model';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-audio-details',
@@ -14,11 +15,14 @@ import { RippleModule } from 'primeng/ripple';
   imports: [CommonModule, DialogModule, ButtonModule, InputTextModule, RippleModule],
 })
 export class AudioDetailsComponent implements OnInit {
-  @Input() nodeData: IAudioAssetsNodeData | undefined;
+  public nodeData: IAudioAssetsNodeData | undefined;
+  public ref = inject(DynamicDialogRef);
+  public config = inject(DynamicDialogConfig);
 
   public showTranscriptionJson = false;
 
   ngOnInit(): void {
+    this.nodeData = this.config.data?.data?.nodeData;
     console.log('audio-details', this.nodeData);
   }
 

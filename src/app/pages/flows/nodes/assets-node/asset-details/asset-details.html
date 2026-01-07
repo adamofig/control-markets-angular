@@ -1,5 +1,7 @@
 <div class="asset-details-container">
-  <img [src]="data?.storage?.url" alt="Asset Image" *ngIf="data?.storage?.url" />
+  @if (data?.storage?.url) {
+    <img [src]="data.storage.url" alt="Asset Image" />
+  }
 
   <div style="width: 100%">
     <pre>{{ data | json }}</pre>

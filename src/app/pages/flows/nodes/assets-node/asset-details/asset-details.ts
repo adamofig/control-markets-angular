@@ -15,6 +15,7 @@ export class AssetDetailsComponent implements OnInit {
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig) {}
 
   ngOnInit() {
-    this.data = this.config.data;
+    // node.data contains both 'config' (metadata) and 'nodeData' (business data)
+    this.data = this.config.data?.data?.nodeData;
   }
 }

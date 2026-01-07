@@ -11,19 +11,23 @@ import {
 } from '../nodes';
 import { VideoScriptGenContentComponent } from '../nodes/video-script-gen-node/video-script-gen-content';
 import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
-import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
-import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
+import { AssetDetailsComponent } from '../nodes/assets-node/asset-details/asset-details';
+import { AudioDetailsComponent } from '../nodes/audio-node/audio-details/audio-details';
+import { SourceNodeDetailsComponent } from '../nodes/sources-node/sources-details/source-node-details';
+import { AssetGeneratedDetailsComponent } from '../nodes/asset-generated-node/asset-generated-details/asset-generated-details';
 import { AudioTTsDetailsComponent } from '../nodes/audio-tts-node/audio-tts-details/audio-tts-details';
 import { NodeCategory, NodeCompTypeStr } from '../models/flows.model';
 import { WrapperNodeComponent } from '../nodes/wrapper-node/wrapper-node.component';
 import { VideoScriptGenDetailsComponent } from '../nodes/video-script-gen-node/video-gen-details/video-script-gen-details';
 import { EmptyDetailsComponent } from '../nodes/empty-node/empty-details/empty-details';
 import { AudioTTsNodeComponent } from '../nodes/audio-tts-node/audio-tts-node';
+import { VideoGenNodeComponent } from '../nodes/video-gen-node/video-gen-node';
+import { AssetGeneratedNodeComponent } from '../nodes/asset-generated-node/asset-generated-node';
 
 export interface INodeConfig {
   component: Type<any>;
-  detailsComponent?: Type<any>; // 👈 Added
-  category: NodeCategory; // 👈 Added
+  detailsComponent?: Type<any>;
+  category: NodeCategory;
   color: string;
   icon?: string;
   label?: string;
@@ -71,17 +75,19 @@ export class FlowNodeRegisterService {
       },
       [NodeCompTypeStr.SourcesNodeComponent]: {
         component: SourcesNodeComponent,
+        detailsComponent: SourceNodeDetailsComponent,
         category: NodeCategory.INPUT,
         color: '#10b981', // green-500
         icon: 'pi pi-file-import',
-        label: 'Source'
+        label: 'Source',
       },
       [NodeCompTypeStr.AssetsNodeComponent]: {
         component: AssetsNodeComponent,
+        detailsComponent: AssetDetailsComponent,
         category: NodeCategory.INPUT,
         color: '#10b981', // green-500
         icon: 'pi pi-plus-circle',
-        label: 'Asset'
+        label: 'Asset',
       },
       [NodeCompTypeStr.VideoGenNodeComponent]: {
         component: VideoGenNodeComponent,
@@ -92,10 +98,11 @@ export class FlowNodeRegisterService {
       },
       [NodeCompTypeStr.AssetGeneratedNodeComponent]: {
         component: AssetGeneratedNodeComponent,
+        detailsComponent: AssetGeneratedDetailsComponent,
         category: NodeCategory.OUTPUT,
         color: '#3b82f6', // blue-500
         icon: 'pi pi-file',
-        label: 'Generated Asset'
+        label: 'Generated Asset',
       },
       [NodeCompTypeStr.AudioTTsNodeComponent]: {
         component: AudioTTsNodeComponent,
@@ -107,10 +114,11 @@ export class FlowNodeRegisterService {
       },
       [NodeCompTypeStr.AudioNodeComponent]: {
         component: AudioNodeComponent,
+        detailsComponent: AudioDetailsComponent,
         category: NodeCategory.INPUT,
         color: '#10b981', // green-500
         icon: 'pi pi-volume-up',
-        label: 'Audio'
+        label: 'Audio',
       },
       [NodeCompTypeStr.EmptyNodeComponent]: {
         component: EmptyNodeComponent,

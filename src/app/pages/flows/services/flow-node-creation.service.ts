@@ -37,13 +37,20 @@ export class FlowNodeCreationService {
     const x = processNode?.point().x! + (processNode?.point().x! - inputNode?.point().x!);
     const y = processNode?.point().y! + (processNode?.point().y! - inputNode?.point().y!);
 
+    const nodeConfig = this.flowNodeRegisterService.getNodeConfig(NodeCompTypeStr.AssetGeneratedNodeComponent);
+    const wrapperConfig = this.flowNodeRegisterService.getNodeConfig('WrapperNodeComponent');
+    if (!nodeConfig || !wrapperConfig) return;
+
     const newNode: DynamicNodeWithData = {
       id: 'asset-generated-node-' + nanoid(),
       point: signal({ x: x, y: y }), // Default position
-      type: AssetGeneratedNodeComponent as Type<any>, // Ensure Type<any> is appropriate or use specific type
+      type: wrapperConfig.component as Type<any>, // Ensure Type<any> is appropriate or use specific type
       config: {
         category: NodeCategory.OUTPUT,
         component: NodeCompTypeStr.AssetGeneratedNodeComponent,
+        color: nodeConfig.color,
+        icon: nodeConfig.icon,
+        label: nodeConfig.label,
       },
       data: { nodeData: generatedAsset },
     };

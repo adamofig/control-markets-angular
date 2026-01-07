@@ -65,7 +65,7 @@ export enum NodeCompTypeStr {
 There are two ways to implement a node's UI on the canvas:
 
 ### Option A: The Wrapper-Based Approach (Recommended)
-This is the preferred method. You create a regular Angular component that focuses ONLY on your node's logic and display. The system wraps it in a `WrapperNodeComponent` which provides the canvas integration (handles, toolbars, status borders).
+This is the preferred method. You create a regular Angular component that focuses ONLY on your node's logic and display. The system wraps it in a [WrapperNodeComponent](../technical-reference/wrapper-node-component.md) which provides the canvas integration (handles, toolbars, status borders).
 
 1.  **Create your content component**:
     ```typescript

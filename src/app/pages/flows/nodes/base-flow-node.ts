@@ -42,6 +42,8 @@ export abstract class BaseFlowNode<T extends { config?: INodeConfig; data?: any 
   public nodeCategory = computed(() => this.config()?.category || 'input');
 
   public nodeData = computed(() => (this.node()?.data as any)?.nodeData || this.node()?.data?.data);
+  public color = computed(() => this.config()?.color || '#03c9f5');
+  public icon = computed(() => this.config()?.icon);
 
   // Tengo que estandarizar como tengo el estatus del job, porque este lo uso en video, para assets, pero en agentes uso jobExecutionState hjkh
   public statusJob = signal<StatusJob>(StatusJob.COMPLETED);
@@ -142,6 +144,8 @@ export abstract class BaseFlowNode<T extends { config?: INodeConfig; data?: any 
       width: '600px',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
+      modal: false,
+      closable: true,
       data: {
         node: this.node(),
         state: state

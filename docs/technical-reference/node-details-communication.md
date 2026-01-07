@@ -23,7 +23,7 @@ This allows the Details Component to make sense of the entire flow:
 
 ## 🔄 The Centralized Pattern
 
-In the refined architecture, the communication and state management logic are centralized in the `WrapperNodeComponent`. Individual content components remain pure views that receive data via `@Input()` properties.
+In the refined architecture, the communication and state management logic are centralized in the [WrapperNodeComponent](./wrapper-node-component.md). Individual content components remain pure views that receive data via `@Input()` properties.
 
 Here's the updated flow for data and configuration changes:
 1.  **User Interacts**: User edits data in the details component.
@@ -146,4 +146,4 @@ export class MyDetailsComponent implements OnInit {
 
 1.  **Extreme Decoupling**: Content components are just views. They don't care how or where data is saved.
 2.  **Consistency**: No more duplicate `openModal` logic scattered across dozens of files.
-3.  **Stability**: High-level orchestration (handles, toolbars, modal lifecycle) is managed in a single, well-tested location: `WrapperNodeComponent`.
+3.  **Stability**: High-level orchestration (handles, toolbars, modal lifecycle) is managed in a single, well-tested location: [WrapperNodeComponent](./wrapper-node-component.md).

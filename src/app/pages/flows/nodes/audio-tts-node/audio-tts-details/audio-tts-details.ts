@@ -104,7 +104,7 @@ export class AudioTTsDetailsComponent implements OnInit {
 
   updateSettings(event: any) {
     this.settings = event;
-    debugger
+    
     this.save();
   }
 

@@ -29,11 +29,11 @@
           </div>
           <div class="detail-item">
             <span class="font-semibold">Status:</span>
-            <span class="status" [ngClass]="'status-' + data.status.toLowerCase()">{{ data.status }}</span>
+            <span class="status" [ngClass]="'status-' + data?.status?.toLowerCase()">{{ data?.status }}</span>
           </div>
           <div class="detail-item">
             <span class="font-semibold">Request:</span>
-            <span>{{ data.request.seconds }}s, {{ data.request.width }}x{{ data.request.height }}</span>
+            <span>{{ data?.request?.seconds }}s, {{ data?.request?.width }}x{{ data?.request?.height }}</span>
           </div>
         </div>
 

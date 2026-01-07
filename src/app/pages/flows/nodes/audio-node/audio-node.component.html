@@ -1,23 +1,6 @@
-@if (selected()) {
-<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="openModal()"> </app-node-toolbar>
+@if(baseMessage()){
+<message-content-displayer [message]="baseMessage()!"></message-content-displayer>
 }
-
-<div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
-  <div class="node-card" [ngClass]="'status-' + (jobExecutionState()?.status || 'default')">
-    @if(baseMessage){
-    <message-content-displayer [message]="baseMessage"></message-content-displayer>
-    }
-    <div class="audio-container">
-      <p-tag [value]="node()?.data?.nodeData?.name" />
-      <br />
-
-      <button (click)="openModal()" class="pi pi-download">Descarga</button>
-
-      @if(!hasTranscription){
-      <button (click)="getTranscriptions()" label="Get Transcription"></button>
-      }
-    </div>
-
-    <handle type="source" position="right" id="right" />
-  </div>
+<div class="audio-container">
+  <p-tag [value]="name" />
 </div>

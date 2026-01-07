@@ -2,8 +2,13 @@
 <app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"> </app-node-toolbar>
 }
 
-<div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
-  <div class="node-card" [ngClass]="'status-' + (jobExecutionState()?.status || 'default')">
+<div
+  class="node-container"
+  (dblclick)="openModal()"
+  (click)="selectNode()"
+  [style.border-color]="color()"
+>
+  <div class="node-card" [ngClass]="'status-' + (currentStatus() || 'default')">
     <!-- SOLO SI EL nodo es imagen. -->
     <div class="image-background" [style.background-image]="'url(' + node()?.data?.nodeData?.assets?.image?.url + ')'">
       <h4>{{ node()?.data?.nodeData?.name }}</h4>

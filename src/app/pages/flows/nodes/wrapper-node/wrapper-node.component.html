@@ -11,32 +11,21 @@
 
 }
 
-<div class="node-container" (click)="selectNode()" (dblclick)="openDetails()">
+<div
+  class="node-container"
+  (click)="selectNode()"
+  (dblclick)="openDetails()"
+  [style.border-color]="color()"
+>
   <div
     class="node-card"
     [class.selected]="selected()"
-    [ngClass]="'status-' + (statusSeverity() || 'default')"
-    [style.border-color]="color()"
+    [ngClass]="'status-' + (currentStatus() || 'default')"
     [style.--node-color]="color()"
     [style.--node-color-alpha]="color() + '60'"
   >
-    @if (statusDescription()) {
-      <div class="status-detail-trigger" [class.failed]="currentStatus() === 'failed'">
-        <i class="pi pi-info-circle"></i>
-        <div class="status-tooltip">
-          <div class="tooltip-header">Status Detail</div>
-          <div class="tooltip-body">{{ statusDescription() }}</div>
-        </div>
-      </div>
-    }
 
-    @if (selected()) {
-      <div class="selection-indicator">
-        <i class="pi pi-check"></i>
-      </div>
-    }
 
-    <p-tag class="tag" [value]="nodeCategory()" [severity]="statusSeverity()" />
 
     @if (nodeCategory() === 'process') {
       <handle type="target" position="left" id="left" />
@@ -44,6 +33,13 @@
     }
 
     <div #container></div>
+
+    @if (selected()) {
+      <div class="selection-indicator">
+        <p-tag class="tag" [value]="nodeCategory()" [severity]="statusSeverity()" />
+        <i class="pi pi-check" style="color: white"></i>
+      </div>
+    }
 
     <handle type="source" position="right" id="right" />
   </div>

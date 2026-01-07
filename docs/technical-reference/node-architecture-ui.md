@@ -116,7 +116,10 @@ The `category` defined in the node configuration significantly impacts how the `
 
 ## 📦 The Wrapper Node Mechanism
 
-The `WrapperNodeComponent` acts as a standardized shell that implements `BaseFlowNode`. It decouples the canvas-level integration (handles, toolbars, status-based styling) from the specific node content.
+The [WrapperNodeComponent](./wrapper-node-component.md) acts as a standardized shell that implements `BaseFlowNode`. It decouples the canvas-level integration (handles, toolbars, status-based styling) from the specific node content.
+
+> [!NOTE]
+> For a deep dive into how the wrapper handles dynamic component loading and data sync, see the [Wrapper Node Technical Reference](./wrapper-node-component.md).
 
 ### How it Works
 The wrapper uses Angular's `ViewContainerRef` to dynamically render the actual node component at runtime.
@@ -145,7 +148,12 @@ override openDetails(): void {
 }
 ```
 ### Safari Compatibility
-- **Safari Compatibility**: By housing the complexity in a stable wrapper, we ensure the simplified UI remains compatible with Safari (iPad/iPhone) as discussed above
+- **Safari Compatibility**: 
+As mention in documentation, complexity of render UI with this new approach, has a  drawback, foreignObject is not fully supported in Safari. so complex style creates a behavior where the node is not displayed correctly. check documentation for more details.
+https://www.ngx-vflow.org/nodes/custom-nodes
+Recomendation is use simple CSS, specially not use absolute, relative position. 
+
+
 
 ### Standardized Interaction Pattern
 - **Single Click**: Selects the node, activates the toolbar, and applies high-contrast visual cues (Glow & Scale).

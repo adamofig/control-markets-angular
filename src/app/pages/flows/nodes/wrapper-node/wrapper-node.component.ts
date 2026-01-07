@@ -4,7 +4,6 @@ import { BaseFlowNode } from '../base-flow-node';
 import { CommonModule } from '@angular/common';
 import { HandleComponent } from 'ngx-vflow';
 import { TagModule } from 'primeng/tag';
-import { DialogService } from 'primeng/dynamicdialog';
 import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
 import { FlowNodeRegisterService } from '../../services/flow-node-register.service';
 import { FlowOrchestrationService } from '../../services/flow-orchestration.service';
@@ -28,9 +27,6 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
   private flowNodeRegisterService = inject(FlowNodeRegisterService);
   private flowOrchestrationService = inject(FlowOrchestrationService);
 
-  public color = computed(() => this.config()?.color || '#03c9f5');
-  public icon = computed(() => this.config()?.icon);
-
   private componentRef!: ComponentRef<any>;
 
   constructor() {
@@ -48,6 +44,7 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
     const nodeData = this.node()?.data?.nodeData;
     const component = this.config()?.component;
     if (component) {
+      
       this.container.clear();
       const ComponentType = this.flowNodeRegisterService.getNodeType(component);
       if (ComponentType) {

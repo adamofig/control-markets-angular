@@ -1,15 +1,4 @@
-@if (selected()) {
-<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="handleToolbarEvents('details')"> </app-node-toolbar>
-}
-
-<div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
-  <div class="node-card">
-    <!-- SOLO SI EL nodo es imagen. -->
-    <div class="image-background" [style.background-image]="source?.thumbnail?.url ? 'url(' + source?.thumbnail?.url + ')' : null">
-      <p>{{ (this.data()?.nodeData?.content | slice : 0 : 130) || 'No source name' }}</p>
-      <p-tag [value]="this.data()?.nodeData?.tag || 'Information'" />
-    </div>
-
-    <handle type="source" position="bottom" id="b" />
-  </div>
+<div class="image-background" [style.background-image]="thumbnail?.url ? 'url(' + thumbnail?.url + ')' : null">
+  <p>{{ (content | slice : 0 : 130) || 'No source name' }}</p>
+  <p-tag [value]="tag || 'Information'" />
 </div>

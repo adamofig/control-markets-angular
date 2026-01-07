@@ -6,119 +6,21 @@
   overflow: hidden;
   padding: 5px;
   min-width: 140px;
-
+  border: 4px solid transparent; // Outer border for theme color
+  transition: border-color 0.3s ease;
 }
 
 .node-card {
   border-radius: 15px;
-  border: 5px solid;
-  overflow: visible; // Allow selection ring/indicator to show if needed, though hidden is safer for content
-  position: relative;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
-  &.selected {
-    border-width: 6px;
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 20px 25px -5px var(--node-color-alpha), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    z-index: 10;
-  }
+  border: 5px solid #03c9f5; // Inner border for status color
+  overflow: hidden;
+  box-shadow: 7px 7px 21px #1779f0, -7px -7px 21px #ffffff;
 }
 
 .selection-indicator {
-  position: absolute;
-  top: -12px;
-  right: -12px;
-  background: var(--node-color);
-  color: white;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  z-index: 100;
-  border: 2px solid white;
-  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes popIn {
-  from { transform: scale(0); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-.status-detail-trigger {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 20;
-  color: rgba(255, 255, 255, 0.8);
-  cursor: help;
-  transition: all 0.2s ease;
-
-  &:hover {
-    color: white;
-    transform: scale(1.2);
-
-    .status-tooltip {
-      visibility: visible;
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  &.failed {
-    color: #ff4d4d;
-    animation: pulseRed 2s infinite;
-  }
-}
-
-.status-tooltip {
-  position: absolute;
-  bottom: 100%;
-  right: 0;
-  width: 200px;
-  background: #1e1e2e;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 10px;
-  visibility: hidden;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-  pointer-events: none;
-
-  .tooltip-header {
-    font-size: 10px;
-    text-transform: uppercase;
-    color: #888;
-    margin-bottom: 4px;
-    letter-spacing: 0.5px;
-  }
-
-  .tooltip-body {
-    font-size: 12px;
-    color: #eee;
-    line-height: 1.4;
-    word-break: break-word;
-  }
-}
-
-@keyframes pulseRed {
-  0% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.8; }
-}
-
-.image-background {
-  background-size: cover;
-  background-position: center;
-  height: 200px;
-  width: 100%;
+  justify-content: space-around;
+  background-color: #091829d1
 }
 
 
