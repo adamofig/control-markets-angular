@@ -1,33 +1,21 @@
-@if (selected()) {
-<app-node-toolbar (delete)="handleToolbarEvents('delete')" (none)="handleToolbarEvents('none')" (details)="openModal()"> </app-node-toolbar>
-}
 
-<div class="node-container" (dblclick)="openModal()" (click)="selectNode()">
-  <div class="node-card">
-    <div class="image-background" [style.background-image]="'url(' + backgroundImageUrl() + ')'">
-      <p style="background: rgba(106, 101, 101, 0.883); height: 100%; width: 100%">
-        @if (this.data()?.nodeData?.responseFormat === responseFormat.ARRAY) {
-        {{ this.data()?.nodeData?.result | json }}
-        } @else if (this.data()?.nodeData?.responseFormat === responseFormat.JSON) {
-        {{ this.data()?.nodeData?.result | json }}
-        } @else if (this.data()?.nodeData?.responseFormat === responseFormat.DEFAULT_CONTENT) {
-        {{
-          this.data()?.nodeData?.response?.content ||
-            this.data()?.nodeData?.result?.response ||
-            this.data()?.nodeData?.result?.description ||
-            'No response in format DEFAULT_CONTENT'
-        }}
-        } @else {
-        {{ this.data()?.nodeData?.response?.content }}
-        }
-      </p>
-    </div>
-  </div>
+<div class="image-background" [style.background-image]="'url(' + backgroundImageUrl() + ')'">
+  <p style="background: rgba(106, 101, 101, 0.883); height: 100%; width: 100%; padding: 10px; margin: 0; box-sizing: border-box; overflow: auto;">
 
-  <!-- <p-button (click)="removeNode()" class="hover-button" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" /> -->
+    @if (displayData()?.responseFormat === responseFormatEnum.ARRAY) {
+    {{ displayData()?.result | json }}
+    } @else if (displayData()?.responseFormat === responseFormatEnum.JSON) {
+    {{ displayData()?.result | json }}
+    } @else if (displayData()?.responseFormat === responseFormatEnum.DEFAULT_CONTENT || displayData()?.responseFormat === 'default_content') {
+    {{
+      displayData()?.response?.content ||
+        displayData()?.result?.response ||
+        displayData()?.result?.description ||
+        'No response found'
+    }}
+    } @else {
+    {{ displayData()?.response?.content || displayData()?.result }}
+    }
+  </p>
 
-  <!-- <img style="position: absolute; top: 0; left: 0" [src]="data()?.image" alt="" /> -->
-
-  <handle type="target" position="left" id="b" />
-  <handle type="source" position="right" id="b" />
 </div>

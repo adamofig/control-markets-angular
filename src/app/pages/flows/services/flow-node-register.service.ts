@@ -9,6 +9,7 @@ import {
   EmptyNodeComponent,
   LeadNodeComponent,
 } from '../nodes';
+import { OutcomeJobDetailComponent } from '../../jobs/job-detail/job-detail.component';
 import { VideoScriptGenContentComponent } from '../nodes/video-script-gen-node/video-script-gen-content';
 import { AssetsNodeComponent } from '../nodes/assets-node/assets-node.component';
 import { AssetDetailsComponent } from '../nodes/assets-node/asset-details/asset-details';
@@ -61,6 +62,7 @@ export class FlowNodeRegisterService {
       },
       [NodeCompTypeStr.OutcomeNodeComponent]: {
         component: OutcomeNodeComponent,
+        detailsComponent: OutcomeJobDetailComponent,
         category: NodeCategory.OUTPUT,
         color: '#3b82f6', // blue-500
         icon: 'pi pi-check-circle',

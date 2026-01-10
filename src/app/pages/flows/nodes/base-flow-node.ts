@@ -41,7 +41,8 @@ export abstract class BaseFlowNode<T extends { config?: INodeConfig; data?: any 
 
   public nodeCategory = computed(() => this.config()?.category || 'input');
 
-  public nodeData = computed(() => (this.node()?.data as any)?.nodeData || this.node()?.data?.data);
+  public nodeData = computed(() => (this.node()?.data as any)?.nodeData);
+  public inputNodeId = computed(() => (this.node()?.data as any)?.inputNodeId);
   public color = computed(() => this.config()?.color || '#03c9f5');
   public icon = computed(() => this.config()?.icon);
 

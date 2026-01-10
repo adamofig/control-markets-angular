@@ -1,92 +1,46 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef, effect, inject, signal } from '@angular/core';
-import { ComponentDynamicNode, Vflow } from 'ngx-vflow';
-import { DialogModule } from 'primeng/dialog';
-import { DialogService } from 'primeng/dynamicdialog';
+import { ChangeDetectionStrategy, Component, Input, OnInit, computed, inject, signal } from '@angular/core';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { IAgentOutcomeJob, ResponseFormat } from 'src/app/pages/jobs/models/jobs.model';
-import { OutcomeJobDetailComponent } from 'src/app/pages/jobs/job-detail/job-detail.component';
-import { ButtonModule } from 'primeng/button';
-import { JsonPipe } from '@angular/common';
-import { BaseFlowNode } from '../base-flow-node';
-import { BaseNodeToolbarComponent } from '../node-toolbar/node-toolbar.component';
-import { INodeConfig } from '../../models/flows.model';
-
-export interface CustomOutcomeNode extends ComponentDynamicNode {
-  data?: any;
-  config: INodeConfig;
-  nodeData: IAgentOutcomeJob;
-  inputNodeId: string;
-  processNodeId: string;
-}
+import { FlowComponentRefStateService } from '../../services/flow-component-ref-state.service';
 
 @Component({
   selector: 'app-outcome-node',
-  imports: [Vflow, DialogModule, ButtonModule, JsonPipe, BaseNodeToolbarComponent],
+  standalone: true,
+  imports: [CommonModule, JsonPipe],
   templateUrl: './outcome-node.component.html',
   styleUrl: './outcome-node.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
 })
-export class OutcomeNodeComponent extends BaseFlowNode<CustomOutcomeNode> implements OnInit {
-  public outcomeJob: IAgentOutcomeJob | null = null;
-  public responseFormat = ResponseFormat;
-  public backgroundImageUrl = signal<string>('');
+export class OutcomeNodeComponent implements OnInit {
+  @Input() nodeData: IAgentOutcomeJob | null = null;
+  @Input() inputNodeId: string = '';
+  
+  // Also support direct inputs if the wrapper maps them
+  @Input() result: any = null;
+  @Input() responseFormat?: ResponseFormat;
+  @Input() response?: any;
 
-  @ViewChild('dialog') dialog!: ViewContainerRef;
+  private flowComponentRefStateService = inject(FlowComponentRefStateService);
 
-  override ngOnInit(): void {
-    super.ngOnInit();
-    setTimeout(() => {
-      const inputNodeId = this.node().data?.inputNodeId || '';
-      console.log('outcomeJob', inputNodeId);
-      const inputNodeComponent = this.flowComponentRefStateService.getNodeComponentRef(inputNodeId);
-      const imageForInput = inputNodeComponent?.data()?.nodeData?.assets?.image?.url;
-      console.log('imageForInput....', imageForInput);
-      this.backgroundImageUrl.set(imageForInput);
-      console.log('inputNodeComponent', this.backgroundImageUrl());
-    }, 500);
+  public responseFormatEnum = ResponseFormat;
+  public backgroundImageUrl = signal<string>('assets/defaults/images/default_2_3.webp');
+  public displayData = computed(() => {
+    return this.nodeData || {
+      result: this.result,
+      responseFormat: this.responseFormat,
+      response: this.response
+    };
+  });
 
-    console.log('outcomeJob', this.outcomeJob);
-    console.log('nodeData', this.nodeData());
-  }
-
-  constructor() {
-    super();
-    this.backgroundImageUrl.set(`url('assets/defaults/images/default_2_3.webp')`);
-    effect(() => {
-      this.outcomeJob = this.nodeData() || null;
-    });
-  }
-
-  public isDialogVisible = false;
-
-  openModal(): void {
-    this.isDialogVisible = true;
-    this.dialogService.open(OutcomeJobDetailComponent, {
-      header: 'Outcome Node',
-      contentStyle: { overflow: 'auto' },
-      baseZIndex: 10000,
-      draggable: true,
-      styleClass: 'draggable-dialog',
-      closable: true,
-      modal: false,
-      width: '650px',
-      inputValues: {
-        jobInput: this.outcomeJob,
-      },
-      duplicate: true,
-    });
-  }
-
-  override handleToolbarEvents(event: 'delete' | 'none' | 'details'): void {
-    switch (event) {
-      case 'delete':
-        this.removeNode();
-        break;
-      case 'none':
-        break;
-      case 'details':
-        this.openModal();
-        break;
+  ngOnInit(): void {
+    if (this.inputNodeId) {
+      setTimeout(() => {
+        const inputNodeComponent = this.flowComponentRefStateService.getNodeComponentRef(this.inputNodeId);
+        const imageForInput = inputNodeComponent?.data()?.nodeData?.assets?.image?.url;
+        if (imageForInput) {
+          this.backgroundImageUrl.set(imageForInput);
+        }
+      }, 500);
     }
   }
 }

@@ -56,9 +56,8 @@
   </ng-template>
 </vflow>
 
-<div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px">
-  <!-- Show options to add agents Assets and Source -->
-  <p-speeddial [model]="resourceItems" direction="up" [tooltipOptions]="{ tooltipPosition: 'left' }">
+<div style="position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; align-items: flex-end; z-index: 100">
+  <p-speeddial [model]="resourceItems" direction="up" [style]="{ position: 'relative', display: 'flex' }" [tooltipOptions]="{ tooltipPosition: 'left' }">
     <ng-template #button let-toggleCallback="toggleCallback">
       <p-button severity="success" [outlined]="true" [rounded]="true" (click)="toggleCallback($event)" pTooltip="Add Resource" tooltipPosition="top">
         <i class="pi pi-paperclip"></i>
@@ -69,10 +68,10 @@
   <p-speeddial
     [model]="processItems"
     direction="up"
-    [style]="{ position: 'absolute', right: 'calc(50% - 5rem)'}"
+    [style]="{ position: 'relative', display: 'flex' }"
     [tooltipOptions]="{ tooltipPosition: 'right' }">
     <ng-template #button let-toggleCallback="toggleCallback">
-      <p-button severity="warn" [outlined]="true" [rounded]="true" (click)="toggleCallback($event)" pTooltip="Add Process">
+      <p-button severity="warn" [outlined]="true" [rounded]="true" (click)="toggleCallback($event)" pTooltip="Add Process" tooltipPosition="top">
         <i class="pi pi-microchip"></i>
       </p-button>
     </ng-template>

@@ -51,6 +51,11 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
         this.componentRef = this.container.createComponent(ComponentType);
 
         if (nodeData && this.componentRef) {
+          // 🥕 Fix: If the component has a 'nodeData' input, pass the whole object
+          if ('nodeData' in this.componentRef.instance) {
+            this.componentRef.instance['nodeData'] = nodeData;
+          }
+
           // Check if we have a nested 'inputs' object or if nodeData itself is the inputs
           const inputs = nodeData['inputs'] || nodeData;
           Object.keys(inputs).forEach(inputName => {
@@ -77,6 +82,7 @@ export class WrapperNodeComponent extends BaseFlowNode<WrapperNode> implements O
         contentStyle: { overflow: 'auto' },
         baseZIndex: 10000,
         draggable: true,
+        duplicate: true,
         styleClass: 'draggable-dialog',
         closable: true,
         width: '650px',

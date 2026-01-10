@@ -80,6 +80,7 @@ This is the preferred method. You create a regular Angular component that focuse
     ```
 2.  **Register it**: Add it to the `FlowNodeRegisterService`.
 3.  **Automatic Binding**: The `WrapperNodeComponent` will automatically instantiate your component and bind `nodeData` fields to your `@Input()`s.
+4.  **Full Data Access**: If you need the entire data object, simply declare `@Input() nodeData: IMyCustomNodeData | null = null;`. The wrapper will detect it and pass the full object.
 
 > [!TIP]
 > Use this approach to ensure your node is immediately compatible with all devices (including Safari) and maintains the system's "Dual-Layer" look and feel.

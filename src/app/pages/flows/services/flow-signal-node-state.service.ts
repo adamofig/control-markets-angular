@@ -70,7 +70,12 @@ export class FlowSignalNodeStateService {
         id: 'outcome-node-' + nanoid(),
         point: signal({ x: x, y: y }), // Default position, can be made configurable
         type: nodeConfig.component as Type<any>, // Ensure Type<any> is appropriate or use specific type
-        data: { nodeData: {}, inputNodeId: inputNode.id, processNodeId: processNode.id }, // not writable for now, but if i change i need to change serializer.
+        data: { 
+          nodeData: { 
+            inputNodeId: inputNode.id, 
+            processNodeId: processNode.id 
+          } 
+        },
         config: {
           component: NodeCompTypeStr.OutcomeNodeComponent,
           category: NodeCategory.OUTPUT,
@@ -142,7 +147,13 @@ export class FlowSignalNodeStateService {
       id: 'asset-generated-node-' + nanoid(),
       point: signal({ x: x, y: y }), // Default position
       type: wrapperConfig.component as Type<any>, // Ensure Type<any> is appropriate or use specific type
-      data: { nodeData: outcomeJob, inputNodeId, processNodeId },
+      data: { 
+        nodeData: { 
+          ...outcomeJob, 
+          inputNodeId, 
+          processNodeId 
+        } 
+      },
       config: {
         component: NodeCompTypeStr.OutcomeNodeComponent,
         category: NodeCategory.OUTPUT,

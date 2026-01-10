@@ -28,10 +28,15 @@ The component extends `BaseFlowNode<WrapperNode>`, inheriting:
 When a node is created on the canvas, the `WrapperNodeComponent`:
 1.  Resolves the target logic component using `FlowNodeRegisterService` via `config.component`.
 2.  Dynamically instantiates it using Angular's `ViewContainerRef`.
-3.  **Automatic Data Injection**: It maps properties from `nodeData` to the component's `@Input()` properties.
+31. **Automatic Data Injection**: It maps properties from `nodeData` to the component's `@Input()` properties.
+32. **Object Discovery**: If the component has an `@Input() nodeData`, the wrapper assigns the entire business data object to it first, then maps individual properties.
 
 ```typescript
 // From wrapper-node.component.ts
+if ('nodeData' in this.componentRef.instance) {
+  this.componentRef.instance['nodeData'] = nodeData;
+}
+
 const inputs = nodeData['inputs'] || nodeData;
 Object.keys(inputs).forEach(inputName => {
   if (inputName in this.componentRef.instance) {

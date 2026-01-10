@@ -1,32 +1,6 @@
-
-.node-container {
-  border-radius: 20px;
-  overflow: hidden;
-  padding: 5px;
-}
-
-.node-card{
-  border-radius: 15px;
-  border: 5px solid #03d9f5;
-  box-shadow: 7px 7px 21px #17a0f0, -7px -7px 21px #ffffff;
-  animation: vanishAndAppear 3s infinite;
-  overflow: hidden;
-}
-
-
 .image-background {
   background-size: cover;
   background-position: center;
   height: 270px;
   width: 200px;
-}
-
-
-@keyframes vanishAndAppear {
-  0%, 100% {
-    box-shadow: 7px 7px 21px #249ae9, -7px -7px 21px #ffffff;
-  }
-  50% {
-    box-shadow: 7px 7px 21px #a0c8d6, -7px -7px 21px #ffffff;
-  }
 }

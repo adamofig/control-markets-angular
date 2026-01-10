@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal, computed, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal, computed, Input, Optional } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 import { JobService } from '../outcome-jobs.service';
@@ -10,6 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { N8nService } from 'src/app/services/n8n.service';
 import { MarkdownComponent } from 'ngx-markdown';
 import { TagModule } from 'primeng/tag';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-job-detail',
@@ -23,6 +24,7 @@ export class OutcomeJobDetailComponent implements OnInit {
   private genericService = inject(JobService);
   private activatedRoute = inject(ActivatedRoute);
   private n8nService = inject(N8nService);
+  private dialogConfig = inject(DynamicDialogConfig, { optional: true });
 
   public responseFormat = ResponseFormat;
 
@@ -58,12 +60,23 @@ export class OutcomeJobDetailComponent implements OnInit {
       this.job.set(this.jobInput);
       return;
     }
+
+    // Check if data is passed via DynamicDialog (Wrapper Node pattern)
+    if (this.dialogConfig?.data) {
+      const node = this.dialogConfig.data;
+      const nodeData = node?.data?.nodeData || node?.nodeData;
+      if (nodeData) {
+        this.job.set(nodeData);
+        return;
+      }
+    }
+
     const job = await this.genericService.getOutcomeJob(this.jobId);
     this.job.set(job);
   }
 
   public async distribute(channel: string) {
-    await this.n8nService.startGithubFlow(this.jobId);
+    await this.n8nService.startGithubFlow(this.jobId || this.job()?.id || '');
     // await this.genericService.distributeJob(this.jobId, channel);
 
     this.loadOutcomeJob();
